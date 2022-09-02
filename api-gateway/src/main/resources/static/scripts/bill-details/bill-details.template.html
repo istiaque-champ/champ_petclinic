@@ -1,0 +1,21 @@
+<script>
+    function printPage() {
+        window.print();
+    }
+</script>
+
+<h2 class="titleOwner">Bill Details: {{$ctrl.bills.billId}}</h2>
+
+<div>
+    <h3>Payment Info for Bill {{$ctrl.bills.billId}}</h3>
+    <h3>505 Lincoln Str. Queens, New York</h3>
+    <h3>Final price: {{$ctrl.bills.amount}}</h3>
+    <h3>Visit type: {{$ctrl.bills.visitType}}</h3>
+    <h3>Date generated: {{$ctrl.bills.date}}</h3>
+
+    <div>
+        <input class="newBtn btn btn-primary" type="button" value="Print this page" onclick="printPage()" />
+    </div>
+    <br>
+    <a class="newBtn btn btn-primary" href="http://localhost:8080/#!/bills">Back to History</a>
+</div>
