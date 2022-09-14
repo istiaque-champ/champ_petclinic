@@ -104,13 +104,13 @@ feat(TEAMTAG-JiraID): short description (#420)
 
 - First create an account on GitHub
 - Download git https://git-scm.com/downloads
-- Go to the official/ main repo https://github.com/cgerard321/champlain_petclinic
+- Go to the official/ main repo https://github.com/istiaque-champ/champ_petclinic
 - Click the green button 'Code', and copy the given URL
 - On your file explorer, navigate to where you want the project, right-click, and select 'git bash here'
 - In the terminal window, type 'git clone' and then paste the copied url. (Do not ctrl + v to paste in the git bash terminal, it does not use standard windows encoding and will add extra invisible chars to the command causing it to error out.) It will look like this:
 
 ```
-git clone https://github.com/cgerard321/champlain_petclinic
+git clone git clone https://github.com/istiaque-champ/champ_petclinic
 ```
 
 - The repo on your computer is known as the "local"
@@ -122,7 +122,7 @@ cd champlain_petclinic/
 ```
 To see that the remote origin has been correctly set up, type:
 ```
-git remote add upstream https://github.com/cgerard321/champlain_petclinic.git
+git remote add upstream git clone https://github.com/istiaque-champ/champ_petclinic.git
 ```
 - If we type `git remote -v` we should see 4 different connections, push and fetch for our upstream and for our origin
 - Now that you have setup your clone, move on to the 'story workflow section'
@@ -133,7 +133,7 @@ git remote add upstream https://github.com/cgerard321/champlain_petclinic.git
 - We will first navigate to our project in the file explorer, right-click, and select 'git bash here'
 - In the current command line, you should see in parentheses, the branch you are currently on. We want to start this 'new story process' from our origin's main branch.
 ```
-Christine@DESKTOP-2VF5PQD MINGW64 /e/champlain_petclinic (main)
+Istiaque@DESKTOP-2VF5PQD MINGW64 /e/champlain_petclinic (main)
 ```
 - If it says main, great. Skip this next line. If not, type:
 ```

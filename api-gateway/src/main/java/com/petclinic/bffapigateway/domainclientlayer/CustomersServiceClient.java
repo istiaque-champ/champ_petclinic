@@ -19,7 +19,7 @@ import static reactor.core.publisher.Mono.just;
 
 /**
  * @author Maciej Szarlinski
- * @author Christine Gerard
+ * @author Istiaque MD Shariar
  * Copied from https://github.com/spring-petclinic/spring-petclinic-microservices
  * Modified to remove circuitbreaker
  */
