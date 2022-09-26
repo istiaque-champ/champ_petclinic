@@ -22,7 +22,7 @@
         <td>{{bill.billId}}</td>
         <td>{{bill.visitType}}</td>
         <td>{{bill.amount}}</td>
-        <td>{{bill.date}}</td>
+        <td>{{bill.date | date:'medium'}}</td>
         <td><a href="http://localhost:8080/#!/bills/details/{{bill.billId}}">Get Details</a></td>
         <td><a class="btn btn-danger" href="javascript:void(0)" ng-click="deleteBill(bill.billId)">Delete Bill</a></td>
     </tr>
