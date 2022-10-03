@@ -74,7 +74,7 @@ public class BFFApiGatewayController {
     public Mono<PetDetails> createPet(@RequestBody PetDetails pet, @PathVariable int ownerId){
         return customersServiceClient.createPet(pet, ownerId);
     }
-
+//push
     @GetMapping(value = "owners/{ownerId}/pets/{petId}")
     public Mono<PetDetails> getPet(@PathVariable int ownerId, @PathVariable int petId){
         return customersServiceClient.getPet(ownerId, petId);
