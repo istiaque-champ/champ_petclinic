@@ -23,6 +23,7 @@
             <a class="newBtn btn btn-default" ui-sref="ownerEdit({ownerId: $ctrl.owner.id, method: 'edit'})">Edit Owner</a>
         </td>
         <td>
+
             <a class="newBtn btn btn-default" ui-sref="addPet({ownerId: $ctrl.owner.id, method: 'new-pet'})">Add New Pet</a>
             <a class="newBtn btn btn-default" ui-sref="ownerEdit({ownerId: $ctrl.owner.id, method: 'delete'})">Delete Owner</a>
         </td>
@@ -61,6 +62,7 @@
                     </td>
                     <td>
                         <a class="newBtn btn btn-default" ui-sref="deletePet({ownerId: $ctrl.owner.id, petId: pet.id, method: 'delete'})">Delete Pet</a>
+                        <a class="newBtn btn btn-default" ui-sref="editPet({ownerId: $ctrl.owner.id, petId: pet.id, method: 'edit'})">Edit Pet</a>
                     </td>
                 </tr>
             </table>

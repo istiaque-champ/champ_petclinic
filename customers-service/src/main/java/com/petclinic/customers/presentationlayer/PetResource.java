@@ -61,5 +61,8 @@ class PetResource {
     {
         petService.deletePet(petId, ownerId);
     }
-
+    @PutMapping(value = "/{petId}")
+    public Pet updatePet(@PathVariable int petId, @RequestBody Pet petRequest) {
+        return petService.updatePet(petId, petRequest);
+    }
 }
