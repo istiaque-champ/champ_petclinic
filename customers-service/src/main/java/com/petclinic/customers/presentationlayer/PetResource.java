@@ -51,15 +51,18 @@ class PetResource {
 
     }
 
-    private Optional<Pet> findPetById(int ownerId, int petId) 
+    private Optional<Pet> findPetById(int ownerId, int petId)
     {
         return petService.findByPetId(ownerId, petId);
     }
-  
+
     @DeleteMapping(value = "/{petId}")
     public void DeletePet(@PathVariable("petId") int petId, @PathVariable("ownerId") int ownerId)
     {
         petService.deletePet(petId, ownerId);
     }
-
+    @PutMapping(value = "/{petId}")
+    public Pet updatePet(@PathVariable int petId, @RequestBody Pet petRequest) {
+        return petService.updatePet(petId, petRequest);
+    }
 }

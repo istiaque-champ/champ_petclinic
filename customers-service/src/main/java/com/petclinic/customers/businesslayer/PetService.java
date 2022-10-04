@@ -14,6 +14,7 @@ public interface PetService {
 
     //FIND ALL PETS
     public List<Pet> findAll(int ownerId);
+    public Pet updatePet(int id, Pet pet);
 
     //CREATE PET
     public Pet CreatePet(PetRequest pet, int ownerId);
