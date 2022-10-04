@@ -39,8 +39,6 @@ public class Vet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-
     @Column(name = "vet_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @UniqueElements(groups = Vet.class)
@@ -75,6 +73,10 @@ public class Vet {
 
     @Column(name = "is_active")
     private Integer isActive;
+
+    @Column(name = "rating")
+    private int rating;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     @JoinTable(name = "vet_specialties", joinColumns = @JoinColumn(name = "vet_id"),
             inverseJoinColumns = @JoinColumn(name = "specialty_id"))
@@ -94,6 +96,14 @@ public class Vet {
 
     public void setIsActive(Integer isActive) {
         this.isActive = DataValidation.verifyIsActive(isActive);
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 
     public Integer getVetId() {
@@ -200,6 +210,7 @@ public class Vet {
                 .append("email", this.getEmail())
                 .append("phoneNumber", this.getPhoneNumber())
                 .append("resume", this.getResume())
+                .append("rating",this.getRating())
                 .append("workday", this.getWorkday()).toString();
     }
 
