@@ -405,31 +405,37 @@
     //hide all and only unhide available options
     const displayOptions = () => {
         let option = document.getElementById("selectedVisitType").value;
-        //let optionInput = document.getElementById("optionInput");
+        let optionInput = document.getElementById("optionInput");
 
         switch (option){
             case("Examinations"):
                 option1 = "general";
+                optionInput.value = "general";
                 break;
 
             case("Injury"):
                 option1 = "radio";
+                optionInput.value = "radio";
                 break;
 
             case("Medical"):
                 option1 = "general";
+                optionInput.value = "general";
                 break;
 
             case("Chronic"):
                 option1 = "general";
+                optionInput.value = "general";
                 break;
 
             case("Consultations"):
                 option1 = "general";
+                optionInput.value = "general";
                 break;
 
             case("Operations"):
                 option1 = "radio";
+                optionInput.value = "radio";
                 break;
         }
     }
@@ -596,7 +602,7 @@
 
     <div class="form-group">
         <label for="selectedVet">Practitioner</label>
-        <input type="text" id="optionInput" ng-model="testfilter" value={{option1}}optionInput>
+        <input type="text" id="optionInput" ng-model="testfilter" value="">
         <select id="selectedVet" ng-model="$ctrl.practitionerId" ng-change="$ctrl.loadVetInfo();$ctrl.getVisitsForPractitionerIdAndMonth()" required>
             <option disabled selected value>Please Select A Veterinarian</option>
             <option ng-repeat="p in $ctrl.vets | filter: testfilter " data-target="{{p.firstName}} {{p.lastName}}" value="{{p.vetId}}">{{p.firstName}} {{p.lastName}}</option>
