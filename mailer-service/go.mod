@@ -7,7 +7,7 @@ require (
 	github.com/go-playground/validator/v10 v10.4.1
 	github.com/stretchr/testify v1.7.0
 	github.com/swaggo/gin-swagger v1.3.2
-	github.com/swaggo/swag v1.7.3
+	github.com/swaggo/swag v1.7.9
 	gopkg.in/mail.v2 v2.3.1
 )
 
