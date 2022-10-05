@@ -8,7 +8,7 @@ angular.module('petForm')
         var petId = $stateParams.petId || 0;
         var owner = "";
         var myDate = new Date();
-      
+
         $http.get('api/gateway/owners/' + ownerId).then(function (resp){
             owner = resp.data.firstName + " " + resp.data.lastName;
         })
@@ -60,11 +60,13 @@ angular.module('petForm')
                 owner: ownerId,
                 type: petType
             }
-            /*console.log(data);*/
+            console.log(data);
             var req;
 
             if(method != 'delete')
                 req = $http.post("api/gateway/owners/" + ownerId + "/pets", data);
+            else if(method == 'edit')
+                req = $http.put("owners/pets/" + petId, data);
             else
                 req = $http.delete("api/gateway/owners/" + ownerId + "/pets/" + petId, data);
 
@@ -74,8 +76,49 @@ angular.module('petForm')
                 var error = response.data;
                 error.errors = error.errors || [];
                 alert(error.error + "\r\n" + error.errors.map(function (e) {
-                        return e.field + ": " + e.defaultMessage;
-                    }).join("\r\n"));
+                    return e.field + ": " + e.defaultMessage;
+                }).join("\r\n"));
+            });
+        };
+
+
+
+
+
+        self.submitPetForm = function () {
+            var petType = {
+                id: self.pet.type   ,
+                name: self.pet.type.name
+            }
+
+
+            var data = {
+                id: petId,
+                name: self.pet.name,
+                birthDate: self.pet.birthDate,
+                owner: ownerId,
+                type: petType
+            }
+            //var id = self.pet.id;
+            console.log(self.pet);
+            var req;
+            if (id){
+                if(method == 'editPet')
+                    req = $http.put("api/gateway/owners/" + ownerId + "/pets/" + petId, data);
+                else
+                    req = $http.delete("api/gateway/owners/" + ownerId + "/pets/" + petId, data)
+            }
+            else
+                req = $http.post("api/gateway/owners", data);
+
+            req.then(function () {
+                $state.go('ownerDetails', {ownerId: ownerId})
+            }, function (response) {
+                var error = response.data;
+                error.errors = error.errors || [];
+                alert(error.error + "\r\n" + error.errors.map(function (e) {
+                    return e.field + ": " + e.defaultMessage;
+                }).join("\r\n"));
             });
         };
     }]);
