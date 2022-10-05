@@ -10,6 +10,7 @@
     <thead>
         <tr>
             <th>Bill ID</th>
+            <th>Owner</th>
             <th>Visit Type</th>
             <th>Amount</th>
             <th>Date/Time</th>
@@ -19,10 +20,35 @@
     </thead>
 
     <tr id="billId" ng-repeat="bill in $ctrl.billHistory | filter:$ctrl.query track by bill.billId">
-        <td>{{bill.billId}}</td>
+        <td>
+            #{{bill.billId}}
+        </td>
+        <td class="t-id{{bill.billId}}" ng-mouseenter="$ctrl.show($event, bill.billId)"
+            ng-mouseleave="$ctrl.hide($event,bill.billId)">
+            <!-- TODO: Make this more efficient - Pass OBJ to script and pull both values maybe?  -->
+            {{($ctrl.billDetailedData | filter:{"customerId": bill.billId})[0]["ownerInfo"]["data"]["firstName"] }}
+            {{($ctrl.billDetailedData | filter:{"customerId": bill.billId})[0]["ownerInfo"]["data"]["lastName"] }}
+            <!--Hover pop up-->
+            <div class="billModal m{{bill.billId}} modalOff container w-25">
+                <div class="row">
+                    <div class="col-6">
+                        <b>Address:</b>
+                        <br>{{($ctrl.billDetailedData | filter:{"customerId": bill.billId})[0]["ownerInfo"]["data"]["address"]}},
+                        <br>{{($ctrl.billDetailedData | filter:{"customerId": bill.billId})[0]["ownerInfo"]["data"]["city"]}}
+                    </div>
+                    <div class="col-6">
+                        <b>Pets:</b>
+                        <span ng-repeat="pet in ($ctrl.billDetailedData | filter:{'customerId': bill.billId})[0]['ownerInfo']['data']['pets'] track by pet.id">
+                        {{pet.name}}<br>
+                    </span>
+                    </div>
+                </div>
+            </div>
+
+        </td>
         <td>{{bill.visitType}}</td>
         <td>{{bill.amount}}</td>
-        <td>{{bill.date}}</td>
+        <td>{{bill.date | date:'medium'}}</td>
         <td><a class="newBtn btn btn-default" href="http://localhost:8080/#!/bills/details/{{bill.billId}}">Get Details</a></td>
         <td><a class="btn btn-danger" href="javascript:void(0)" ng-click="deleteBill(bill.billId)">Delete Bill</a></td>
     </tr>
