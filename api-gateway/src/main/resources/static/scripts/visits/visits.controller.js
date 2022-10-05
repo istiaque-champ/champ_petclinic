@@ -668,18 +668,23 @@ angular.module('visits')
 
         self.getStatus = function (status, date) {
             var statusText = "";
+            //Initialize statusText & getting current date
             let currentDate = new Date().getDate();
 
+            //Verifying if status of visit is cancelled
             if(status === false){
                 statusText = "Canceled";
             }
             else{
+                //Verifying if date of visit is in the future
                 if(date > currentDate){
                     statusText = "Scheduled";
                 }
+                //Verifying if date is same as today
                 else if(date == currentDate){
                     statusText = "Today";
                 }
+                //Verifying  if date is in the past
                 else if(date < currentDate){
                     statusText = "Billed";
                 }
