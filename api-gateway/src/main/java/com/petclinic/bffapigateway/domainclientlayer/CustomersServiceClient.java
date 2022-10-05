@@ -119,4 +119,12 @@ public class CustomersServiceClient {
                 .bodyToMono(OwnerDetails.class);
     }
 
+    public Mono<PetDetails> updatePet(int petId, PetDetails pd){
+
+        return webClientBuilder.build().put()
+                .uri(customersServiceUrl + petId)
+                .body(Mono.just(pd), PetDetails.class)
+                .retrieve().bodyToMono(PetDetails.class);
+    }
+
 }
