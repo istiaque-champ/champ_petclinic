@@ -27,7 +27,7 @@ public class PetServiceImpl implements PetService {
         this.ownerService = ownerService;
     }
 
-   @Override
+    @Override
     public Optional<Pet> findByPetId(int ownerId, int petId) {
         try {
             Optional<Owner> optionalOwner = ownerService.findByOwnerId(ownerId);
@@ -52,6 +52,29 @@ public class PetServiceImpl implements PetService {
         Owner owner = optionalOwner.get();
         return petRepository.findAllPetByOwner(owner);
     }
+
+    @Override
+    public Pet updatePet(int id, Pet newPet) {
+        try{
+            Optional<Pet> optionalPet = petRepository.findById(id);
+            Pet foundPet = optionalPet.get();
+            foundPet.setName(newPet.getName());
+            foundPet.setBirthDate(newPet.getBirthDate());
+            foundPet.setType(newPet.getType());
+            foundPet.setOwner(newPet.getOwner());
+            LOG.debug("updatePet: Pet with id {} updated",id);
+            return petRepository.save(foundPet);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            throw new NotFoundException("updatePet failed, Pet with id: " + id + " not found.");
+        }
+    }
+
+
+
+
 
     @Override
     public Pet CreatePet(PetRequest petRequest, int ownerId)
