@@ -135,59 +135,56 @@
 
                         <div class="form-check">
                             <input class="form-check-input workdays" id="sunday" name="workdays"
-                                   ng-model="vet.workday"
                                    type="checkbox"
-                                   value='{"workday":"sunday"}'>
+                                   value="sunday">
                             <label class="form-check-label vet-label-input" for="sunday">Sunday</label>
                         </div>
 
                         <div class="form-check">
                             <input class="form-check-input workdays" id="monday" name="workdays"
-                                   ng-model="vet.workday"
                                    type="checkbox"
-                                   value='{"workday":"monday"}'>
+                                   value="monday">
                             <label class="form-check-label vet-label-input" for="monday">Monday</label>
                         </div>
 
                         <div class="form-check">
                             <input class="form-check-input workdays" id="tuesday" name="workdays"
-                                   ng-model="vet.workday"
                                    type="checkbox"
-                                   value='{"workday":"tuesday"}'>
+                                   value="tuesday">
                             <label class="form-check-label vet-label-input" for="tuesday">Tuesday</label>
                         </div>
 
                         <div class="form-check">
                             <input class="form-check-input workdays" id="wednesday" name="workdays"
-                                   ng-model="vet.workday"
                                    type="checkbox"
-                                   value='{"workday":"wednesday"}'>
+                                   value="wednesday">
                             <label class="form-check-label vet-label-input" for="wednesday">Wednesday</label>
                         </div>
 
                         <div class="form-check">
                             <input class="form-check-input workdays" id="thursday" name="workdays"
-                                   ng-model="vet.workday"
                                    type="checkbox"
-                                   value='{"workday":"thursday"}'>
+                                   value="thursday">
                             <label class="form-check-label vet-label-input" for="thursday">Thursday</label>
                         </div>
 
                         <div class="form-check">
                             <input class="form-check-input workdays" id="friday" name="workdays"
-                                   ng-model="vet.workday"
                                    type="checkbox"
-                                   value='{"workday":"friday"}'>
+                                   value="friday">
                             <label class="form-check-label vet-label-input" for="friday">Friday</label>
                         </div>
 
                         <div class="form-check">
                             <input class="form-check-input workdays" id="saturday" name="workdays"
-                                   ng-model="vet.workday"
                                    type="checkbox"
-                                   value='{"workday":"saturday"}'>
+                                   value="saturday">
                             <label class="form-check-label vet-label-input" for="saturday">Saturday</label>
                         </div>
+
+                        <button onclick="getDays()">Set Days</button>
+
+                        <input type="text" id="workdaysSet" size="50" ng-model="vet.workday" readonly>
 
                     </div>
                 </div>
@@ -231,3 +228,24 @@
         </div>
     </div>
 </div>
+
+<script>
+    function getDays() {
+        var days = document.forms[0];
+        var wrkDys = "";
+        var i;
+        for (i = 0; i < days.length; i++) {
+            if (days[i].checked) {
+                wrkDys = wrkDys + days[i].value + ",";
+            }
+        }
+
+        if(wrkDys.length == 0){
+            wrkDys = "None";
+        }
+        if (wrkDys.charAt(wrkDys.length-1) == ","){
+            wrkDys = wrkDys.substr(0, wrkDys.length-1);
+        }
+        document.getElementById("workdaysSet").value = '{"workday": "' + wrkDys + '"}';
+    }
+</script>
