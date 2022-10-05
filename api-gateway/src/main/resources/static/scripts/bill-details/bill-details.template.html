@@ -4,18 +4,35 @@
     }
 </script>
 
-<h2 class="titleOwner">Bill Details: {{$ctrl.bills.billId}}</h2>
+<div class="bColor">
+<h2>Bill Details: {{$ctrl.bills.billId}}</h2>
+    <br><br>
+</div>
 
-<div>
-    <h3>Payment Info for Bill {{$ctrl.bills.billId}}</h3>
-    <h3>505 Lincoln Str. Queens, New York</h3>
-    <h3>Final price: {{$ctrl.bills.amount}}</h3>
-    <h3>Visit type: {{$ctrl.bills.visitType}}</h3>
-    <h3>Date generated: {{$ctrl.bills.date}}</h3>
-
+<table class="table table-striped">
+    <tr>
+        <th>Payment Info for Bill:</th>
+        <td>{{$ctrl.bills.billId}}</td>
+    </tr>
+    <tr>
+        <th>Address:</th>
+        <td>505 Lincoln Str. Queens, New York</td>
+    </tr>
+    <tr>
+        <th>Final price:</th>
+        <td>{{$ctrl.bills.amount}}</td>
+    </tr>
+    <tr>
+        <th>Visit type:</th>
+        <td>{{$ctrl.bills.visitType}}</td>
+    </tr>
+    <tr>
+        <th>Date generated:</th>
+        <td>{{$ctrl.bills.date}}</td>
+    </tr>
+</table>
+    <br>
     <div>
         <input class="newBtn btn btn-primary" type="button" value="Print this page" onclick="printPage()" />
+        <a class="btn btn-primary" href="http://localhost:8080/#!/bills">Back to History</a>
     </div>
-    <br>
-    <a class="newBtn btn btn-primary" href="http://localhost:8080/#!/bills">Back to History</a>
-</div>
