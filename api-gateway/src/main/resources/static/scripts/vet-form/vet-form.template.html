@@ -184,13 +184,13 @@
 
                         <button onclick="getDays()">Set Days</button>
 
-                        <input type="text" id="workdaysSet" size="50" ng-model="vet.workday" readonly>
+                        <input type="text" id="workdaysSet" size="100" ng-model="vet.workday" readonly>
 
                     </div>
                 </div>
             </div>
 
-            <div class="col-sm-6">
+            <!-- <div class="col-sm-6">
                 <div class="my-3 check-align">
                     <h5 class="mb-3">Available Work Days</h5>
                     <div class="col-sm-12">
@@ -202,7 +202,7 @@
                                type="text">
                     </div>
                 </div>
-            </div>
+            </div> -->
 
 
 
@@ -246,6 +246,6 @@
         if (wrkDys.charAt(wrkDys.length-1) == ","){
             wrkDys = wrkDys.substr(0, wrkDys.length-1);
         }
-        document.getElementById("workdaysSet").value = '{"workday": "' + wrkDys + '"}';
+        document.getElementById("workdaysSet").value = '{"workday":"' + wrkDys + '"}';
     }
 </script>
