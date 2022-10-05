@@ -554,16 +554,16 @@
         <br>
 
         <label for="vetPhoneNumber" style="margin-top: 10px;">Phone Number:</label>
-        <input id="vetPhoneNumber" disabled="disabled" style="background-color: #dbd9ce;"/>
+        <input id="vetPhoneNumber" disabled="disabled" style="background-color: antiquewhite;"/>
 
         <label for="vetEmailAddress">Email Address:</label>
-        <input id="vetEmailAddress" disabled="disabled" style="background-color: #dbd9ce;"/>
+        <input id="vetEmailAddress" disabled="disabled" style="background-color: antiquewhite;"/>
 
         <label for="vetSpecialties">Specialties:</label>
-        <input id="vetSpecialties" disabled="disabled" style="background-color: #dbd9ce;"/>
+        <input id="vetSpecialties" disabled="disabled" style="background-color: antiquewhite;"/>
 
         <label for="vetWorkdays">Workdays:</label>
-        <input id="vetWorkdays" disabled="disabled" style="background-color: #dbd9ce;" onchange=selectChanged() />
+        <input id="vetWorkdays" disabled="disabled" style="background-color: antiquewhite;" onchange=selectChanged() />
     </div>
 
     <div class="form-group" style="margin-top: 12px">
@@ -590,8 +590,8 @@
     </div>
 
     <div class="form-group" style="margin-top: 6px; margin-bottom: 6px">
-        <button id="submit_button" ng-click="$ctrl.showConfirmationModal($event)" class="btn btn-default" type="button" style="border: 1px solid gray; border-radius: 4px">Add New Visit</button>
-        <button id="cancel_button" ng-click="$ctrl.resetForm()" onclick="dateReset()" class="btn btn-default" type="button" style="visibility: hidden; border: 1px solid gray; border-radius: 4px">Cancel</button>
+        <button id="submit_button" ng-click="$ctrl.showConfirmationModal($event)" class="btn btn-default" type="button" style="border: 1px solid green ; border-radius: 4px;background-color: lightgreen; color: white">Add New Visit</button>
+        <button id="cancel_button" ng-click="$ctrl.resetForm()" onclick="dateReset()" class="btn btn-default" type="button" style="visibility: hidden; border: 1px solid darkred; border-radius: 4px; background-color: red; color: white">Cancel</button>
     </div>
 </form>
 
@@ -603,10 +603,10 @@
 <table class="table">
     <thead>
     <tr>
-        <th> <button class="btn btn-default" id="sortByDateButtonUpcomingVisits" ng-click="$ctrl.SortTableByDate(true)" style="color: white">Sort by date ⇅</button> </th>
-        <th> <button class="btn btn-default" id="sortByDescButtonUpcomingVisits" ng-click="$ctrl.SortTableByDesc(true)" style="color: white">Sort by description ⇅</button> </th>
-        <th> <button class="btn btn-default" id="sortByVetButtonUpcomingVisits" ng-click="$ctrl.SortTableByVet(true)" style="color: white">Sort by veterinarian ⇅</button> </th>
-        <th> <button class="btn btn-default" id="sortByStatusButtonUpcomingVisits" ng-click="$ctrl.SortTableByStatus(true)" style="color: white">Sort by status ⇅</button> </th>
+        <th> <button class="btn btn-default" id="sortByDateButtonUpcomingVisits" ng-click="$ctrl.SortTableByDate(true)" style="color: antiquewhite">Sort by date ⇅</button> </th>
+        <th> <button class="btn btn-default" id="sortByDescButtonUpcomingVisits" ng-click="$ctrl.SortTableByDesc(true)" style="color: antiquewhite">Sort by description ⇅</button> </th>
+        <th> <button class="btn btn-default" id="sortByVetButtonUpcomingVisits" ng-click="$ctrl.SortTableByVet(true)" style="color: antiquewhite">Sort by veterinarian ⇅</button> </th>
+        <th> <button class="btn btn-default" id="sortByStatusButtonUpcomingVisits" ng-click="$ctrl.SortTableByStatus(true)" style="color: antiquewhite">Sort by status ⇅</button> </th>
         <th style="text-align:center; vertical-align:middle"> <label>Cancel</label> </th>
         <th style="text-align:center; vertical-align:middle"> <label>Edit</label> </th>
         <th style="text-align:center; vertical-align:middle"> <label>Delete</label> </th>
@@ -629,10 +629,10 @@
 <table class="table">
     <thead>
         <tr>
-            <th> <button class="btn btn-default" id="sortByDateButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByDate(false)" style="color: white">Sort by date ⇅</button> </th>
-            <th> <button class="btn btn-default" id="sortByDescButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByDesc(false)" style="color: white">Sort by description ⇅</button> </th>
-            <th> <button class="btn btn-default" id="sortByVetButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByVet(false)" style="color: white">Sort by veterinarian ⇅</button> </th>
-            <th> <button class="btn btn-default" id="sortByStatusButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByStatus(false)" style="color: white">Sort by status ⇅</button>  </th>
+            <th> <button class="btn btn-default" id="sortByDateButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByDate(false)" style="color: antiquewhite">Sort by date ⇅</button> </th>
+            <th> <button class="btn btn-default" id="sortByDescButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByDesc(false)" style="color: antiquewhite">Sort by description ⇅</button> </th>
+            <th> <button class="btn btn-default" id="sortByVetButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByVet(false)" style="color: antiquewhite">Sort by veterinarian ⇅</button> </th>
+            <th> <button class="btn btn-default" id="sortByStatusButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByStatus(false)" style="color: antiquewhite">Sort by status ⇅</button>  </th>
             <th style="text-align:center; vertical-align:middle"> <label>Edit</label> </th>
             <th style="text-align:center; vertical-align:middle"> <label>Delete</label> </th>
         </tr>

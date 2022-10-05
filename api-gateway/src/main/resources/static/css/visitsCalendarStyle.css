@@ -107,6 +107,7 @@
 .next-date:hover {
     padding-top: 0.3rem !important;
     border: 0.1rem solid #777 !important;
+
 }
 
 .prev-date,
@@ -139,7 +140,7 @@
 
 .date-selected {
     background-color: #d3d3d3;
-    border: 1px solid #5a5a5a;
+    border: 1px solid black;
     padding-top: 0.3rem;
 }
 
@@ -230,7 +231,7 @@
     align-items: center;
 
     transition: background-color 0.2s;
-    border: 0.1rem solid #5b5b5b;
+    border: 0.1rem solid #d3d3d3;
     border-radius: 0.25rem;
 }
 
@@ -242,7 +243,7 @@
 
 .time-selected {
     background-color: #1E9C04 !important;
-    border: 0.1rem solid #5a5a5a;
+    border: 0.1rem solid black;
 }
 
 .confirmation-time {
@@ -256,13 +257,14 @@
 
 .submitBTN {
     font-size: 0.9rem !important;
-    border: 0.1rem solid #5b5b5b;
+    border: 0.1rem solid green;
     text-align: center;
     justify-content: center;
     align-items: center;
     border-radius: 0.5rem;
     padding: 0.5rem 0.9rem;
     cursor: pointer;
+
 }
 
 .time-unavailable {
