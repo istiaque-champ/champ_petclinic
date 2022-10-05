@@ -399,8 +399,39 @@
     const selectChanged = () => {
         vetAvailabilityStr = $('#vetWorkdays').val();
         nameOnCalenderStr = $("#selectedVet :selected").attr("data-target");
-
         renderCalendar();
+    }
+
+    //hide all and only unhide available options
+    const displayOptions = () => {
+        let option = document.getElementById("selectedVisitType").value;
+        //let optionInput = document.getElementById("optionInput");
+
+        switch (option){
+            case("Examinations"):
+                option1 = "general";
+                break;
+
+            case("Injury"):
+                option1 = "radio";
+                break;
+
+            case("Medical"):
+                option1 = "general";
+                break;
+
+            case("Chronic"):
+                option1 = "general";
+                break;
+
+            case("Consultations"):
+                option1 = "general";
+                break;
+
+            case("Operations"):
+                option1 = "radio";
+                break;
+        }
     }
 
     //get value either for PM or AM for the time slots
@@ -520,6 +551,10 @@
     });
 </script>
 
+<script>
+    let option1 = "general";
+</script>
+
 <h2>Visits</h2>
 
 <form id="visitForm" ng-submit="$ctrl.submit()" onsubmit="return false;">
@@ -544,11 +579,27 @@
         </div>
     </div>
 
+    <div class="form-group" style="margin-top: 12px">
+        <label for="selectedVisitType">Visit Type:</label>
+        <select id="selectedVisitType" name="selectedVisitType" ng-model="$ctrl.visitType" onchange=displayOptions()>
+            <option disabled selected value>Please Select A Visit Type</option>
+            <option value="Examinations">Examinations</option>
+            <option value="Injury">Injury</option>
+            <option value="Medical">Medical</option>
+            <option value="Chronic">Chronic</option>
+            <option value="Consultations">Consultations</option>
+            <option value="Operations">Operations</option>
+        </select>
+    </div>
+
+    <br>
+
     <div class="form-group">
         <label for="selectedVet">Practitioner</label>
+        <input type="text" id="optionInput" ng-model="testfilter" value={{option1}}optionInput>
         <select id="selectedVet" ng-model="$ctrl.practitionerId" ng-change="$ctrl.loadVetInfo();$ctrl.getVisitsForPractitionerIdAndMonth()" required>
             <option disabled selected value>Please Select A Veterinarian</option>
-            <option ng-repeat="p in $ctrl.vets" data-target="{{p.firstName}} {{p.lastName}}" value="{{p.vetId}}">{{p.firstName}} {{p.lastName}}</option>
+            <option ng-repeat="p in $ctrl.vets | filter: testfilter " data-target="{{p.firstName}} {{p.lastName}}" value="{{p.vetId}}">{{p.firstName}} {{p.lastName}}</option>
         </select>
 
         <br>
@@ -564,19 +615,6 @@
 
         <label for="vetWorkdays">Workdays:</label>
         <input id="vetWorkdays" disabled="disabled" style="background-color: #dbd9ce;" onchange=selectChanged() />
-    </div>
-
-    <div class="form-group" style="margin-top: 12px">
-        <label for="selectedVisitType">Visit Type:</label>
-        <select id="selectedVisitType" name="selectedVisitType" ng-model="$ctrl.visitType">
-            <option disabled selected value>Please Select A Visit Type</option>
-            <option value="Examinations">Examinations</option>
-            <option value="Injury">Injury</option>
-            <option value="Medical">Medical</option>
-            <option value="Chronic">Chronic</option>
-            <option value="Consultations">Consultations</option>
-            <option value="Operations">Operations</option>
-        </select>
     </div>
 
     <div class="form-group" style="margin-top: 4px">

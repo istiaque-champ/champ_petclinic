@@ -1,5 +1,4 @@
 'use strict';
-
 angular.module('visits')
     .controller('VisitsController', ['$http', '$state', '$stateParams', '$filter', function ($http, $state, $stateParams, $filter) {
         var self = this;
@@ -128,7 +127,6 @@ angular.module('visits')
                     vetEmailAddress = vet.email;
                     vetSpecialtiesObject = vet.specialties;
                     vetWorkdays = vet.workday;
-
                     return false;
                 }
             });
@@ -562,16 +560,16 @@ angular.module('visits')
 
                 if(sortStatusAscendingUpcomingVisits) {
                     self.upcomingVisits.sort(function (a, b) {
-                        a = self.getStatus(a.status).toLowerCase();
-                        b = self.getStatus(b.status).toLowerCase();
+                        a = self.getStatus(a.status, a.date).toLowerCase();
+                        b = self.getStatus(b.status, b.date).toLowerCase();
 
                         return a < b ? -1 : a > b ? 1 : 0;
                     });
                     $('#sortByStatusButtonUpcomingVisits').text("Sort by status ↓")
                 } else {
                     self.upcomingVisits.sort(function (a, b) {
-                        a = self.getStatus(a.status).toLowerCase();
-                        b = self.getStatus(b.status).toLowerCase();
+                        a = self.getStatus(a.status, a.date).toLowerCase();
+                        b = self.getStatus(b.status, b.date).toLowerCase();
 
                         return a > b ? -1 : a < b ? 1 : 0;
                     });
@@ -584,16 +582,16 @@ angular.module('visits')
 
                 if(sortStatusAscendingPreviousVisits) {
                     self.previousVisits.sort(function (a, b) {
-                        a = self.getStatus(a.status).toLowerCase();
-                        b = self.getStatus(b.status).toLowerCase();
+                        a = self.getStatus(a.status, a.date).toLowerCase();
+                        b = self.getStatus(b.status, b.date).toLowerCase();
 
                         return a < b ? -1 : a > b ? 1 : 0;
                     });
                     $('#sortByStatusButtonPreviousVisits').text("Sort by status ↓")
                 } else {
                     self.previousVisits.sort(function (a, b) {
-                        a = self.getStatus(a.status).toLowerCase();
-                        b = self.getStatus(b.status).toLowerCase();
+                        a = self.getStatus(a.status, a.date).toLowerCase();
+                        b = self.getStatus(b.status, b.date).toLowerCase();
 
                         return a > b ? -1 : a < b ? 1 : 0;
                     });
@@ -666,14 +664,21 @@ angular.module('visits')
             });
         };
 
-        self.getStatus = function (status) {
+        self.getStatus = function (status, date) {
             var statusText = "";
+            let currentDate = getCurrentDate();
 
-            if(status === false){
+            if (status === false) {
                 statusText = "Canceled";
             }
-            else{
-                statusText = "Not Canceled";
+            else if (date > currentDate) {
+                statusText = "Scheduled";
+            }
+            else if (date == currentDate) {
+                statusText = "Today";
+            }
+            else if (date < currentDate) {
+                statusText = "Billed";
             }
 
             return statusText;
