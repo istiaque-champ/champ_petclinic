@@ -24,7 +24,7 @@ public class DataSetup implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         List<BillDTO> billDTOS = new ArrayList<>();
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < 10; i++){
             BillDTO setupBill = new BillDTO();
             setupBill.setCustomerId(VALID_CUSTOMER_ID);
             setupBill.setVisitType(VALID_VISIT_TYPE);
