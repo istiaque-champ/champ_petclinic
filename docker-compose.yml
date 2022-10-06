@@ -48,6 +48,7 @@ services:
             - customers
             - vets
             - visits
+            - billing-service
 
     auth-service:
         build: auth-service
@@ -69,8 +70,7 @@ services:
         environment:
             - SPRING_PROFILES_ACTIVE=docker
         depends_on:
-            mysql5:
-                condition: service_healthy
+            - mongo
 
     mailer-service:
         build: mailer-service
@@ -224,3 +224,31 @@ services:
             interval: 10s
             timeout: 5s
             retries: 10
+
+    mongo:
+        image: mongo
+        container_name: mongo
+        restart: always
+        ports:
+            - 27017:27017
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: password
+        healthcheck:
+            test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
+            retries: 5
+            interval: 15s
+            start_period: 30s
+
+    mongo-express:
+        image: mongo-express
+        restart: always
+        environment:
+            - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+            - ME_CONFIG_MONGODB_ADMINPASSWORD=password
+            - ME_CONFIG_MONGODB_SERVER=mongo
+            - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
+        ports:
+            - 8081:8081
+        depends_on:
+            - mongo

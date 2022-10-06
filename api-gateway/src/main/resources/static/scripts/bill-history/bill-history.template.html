@@ -1,29 +1,59 @@
-<h2 class="titleOwner">Bill History</h2>
+<h2>Bill History</h2>
 
-<form>
-    <div>
-        <input type="text" placeholder="Search Filter..." class="form-control" ng-model="$ctrl.query">
+<form onsubmit="void(0)" style="max-width: 20em; margin-top: 2em; margin-bottom: 2em;">
+    <div class="form-group">
+        <input type="text" placeholder="Search Filter..." class="form-control" ng-model="$ctrl.query"/>
     </div>
 </form>
 
-<table class="table table-striped">
+<table id="bill" class="table table-striped">
     <thead>
         <tr>
-            <td>Bill ID</td>
-            <td>Visit Type</td>
-            <td>Amount</td>
-            <td>Date/Time</td>
-            <td>Details</td>
-            <td>Delete</td>
+            <th>Bill ID</th>
+            <th>Owner</th>
+            <th>Visit Type</th>
+            <th>Amount</th>
+            <th>Date/Time</th>
+            <th>Details</th>
+            <th>Delete</th>
         </tr>
     </thead>
 
     <tr id="billId" ng-repeat="bill in $ctrl.billHistory | filter:$ctrl.query track by bill.billId">
-        <td>{{bill.billId}}</td>
+        <td>
+            #{{bill.billId}}
+        </td>
+        <td class="t-id{{bill.billId}}" ng-mouseenter="$ctrl.show($event, bill.billId)"
+            ng-mouseleave="$ctrl.hide($event,bill.billId)">
+            <!-- TODO: Make this more efficient - Pass OBJ to script and pull both values maybe?  -->
+            {{($ctrl.billDetailedData | filter:{"customerId": bill.billId})[0]["ownerInfo"]["data"]["firstName"] }}
+            {{($ctrl.billDetailedData | filter:{"customerId": bill.billId})[0]["ownerInfo"]["data"]["lastName"] }}
+            <!--Hover pop up-->
+            <div class="billModal m{{bill.billId}} modalOff container w-25">
+                <div class="row">
+                    <div class="col-6">
+                        <b>Address:</b>
+                        <br>{{($ctrl.billDetailedData | filter:{"customerId": bill.billId})[0]["ownerInfo"]["data"]["address"]}},
+                        <br>{{($ctrl.billDetailedData | filter:{"customerId": bill.billId})[0]["ownerInfo"]["data"]["city"]}}
+                    </div>
+                    <div class="col-6">
+                        <b>Pets:</b>
+                        <span ng-repeat="pet in ($ctrl.billDetailedData | filter:{'customerId': bill.billId})[0]['ownerInfo']['data']['pets'] track by pet.id">
+                        {{pet.name}}<br>
+                    </span>
+                    </div>
+                </div>
+            </div>
+
+        </td>
         <td>{{bill.visitType}}</td>
         <td>{{bill.amount}}</td>
-        <td>{{bill.date}}</td>
-        <td><a href="http://localhost:8080/#!/bills/details/{{bill.billId}}">Get Details</a></td>
+        <td>{{bill.date | date:'medium'}}</td>
+        <td><a class="newBtn btn btn-default" href="http://localhost:8080/#!/bills/details/{{bill.billId}}">Get Details</a></td>
         <td><a class="btn btn-danger" href="javascript:void(0)" ng-click="deleteBill(bill.billId)">Delete Bill</a></td>
     </tr>
 </table>
+
+<a ui-sref="billHistory">
+    <button class="add-bill-button btn btn-success">Add A Bill</button>
+</a>

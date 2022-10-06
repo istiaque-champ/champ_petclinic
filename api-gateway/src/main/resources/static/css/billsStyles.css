@@ -1,0 +1,7 @@
+.billModal {
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.95) !important;
+    color: white !important;
+    position: absolute;
+    z-index: 100000;
+}

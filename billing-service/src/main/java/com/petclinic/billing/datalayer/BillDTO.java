@@ -1,9 +1,8 @@
 package com.petclinic.billing.datalayer;
 
-import lombok.*;
 import org.springframework.lang.Nullable;
 
-import java.util.Date;
+import java.time.Instant;
 
 
 public class BillDTO {
@@ -11,7 +10,7 @@ public class BillDTO {
     private int billId;
     private int customerId;
     private String visitType;
-    private Date date;
+    private Instant date;
     @Nullable
     private double amount;
 
@@ -25,28 +24,11 @@ public class BillDTO {
     }
 
 
-    public BillDTO(int billId,int customerId, String visitType, Date date, double amount){
-        this.billId = billId;
-        this.customerId = customerId;
-        this.visitType = visitType;
-        this.date = date;
-        this.amount = amount;
-    }
-
-    public BillDTO(int billId,int customerId, Date date, String visitType){
-        this.billId = billId;
-        this.customerId = customerId;
-        this.date = date;
-        this.visitType = visitType;
-    }
-
-
-
     public int getBillId(){
         return billId;
     }
     public int getCustomerId(){return customerId;}
-    public Date getDate(){
+    public Instant getDate(){
         return date;
     }
     public String getVisitType(){
@@ -62,7 +44,7 @@ public class BillDTO {
 
     public void setCustomerId(int customerId){this.customerId = customerId;}
 
-    public void setDate(Date date){
+    public void setDate(Instant date){
         this.date = date;
     }
 
