@@ -1,10 +1,24 @@
 
+<div>
+    <table class="table table-striped">
+        <tr>
+            <th class="stripe-dark">Pet Info</th>
+        </tr>
+        <tr>
+            <td>{{$ctrl.pet.name}}</td>
+        </tr>
+        <tr>
+            <td>{{$ctrl.pet.birthDate}}</td>
+        </tr>
+        <tr>
+            <td>{{$ctrl.pet.type.name}}</td>
+        </tr>
+    </table>
 
-    <form>
-        <input type="text" value="{{$ctrl.pet.name}}">
+    <h3>
+        Add Notes
+    </h3>
+    <textarea class="input"></textarea>
 
-        <input type="text" value="{{$ctrl.pet.birthDate}}">
 
-        <input type="text" value="{{$ctrl.pet.type}}">
-
-    </form>
+</div>
