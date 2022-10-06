@@ -5,7 +5,7 @@ angular.module('petDetails')
         var self = this
 
 
-        $http.get("owners/" + $stateParams.ownerId + " /pets/" + $stateParams.petId).then(function (resp){
+        $http.get("api/gateway/owners/" + $stateParams.ownerId + " /pets/" + $stateParams.petId).then(function (resp){
                 self.pet = resp.data;
         })
 
