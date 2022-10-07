@@ -1,12 +1,14 @@
 package com.petclinic.billing.datalayer;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.Instant;
 
 
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 public class BillDTO {
 
