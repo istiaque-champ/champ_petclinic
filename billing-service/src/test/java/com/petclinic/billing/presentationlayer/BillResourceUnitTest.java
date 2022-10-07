@@ -95,7 +95,7 @@ class BillResourceUnitTest {
 
     @Test
     void getBillByCustomerIdUnitTest() {
-        when(service.GetBillByCustomerId(VALID_CUSTOMER_ID)).thenReturn(Flux.just(VALID_BILL_RESPONSE_MODEL));
+        when(service.GetBillsByCustomerId(VALID_CUSTOMER_ID)).thenReturn(Flux.just(VALID_BILL_RESPONSE_MODEL));
 
         webTestClient.get()
                 .uri(BASE_URI + "/customer/" + VALID_CUSTOMER_ID)
@@ -173,7 +173,7 @@ class BillResourceUnitTest {
     @Test
     void testEmptyCustomerIdUnitTest(){
         int NOT_FOUND_CUSTOMER_ID = 2;
-        when(service.GetBillByCustomerId(NOT_FOUND_CUSTOMER_ID)).thenReturn(Flux.empty());
+        when(service.GetBillsByCustomerId(NOT_FOUND_CUSTOMER_ID)).thenReturn(Flux.empty());
 
         webTestClient.get()
                 .uri(BASE_URI + "/customer/" + NOT_FOUND_CUSTOMER_ID)

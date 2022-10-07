@@ -108,7 +108,7 @@ public class BillServiceImplTest {
     }
     @Test
     public void test_GetBillByCustomerId(){
-        billService.GetBillByCustomerId(VALID_CUSTOMER_ID)
+        billService.GetBillsByCustomerId(VALID_CUSTOMER_ID)
                 .map(billDTO -> {
                     assertEquals(billDTO.getBillId(), VALID_BILL_ID);
                     assertEquals(billDTO.getCustomerId(), VALID_CUSTOMER_ID);
