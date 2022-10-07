@@ -161,5 +161,19 @@ public class BillServiceImplTest {
                     return billDTO;
                 });
     }
+
+    @Test
+    void test_GetBillByVetId(){
+        billService.GetBillsByVetId(VALID_VET_ID)
+                .map(billDTO -> {
+                    assertEquals(billDTO.getBillId(), VALID_BILL_ID);
+                    assertEquals(billDTO.getCustomerId(), VALID_CUSTOMER_ID);
+                    assertEquals(billDTO.getVisitType(), VALID_VISIT_TYPE);
+                    assertEquals(billDTO.getDate(), VALID_DATE);
+                    assertEquals(billDTO.getAmount(), VALID_AMOUNT);
+                    assertEquals(billDTO.getVetId(), VALID_VET_ID);
+                    return billDTO;
+                });
+    }
 }
 
