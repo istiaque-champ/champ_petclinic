@@ -50,12 +50,7 @@ public class BillResourceIntegrationTest {
 
     @Test
     void testGetByIdIntegration() {
-        Bill setupBill = new Bill();
-        setupBill.setBillId(VALID_BILL_ID);
-        setupBill.setCustomerId(VALID_CUSTOMER_ID);
-        setupBill.setVisitType(VALID_VISIT_TYPE);
-        setupBill.setDate(VALID_DATE);
-        setupBill.setAmount(VALID_AMOUNT);
+        Bill setupBill = getSetupBill();
 
         Publisher<Bill> setup = billRepository.deleteAll().thenMany(billRepository.save(setupBill));
 
@@ -80,12 +75,7 @@ public class BillResourceIntegrationTest {
 
     @Test
     void testGetAllIntegration(){
-        Bill setupBill = new Bill();
-        setupBill.setBillId(VALID_BILL_ID);
-        setupBill.setCustomerId(VALID_CUSTOMER_ID);
-        setupBill.setVisitType(VALID_VISIT_TYPE);
-        setupBill.setDate(VALID_DATE);
-        setupBill.setAmount(VALID_AMOUNT);
+        Bill setupBill = getSetupBill();
 
         Publisher<Bill> setup = billRepository.deleteAll().thenMany(billRepository.save(setupBill));
 
@@ -135,12 +125,7 @@ public class BillResourceIntegrationTest {
 
     @Test
     void testUpdateIntegration(){
-        Bill setupBill = new Bill();
-        setupBill.setBillId(VALID_BILL_ID);
-        setupBill.setCustomerId(VALID_CUSTOMER_ID);
-        setupBill.setVisitType(VALID_VISIT_TYPE);
-        setupBill.setDate(VALID_DATE);
-        setupBill.setAmount(VALID_AMOUNT);
+        Bill setupBill = getSetupBill();
 
         Publisher<Bill> setup = billRepository.deleteAll().thenMany(billRepository.save(setupBill));
 
@@ -166,12 +151,7 @@ public class BillResourceIntegrationTest {
 
     @Test
     void testGetByCustomerIdIntegration(){
-        Bill setupBill = new Bill();
-        setupBill.setBillId(VALID_BILL_ID);
-        setupBill.setCustomerId(VALID_CUSTOMER_ID);
-        setupBill.setVisitType(VALID_VISIT_TYPE);
-        setupBill.setDate(VALID_DATE);
-        setupBill.setAmount(VALID_AMOUNT);
+        Bill setupBill = getSetupBill();
 
         Publisher<Bill> setup = billRepository.deleteAll().thenMany(billRepository.save(setupBill));
 
@@ -196,12 +176,7 @@ public class BillResourceIntegrationTest {
 
     @Test
     void testDeleteIntegration(){
-        Bill setupBill = new Bill();
-        setupBill.setBillId(VALID_BILL_ID);
-        setupBill.setCustomerId(VALID_CUSTOMER_ID);
-        setupBill.setVisitType(VALID_VISIT_TYPE);
-        setupBill.setDate(VALID_DATE);
-        setupBill.setAmount(VALID_AMOUNT);
+        Bill setupBill = getSetupBill();
 
         Publisher<Bill> setup = billRepository.deleteAll().thenMany(billRepository.save(setupBill));
 
@@ -311,12 +286,7 @@ public class BillResourceIntegrationTest {
 
     @Test
     void testUpdateInvalidCustomerIdIntegration(){
-        Bill setupBill = new Bill();
-        setupBill.setBillId(VALID_BILL_ID);
-        setupBill.setCustomerId(VALID_CUSTOMER_ID);
-        setupBill.setVisitType(VALID_VISIT_TYPE);
-        setupBill.setDate(VALID_DATE);
-        setupBill.setAmount(VALID_AMOUNT);
+        Bill setupBill = getSetupBill();
 
         Publisher<Bill> setup = billRepository.deleteAll().thenMany(billRepository.save(setupBill));
 
@@ -337,12 +307,7 @@ public class BillResourceIntegrationTest {
 
     @Test
     void testUpdateInvalidVisitTypeIntegration(){
-        Bill setupBill = new Bill();
-        setupBill.setBillId(VALID_BILL_ID);
-        setupBill.setCustomerId(VALID_CUSTOMER_ID);
-        setupBill.setVisitType(VALID_VISIT_TYPE);
-        setupBill.setDate(VALID_DATE);
-        setupBill.setAmount(VALID_AMOUNT);
+        Bill setupBill = getSetupBill();
 
         Publisher<Bill> setup = billRepository.deleteAll().thenMany(billRepository.save(setupBill));
 
@@ -363,12 +328,7 @@ public class BillResourceIntegrationTest {
 
     @Test
     void getBillIdInvalidBillIdIntegration(){
-        Bill setupBill = new Bill();
-        setupBill.setBillId(VALID_BILL_ID);
-        setupBill.setCustomerId(VALID_CUSTOMER_ID);
-        setupBill.setVisitType(VALID_VISIT_TYPE);
-        setupBill.setDate(VALID_DATE);
-        setupBill.setAmount(VALID_AMOUNT);
+        Bill setupBill = getSetupBill();
 
         Publisher<Bill> setup = billRepository.deleteAll().thenMany(billRepository.save(setupBill));
 
@@ -388,12 +348,7 @@ public class BillResourceIntegrationTest {
 
     @Test
     void getBillsByInvalidCustomerIdIntegration(){
-        Bill setupBill = new Bill();
-        setupBill.setBillId(VALID_BILL_ID);
-        setupBill.setCustomerId(VALID_CUSTOMER_ID);
-        setupBill.setVisitType(VALID_VISIT_TYPE);
-        setupBill.setDate(VALID_DATE);
-        setupBill.setAmount(VALID_AMOUNT);
+        Bill setupBill = getSetupBill();
 
         Publisher<Bill> setup = billRepository.deleteAll().thenMany(billRepository.save(setupBill));
 
@@ -413,12 +368,7 @@ public class BillResourceIntegrationTest {
 
     @Test
     void updateBillInvalidBillIdIntegration(){
-        Bill setupBill = new Bill();
-        setupBill.setBillId(VALID_BILL_ID);
-        setupBill.setCustomerId(VALID_CUSTOMER_ID);
-        setupBill.setVisitType(VALID_VISIT_TYPE);
-        setupBill.setDate(VALID_DATE);
-        setupBill.setAmount(VALID_AMOUNT);
+        Bill setupBill = getSetupBill();
 
         Publisher<Bill> setup = billRepository.deleteAll().thenMany(billRepository.save(setupBill));
 
@@ -439,12 +389,7 @@ public class BillResourceIntegrationTest {
 
     @Test
     void deleteBillByInvalidBillIdIntegration(){
-        Bill setupBill = new Bill();
-        setupBill.setBillId(VALID_BILL_ID);
-        setupBill.setCustomerId(VALID_CUSTOMER_ID);
-        setupBill.setVisitType(VALID_VISIT_TYPE);
-        setupBill.setDate(VALID_DATE);
-        setupBill.setAmount(VALID_AMOUNT);
+        Bill setupBill = getSetupBill();
 
         Publisher<Bill> setup = billRepository.deleteAll().thenMany(billRepository.save(setupBill));
 
@@ -516,5 +461,16 @@ public class BillResourceIntegrationTest {
         billDTO.setDate(VALID_DATE);
 
         return billDTO;
+    }
+
+    private Bill getSetupBill() {
+        Bill setupBill = new Bill();
+        setupBill.setBillId(VALID_BILL_ID);
+        setupBill.setCustomerId(VALID_CUSTOMER_ID);
+        setupBill.setVisitType(VALID_VISIT_TYPE);
+        setupBill.setDate(VALID_DATE);
+        setupBill.setAmount(VALID_AMOUNT);
+        setupBill.setVetId(VALID_VET_ID);
+        return setupBill;
     }
 }
