@@ -1,8 +1,6 @@
 package com.petclinic.bffapigateway.domainclientlayer;
 
 import com.petclinic.bffapigateway.dtos.BillDetails;
-import com.petclinic.bffapigateway.dtos.OwnerDetails;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -15,7 +13,7 @@ import reactor.core.publisher.Mono;
 public class BillServiceClient {
 
     private final WebClient.Builder webClientBuilder;
-    private String billServiceUrl;
+    private final String billServiceUrl;
 
 
     public BillServiceClient(
@@ -49,6 +47,13 @@ public class BillServiceClient {
                 .body(Mono.just(model),BillDetails.class)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve().bodyToMono(BillDetails.class);
+    }
+
+    public Flux<BillDetails> getBillsByVetId(final int vetId){
+        return webClientBuilder.build().get()
+                .uri(billServiceUrl + "/vets/" + vetId)
+                .retrieve()
+                .bodyToFlux(BillDetails.class);
     }
 
     public Mono<Void> deleteBill(final int billId) {
