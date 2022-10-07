@@ -62,7 +62,8 @@ class BillResourceUnitTest {
                 .jsonPath("$.billId").isEqualTo(VALID_BILL_ID)
                 .jsonPath("$.customerId").isEqualTo(VALID_CUSTOMER_ID)
                 .jsonPath("$.visitType").isEqualTo(VALID_VISIT_TYPE)
-                .jsonPath("$.amount").isEqualTo(VALID_AMOUNT);
+                .jsonPath("$.amount").isEqualTo(VALID_AMOUNT)
+                .jsonPath("$.vetId").isEqualTo(VALID_VET_ID);
     }
 
     @Test
@@ -91,7 +92,8 @@ class BillResourceUnitTest {
                 .jsonPath("$.billId").isEqualTo(VALID_BILL_ID)
                 .jsonPath("$.customerId").isEqualTo(VALID_CUSTOMER_ID)
                 .jsonPath("$.visitType").isEqualTo(VALID_VISIT_TYPE)
-                .jsonPath("$.amount").isEqualTo(VALID_AMOUNT);
+                .jsonPath("$.amount").isEqualTo(VALID_AMOUNT)
+                .jsonPath("$.vetId").isEqualTo(VALID_VET_ID);
     }
 
     @Test
@@ -108,7 +110,8 @@ class BillResourceUnitTest {
                 .jsonPath("$[0].billId").isEqualTo(VALID_BILL_ID)
                 .jsonPath("$[0].customerId").isEqualTo(VALID_CUSTOMER_ID)
                 .jsonPath("$[0].visitType").isEqualTo(VALID_VISIT_TYPE)
-                .jsonPath("$[0].amount").isEqualTo(VALID_AMOUNT);
+                .jsonPath("$[0].amount").isEqualTo(VALID_AMOUNT)
+                .jsonPath("$.vetId").isEqualTo(VALID_VET_ID);
     }
 
     @Test
@@ -126,7 +129,8 @@ class BillResourceUnitTest {
                 .jsonPath("$.billId").isEqualTo(VALID_BILL_ID)
                 .jsonPath("$.customerId").isEqualTo(VALID_CUSTOMER_ID)
                 .jsonPath("$.visitType").isEqualTo(VALID_VISIT_TYPE)
-                .jsonPath("$.amount").isEqualTo(VALID_AMOUNT);
+                .jsonPath("$.amount").isEqualTo(VALID_AMOUNT)
+                .jsonPath("$.vetId").isEqualTo(VALID_VET_ID);
     }
 
     @Test
@@ -143,7 +147,8 @@ class BillResourceUnitTest {
                 .jsonPath("$[0].billId").isEqualTo(VALID_BILL_ID)
                 .jsonPath("$[0].customerId").isEqualTo(VALID_CUSTOMER_ID)
                 .jsonPath("$[0].visitType").isEqualTo(VALID_VISIT_TYPE)
-                .jsonPath("$[0].amount").isEqualTo(VALID_AMOUNT);
+                .jsonPath("$[0].amount").isEqualTo(VALID_AMOUNT)
+                .jsonPath("$[0].vetId").isEqualTo(VALID_VET_ID);
     }
 
     @Test
