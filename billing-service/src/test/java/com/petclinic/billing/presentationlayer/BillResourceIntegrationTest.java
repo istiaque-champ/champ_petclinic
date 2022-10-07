@@ -175,6 +175,31 @@ public class BillResourceIntegrationTest {
     }
 
     @Test
+    void testGetByVetIdIntegration(){
+        Bill setupBill = getSetupBill();
+
+        Publisher<Bill> setup = billRepository.deleteAll().thenMany(billRepository.save(setupBill));
+
+        StepVerifier
+                .create(setup)
+                .expectNextCount(1)
+                .verifyComplete();
+
+        webTestClient.get()
+                .uri(BASE_URI + "/vets/" + VALID_VET_ID)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody()
+                .jsonPath("$[0].billId").isEqualTo(VALID_BILL_ID)
+                .jsonPath("$[0].customerId").isEqualTo(VALID_CUSTOMER_ID)
+                .jsonPath("$[0].visitType").isEqualTo(VALID_VISIT_TYPE)
+                .jsonPath("$[0].amount").isEqualTo(VALID_AMOUNT)
+                .jsonPath("$[0].vetId").isEqualTo(VALID_VET_ID);
+    }
+
+    @Test
     void testDeleteIntegration(){
         Bill setupBill = getSetupBill();
 
