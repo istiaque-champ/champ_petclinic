@@ -23,6 +23,8 @@ public class PetRequest {
     @Size(min = 1)
     private String name;
 
+    private String petNotes;
+
     private PetType type;
 
     //USED FOR TESTING PURPOSE
