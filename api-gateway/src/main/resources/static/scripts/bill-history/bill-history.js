@@ -13,4 +13,9 @@ angular.module('billHistory', ['ui.router'])
                 url: '/bills/:billId/deleteBill',
                 template: '<bill-history></bill-history>'
             })
+            .state('billsByVet', {
+                parent: 'app',
+                url: '/bills/vets/:vetId',
+                template: '<bill-history></bill-history>'
+            })
     }]);
