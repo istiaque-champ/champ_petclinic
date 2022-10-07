@@ -282,6 +282,18 @@ class BillResourceUnitTest {
     }
 
     @Test
+    void getBillsByInvalidVetIdUnit(){
+        int INVALID_VET_ID = -1;
+        webTestClient.get()
+                .uri(BASE_URI + "/vets/" + INVALID_VET_ID)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
+                .expectBody()
+                .jsonPath("$.message").isEqualTo("That id is invalid");
+    }
+
+    @Test
     void updateBillInvalidBillIdUnit(){
 
         webTestClient.put()
