@@ -5,9 +5,16 @@ angular.module('billHistory')
     .controller('BillHistoryController', ['$http', '$scope', function ($http, $scope) {
         var self = this;
 
+        const url = window.location.href;
+
+        let requestUrl = "api/gateway/bills";
+
+        if(url.includes("/vets/")){
+            requestUrl += "/vets/" + url.substring(url.lastIndexOf("/") + 1);
+        }
         //############ API ############
         //get all bills
-        $http.get('api/gateway/bills').then(async (resp) => {
+        $http.get(requestUrl).then(async (resp) => {
             self.billHistory = resp.data;
 
             let billDetailedData = [];
