@@ -39,6 +39,7 @@ class BillResourceUnitTest {
     private final String VALID_VISIT_TYPE = "Examinations";
     private final Instant VALID_DATE = Instant.now();
     private final Double VALID_AMOUNT = BillServiceImpl.visitTypePrices.get(VALID_VISIT_TYPE);
+    private final Integer VALID_VET_ID = 1;
 
     private final Integer NOT_FOUND_BILL_ID = 2;
 
@@ -276,6 +277,7 @@ class BillResourceUnitTest {
         billDTO.setVisitType(VALID_VISIT_TYPE);
         billDTO.setAmount(VALID_AMOUNT);
         billDTO.setDate(VALID_DATE);
+        billDTO.setVetId(VALID_VET_ID);
 
         return billDTO;
     }
@@ -287,6 +289,7 @@ class BillResourceUnitTest {
         billDTO.setVisitType(VALID_VISIT_TYPE);
         billDTO.setAmount(VALID_AMOUNT);
         billDTO.setDate(VALID_DATE);
+        billDTO.setVetId(VALID_VET_ID);
 
         return billDTO;
     }
