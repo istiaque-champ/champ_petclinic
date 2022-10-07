@@ -371,6 +371,27 @@ public class BillResourceIntegrationTest {
     }
 
     @Test
+    void testUpdateInvalidVetIdIntegration(){
+        Bill setupBill = getSetupBill();
+
+        Publisher<Bill> setup = billRepository.deleteAll().thenMany(billRepository.save(setupBill));
+
+        StepVerifier
+                .create(setup)
+                .expectNextCount(1)
+                .verifyComplete();
+
+        webTestClient.put()
+                .uri(BASE_URI + "/" + VALID_BILL_ID)
+                .body(Mono.just(INVALID_VET_ID_REQUEST_MODEL), BillDTO.class)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
+                .expectBody()
+                .jsonPath("$.message").isEqualTo("That vet id is invalid");
+    }
+
+    @Test
     void getBillIdInvalidBillIdIntegration(){
         Bill setupBill = getSetupBill();
 
