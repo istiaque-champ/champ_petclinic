@@ -55,13 +55,6 @@ public class BillServiceImplTest {
         when(billRepository.findBillsByCustomerId(VALID_CUSTOMER_ID)).thenReturn(Flux.just(setupBill));
         when(billRepository.findAll()).thenReturn(Flux.just(setupBill));
         when(billRepository.findBillsByVetId(VALID_VET_ID)).thenReturn(Flux.just(setupBill));
-
-        int INVALID_BILL_ID = 2;
-        when(billRepository.findBillByBillId(INVALID_BILL_ID)).thenReturn(Mono.empty());
-        int INVALID_CUSTOMER_ID = 2;
-        when(billRepository.findBillsByCustomerId(INVALID_CUSTOMER_ID)).thenReturn(Flux.empty());
-        int INVALID_VET_ID = 2;
-        when(billRepository.findBillsByVetId(INVALID_VET_ID)).thenReturn(Flux.empty());
     }
 
     @Test
