@@ -54,11 +54,11 @@ public class BillResource {
     }
 
     @GetMapping(value = "/customer/{customerId}")
-    public Flux<BillDTO> getBillsByCustomerId(@PathVariable("customerId") int customerId) {return SERVICE.GetBillByCustomerId( EntityDTOUtil.verifyId(customerId));}
+    public Flux<BillDTO> getBillsByCustomerId(@PathVariable("customerId") int customerId) {return SERVICE.GetBillsByCustomerId( EntityDTOUtil.verifyId(customerId));}
 
     @GetMapping(value = "/vets/{vetId}")
     public Flux<BillDTO> getBillsByVetId(@PathVariable int vetId){
-        return SERVICE.GetBillByCustomerId(EntityDTOUtil.verifyId(vetId));
+        return SERVICE.GetBillsByCustomerId(EntityDTOUtil.verifyId(vetId));
     }
     // Delete Bill //
     @DeleteMapping(value = "{billId}")
