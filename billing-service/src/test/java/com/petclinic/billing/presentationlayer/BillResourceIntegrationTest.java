@@ -30,6 +30,7 @@ public class BillResourceIntegrationTest {
 
     private final Integer VALID_BILL_ID = 1;
     private final Integer VALID_CUSTOMER_ID = 1;
+    private final Integer VALID_VET_ID = 1;
     private final String VALID_VISIT_TYPE = "Examinations";
     private final Instant VALID_DATE = Instant.now();
     private final Double VALID_AMOUNT = BillServiceImpl.visitTypePrices.get(VALID_VISIT_TYPE);
@@ -39,10 +40,13 @@ public class BillResourceIntegrationTest {
 
     private final Integer INVALID_BILL_ID = -1;
     private final Integer INVALID_CUSTOMER_ID = -1;
+
+    private final Integer INVALID_VET_ID = -1;
     private final BillDTO VALID_BILL_REQUEST_MODEL = buildBillDTORequestModel();
     private final BillDTO SECOND_VALID_BILL_REQUEST_MODEL = buildBillDTORequestModel2();
     private final BillDTO INVALID_CUSTOMER_ID_REQUEST_MODEL = buildInvalidCustomerIdBillDTO();
     private final BillDTO INVALID_VISIT_TYPE_REQUEST_MODEL = buildInvalidVisitTypeBillDTO();
+    private final BillDTO INVALID_VET_ID_REQUEST_MODEL = buildInvalidVetIdBillDTO();
 
     @Test
     void testGetByIdIntegration() {
@@ -457,6 +461,7 @@ public class BillResourceIntegrationTest {
         BillDTO billDTO = new BillDTO();
 
         billDTO.setCustomerId(VALID_CUSTOMER_ID);
+        billDTO.setVetId(VALID_VET_ID);
         billDTO.setVisitType(VALID_VISIT_TYPE);
         billDTO.setDate(VALID_DATE);
 
@@ -467,6 +472,7 @@ public class BillResourceIntegrationTest {
         BillDTO billDTO = new BillDTO();
 
         billDTO.setCustomerId(VALID_CUSTOMER_ID);
+        billDTO.setVetId(VALID_VET_ID);
         billDTO.setVisitType(SECOND_VALID_VISIT_TYPE);
         billDTO.setDate(VALID_DATE);
 
@@ -477,6 +483,7 @@ public class BillResourceIntegrationTest {
         BillDTO billDTO = new BillDTO();
 
         billDTO.setCustomerId(INVALID_CUSTOMER_ID);
+        billDTO.setVetId(VALID_VET_ID);
         billDTO.setVisitType(SECOND_VALID_VISIT_TYPE);
         billDTO.setDate(VALID_DATE);
 
@@ -487,8 +494,20 @@ public class BillResourceIntegrationTest {
         BillDTO billDTO = new BillDTO();
 
         billDTO.setCustomerId(VALID_CUSTOMER_ID);
+        billDTO.setVetId(VALID_VET_ID);
         String INVALID_VISIT_TYPE = "Random";
         billDTO.setVisitType(INVALID_VISIT_TYPE);
+        billDTO.setDate(VALID_DATE);
+
+        return billDTO;
+    }
+
+    BillDTO buildInvalidVetIdBillDTO(){
+        BillDTO billDTO = new BillDTO();
+
+        billDTO.setCustomerId(VALID_CUSTOMER_ID);
+        billDTO.setVetId(INVALID_VET_ID);
+        billDTO.setVisitType(SECOND_VALID_VISIT_TYPE);
         billDTO.setDate(VALID_DATE);
 
         return billDTO;
