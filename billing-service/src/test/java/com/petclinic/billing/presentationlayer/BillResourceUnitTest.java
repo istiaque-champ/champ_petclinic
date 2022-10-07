@@ -209,6 +209,20 @@ class BillResourceUnitTest {
     }
 
     @Test
+    void testEmptyVetIdUnitTest(){
+        int NOT_FOUND_VET_ID = 2;
+        when(service.GetBillsByCustomerId(NOT_FOUND_VET_ID)).thenReturn(Flux.empty());
+
+        webTestClient.get()
+                .uri(BASE_URI + "/vets/" + NOT_FOUND_VET_ID)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$[0]").doesNotExist();
+    }
+
+    @Test
     void testUpdateNotFoundUnitTest() {
         when(service.UpdateBill(any(Mono.class), anyInt())).thenReturn(Mono.empty());
 
