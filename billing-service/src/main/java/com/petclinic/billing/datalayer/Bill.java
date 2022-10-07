@@ -1,7 +1,8 @@
 package com.petclinic.billing.datalayer;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,7 +10,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.Instant;
 
 @Document(collection = "bills")
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 public class Bill {
     @Id
