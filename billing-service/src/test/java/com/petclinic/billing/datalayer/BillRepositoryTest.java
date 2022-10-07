@@ -67,6 +67,7 @@ class BillRepositoryTest {
                     assertEquals(bill.getVisitType(), setupBill.getVisitType());
                     assertNotNull(bill.getDate());
                     assertEquals(bill.getAmount(), setupBill.getAmount());
+                    assertEquals(bill.getVetId(), setupBill.getVetId());
                 })
                 .verifyComplete();
     }
@@ -86,6 +87,7 @@ class BillRepositoryTest {
                     assertEquals(bill.getVisitType(), setupBill.getVisitType());
                     assertNotNull(bill.getDate());
                     assertEquals(bill.getAmount(), setupBill.getAmount());
+                    assertEquals(bill.getVetId(), setupBill.getVetId());
                 })
                 .verifyComplete();
     }
@@ -116,6 +118,7 @@ class BillRepositoryTest {
                     assertEquals(bill.getVisitType(), setupBill.getVisitType());
                     assertNotNull(bill.getDate());
                     assertEquals(bill.getAmount(), setupBill.getAmount());
+                    assertEquals(bill.getVetId(), setupBill.getVetId());
                 })
                 .verifyComplete();
     }
@@ -145,6 +148,7 @@ class BillRepositoryTest {
                     assertEquals(bill.getVisitType(), setupBill.getVisitType());
                     assertNotNull(bill.getDate());
                     assertEquals(bill.getAmount(), setupBill.getAmount());
+                    assertEquals(bill.getVetId(), setupBill.getVetId());
                 })
                 .verifyComplete();
     }
@@ -232,6 +236,7 @@ class BillRepositoryTest {
                     assertEquals(bill.getVisitType(), setupBill.getVisitType());
                     assertNotNull(bill.getDate());
                     assertEquals(bill.getAmount(), SECOND_VALID_AMOUNT);
+                    assertEquals(bill.getVetId(), setupBill.getVetId());
                 })
                 .verifyComplete();
     }
