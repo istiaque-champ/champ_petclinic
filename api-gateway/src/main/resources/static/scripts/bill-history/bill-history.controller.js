@@ -7,7 +7,7 @@ angular.module('billHistory')
 
         const url = window.location.href;
 
-        let requestUrl = "api/gateway/bills" + url.match(/\/bills(.*)/)[1];
+        let requestUrl = "api/gateway" + url.match(/\/#!(.*)/)[1];
         //############ API ############
         //get all bills
         $http.get(requestUrl).then(async (resp) => {
