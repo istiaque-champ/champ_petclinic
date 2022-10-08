@@ -2,12 +2,16 @@
 
 
 angular.module('billHistory')
-    .controller('BillHistoryController', ['$http', '$scope', function ($http, $scope) {
+    .controller('BillHistoryController', ['$http', '$scope', '$stateParams', function ($http, $scope, $stateParams) {
         var self = this;
 
-        const url = window.location.href;
+        let requestUrl = "api/gateway/bills/";
 
-        let requestUrl = "api/gateway" + url.match(/\/#!(.*)/)[1];
+        if($stateParams.filterId != null ){
+            requestUrl += $stateParams.filterType + "/" + $stateParams.filterId;
+        }
+
+        console.log(requestUrl);
         //############ API ############
         //get all bills
         $http.get(requestUrl).then(async (resp) => {
@@ -64,8 +68,6 @@ angular.module('billHistory')
 
             child.classList.remove("modalOff");
             child.classList.add("modalOn");
-
-            let width = child.offsetWidth;
 
             child.style.top = `${top}px`;
             // child.style.left = `${right + width}px`;

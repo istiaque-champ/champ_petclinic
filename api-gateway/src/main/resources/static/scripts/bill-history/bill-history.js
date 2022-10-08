@@ -13,9 +13,10 @@ angular.module('billHistory', ['ui.router'])
                 url: '/bills/:billId/deleteBill',
                 template: '<bill-history></bill-history>'
             })
-            .state('billsByVet', {
+            .state('billsByFilter', {
                 parent: 'app',
-                url: '/bills/vets/:vetId',
+                url: '/bills/:filterType/:filterId',
+                params: {filterType: null, filterId: null},
                 template: '<bill-history></bill-history>'
             })
     }]);
