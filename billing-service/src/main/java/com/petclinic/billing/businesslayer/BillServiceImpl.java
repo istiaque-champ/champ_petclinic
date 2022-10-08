@@ -85,4 +85,10 @@ public class BillServiceImpl implements BillService{
         return billRepository.findBillsByVetId(vetId)
                 .map(EntityDTOUtil::entityToDTO);
     }
+
+    @Override
+    public Flux<BillDTO> GetBillsByPetId(int petId) {
+        return billRepository.findBillsByPetId(petId)
+                .map(EntityDTOUtil::entityToDTO);
+    }
 }
