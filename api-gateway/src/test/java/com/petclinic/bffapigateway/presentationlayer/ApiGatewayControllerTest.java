@@ -353,6 +353,49 @@ class ApiGatewayControllerTest {
     }
 
     @Test
+    void shouldCreateThenUpdatePetNotes(){
+        OwnerDetails od = new OwnerDetails();
+        od.setId(1);
+
+        final String VALID_NOTES = "Test Notes";
+
+        PetDetails pet = new PetDetails();
+        PetType type = new PetType();
+        type.setName("Dog");
+        pet.setId(30);
+        pet.setNotes(VALID_NOTES);
+        pet.setName("Fluffy");
+        pet.setBirthDate("2000-01-01");
+        pet.setType(type);
+
+        when(customersServiceClient.createPet(pet,od.getId()))
+
+                .thenReturn(Mono.just(pet));
+
+        client.post()
+                .uri("/api/gateway/owners/{ownerId}/pets", od.getId())
+                .body(Mono.just(pet), PetDetails.class)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody()
+                .jsonPath("$.name").isEqualTo(pet.getName());
+
+        pet.setNotes("Update Notes");
+        client.put()
+                .uri("/api/gateway/owners/{ownerId}/pets/{petId}", od.getId(), pet.getId())
+                .body(Mono.just(pet), PetDetails.class)
+                .accept(APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(APPLICATION_JSON)
+                .expectBody();
+
+
+    }
+
+    @Test
     void shouldThrowNotFoundWhenOwnerIdIsNotSpecifiedOnDeletePets(){
         OwnerDetails od = new OwnerDetails();
         od.setId(1);
