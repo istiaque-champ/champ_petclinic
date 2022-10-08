@@ -22,6 +22,8 @@ public class Bill {
 
     private Integer customerId;
 
+    private Integer petId;
+
     private Integer vetId;
 
     private String visitType;
