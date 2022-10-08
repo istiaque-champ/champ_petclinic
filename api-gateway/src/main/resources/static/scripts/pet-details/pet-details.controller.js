@@ -7,11 +7,12 @@ angular.module('petDetails')
 
         $http.get("api/gateway/owners/" + $stateParams.ownerId + "/pets/" + $stateParams.petId).then(function (resp){
                 self.pet = resp.data;
+
         })
 
         self.submitPetDetailsForm = function (){
 
-            self.pet.notes = "Test"
+
             var uri = "api/gateway/owners/" + $stateParams.ownerId + "/pets/" + $stateParams.petId
             $http.put(uri, self.pet)
 
