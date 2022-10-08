@@ -20,7 +20,7 @@
     </thead>
 
     <tr id="billId" ng-repeat="bill in $ctrl.billHistory | filter:$ctrl.query track by bill.billId">
-        <td>
+        <td id="BillIdColumn">
             #{{bill.billId}}
         </td>
         <td class="t-id{{bill.billId}}" ng-mouseenter="$ctrl.show($event, bill.billId)"
