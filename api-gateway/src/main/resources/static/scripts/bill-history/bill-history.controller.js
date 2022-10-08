@@ -11,7 +11,7 @@ angular.module('billHistory')
             requestUrl += $stateParams.filterType + "/" + $stateParams.filterId;
         }
 
-        console.log(requestUrl);
+        //console.log(requestUrl);
         //############ API ############
         //get all bills
         $http.get(requestUrl).then(async (resp) => {
@@ -42,7 +42,7 @@ angular.module('billHistory')
                 function successCallback(response) {
                     $scope.errors = [];
                     alert(billId + " bill was deleted successfully");
-                    console.log(response, 'res');
+                    //console.log(response, 'res');
                     //refresh list
                     $http.get('api/gateway/bills').then(function (resp) {
                         self.billHistory = resp.data;
