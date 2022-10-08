@@ -61,7 +61,7 @@ public class PetServiceImpl implements PetService {
             foundPet.setName(newPet.getName());
             foundPet.setBirthDate(newPet.getBirthDate());
             foundPet.setType(newPet.getType());
-            foundPet.setNotes(newPet.getPetNotes());
+            foundPet.setNotes(newPet.getNotes());
             LOG.debug("updatePet: Pet with id {} updated",id);
             return petRepository.save(foundPet);
         }
@@ -89,6 +89,7 @@ public class PetServiceImpl implements PetService {
             pet.setName(petRequest.getName());
             pet.setBirthDate(petRequest.getBirthDate());
             pet.setType(petRequest.getType());
+            pet.setNotes(petRequest.getNotes());
             LOG.debug("New pet has been saved! The pet name is: " + pet.getName());
             return petRepository.save(pet);
         }
