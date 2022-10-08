@@ -1,24 +1,27 @@
 
 <div>
+
     <table class="table table-striped">
         <tr>
             <th class="bg-success white">Pet Info</th>
         </tr>
         <tr>
-            <td><input type="text" value="{{$ctrl.pet.name}}"></td>
+            <td><input id="petName" type="text" value="{{$ctrl.pet.name}}"></td>
         </tr>
         <tr>
-            <td><input type="text" value="{{$ctrl.pet.birthDate}}"></td>
+            <td><input id="petBDay" type="text" value="{{$ctrl.pet.birthDate}}"></td>
         </tr>
         <tr>
-            <td><input type="text" value="{{$ctrl.pet.type.name}}"></td>
+            <td><input id="petTypeName" type="text" value="{{$ctrl.pet.type.name}}"></td>
         </tr>
     </table>
 
     <h3>
         Add Notes
     </h3>
-    <textarea id="notesTA" class="form-control" cols="50" >{{$ctrl.pet.notes}}</textarea>
+    <textarea id="notesTA" class="form-control" cols="50" ng-model="petNotes">{{$ctrl.pet.notes}}</textarea>
 
+    <!--Button should send back to owner list???-->
+    <button ng-click="$ctrl.submitPetDetailsForm()" type="submit" ui-sref="owners">Save</button>
 
 </div>
