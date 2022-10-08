@@ -22,29 +22,14 @@ import reactor.util.function.Tuples;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.UUID;
 import java.util.List;
-
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.argThat;
-
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.when;
-
-
-
 import static org.mockito.Mockito.*;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.UNAUTHORIZED;
-
-import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpStatus.*;
-
-
-import static org.springframework.http.HttpStatus.*;
-
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 //
 //import com.petclinic.billing.datalayer.BillDTO;
@@ -1258,6 +1243,8 @@ class ApiGatewayControllerTest {
 
         entity.setVetId(1);
 
+        entity.setPetId(1);
+
         entity.setVisitType("Consultation");
 
         when(billServiceClient.getBillsByVetId(anyInt())).thenReturn(Flux.just(entity));
@@ -1272,7 +1259,8 @@ class ApiGatewayControllerTest {
                 .jsonPath("$[0].customerId").isEqualTo(entity.getCustomerId())
                 .jsonPath("$[0].visitType").isEqualTo(entity.getVisitType())
                 .jsonPath("$[0].amount").isEqualTo(entity.getAmount())
-                .jsonPath("$[0].vetId").isEqualTo(entity.getVetId());
+                .jsonPath("$[0].vetId").isEqualTo(entity.getVetId())
+                .jsonPath("$[0].petId").isEqualTo(entity.getPetId());
     }
     @Test
     void getBillsByVetNotFoundIdEmpty() {
@@ -1281,6 +1269,50 @@ class ApiGatewayControllerTest {
         client.get()
                 //check the URI
                 .uri("/api/gateway/bills/vets/1")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$[0].billId").doesNotExist();
+    }
+
+    @Test
+    void getBillsByPetId() {
+        BillDetails entity = new BillDetails();
+
+        entity.setBillId(1);
+
+        entity.setAmount(599);
+
+        entity.setCustomerId(2);
+
+        entity.setVetId(1);
+
+        entity.setPetId(1);
+
+        entity.setVisitType("Consultation");
+
+        when(billServiceClient.getBillsByPetId(anyInt())).thenReturn(Flux.just(entity));
+
+        client.get()
+                //check the URI
+                .uri("/api/gateway/bills/pets/1")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$[0].billId").isEqualTo(1)
+                .jsonPath("$[0].customerId").isEqualTo(entity.getCustomerId())
+                .jsonPath("$[0].visitType").isEqualTo(entity.getVisitType())
+                .jsonPath("$[0].amount").isEqualTo(entity.getAmount())
+                .jsonPath("$[0].vetId").isEqualTo(entity.getVetId())
+                .jsonPath("$[0].petId").isEqualTo(entity.getPetId());
+    }
+    @Test
+    void getBillsByPetNotFoundIdEmpty() {
+        when(billServiceClient.getBillsByPetId(anyInt())).thenReturn(Flux.empty());
+
+        client.get()
+                //check the URI
+                .uri("/api/gateway/bills/pets/1")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
