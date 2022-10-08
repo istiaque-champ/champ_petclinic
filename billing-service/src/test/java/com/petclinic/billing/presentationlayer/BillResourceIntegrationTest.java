@@ -49,6 +49,7 @@ public class BillResourceIntegrationTest {
     private final BillDTO INVALID_CUSTOMER_ID_REQUEST_MODEL = buildInvalidCustomerIdBillDTO();
     private final BillDTO INVALID_VISIT_TYPE_REQUEST_MODEL = buildInvalidVisitTypeBillDTO();
     private final BillDTO INVALID_VET_ID_REQUEST_MODEL = buildInvalidVetIdBillDTO();
+    private final BillDTO INVALID_PET_ID_REQUEST_MODEL = buildInvalidPetIdBillDTO();
 
     @Test
     void testGetByIdIntegration() {
@@ -208,6 +209,32 @@ public class BillResourceIntegrationTest {
     }
 
     @Test
+    void testGetByPetIdIntegration(){
+        Bill setupBill = getSetupBill();
+
+        Publisher<Bill> setup = billRepository.deleteAll().thenMany(billRepository.save(setupBill));
+
+        StepVerifier
+                .create(setup)
+                .expectNextCount(1)
+                .verifyComplete();
+
+        webTestClient.get()
+                .uri(BASE_URI + "/pets/" + VALID_PET_ID)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody()
+                .jsonPath("$[0].billId").isEqualTo(VALID_BILL_ID)
+                .jsonPath("$[0].customerId").isEqualTo(VALID_CUSTOMER_ID)
+                .jsonPath("$[0].visitType").isEqualTo(VALID_VISIT_TYPE)
+                .jsonPath("$[0].amount").isEqualTo(VALID_AMOUNT)
+                .jsonPath("$[0].vetId").isEqualTo(VALID_VET_ID)
+                .jsonPath("$[0].petId").isEqualTo(VALID_PET_ID);
+    }
+
+    @Test
     void testDeleteIntegration(){
         Bill setupBill = getSetupBill();
 
@@ -318,6 +345,25 @@ public class BillResourceIntegrationTest {
     }
 
     @Test
+    void testCreateInvalidPetIdIntegration(){
+        Publisher<Void> setup = billRepository.deleteAll();
+
+        StepVerifier
+                .create(setup)
+                .expectNextCount(0)
+                .verifyComplete();
+
+        webTestClient.post()
+                .uri(BASE_URI)
+                .body(Mono.just(INVALID_PET_ID_REQUEST_MODEL), BillDTO.class)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
+                .expectBody()
+                .jsonPath("$.message").isEqualTo("That pet id is invalid");
+    }
+
+    @Test
     void testUpdateNotFoundIntegration(){
         Publisher<Void> setup = billRepository.deleteAll();
 
@@ -400,6 +446,27 @@ public class BillResourceIntegrationTest {
     }
 
     @Test
+    void testUpdateInvalidPetIdIntegration(){
+        Bill setupBill = getSetupBill();
+
+        Publisher<Bill> setup = billRepository.deleteAll().thenMany(billRepository.save(setupBill));
+
+        StepVerifier
+                .create(setup)
+                .expectNextCount(1)
+                .verifyComplete();
+
+        webTestClient.put()
+                .uri(BASE_URI + "/" + VALID_BILL_ID)
+                .body(Mono.just(INVALID_PET_ID_REQUEST_MODEL), BillDTO.class)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
+                .expectBody()
+                .jsonPath("$.message").isEqualTo("That pet id is invalid");
+    }
+
+    @Test
     void getBillIdInvalidBillIdIntegration(){
         Bill setupBill = getSetupBill();
 
@@ -452,6 +519,26 @@ public class BillResourceIntegrationTest {
 
         webTestClient.get()
                 .uri(BASE_URI + "/vets/" + INVALID_VET_ID)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
+                .expectBody()
+                .jsonPath("$.message").isEqualTo("That id is invalid");
+    }
+
+    @Test
+    void getBillsByInvalidPetIdIntegration(){
+        Bill setupBill = getSetupBill();
+
+        Publisher<Bill> setup = billRepository.deleteAll().thenMany(billRepository.save(setupBill));
+
+        StepVerifier
+                .create(setup)
+                .expectNextCount(1)
+                .verifyComplete();
+
+        webTestClient.get()
+                .uri(BASE_URI + "/pets/" + INVALID_PET_ID)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
