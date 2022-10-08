@@ -59,14 +59,13 @@ public class BFFApiGatewayController {
         return billServiceClient.getAllBilling();
     }
 
-
+    @GetMapping(value = "/bills/vets/{vetId}")
+    public Flux<BillDetails> getBillsByVetId(final @PathVariable int vetId){
+        return billServiceClient.getBillsByVetId(vetId);
+    }
     @DeleteMapping(value = "bills/{billId}")
     public Mono<Void> deleteBill(final @PathVariable int billId){
         return billServiceClient.deleteBill(billId);
-
-
-
-
     }
 
 

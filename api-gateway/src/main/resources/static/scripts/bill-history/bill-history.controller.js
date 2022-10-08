@@ -2,12 +2,19 @@
 
 
 angular.module('billHistory')
-    .controller('BillHistoryController', ['$http', '$scope', function ($http, $scope) {
+    .controller('BillHistoryController', ['$http', '$scope', '$stateParams', function ($http, $scope, $stateParams) {
         var self = this;
 
+        let requestUrl = "api/gateway/bills/";
+
+        if($stateParams.filterId != null ){
+            requestUrl += $stateParams.filterType + "/" + $stateParams.filterId;
+        }
+
+        //console.log(requestUrl);
         //############ API ############
         //get all bills
-        $http.get('api/gateway/bills').then(async (resp) => {
+        $http.get(requestUrl).then(async (resp) => {
             self.billHistory = resp.data;
 
             let billDetailedData = [];
@@ -35,7 +42,7 @@ angular.module('billHistory')
                 function successCallback(response) {
                     $scope.errors = [];
                     alert(billId + " bill was deleted successfully");
-                    console.log(response, 'res');
+                    //console.log(response, 'res');
                     //refresh list
                     $http.get('api/gateway/bills').then(function (resp) {
                         self.billHistory = resp.data;
@@ -61,8 +68,6 @@ angular.module('billHistory')
 
             child.classList.remove("modalOff");
             child.classList.add("modalOn");
-
-            let width = child.offsetWidth;
 
             child.style.top = `${top}px`;
             // child.style.left = `${right + width}px`;

@@ -27,16 +27,24 @@ class BillRepositoryTest {
     private final Instant VALID_DATE = Instant.now();
     private final Double VALID_AMOUNT = BillServiceImpl.visitTypePrices.get(VALID_VISIT_TYPE);
     private final Double SECOND_VALID_AMOUNT = 50.00;
+    private final Integer VALID_VET_ID = 1;
 
 
-    @Test
-    void findAllBills(){
+
+    private Bill getSetupBill() {
         Bill setupBill = new Bill();
         setupBill.setBillId(VALID_BILL_ID);
         setupBill.setCustomerId(VALID_CUSTOMER_ID);
         setupBill.setVisitType(VALID_VISIT_TYPE);
         setupBill.setDate(VALID_DATE);
         setupBill.setAmount(VALID_AMOUNT);
+        setupBill.setVetId(VALID_VET_ID);
+        return setupBill;
+    }
+
+    @Test
+    void findAllBills(){
+        Bill setupBill = getSetupBill();
 
         Publisher<Bill> setup = billRepository.deleteAll().thenMany(billRepository.save(setupBill));
 
@@ -59,18 +67,14 @@ class BillRepositoryTest {
                     assertEquals(bill.getVisitType(), setupBill.getVisitType());
                     assertNotNull(bill.getDate());
                     assertEquals(bill.getAmount(), setupBill.getAmount());
+                    assertEquals(bill.getVetId(), setupBill.getVetId());
                 })
                 .verifyComplete();
     }
 
     @Test
     void createBill(){
-        Bill setupBill = new Bill();
-        setupBill.setBillId(VALID_BILL_ID);
-        setupBill.setCustomerId(VALID_CUSTOMER_ID);
-        setupBill.setVisitType(VALID_VISIT_TYPE);
-        setupBill.setDate(VALID_DATE);
-        setupBill.setAmount(VALID_AMOUNT);
+        Bill setupBill = getSetupBill();
 
         Publisher<Bill> setup = billRepository.deleteAll().thenMany(billRepository.save(setupBill));
 
@@ -83,6 +87,7 @@ class BillRepositoryTest {
                     assertEquals(bill.getVisitType(), setupBill.getVisitType());
                     assertNotNull(bill.getDate());
                     assertEquals(bill.getAmount(), setupBill.getAmount());
+                    assertEquals(bill.getVetId(), setupBill.getVetId());
                 })
                 .verifyComplete();
     }
@@ -90,12 +95,7 @@ class BillRepositoryTest {
     //checks both create and find by bill_id
     @Test
     void findBillByBillId() {
-        Bill setupBill = new Bill();
-        setupBill.setBillId(VALID_BILL_ID);
-        setupBill.setCustomerId(VALID_CUSTOMER_ID);
-        setupBill.setVisitType(VALID_VISIT_TYPE);
-        setupBill.setDate(VALID_DATE);
-        setupBill.setAmount(VALID_AMOUNT);
+        Bill setupBill = getSetupBill();
 
         Publisher<Bill> setup = billRepository.deleteAll().thenMany(billRepository.save(setupBill));
 
@@ -118,18 +118,14 @@ class BillRepositoryTest {
                     assertEquals(bill.getVisitType(), setupBill.getVisitType());
                     assertNotNull(bill.getDate());
                     assertEquals(bill.getAmount(), setupBill.getAmount());
+                    assertEquals(bill.getVetId(), setupBill.getVetId());
                 })
                 .verifyComplete();
     }
 
     @Test
     void findBillByCustomerId() {
-        Bill setupBill = new Bill();
-        setupBill.setBillId(VALID_BILL_ID);
-        setupBill.setCustomerId(VALID_CUSTOMER_ID);
-        setupBill.setVisitType(VALID_VISIT_TYPE);
-        setupBill.setDate(VALID_DATE);
-        setupBill.setAmount(VALID_AMOUNT);
+        Bill setupBill = getSetupBill();
 
         Publisher<Bill> setup = billRepository.deleteAll().thenMany(billRepository.save(setupBill));
 
@@ -152,18 +148,44 @@ class BillRepositoryTest {
                     assertEquals(bill.getVisitType(), setupBill.getVisitType());
                     assertNotNull(bill.getDate());
                     assertEquals(bill.getAmount(), setupBill.getAmount());
+                    assertEquals(bill.getVetId(), setupBill.getVetId());
+                })
+                .verifyComplete();
+    }
+
+    @Test
+    void findBillsByVetId(){
+        Bill setupBill = getSetupBill();
+
+        Publisher<Bill> setup = billRepository.deleteAll().thenMany(billRepository.save(setupBill));
+
+        StepVerifier
+                .create(setup)
+                .expectNextCount(1)
+                .verifyComplete();
+
+        Flux<Bill> find = billRepository.findBillsByVetId(VALID_VET_ID);
+        Publisher<Bill> composite = Mono
+                .from(setup)
+                .thenMany(find);
+
+        StepVerifier
+                .create(composite)
+                .consumeNextWith(bill -> {
+                    assertNotNull(bill.getId());
+                    assertEquals(bill.getBillId(), setupBill.getBillId());
+                    assertEquals(bill.getCustomerId(), setupBill.getCustomerId());
+                    assertEquals(bill.getVisitType(), setupBill.getVisitType());
+                    assertNotNull(bill.getDate());
+                    assertEquals(bill.getAmount(), setupBill.getAmount());
+                    assertEquals(bill.getVetId(), setupBill.getVetId());
                 })
                 .verifyComplete();
     }
 
     @Test
     void deleteBillByBillId() {
-        Bill setupBill = new Bill();
-        setupBill.setBillId(VALID_BILL_ID);
-        setupBill.setCustomerId(VALID_CUSTOMER_ID);
-        setupBill.setVisitType(VALID_VISIT_TYPE);
-        setupBill.setDate(VALID_DATE);
-        setupBill.setAmount(VALID_AMOUNT);
+        Bill setupBill = getSetupBill();
 
         Publisher<Bill> setup = billRepository.deleteAll().thenMany(billRepository.save(setupBill));
 
@@ -186,12 +208,7 @@ class BillRepositoryTest {
 
     @Test
     void update(){
-        Bill setupBill = new Bill();
-        setupBill.setBillId(VALID_BILL_ID);
-        setupBill.setCustomerId(VALID_CUSTOMER_ID);
-        setupBill.setVisitType(VALID_VISIT_TYPE);
-        setupBill.setDate(VALID_DATE);
-        setupBill.setAmount(VALID_AMOUNT);
+        Bill setupBill = getSetupBill();
 
         Publisher<Bill> setup = billRepository.deleteAll().thenMany(billRepository.save(setupBill));
 
@@ -219,6 +236,7 @@ class BillRepositoryTest {
                     assertEquals(bill.getVisitType(), setupBill.getVisitType());
                     assertNotNull(bill.getDate());
                     assertEquals(bill.getAmount(), SECOND_VALID_AMOUNT);
+                    assertEquals(bill.getVetId(), setupBill.getVetId());
                 })
                 .verifyComplete();
     }

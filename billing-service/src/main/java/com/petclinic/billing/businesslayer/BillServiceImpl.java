@@ -74,9 +74,15 @@ public class BillServiceImpl implements BillService{
 
     //Returns all the bills of a specific customer by its customer id
     @Override
-    public Flux<BillDTO> GetBillByCustomerId(int customerId) {
+    public Flux<BillDTO> GetBillsByCustomerId(int customerId) {
             return billRepository.findBillsByCustomerId(customerId)
                     .map(EntityDTOUtil::entityToDTO);
 
+    }
+
+    @Override
+    public Flux<BillDTO> GetBillsByVetId(int vetId) {
+        return billRepository.findBillsByVetId(vetId)
+                .map(EntityDTOUtil::entityToDTO);
     }
 }
