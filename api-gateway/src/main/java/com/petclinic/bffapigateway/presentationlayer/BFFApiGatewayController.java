@@ -55,27 +55,47 @@ public class BFFApiGatewayController {
             consumes = "application/json",
             produces = "application/json")
     public Mono<BillDetailsExpanded> createBill(@RequestBody BillDetails model) {
-        return billServiceClient.createBill(model);
+        return billServiceClient.createBill(model)
+                .flatMap(billDetails ->
+                    customersServiceClient.getOwner(billDetails.getCustomerId())
+                            .map(addOwnersToBillDetails(billDetails))
+                );
     }
 
     @GetMapping(value = "bills")
     public Flux<BillDetailsExpanded> getAllBilling() {
-        return billServiceClient.getAllBilling();
+        return billServiceClient.getAllBilling()
+                .flatMap(billDetails ->
+                        customersServiceClient.getOwner(billDetails.getCustomerId())
+                                .map(addOwnersToBillDetails(billDetails))
+                );
     }
 
     @GetMapping(value = "/bills/vets/{vetId}")
     public Flux<BillDetailsExpanded> getBillsByVetId(final @PathVariable int vetId){
-        return billServiceClient.getBillsByVetId(vetId);
+        return billServiceClient.getBillsByVetId(vetId)
+                .flatMap(billDetails ->
+                        customersServiceClient.getOwner(billDetails.getCustomerId())
+                                .map(addOwnersToBillDetails(billDetails))
+                );
     }
 
     @GetMapping(value = "/bills/pets/{petId}")
     public Flux<BillDetailsExpanded> getBillsByPetId(final @PathVariable int petId){
-        return billServiceClient.getBillsByPetId(petId);
+        return billServiceClient.getBillsByPetId(petId)
+                .flatMap(billDetails ->
+                        customersServiceClient.getOwner(billDetails.getCustomerId())
+                                .map(addOwnersToBillDetails(billDetails))
+                );
     }
     
     @GetMapping(value = "/bills/customers/{customerId}")
     public Flux<BillDetailsExpanded> getBillsByCustomerId(final @PathVariable int customerId){
-        return billServiceClient.getBillsByCustomerId(customerId);
+        return billServiceClient.getBillsByCustomerId(customerId)
+                .flatMap(billDetails ->
+                        customersServiceClient.getOwner(billDetails.getCustomerId())
+                                .map(addOwnersToBillDetails(billDetails))
+                );
     }
     
     @DeleteMapping(value = "bills/{billId}")
