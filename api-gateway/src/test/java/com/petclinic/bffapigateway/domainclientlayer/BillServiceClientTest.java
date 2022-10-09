@@ -1,5 +1,6 @@
 package com.petclinic.bffapigateway.domainclientlayer;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.petclinic.bffapigateway.dtos.BillDetails;
 import okhttp3.mockwebserver.MockResponse;
@@ -81,7 +82,27 @@ class BillServiceClientTest {
     }
 
     @Test
-    void createBill() {
+    void createBill() throws JsonProcessingException {
+        BillDetails entity = new BillDetails();
+
+        entity.setBillId(1);
+
+        entity.setAmount(599);
+
+        entity.setCustomerId(2);
+
+        entity.setVetId(1);
+        entity.setPetId(1);
+
+        final String body = objectMapper.writeValueAsString(objectMapper.convertValue(entity, BillDetails.class));
+
+        prepareResponse(response -> response
+                .setHeader("Content-Type", "application/json")
+                .setBody(body));
+
+        Mono<BillDetails> billDetailsMono = billServiceClient.createBill(entity);
+
+        assertEquals(1, billDetailsMono.block().getBillId());
     }
 
     @Test
