@@ -73,6 +73,12 @@ public class BFFApiGatewayController {
         return billServiceClient.deleteBill(billId);
     }
 
+    private Function<OwnerDetails, BillDetailsExpanded> addOwnersToBillDetails(BillDetailsExpanded billDetailsExpanded){
+        return owner -> {
+            billDetailsExpanded.setOwnerDetails(owner);
+            return billDetailsExpanded;
+        };
+    }
 
     @PostMapping(value = "owners/{ownerId}/pets" , produces = "application/json", consumes = "application/json")
     public Mono<PetDetails> createPet(@RequestBody PetDetails pet, @PathVariable int ownerId){
