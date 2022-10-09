@@ -8,6 +8,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
@@ -62,6 +63,21 @@ class BillServiceClientTest {
 
     @Test
     void getAllBilling() {
+        prepareResponse(response -> response
+            .setHeader("Content-Type", "application/json")
+            .setBody("[{\n" +
+                    "        \"billId\": 63701,\n" +
+                    "        \"date\": \"2022-10-09T03:29:52.992+00:00\",\n" +
+                    "        \"customerId\": 1,\n" +
+                    "        \"vetId\": 2,\n" +
+                    "        \"petId\": 2,\n" +
+                    "        \"visitType\": \"Examinations\",\n" +
+                    "        \"amount\": 59.99\n" +
+                    "    }]"));
+
+        Flux<BillDetails> billDetailsFlux = billServiceClient.getAllBilling();
+
+        assertEquals(63701, billDetailsFlux.blockFirst().getBillId());
     }
 
     @Test
