@@ -41,9 +41,13 @@ public class BFFApiGatewayController {
 
 
     @GetMapping(value = "bills/{billId}")
-    public Mono<BillDetails> getBillingInfo(final @PathVariable int billId)
+    public Mono<BillDetailsExpanded> getBillingInfo(final @PathVariable int billId)
     {
-        return billServiceClient.getBilling(billId);
+        return billServiceClient.getBilling(billId)
+                .flatMap(billDetails ->
+                        customersServiceClient.getOwner(billDetails.getCustomerId())
+                                .map(addOwnersToBillDetails(billDetails))
+                );
     }
 
 
