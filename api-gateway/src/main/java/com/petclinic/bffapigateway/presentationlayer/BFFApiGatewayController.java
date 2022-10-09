@@ -68,6 +68,12 @@ public class BFFApiGatewayController {
     public Flux<BillDetails> getBillsByPetId(final @PathVariable int petId){
         return billServiceClient.getBillsByPetId(petId);
     }
+    
+    @GetMapping(value = "/bills/customers/{customerId}")
+    public Flux<BillDetails> getBillsByCustomerId(final @PathVariable int customerId){
+        return billServiceClient.getBillsByCustomerId(customerId);
+    }
+    
     @DeleteMapping(value = "bills/{billId}")
     public Mono<Void> deleteBill(final @PathVariable int billId){
         return billServiceClient.deleteBill(billId);
@@ -79,9 +85,9 @@ public class BFFApiGatewayController {
         return customersServiceClient.createPet(pet, ownerId);
     }
 
-    @PutMapping(value = "owners/pets/{petId}" , produces = "application/json", consumes = "application/json")
-    public Mono<PetDetails> updatePet(@RequestBody PetDetails pet, @PathVariable int petId){
-        return customersServiceClient.updatePet(petId, pet);
+    @PutMapping(value = "owners/{ownerId}/pets/{petId}" , produces = "application/json", consumes = "application/json")
+    public Mono<PetDetails> updatePet(@RequestBody PetDetails pet, @PathVariable int petId, @PathVariable int ownerId){
+        return customersServiceClient.updatePet(petId,ownerId, pet);
     }
 
     @GetMapping(value = "owners/{ownerId}/pets/{petId}")

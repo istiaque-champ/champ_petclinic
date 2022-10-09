@@ -353,6 +353,49 @@ class ApiGatewayControllerTest {
     }
 
     @Test
+    void shouldCreateThenUpdatePetNotes(){
+        OwnerDetails od = new OwnerDetails();
+        od.setId(1);
+
+        final String VALID_NOTES = "Test Notes";
+
+        PetDetails pet = new PetDetails();
+        PetType type = new PetType();
+        type.setName("Dog");
+        pet.setId(30);
+        pet.setNotes(VALID_NOTES);
+        pet.setName("Fluffy");
+        pet.setBirthDate("2000-01-01");
+        pet.setType(type);
+
+        when(customersServiceClient.createPet(pet,od.getId()))
+
+                .thenReturn(Mono.just(pet));
+
+        client.post()
+                .uri("/api/gateway/owners/{ownerId}/pets", od.getId())
+                .body(Mono.just(pet), PetDetails.class)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody()
+                .jsonPath("$.name").isEqualTo(pet.getName());
+
+        pet.setNotes("Update Notes");
+        client.put()
+                .uri("/api/gateway/owners/{ownerId}/pets/{petId}", od.getId(), pet.getId())
+                .body(Mono.just(pet), PetDetails.class)
+                .accept(APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(APPLICATION_JSON)
+                .expectBody();
+
+
+    }
+
+    @Test
     void shouldThrowNotFoundWhenOwnerIdIsNotSpecifiedOnDeletePets(){
         OwnerDetails od = new OwnerDetails();
         od.setId(1);
@@ -1286,7 +1329,6 @@ class ApiGatewayControllerTest {
         entity.setCustomerId(2);
 
         entity.setVetId(1);
-
         entity.setPetId(1);
 
         entity.setVisitType("Consultation");
@@ -1306,6 +1348,7 @@ class ApiGatewayControllerTest {
                 .jsonPath("$[0].vetId").isEqualTo(entity.getVetId())
                 .jsonPath("$[0].petId").isEqualTo(entity.getPetId());
     }
+    
     @Test
     void getBillsByPetNotFoundIdEmpty() {
         when(billServiceClient.getBillsByPetId(anyInt())).thenReturn(Flux.empty());
@@ -1318,7 +1361,48 @@ class ApiGatewayControllerTest {
                 .expectBody()
                 .jsonPath("$[0].billId").doesNotExist();
     }
+    
+    @Test
+    void getBillsByCustomerId() {
+        BillDetails entity = new BillDetails();
 
+        entity.setBillId(1);
+
+        entity.setAmount(599);
+
+        entity.setCustomerId(2);
+
+        entity.setVetId(1);
+        entity.setPetId(1);
+
+        entity.setVisitType("Consultation");
+
+        when(billServiceClient.getBillsByCustomerId(anyInt())).thenReturn(Flux.just(entity));
+
+        client.get()
+                //check the URI
+                .uri("/api/gateway/bills/customers/1")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$[0].billId").isEqualTo(1)
+                .jsonPath("$[0].customerId").isEqualTo(entity.getCustomerId())
+                .jsonPath("$[0].visitType").isEqualTo(entity.getVisitType())
+                .jsonPath("$[0].amount").isEqualTo(entity.getAmount())
+                .jsonPath("$[0].vetId").isEqualTo(entity.getVetId())
+                .jsonPath("$[0].petId").isEqualTo(entity.getPetId());
+    }
+    
+    @Test
+    void getBillsByCustomerNotFoundIdEmpty() {
+        when(billServiceClient.getBillsByCustomerId(anyInt())).thenReturn(Flux.empty());
+
+        client.get()
+                //check the URI
+                .uri("/api/gateway/bills/customers/1")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$[0].billId").doesNotExist();
+    }
 }
-
-

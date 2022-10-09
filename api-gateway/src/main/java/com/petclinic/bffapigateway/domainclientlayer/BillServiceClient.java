@@ -55,10 +55,18 @@ public class BillServiceClient {
                 .retrieve()
                 .bodyToFlux(BillDetails.class);
     }
-
+    
     public Flux<BillDetails> getBillsByPetId(final int petId){
         return webClientBuilder.build().get()
                 .uri(billServiceUrl + "/pets/" + petId)
+                .retrieve()
+                .bodyToFlux(BillDetails.class);  
+    }
+    
+    public Flux<BillDetails> getBillsByCustomerId(final int customerId){
+        return webClientBuilder.build()
+                .get()
+                .uri(billServiceUrl + "/customer/" + customerId)
                 .retrieve()
                 .bodyToFlux(BillDetails.class);
     }
