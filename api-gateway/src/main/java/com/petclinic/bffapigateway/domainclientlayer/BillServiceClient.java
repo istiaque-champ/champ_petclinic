@@ -1,6 +1,7 @@
 package com.petclinic.bffapigateway.domainclientlayer;
 
 import com.petclinic.bffapigateway.dtos.BillDetails;
+import com.petclinic.bffapigateway.dtos.BillDetailsExpanded;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -27,11 +28,11 @@ public class BillServiceClient {
 
     }
 
-    public Mono<BillDetails> getBilling(final int billId) {
+    public Mono<BillDetailsExpanded> getBilling(final int billId) {
         return webClientBuilder.build().get()
                 .uri(billServiceUrl + "/{billId}", billId)
                 .retrieve()
-                .bodyToMono(BillDetails.class);
+                .bodyToMono(BillDetailsExpanded.class);
     }
 
     public Flux<BillDetails> getAllBilling() {
