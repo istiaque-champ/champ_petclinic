@@ -40,12 +40,11 @@ public class BFFApiGatewayController {
     private final BillServiceClient billServiceClient;
 
 
+    //<editor-fold desc="BillingSection">
     @GetMapping(value = "bills/{billId}")
-    public Mono<BillDetails> getBillingInfo(final @PathVariable int billId)
-    {
+    public Mono<BillDetails> getBillingInfo(final @PathVariable int billId) {
         return billServiceClient.getBilling(billId);
     }
-
 
     @PostMapping(value = "bills",
             consumes = "application/json",
@@ -60,52 +59,54 @@ public class BFFApiGatewayController {
     }
 
     @GetMapping(value = "/bills/vets/{vetId}")
-    public Flux<BillDetails> getBillsByVetId(final @PathVariable int vetId){
+    public Flux<BillDetails> getBillsByVetId(final @PathVariable int vetId) {
         return billServiceClient.getBillsByVetId(vetId);
     }
 
     @GetMapping(value = "/bills/pets/{petId}")
-    public Flux<BillDetails> getBillsByPetId(final @PathVariable int petId){
+    public Flux<BillDetails> getBillsByPetId(final @PathVariable int petId) {
         return billServiceClient.getBillsByPetId(petId);
     }
-    
+
     @GetMapping(value = "/bills/customers/{customerId}")
-    public Flux<BillDetails> getBillsByCustomerId(final @PathVariable int customerId){
+    public Flux<BillDetails> getBillsByCustomerId(final @PathVariable int customerId) {
         return billServiceClient.getBillsByCustomerId(customerId);
     }
-    
+
     @DeleteMapping(value = "bills/{billId}")
-    public Mono<Void> deleteBill(final @PathVariable int billId){
+    public Mono<Void> deleteBill(final @PathVariable int billId) {
         return billServiceClient.deleteBill(billId);
     }
+    //</editor-fold>
 
-
-    @PostMapping(value = "owners/{ownerId}/pets" , produces = "application/json", consumes = "application/json")
-    public Mono<PetDetails> createPet(@RequestBody PetDetails pet, @PathVariable int ownerId){
+    //<editor-fold desc="PetsSection">
+    @PostMapping(value = "owners/{ownerId}/pets", produces = "application/json", consumes = "application/json")
+    public Mono<PetDetails> createPet(@RequestBody PetDetails pet, @PathVariable int ownerId) {
         return customersServiceClient.createPet(pet, ownerId);
     }
 
-    @PutMapping(value = "owners/{ownerId}/pets/{petId}" , produces = "application/json", consumes = "application/json")
-    public Mono<PetDetails> updatePet(@RequestBody PetDetails pet, @PathVariable int petId, @PathVariable int ownerId){
-        return customersServiceClient.updatePet(petId,ownerId, pet);
+    @PutMapping(value = "owners/{ownerId}/pets/{petId}", produces = "application/json", consumes = "application/json")
+    public Mono<PetDetails> updatePet(@RequestBody PetDetails pet, @PathVariable int petId, @PathVariable int ownerId) {
+        return customersServiceClient.updatePet(petId, ownerId, pet);
     }
 
     @GetMapping(value = "owners/{ownerId}/pets/{petId}")
-    public Mono<PetDetails> getPet(@PathVariable int ownerId, @PathVariable int petId){
+    public Mono<PetDetails> getPet(@PathVariable int ownerId, @PathVariable int petId) {
         return customersServiceClient.getPet(ownerId, petId);
     }
 
     @DeleteMapping("owners/{ownerId}/pets/{petId}")
-    public Mono<PetDetails> deletePet(@PathVariable int ownerId, @PathVariable int petId){
-        return customersServiceClient.deletePet(ownerId,petId);
+    public Mono<PetDetails> deletePet(@PathVariable int ownerId, @PathVariable int petId) {
+        return customersServiceClient.deletePet(ownerId, petId);
     }
 
     @GetMapping("owners/petTypes")
-    public Flux<PetType> getPetTypes(){
+    public Flux<PetType> getPetTypes() {
         return customersServiceClient.getPetTypes();
     }
+    //</editor-fold>
 
-
+    //<editor-fold desc="VisitSection">
     @PutMapping(
             value = "owners/*/pets/{petId}/visits/{visitId}",
             consumes = "application/json",
@@ -117,18 +118,18 @@ public class BFFApiGatewayController {
         return visitsServiceClient.updateVisitForPet(visit);
     }
 
-    @DeleteMapping (value = "visits/{visitId}")
-    public Mono<Void> deleteVisitsByVisitId(final @PathVariable String visitId){
+    @DeleteMapping(value = "visits/{visitId}")
+    public Mono<Void> deleteVisitsByVisitId(final @PathVariable String visitId) {
         return visitsServiceClient.deleteVisitByVisitId(visitId);
     }
 
     @GetMapping(value = "visits/{petId}")
-    public Flux<VisitDetails> getVisitsForPet(final @PathVariable int petId){
+    public Flux<VisitDetails> getVisitsForPet(final @PathVariable int petId) {
         return visitsServiceClient.getVisitsForPet(petId);
     }
 
-    @GetMapping(value ="visit/{visitId}")
-    public Mono<VisitDetails> getVisitByVisitId(final @PathVariable String visitId){
+    @GetMapping(value = "visit/{visitId}")
+    public Mono<VisitDetails> getVisitByVisitId(final @PathVariable String visitId) {
         return visitsServiceClient.getVisitByVisitId(visitId);
     }
 
@@ -144,7 +145,7 @@ public class BFFApiGatewayController {
     }
 
     @GetMapping(value = "visits/vets/{practitionerId}")
-    public Flux<VisitDetails> getVisitForPractitioner(@PathVariable int practitionerId){
+    public Flux<VisitDetails> getVisitForPractitioner(@PathVariable int practitionerId) {
         return visitsServiceClient.getVisitForPractitioner(practitionerId);
     }
 
@@ -178,6 +179,9 @@ public class BFFApiGatewayController {
         visit.setPetId(Integer.parseInt(petId));
         return visitsServiceClient.createVisitForPet(visit);
     }
+    //</editor-fold>
+
+    //<editor-fold desc="VetsSection">
 
     /**
      * Retrieve all vets from DB
@@ -225,7 +229,49 @@ public class BFFApiGatewayController {
         log.debug("Trying to update vet");
         return vetsServiceClient.updateVet(vetId, vet);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="OwnersSection">
+    @GetMapping(value = "owners")
+    public Flux<OwnerDetails> getOwners() {
+        return customersServiceClient.getOwners()
+                .flatMap(n ->
+                        visitsServiceClient.getVisitsForPets(n.getPetIds())
+                                .map(addVisitsToOwner(n))
+                );
+    }
+
+    @GetMapping(value = "owners/{ownerId}")
+    public Mono<OwnerDetails> getOwnerDetails(final @PathVariable int ownerId) {
+        return customersServiceClient.getOwner(ownerId)
+                .flatMap(owner ->
+                        visitsServiceClient.getVisitsForPets(owner.getPetIds())
+                                .map(addVisitsToOwner(owner))
+                );
+    }
+
+    @PostMapping(value = "owners",
+            consumes = "application/json",
+            produces = "application/json")
+    public Mono<OwnerDetails> createOwner(@RequestBody OwnerDetails model) {
+        return customersServiceClient.createOwner(model);
+    }
+
+    @PutMapping(value = "owners/{ownerId}", consumes = "application/json", produces = "application/json")
+    public Mono<OwnerDetails> updateOwnerDetails(@PathVariable int ownerId, @RequestBody OwnerDetails od) {
+        return customersServiceClient.updateOwner(ownerId, od)
+                .flatMap(owner ->
+                        visitsServiceClient.getVisitsForPets(owner.getPetIds())
+                                .map(addVisitsToOwner(owner)));
+    }
+
+    @DeleteMapping(value = "owners/{ownerId}")
+    public Mono<OwnerDetails> deleteOwner(@PathVariable int ownerId) {
+        return customersServiceClient.deleteOwner(ownerId);
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="AuthSection">
     @PostMapping(value = "users",
             consumes = "application/json",
             produces = "application/json")
@@ -242,6 +288,7 @@ public class BFFApiGatewayController {
     public Mono<UserDetails> getUserDetails(final @PathVariable long userId) {
         return authServiceClient.getUser(userId);
     }
+
     @GetMapping(value = "users")
     public Flux<UserDetails> getAll() {
         return authServiceClient.getUsers();
@@ -269,53 +316,6 @@ public class BFFApiGatewayController {
         return authServiceClient.addRole(model);
     }
 
-
-    /**
-     * Owners Methods
-     * **/
-
-    @GetMapping(value = "owners")
-    public Flux<OwnerDetails> getOwners() {
-        return customersServiceClient.getOwners()
-                .flatMap(n ->
-                        visitsServiceClient.getVisitsForPets(n.getPetIds())
-                                .map(addVisitsToOwner(n))
-                );
-    }
-
-    @GetMapping(value = "owners/{ownerId}")
-    public Mono<OwnerDetails> getOwnerDetails(final @PathVariable int ownerId) {
-        return customersServiceClient.getOwner(ownerId)
-                .flatMap(owner ->
-                        visitsServiceClient.getVisitsForPets(owner.getPetIds())
-                                .map(addVisitsToOwner(owner))
-                );
-    }
-
-    @PostMapping(value = "owners",
-            consumes = "application/json",
-            produces = "application/json")
-    public Mono<OwnerDetails> createOwner(@RequestBody OwnerDetails model){
-        return customersServiceClient.createOwner(model);
-    }
-
-    @PutMapping(value = "owners/{ownerId}",consumes = "application/json" ,produces = "application/json")
-    public Mono<OwnerDetails> updateOwnerDetails(@PathVariable int ownerId, @RequestBody OwnerDetails od) {
-        return customersServiceClient.updateOwner(ownerId, od)
-                .flatMap(owner ->
-                        visitsServiceClient.getVisitsForPets(owner.getPetIds())
-                                .map(addVisitsToOwner(owner)));
-    }
-
-    @DeleteMapping(value = "owners/{ownerId}")
-    public Mono<OwnerDetails> deleteOwner(@PathVariable int ownerId){
-        return customersServiceClient.deleteOwner(ownerId);
-    }
-
-    /**
-     * End of Owner Methods
-     * **/
-
     @GetMapping("/verification/{token}")
     public Mono<UserDetails> verifyUser(@PathVariable final String token) {
         return authServiceClient.verifyUser(token);
@@ -329,4 +329,5 @@ public class BFFApiGatewayController {
                         .body(n.getT2())
                 );
     }
+    //</editor-fold>
 }
