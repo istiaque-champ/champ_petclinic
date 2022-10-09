@@ -510,7 +510,7 @@ class ApiGatewayControllerTest {
 
         //int expectedLength = 1;
 
-        BillDetails entity = new BillDetails();
+        BillDetailsExpanded entity = new BillDetailsExpanded();
 
         entity.setBillId(1);
 
