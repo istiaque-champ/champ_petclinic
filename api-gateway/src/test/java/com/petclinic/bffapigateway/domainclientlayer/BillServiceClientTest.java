@@ -107,18 +107,77 @@ class BillServiceClientTest {
 
     @Test
     void getBillsByVetId() {
+        prepareResponse(response -> response
+                .setHeader("Content-Type", "application/json")
+                .setBody("[{\n" +
+                        "        \"billId\": 63701,\n" +
+                        "        \"date\": \"2022-10-09T03:29:52.992+00:00\",\n" +
+                        "        \"customerId\": 1,\n" +
+                        "        \"vetId\": 2,\n" +
+                        "        \"petId\": 2,\n" +
+                        "        \"visitType\": \"Examinations\",\n" +
+                        "        \"amount\": 59.99\n" +
+                        "    }]"));
+
+        Flux<BillDetails> billDetailsFlux = billServiceClient.getBillsByVetId(2);
+
+        assertEquals(63701, billDetailsFlux.blockFirst().getBillId());
     }
 
     @Test
     void getBillsByPetId() {
+        prepareResponse(response -> response
+                .setHeader("Content-Type", "application/json")
+                .setBody("[{\n" +
+                        "        \"billId\": 63701,\n" +
+                        "        \"date\": \"2022-10-09T03:29:52.992+00:00\",\n" +
+                        "        \"customerId\": 1,\n" +
+                        "        \"vetId\": 2,\n" +
+                        "        \"petId\": 2,\n" +
+                        "        \"visitType\": \"Examinations\",\n" +
+                        "        \"amount\": 59.99\n" +
+                        "    }]"));
+
+        Flux<BillDetails> billDetailsFlux = billServiceClient.getBillsByPetId(2);
+
+        assertEquals(63701, billDetailsFlux.blockFirst().getBillId());
     }
 
     @Test
     void getBillsByCustomerId() {
+        prepareResponse(response -> response
+                .setHeader("Content-Type", "application/json")
+                .setBody("[{\n" +
+                        "        \"billId\": 63701,\n" +
+                        "        \"date\": \"2022-10-09T03:29:52.992+00:00\",\n" +
+                        "        \"customerId\": 1,\n" +
+                        "        \"vetId\": 2,\n" +
+                        "        \"petId\": 2,\n" +
+                        "        \"visitType\": \"Examinations\",\n" +
+                        "        \"amount\": 59.99\n" +
+                        "    }]"));
+
+        Flux<BillDetails> billDetailsFlux = billServiceClient.getBillsByCustomerId(1);
+
+        assertEquals(63701, billDetailsFlux.blockFirst().getBillId());
     }
 
     @Test
     void deleteBill() {
+        prepareResponse(response -> response
+            .setHeader("Content-Type", "application/json")
+            .setBody("{\n" +
+                    "        \"billId\": 63701,\n" +
+                    "        \"date\": \"2022-10-09T03:29:52.992+00:00\",\n" +
+                    "        \"customerId\": 1,\n" +
+                    "        \"vetId\": 2,\n" +
+                    "        \"petId\": 2,\n" +
+                    "        \"visitType\": \"Examinations\",\n" +
+                    "        \"amount\": 59.99\n" +
+                    "    }"));
+
+        Mono<Void> empty = billServiceClient.deleteBill(1);
+        assertEquals(empty.block(), null);
     }
 
     private void prepareResponse(Consumer<MockResponse> consumer) {
