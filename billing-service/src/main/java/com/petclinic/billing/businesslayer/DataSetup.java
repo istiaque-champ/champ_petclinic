@@ -32,7 +32,6 @@ public class DataSetup implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        billRepository.deleteAll();
         List<BillDTO> billDTOS = new ArrayList<>();
         for(int i = 0; i < 10; i++){
             BillDTO setupBill = new BillDTO();
