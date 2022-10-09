@@ -54,27 +54,27 @@ public class BFFApiGatewayController {
     @PostMapping(value = "bills",
             consumes = "application/json",
             produces = "application/json")
-    public Mono<BillDetails> createBill(@RequestBody BillDetails model) {
+    public Mono<BillDetailsExpanded> createBill(@RequestBody BillDetails model) {
         return billServiceClient.createBill(model);
     }
 
     @GetMapping(value = "bills")
-    public Flux<BillDetails> getAllBilling() {
+    public Flux<BillDetailsExpanded> getAllBilling() {
         return billServiceClient.getAllBilling();
     }
 
     @GetMapping(value = "/bills/vets/{vetId}")
-    public Flux<BillDetails> getBillsByVetId(final @PathVariable int vetId){
+    public Flux<BillDetailsExpanded> getBillsByVetId(final @PathVariable int vetId){
         return billServiceClient.getBillsByVetId(vetId);
     }
 
     @GetMapping(value = "/bills/pets/{petId}")
-    public Flux<BillDetails> getBillsByPetId(final @PathVariable int petId){
+    public Flux<BillDetailsExpanded> getBillsByPetId(final @PathVariable int petId){
         return billServiceClient.getBillsByPetId(petId);
     }
     
     @GetMapping(value = "/bills/customers/{customerId}")
-    public Flux<BillDetails> getBillsByCustomerId(final @PathVariable int customerId){
+    public Flux<BillDetailsExpanded> getBillsByCustomerId(final @PathVariable int customerId){
         return billServiceClient.getBillsByCustomerId(customerId);
     }
     

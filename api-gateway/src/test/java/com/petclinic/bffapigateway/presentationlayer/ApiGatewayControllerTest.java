@@ -607,8 +607,17 @@ class ApiGatewayControllerTest {
 
         bill.setVisitType("Adoption");
 
+        BillDetailsExpanded billDetailsExpanded = new BillDetailsExpanded();
+        bill.setBillId(1);
+
+        bill.setDate(null);
+
+        bill.setAmount(600);
+
+        bill.setVisitType("Adoption");
+
         when(billServiceClient.createBill(bill))
-                .thenReturn(Mono.just(bill));
+                .thenReturn(Mono.just(billDetailsExpanded));
 
 
         client.post()
@@ -660,9 +669,17 @@ class ApiGatewayControllerTest {
             bill.setAmount(600);
 
             bill.setVisitType("Adoption");
+            BillDetailsExpanded billDetailsExpanded = new BillDetailsExpanded();
+            bill.setBillId(1);
+
+            bill.setDate(null);
+
+            bill.setAmount(600);
+
+            bill.setVisitType("Adoption");
 
             when(billServiceClient.createBill(bill))
-                    .thenReturn(Mono.just(bill));
+                    .thenReturn(Mono.just(billDetailsExpanded));
 
 
             client.post()
@@ -1276,7 +1293,7 @@ class ApiGatewayControllerTest {
 
     @Test
     void getBillsByVetId() {
-        BillDetails entity = new BillDetails();
+        BillDetailsExpanded entity = new BillDetailsExpanded();
 
         entity.setBillId(1);
 
@@ -1320,7 +1337,7 @@ class ApiGatewayControllerTest {
 
     @Test
     void getBillsByPetId() {
-        BillDetails entity = new BillDetails();
+        BillDetailsExpanded entity = new BillDetailsExpanded();
 
         entity.setBillId(1);
 
@@ -1364,7 +1381,7 @@ class ApiGatewayControllerTest {
     
     @Test
     void getBillsByCustomerId() {
-        BillDetails entity = new BillDetails();
+        BillDetailsExpanded entity = new BillDetailsExpanded();
 
         entity.setBillId(1);
 

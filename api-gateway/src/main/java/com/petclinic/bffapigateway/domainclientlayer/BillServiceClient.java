@@ -35,41 +35,41 @@ public class BillServiceClient {
                 .bodyToMono(BillDetailsExpanded.class);
     }
 
-    public Flux<BillDetails> getAllBilling() {
+    public Flux<BillDetailsExpanded> getAllBilling() {
         return webClientBuilder.build().get()
                 .uri(billServiceUrl)
                 .retrieve()
-                .bodyToFlux(BillDetails.class);
+                .bodyToFlux(BillDetailsExpanded.class);
     }
 
-    public Mono<BillDetails> createBill(final BillDetails model){
+    public Mono<BillDetailsExpanded> createBill(final BillDetails model){
         return webClientBuilder.build().post()
                 .uri(billServiceUrl)
                 .body(Mono.just(model),BillDetails.class)
                 .accept(MediaType.APPLICATION_JSON)
-                .retrieve().bodyToMono(BillDetails.class);
+                .retrieve().bodyToMono(BillDetailsExpanded.class);
     }
 
-    public Flux<BillDetails> getBillsByVetId(final int vetId){
+    public Flux<BillDetailsExpanded> getBillsByVetId(final int vetId){
         return webClientBuilder.build().get()
                 .uri(billServiceUrl + "/vets/" + vetId)
                 .retrieve()
-                .bodyToFlux(BillDetails.class);
+                .bodyToFlux(BillDetailsExpanded.class);
     }
     
-    public Flux<BillDetails> getBillsByPetId(final int petId){
+    public Flux<BillDetailsExpanded> getBillsByPetId(final int petId){
         return webClientBuilder.build().get()
                 .uri(billServiceUrl + "/pets/" + petId)
                 .retrieve()
-                .bodyToFlux(BillDetails.class);  
+                .bodyToFlux(BillDetailsExpanded.class);
     }
     
-    public Flux<BillDetails> getBillsByCustomerId(final int customerId){
+    public Flux<BillDetailsExpanded> getBillsByCustomerId(final int customerId){
         return webClientBuilder.build()
                 .get()
                 .uri(billServiceUrl + "/customer/" + customerId)
                 .retrieve()
-                .bodyToFlux(BillDetails.class);
+                .bodyToFlux(BillDetailsExpanded.class);
     }
 
     public Mono<Void> deleteBill(final int billId) {
