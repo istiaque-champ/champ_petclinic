@@ -16,7 +16,8 @@
     </tr>
     <tr>
         <th>Address:</th>
-        <td>505 Lincoln Str. Queens, New York</td>
+        {{bill.ownerDetails.address}}, {{bill.ownerDetails.city}}
+        <td>{{$ctrl.bills.ownerDetails.address}}, {{$ctrl.bills.ownerDetails.city}}</td>
     </tr>
     <tr>
         <th>Final price:</th>
