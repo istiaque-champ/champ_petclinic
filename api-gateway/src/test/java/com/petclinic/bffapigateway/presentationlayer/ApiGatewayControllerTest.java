@@ -1434,4 +1434,17 @@ class ApiGatewayControllerTest {
                 .jsonPath("$[0].vetId").isEqualTo(entity.getVetId())
                 .jsonPath("$[0].petId").isEqualTo(entity.getPetId());
     }
+
+    @Test
+    void getAllBillingsNotFoundEmpty(){
+        when(billServiceClient.getAllBilling()).thenReturn(Flux.empty());
+
+        client.get()
+                //check the URI
+                .uri("/api/gateway/bills")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$[0].billId").doesNotExist();
+    }
 }
