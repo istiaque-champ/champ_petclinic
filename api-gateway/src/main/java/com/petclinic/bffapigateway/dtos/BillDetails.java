@@ -11,6 +11,7 @@ public class BillDetails {
     private Date date;
     private int customerId;
     private int vetId;
+    private int petId;
     private String visitType;
     private double amount;
 

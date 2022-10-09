@@ -14,6 +14,7 @@ public class BillDTO {
 
     private int billId;
     private int customerId;
+    private int petId;
     private int vetId;
     private String visitType;
     private Instant date;

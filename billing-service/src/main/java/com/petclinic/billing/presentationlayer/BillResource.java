@@ -60,6 +60,11 @@ public class BillResource {
     public Flux<BillDTO> getBillsByVetId(@PathVariable int vetId){
         return SERVICE.GetBillsByVetId(EntityDTOUtil.verifyId(vetId));
     }
+
+    @GetMapping(value = "/pets/{petId}")
+    public Flux<BillDTO> getBillsByPetId(@PathVariable int petId){
+        return SERVICE.GetBillsByPetId(EntityDTOUtil.verifyId(petId));
+    }
     // Delete Bill //
     @DeleteMapping(value = "{billId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

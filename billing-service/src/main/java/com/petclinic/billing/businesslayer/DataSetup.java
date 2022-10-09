@@ -19,6 +19,8 @@ public class DataSetup implements CommandLineRunner {
     private static final Instant VALID_DATE = Instant.now();
     private static final int VALID_VET_ID1 = 1;
     private static final int VALID_VET_ID2 = 2;
+    private static final int VALID_PET_ID1 = 1;
+    private static final int VALID_PET_ID2 = 2;
 
     @Autowired
     private BillService billService;
@@ -32,6 +34,7 @@ public class DataSetup implements CommandLineRunner {
             setupBill.setVisitType(VALID_VISIT_TYPE);
             setupBill.setDate(VALID_DATE);
             setupBill.setVetId(i % 2 == 0 ? VALID_VET_ID1 : VALID_VET_ID2);
+            setupBill.setPetId(i % 2 == 0 ? VALID_PET_ID1 : VALID_PET_ID2);
 
             billDTOS.add(setupBill);
         }

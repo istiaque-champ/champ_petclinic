@@ -18,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 //recreating the test classes entirely as they are significantly different
 class BillRepositoryTest {
 
+    private static final int VALID_PET_ID = 1;
     @Autowired
     BillRepository billRepository;
 
@@ -39,6 +40,7 @@ class BillRepositoryTest {
         setupBill.setDate(VALID_DATE);
         setupBill.setAmount(VALID_AMOUNT);
         setupBill.setVetId(VALID_VET_ID);
+        setupBill.setPetId(VALID_PET_ID);
         return setupBill;
     }
 
@@ -68,6 +70,7 @@ class BillRepositoryTest {
                     assertNotNull(bill.getDate());
                     assertEquals(bill.getAmount(), setupBill.getAmount());
                     assertEquals(bill.getVetId(), setupBill.getVetId());
+                    assertEquals(bill.getPetId(), setupBill.getPetId());
                 })
                 .verifyComplete();
     }
@@ -88,6 +91,7 @@ class BillRepositoryTest {
                     assertNotNull(bill.getDate());
                     assertEquals(bill.getAmount(), setupBill.getAmount());
                     assertEquals(bill.getVetId(), setupBill.getVetId());
+                    assertEquals(bill.getPetId(), setupBill.getPetId());
                 })
                 .verifyComplete();
     }
@@ -119,6 +123,7 @@ class BillRepositoryTest {
                     assertNotNull(bill.getDate());
                     assertEquals(bill.getAmount(), setupBill.getAmount());
                     assertEquals(bill.getVetId(), setupBill.getVetId());
+                    assertEquals(bill.getPetId(), setupBill.getPetId());
                 })
                 .verifyComplete();
     }
@@ -149,6 +154,7 @@ class BillRepositoryTest {
                     assertNotNull(bill.getDate());
                     assertEquals(bill.getAmount(), setupBill.getAmount());
                     assertEquals(bill.getVetId(), setupBill.getVetId());
+                    assertEquals(bill.getPetId(), setupBill.getPetId());
                 })
                 .verifyComplete();
     }
@@ -179,6 +185,40 @@ class BillRepositoryTest {
                     assertNotNull(bill.getDate());
                     assertEquals(bill.getAmount(), setupBill.getAmount());
                     assertEquals(bill.getVetId(), setupBill.getVetId());
+                    assertEquals(bill.getPetId(), setupBill.getPetId());
+                })
+                .verifyComplete();
+    }
+
+
+
+    @Test
+    void findBillsByPetId(){
+        Bill setupBill = getSetupBill();
+
+        Publisher<Bill> setup = billRepository.deleteAll().thenMany(billRepository.save(setupBill));
+
+        StepVerifier
+                .create(setup)
+                .expectNextCount(1)
+                .verifyComplete();
+
+        Flux<Bill> find = billRepository.findBillsByPetId(VALID_PET_ID);
+        Publisher<Bill> composite = Mono
+                .from(setup)
+                .thenMany(find);
+
+        StepVerifier
+                .create(composite)
+                .consumeNextWith(bill -> {
+                    assertNotNull(bill.getId());
+                    assertEquals(bill.getBillId(), setupBill.getBillId());
+                    assertEquals(bill.getCustomerId(), setupBill.getCustomerId());
+                    assertEquals(bill.getVisitType(), setupBill.getVisitType());
+                    assertNotNull(bill.getDate());
+                    assertEquals(bill.getAmount(), setupBill.getAmount());
+                    assertEquals(bill.getVetId(), setupBill.getVetId());
+                    assertEquals(bill.getPetId(), setupBill.getPetId());
                 })
                 .verifyComplete();
     }
@@ -237,6 +277,7 @@ class BillRepositoryTest {
                     assertNotNull(bill.getDate());
                     assertEquals(bill.getAmount(), SECOND_VALID_AMOUNT);
                     assertEquals(bill.getVetId(), setupBill.getVetId());
+                    assertEquals(bill.getPetId(), setupBill.getPetId());
                 })
                 .verifyComplete();
     }

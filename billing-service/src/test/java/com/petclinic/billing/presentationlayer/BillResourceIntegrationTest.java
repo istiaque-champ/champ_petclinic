@@ -31,6 +31,7 @@ public class BillResourceIntegrationTest {
     private final Integer VALID_BILL_ID = 1;
     private final Integer VALID_CUSTOMER_ID = 1;
     private final Integer VALID_VET_ID = 1;
+    private final Integer VALID_PET_ID = 1;
     private final String VALID_VISIT_TYPE = "Examinations";
     private final Instant VALID_DATE = Instant.now();
     private final Double VALID_AMOUNT = BillServiceImpl.visitTypePrices.get(VALID_VISIT_TYPE);
@@ -42,11 +43,13 @@ public class BillResourceIntegrationTest {
     private final Integer INVALID_CUSTOMER_ID = -1;
 
     private final Integer INVALID_VET_ID = -1;
+    private final Integer INVALID_PET_ID = -1;
     private final BillDTO VALID_BILL_REQUEST_MODEL = buildBillDTORequestModel();
     private final BillDTO SECOND_VALID_BILL_REQUEST_MODEL = buildBillDTORequestModel2();
     private final BillDTO INVALID_CUSTOMER_ID_REQUEST_MODEL = buildInvalidCustomerIdBillDTO();
     private final BillDTO INVALID_VISIT_TYPE_REQUEST_MODEL = buildInvalidVisitTypeBillDTO();
     private final BillDTO INVALID_VET_ID_REQUEST_MODEL = buildInvalidVetIdBillDTO();
+    private final BillDTO INVALID_PET_ID_REQUEST_MODEL = buildInvalidPetIdBillDTO();
 
     @Test
     void testGetByIdIntegration() {
@@ -70,7 +73,8 @@ public class BillResourceIntegrationTest {
                 .jsonPath("$.customerId").isEqualTo(VALID_CUSTOMER_ID)
                 .jsonPath("$.visitType").isEqualTo(VALID_VISIT_TYPE)
                 .jsonPath("$.amount").isEqualTo(VALID_AMOUNT)
-                .jsonPath("$.vetId").isEqualTo(VALID_VET_ID);
+                .jsonPath("$.vetId").isEqualTo(VALID_VET_ID)
+                .jsonPath("$.petId").isEqualTo(VALID_PET_ID);
     }
 
     @Test
@@ -96,7 +100,8 @@ public class BillResourceIntegrationTest {
                 .jsonPath("$[0].customerId").isEqualTo(VALID_CUSTOMER_ID)
                 .jsonPath("$[0].visitType").isEqualTo(VALID_VISIT_TYPE)
                 .jsonPath("$[0].amount").isEqualTo(VALID_AMOUNT)
-                .jsonPath("$[0].vetId").isNotEmpty();
+                .jsonPath("$[0].vetId").isNotEmpty()
+                .jsonPath("$[0].petId").isNotEmpty();
     }
 
     @Test
@@ -120,7 +125,8 @@ public class BillResourceIntegrationTest {
                 .jsonPath("$.customerId").isEqualTo(VALID_CUSTOMER_ID)
                 .jsonPath("$.visitType").isEqualTo(VALID_VISIT_TYPE)
                 .jsonPath("$.amount").isEqualTo(VALID_AMOUNT)
-                .jsonPath("$.vetId").isEqualTo(VALID_VET_ID);
+                .jsonPath("$.vetId").isEqualTo(VALID_VET_ID)
+                .jsonPath("$.petId").isEqualTo(VALID_PET_ID);
     }
 
     @Test
@@ -146,7 +152,8 @@ public class BillResourceIntegrationTest {
                 .jsonPath("$.customerId").isEqualTo(VALID_CUSTOMER_ID)
                 .jsonPath("$.visitType").isEqualTo(SECOND_VALID_VISIT_TYPE)
                 .jsonPath("$.amount").isEqualTo(SECOND_VALID_AMOUNT)
-                .jsonPath("$.vetId").isEqualTo(VALID_VET_ID);
+                .jsonPath("$.vetId").isEqualTo(VALID_VET_ID)
+                .jsonPath("$.petId").isEqualTo(VALID_PET_ID);
     }
 
     @Test
@@ -171,7 +178,8 @@ public class BillResourceIntegrationTest {
                 .jsonPath("$[0].customerId").isEqualTo(VALID_CUSTOMER_ID)
                 .jsonPath("$[0].visitType").isEqualTo(VALID_VISIT_TYPE)
                 .jsonPath("$[0].amount").isEqualTo(VALID_AMOUNT)
-                .jsonPath("$[0].vetId").isEqualTo(VALID_VET_ID);
+                .jsonPath("$[0].vetId").isEqualTo(VALID_VET_ID)
+                .jsonPath("$[0].petId").isEqualTo(VALID_PET_ID);
     }
 
     @Test
@@ -196,7 +204,34 @@ public class BillResourceIntegrationTest {
                 .jsonPath("$[0].customerId").isEqualTo(VALID_CUSTOMER_ID)
                 .jsonPath("$[0].visitType").isEqualTo(VALID_VISIT_TYPE)
                 .jsonPath("$[0].amount").isEqualTo(VALID_AMOUNT)
-                .jsonPath("$[0].vetId").isEqualTo(VALID_VET_ID);
+                .jsonPath("$[0].vetId").isEqualTo(VALID_VET_ID)
+                .jsonPath("$[0].petId").isEqualTo(VALID_PET_ID);
+    }
+
+    @Test
+    void testGetByPetIdIntegration(){
+        Bill setupBill = getSetupBill();
+
+        Publisher<Bill> setup = billRepository.deleteAll().thenMany(billRepository.save(setupBill));
+
+        StepVerifier
+                .create(setup)
+                .expectNextCount(1)
+                .verifyComplete();
+
+        webTestClient.get()
+                .uri(BASE_URI + "/pets/" + VALID_PET_ID)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody()
+                .jsonPath("$[0].billId").isEqualTo(VALID_BILL_ID)
+                .jsonPath("$[0].customerId").isEqualTo(VALID_CUSTOMER_ID)
+                .jsonPath("$[0].visitType").isEqualTo(VALID_VISIT_TYPE)
+                .jsonPath("$[0].amount").isEqualTo(VALID_AMOUNT)
+                .jsonPath("$[0].vetId").isEqualTo(VALID_VET_ID)
+                .jsonPath("$[0].petId").isEqualTo(VALID_PET_ID);
     }
 
     @Test
@@ -310,6 +345,25 @@ public class BillResourceIntegrationTest {
     }
 
     @Test
+    void testCreateInvalidPetIdIntegration(){
+        Publisher<Void> setup = billRepository.deleteAll();
+
+        StepVerifier
+                .create(setup)
+                .expectNextCount(0)
+                .verifyComplete();
+
+        webTestClient.post()
+                .uri(BASE_URI)
+                .body(Mono.just(INVALID_PET_ID_REQUEST_MODEL), BillDTO.class)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
+                .expectBody()
+                .jsonPath("$.message").isEqualTo("That pet id is invalid");
+    }
+
+    @Test
     void testUpdateNotFoundIntegration(){
         Publisher<Void> setup = billRepository.deleteAll();
 
@@ -392,6 +446,27 @@ public class BillResourceIntegrationTest {
     }
 
     @Test
+    void testUpdateInvalidPetIdIntegration(){
+        Bill setupBill = getSetupBill();
+
+        Publisher<Bill> setup = billRepository.deleteAll().thenMany(billRepository.save(setupBill));
+
+        StepVerifier
+                .create(setup)
+                .expectNextCount(1)
+                .verifyComplete();
+
+        webTestClient.put()
+                .uri(BASE_URI + "/" + VALID_BILL_ID)
+                .body(Mono.just(INVALID_PET_ID_REQUEST_MODEL), BillDTO.class)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
+                .expectBody()
+                .jsonPath("$.message").isEqualTo("That pet id is invalid");
+    }
+
+    @Test
     void getBillIdInvalidBillIdIntegration(){
         Bill setupBill = getSetupBill();
 
@@ -452,6 +527,26 @@ public class BillResourceIntegrationTest {
     }
 
     @Test
+    void getBillsByInvalidPetIdIntegration(){
+        Bill setupBill = getSetupBill();
+
+        Publisher<Bill> setup = billRepository.deleteAll().thenMany(billRepository.save(setupBill));
+
+        StepVerifier
+                .create(setup)
+                .expectNextCount(1)
+                .verifyComplete();
+
+        webTestClient.get()
+                .uri(BASE_URI + "/pets/" + INVALID_PET_ID)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
+                .expectBody()
+                .jsonPath("$.message").isEqualTo("That id is invalid");
+    }
+
+    @Test
     void updateBillInvalidBillIdIntegration(){
         Bill setupBill = getSetupBill();
 
@@ -497,6 +592,7 @@ public class BillResourceIntegrationTest {
 
         billDTO.setCustomerId(VALID_CUSTOMER_ID);
         billDTO.setVetId(VALID_VET_ID);
+        billDTO.setPetId(VALID_PET_ID);
         billDTO.setVisitType(VALID_VISIT_TYPE);
         billDTO.setDate(VALID_DATE);
 
@@ -508,6 +604,7 @@ public class BillResourceIntegrationTest {
 
         billDTO.setCustomerId(VALID_CUSTOMER_ID);
         billDTO.setVetId(VALID_VET_ID);
+        billDTO.setPetId(VALID_PET_ID);
         billDTO.setVisitType(SECOND_VALID_VISIT_TYPE);
         billDTO.setDate(VALID_DATE);
 
@@ -519,6 +616,7 @@ public class BillResourceIntegrationTest {
 
         billDTO.setCustomerId(INVALID_CUSTOMER_ID);
         billDTO.setVetId(VALID_VET_ID);
+        billDTO.setPetId(VALID_PET_ID);
         billDTO.setVisitType(SECOND_VALID_VISIT_TYPE);
         billDTO.setDate(VALID_DATE);
 
@@ -530,6 +628,7 @@ public class BillResourceIntegrationTest {
 
         billDTO.setCustomerId(VALID_CUSTOMER_ID);
         billDTO.setVetId(VALID_VET_ID);
+        billDTO.setPetId(VALID_PET_ID);
         String INVALID_VISIT_TYPE = "Random";
         billDTO.setVisitType(INVALID_VISIT_TYPE);
         billDTO.setDate(VALID_DATE);
@@ -542,6 +641,19 @@ public class BillResourceIntegrationTest {
 
         billDTO.setCustomerId(VALID_CUSTOMER_ID);
         billDTO.setVetId(INVALID_VET_ID);
+        billDTO.setPetId(VALID_PET_ID);
+        billDTO.setVisitType(SECOND_VALID_VISIT_TYPE);
+        billDTO.setDate(VALID_DATE);
+
+        return billDTO;
+    }
+
+    BillDTO buildInvalidPetIdBillDTO(){
+        BillDTO billDTO = new BillDTO();
+
+        billDTO.setCustomerId(VALID_CUSTOMER_ID);
+        billDTO.setVetId(VALID_VET_ID);
+        billDTO.setPetId(INVALID_PET_ID);
         billDTO.setVisitType(SECOND_VALID_VISIT_TYPE);
         billDTO.setDate(VALID_DATE);
 
@@ -556,6 +668,7 @@ public class BillResourceIntegrationTest {
         setupBill.setDate(VALID_DATE);
         setupBill.setAmount(VALID_AMOUNT);
         setupBill.setVetId(VALID_VET_ID);
+        setupBill.setPetId(VALID_PET_ID);
         return setupBill;
     }
 }
