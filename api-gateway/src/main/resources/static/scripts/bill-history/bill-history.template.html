@@ -26,19 +26,17 @@
         <td class="t-id{{bill.billId}}" ng-mouseenter="$ctrl.show($event, bill.billId)"
             ng-mouseleave="$ctrl.hide($event,bill.billId)">
             <!-- TODO: Make this more efficient - Pass OBJ to script and pull both values maybe?  -->
-            {{($ctrl.billDetailedData | filter:{"customerId": bill.billId})[0]["ownerInfo"]["data"]["firstName"] }}
-            {{($ctrl.billDetailedData | filter:{"customerId": bill.billId})[0]["ownerInfo"]["data"]["lastName"] }}
+            {{bill.ownerDetails.firstName}} {{bill.ownerDetails.lastName}}
             <!--Hover pop up-->
             <div class="billModal m{{bill.billId}} modalOff container w-25">
                 <div class="row">
                     <div class="col-6">
                         <b>Address:</b>
-                        <br>{{($ctrl.billDetailedData | filter:{"customerId": bill.billId})[0]["ownerInfo"]["data"]["address"]}},
-                        <br>{{($ctrl.billDetailedData | filter:{"customerId": bill.billId})[0]["ownerInfo"]["data"]["city"]}}
+                        {{bill.ownerDetails.address}}, {{bill.ownerDetails.city}}
                     </div>
                     <div class="col-6">
                         <b>Pets:</b>
-                        <span ng-repeat="pet in ($ctrl.billDetailedData | filter:{'customerId': bill.billId})[0]['ownerInfo']['data']['pets'] track by pet.id">
+                        <span ng-repeat="pet in bill.ownerDetails.pets track by pet.id">
                         {{pet.name}}<br>
                     </span>
                     </div>
