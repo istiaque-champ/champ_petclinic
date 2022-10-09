@@ -56,6 +56,14 @@ public class BillServiceClient {
                 .bodyToFlux(BillDetails.class);
     }
 
+    public Flux<BillDetails> getBillsByCustomerId(final int customerId){
+        return webClientBuilder.build()
+                .get()
+                .uri(billServiceUrl + "/customer/" + customerId)
+                .retrieve()
+                .bodyToFlux(BillDetails.class);
+    }
+
     public Mono<Void> deleteBill(final int billId) {
         return webClientBuilder.build()
                 .delete()
