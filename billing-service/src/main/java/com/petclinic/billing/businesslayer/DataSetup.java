@@ -1,6 +1,7 @@
 package com.petclinic.billing.businesslayer;
 
 import com.petclinic.billing.datalayer.BillDTO;
+import com.petclinic.billing.datalayer.BillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
@@ -26,8 +27,12 @@ public class DataSetup implements CommandLineRunner {
     @Autowired
     private BillService billService;
 
+    @Autowired
+    private BillRepository billRepository;
+
     @Override
     public void run(String... args) throws Exception {
+        billRepository.deleteAll();
         List<BillDTO> billDTOS = new ArrayList<>();
         for(int i = 0; i < 10; i++){
             BillDTO setupBill = new BillDTO();
