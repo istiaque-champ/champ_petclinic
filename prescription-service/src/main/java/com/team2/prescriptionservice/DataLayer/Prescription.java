@@ -20,13 +20,16 @@ public class Prescription {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "prescriptionid", nullable = false)
+    private String prescriptionId;
+
     @Column(name = "medication", nullable = false)
     private String medication;
 
     @Column(name = "amount", nullable = false)
     private String amount;
 
-    @Column(name = "datePrinted")
+    @Column(name = "dateprinted")
     @Temporal(TemporalType.DATE)
     private Date datePrinted;
 
