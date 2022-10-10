@@ -1,4 +1,4 @@
-USE 'prescription-db';
+USE `prescription-db`;
 
 CREATE TABLE IF NOT EXISTS prescriptions(
     id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
