@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
-import java.util.Date;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.transaction.annotation.Propagation.NOT_SUPPORTED;
@@ -65,7 +65,17 @@ class PrescriptionRepoTest {
                 () -> assertNotNull(savedPrescription)
         );
 
+    }
 
+
+    @Test
+    void whenPrescriptionIdExists_ThenAssertTrue(){
+
+        Boolean isFound;
+
+        isFound = prescriptionRepo.existsPrescriptionByPrescriptionId(VALID_PRESCRIPTION_ID);
+
+        Assertions.assertEquals(true, isFound);
 
 
     }
