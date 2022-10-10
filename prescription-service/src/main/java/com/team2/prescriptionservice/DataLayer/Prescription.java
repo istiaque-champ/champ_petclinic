@@ -2,7 +2,6 @@ package com.team2.prescriptionservice.DataLayer;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 
@@ -21,7 +20,7 @@ public class Prescription {
     private Integer id;
 
     @Column(name = "prescriptionid", nullable = false)
-    private String prescriptionId;
+    private Integer prescriptionId;
 
     @Column(name = "medication", nullable = false)
     private String medication;
