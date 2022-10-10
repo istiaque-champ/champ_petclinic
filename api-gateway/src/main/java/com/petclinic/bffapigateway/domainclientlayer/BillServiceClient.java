@@ -13,7 +13,12 @@ import reactor.core.publisher.Mono;
 public class BillServiceClient {
 
     private final WebClient.Builder webClientBuilder;
-    private final String billServiceUrl;
+
+    public void setBillServiceUrl(String billServiceUrl) {
+        this.billServiceUrl = billServiceUrl;
+    }
+
+    private String billServiceUrl;
 
 
     public BillServiceClient(
