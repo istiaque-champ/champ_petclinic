@@ -3,6 +3,7 @@ package com.petclinic.bffapigateway.domainclientlayer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.petclinic.bffapigateway.dtos.BillDetails;
+import com.petclinic.bffapigateway.dtos.BillDetailsExpanded;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.AfterEach;
@@ -57,7 +58,7 @@ class BillServiceClientTest {
                         "        \"amount\": 59.99\n" +
                         "    }"));
 
-        Mono<BillDetails> billDetailsMono = billServiceClient.getBilling(63701);
+        Mono<BillDetailsExpanded> billDetailsMono = billServiceClient.getBilling(63701);
 
         assertEquals(63701, billDetailsMono.block().getBillId());
     }
@@ -76,7 +77,7 @@ class BillServiceClientTest {
                     "        \"amount\": 59.99\n" +
                     "    }]"));
 
-        Flux<BillDetails> billDetailsFlux = billServiceClient.getAllBilling();
+        Flux<BillDetailsExpanded> billDetailsFlux = billServiceClient.getAllBilling();
 
         assertEquals(63701, billDetailsFlux.blockFirst().getBillId());
     }
@@ -100,7 +101,7 @@ class BillServiceClientTest {
                 .setHeader("Content-Type", "application/json")
                 .setBody(body));
 
-        Mono<BillDetails> billDetailsMono = billServiceClient.createBill(entity);
+        Mono<BillDetailsExpanded> billDetailsMono = billServiceClient.createBill(entity);
 
         assertEquals(1, billDetailsMono.block().getBillId());
     }
@@ -119,7 +120,7 @@ class BillServiceClientTest {
                         "        \"amount\": 59.99\n" +
                         "    }]"));
 
-        Flux<BillDetails> billDetailsFlux = billServiceClient.getBillsByVetId(2);
+        Flux<BillDetailsExpanded> billDetailsFlux = billServiceClient.getBillsByVetId(2);
 
         assertEquals(63701, billDetailsFlux.blockFirst().getBillId());
     }
@@ -138,7 +139,7 @@ class BillServiceClientTest {
                         "        \"amount\": 59.99\n" +
                         "    }]"));
 
-        Flux<BillDetails> billDetailsFlux = billServiceClient.getBillsByPetId(2);
+        Flux<BillDetailsExpanded> billDetailsFlux = billServiceClient.getBillsByPetId(2);
 
         assertEquals(63701, billDetailsFlux.blockFirst().getBillId());
     }
@@ -157,7 +158,7 @@ class BillServiceClientTest {
                         "        \"amount\": 59.99\n" +
                         "    }]"));
 
-        Flux<BillDetails> billDetailsFlux = billServiceClient.getBillsByCustomerId(1);
+        Flux<BillDetailsExpanded> billDetailsFlux = billServiceClient.getBillsByCustomerId(1);
 
         assertEquals(63701, billDetailsFlux.blockFirst().getBillId());
     }
