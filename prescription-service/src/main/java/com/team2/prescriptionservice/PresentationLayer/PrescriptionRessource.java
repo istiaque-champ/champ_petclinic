@@ -1,5 +1,6 @@
 package com.team2.prescriptionservice.PresentationLayer;
 
+import com.team2.prescriptionservice.DataLayer.PrescriptionRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
