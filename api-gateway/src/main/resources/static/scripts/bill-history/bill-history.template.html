@@ -23,9 +23,8 @@
         <td id="BillIdColumn">
             #{{bill.billId}}
         </td>
-        <td class="t-id{{bill.billId}}" ng-mouseenter="$ctrl.show($event, bill.billId)"
+        <td class="t-id{{bill.billId}}" id="ownerName" ng-mouseenter="$ctrl.show($event, bill.billId)"
             ng-mouseleave="$ctrl.hide($event,bill.billId)">
-            <!-- TODO: Make this more efficient - Pass OBJ to script and pull both values maybe?  -->
             {{bill.ownerDetails.firstName}} {{bill.ownerDetails.lastName}}
             <!--Hover pop up-->
             <div class="billModal m{{bill.billId}} modalOff container w-25">
