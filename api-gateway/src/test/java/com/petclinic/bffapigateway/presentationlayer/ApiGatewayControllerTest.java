@@ -1425,7 +1425,7 @@ class ApiGatewayControllerTest {
 
     @Test
     void getAllBillings(){
-        BillDetails entity = new BillDetails();
+        BillDetailsExpanded entity = new BillDetailsExpanded();
 
         entity.setBillId(1);
 
