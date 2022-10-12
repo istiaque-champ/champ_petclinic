@@ -1,14 +1,3 @@
-<script>
-    function printPage() {
-        window.print();
-    }
-
-    function getAll(){
-
-    }
-
-</script>
-
 <div class="bColor">
 <h2 id="BillDetailsTitle">Bill Details: </h2>
     <br><br>
@@ -29,11 +18,16 @@
         </tr>
         <tr>
             <td><label>Owners: </label><select ng-model="$ctrl.bills.costumerId"><option ng-repeat="owner in $ctrl.owners" value={{owner.id}}>{{owner.firstName}} {{owner.lastName}}</option></select></td>
+            <td><label>Pet: </label><select><option></option></select></td>
+        </tr>
+        <tr>
+            <td><label>Vet: </label><select ng-model="$ctrl.bills.vetId"><option ng-repeat="vet in $ctrl.vets" value={{vet.id}}>{{vet.firstName}} {{vet.lastName}}</option></select></td>
         </tr>
     </table>
 
     <a ui-sref="saveBill">
-        <button ng-click="$ctrl.submitBillDetailsForm()" type="submit">Save</button>
+        <button class="save-bill-button btn btn-success" ng-click="$ctrl.submitBillDetailsForm()" type="submit">Save</button>
     </a>
-        <button ng-click="$ctrl.print()" type="print">Print</button>
-
+    <a ui-sref="printBill">
+        <button class="print-bill-button btn btn-success" ng-click="$ctrl.printPage()" type="print">Print</button>
+    </a>

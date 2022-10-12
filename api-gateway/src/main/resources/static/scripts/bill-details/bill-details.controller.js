@@ -15,6 +15,10 @@ angular.module('billDetails')
             self.owners = resp.data;
         })
 
+        $http.get('api/gateway/vets').then(function (resp){
+            self.vets = resp.data;
+        })
+
         self.submitBillDetailsForm = function (){
 
             if (createBill){
@@ -26,6 +30,10 @@ angular.module('billDetails')
                 var uri = 'api/gateway/bills/' + $stateParams.billId;
                 $http.put(uri, self.bills)
             }
+        }
+
+        self.printPage = function (){
+            window.print();
         }
 
     }])
