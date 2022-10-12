@@ -13,6 +13,14 @@ angular.module('billDetails')
 
         $http.get('api/gateway/owners').then(function (resp){
             self.owners = resp.data;
+           /* if(!createBill){
+                for (let i = 0; i < self.owners.length; i++){
+                    if(self.owners[i].customerId == self.bills.ownerID){
+                        self.selectedOwner = self.owners[i];
+                        break;
+                    }
+                }
+            }*/
         })
 
         $http.get('api/gateway/vets').then(function (resp){
