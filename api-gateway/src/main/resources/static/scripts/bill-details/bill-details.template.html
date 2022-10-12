@@ -27,6 +27,9 @@
         <tr>
             <td><label>Date/Time: </label><input id="BillDate" type="text" ng-model="$ctrl.bills.date"></td>
         </tr>
+        <tr>
+            <td><label>Owners: </label><select ng-model="$ctrl.bills.costumerId"><option ng-repeat="owner in $ctrl.owners" value={{owner.id}}>{{owner.firstName}} {{owner.lastName}}</option></select></td>
+        </tr>
     </table>
 
     <a ui-sref="saveBill">

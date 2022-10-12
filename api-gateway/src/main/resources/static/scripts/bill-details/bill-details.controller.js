@@ -1,26 +1,31 @@
 'use strict';
 
 angular.module('billDetails')
-    .controller('BillDetailsController', ['$http', '$stateParams', function ($http, $stateParams) {
+    .controller('BillDetailsController', ['$http', '$scope', '$stateParams', function ($http, $scope, $stateParams) {
         var self = this
-        //var newBillId = this
+        var createBill = $stateParams.billId == null
 
-        $http.get('api/gateway/bills/' + $stateParams.billId).then(function (resp) {
-            self.bills = resp.data;
+        if (!createBill){
+            $http.get('api/gateway/bills/' + $stateParams.billId).then(function (resp) {
+                self.bills = resp.data;
+            })
+        }
+
+        $http.get('api/gateway/owners').then(function (resp){
+            self.owners = resp.data;
         })
-
-       /* $http.post('api/gateway/bills/' + $stateParams.newId).then(function (createBillId){
-            newBillId.bills = createBillId.data;
-        })*/
 
         self.submitBillDetailsForm = function (){
 
-            var uri = 'api/gateway/bills/' + $stateParams.billId
-            $http.put(uri, self.bills)
+            if (createBill){
+                console.log('Creating new bill');
+                console.log(self.bills);
+                var uri = 'api/gateway/bills';
+                $http.post(uri, self.bills)
+            }else {
+                var uri = 'api/gateway/bills/' + $stateParams.billId;
+                $http.put(uri, self.bills)
+            }
         }
 
-       /* self.AddBillForm = function (){
-            var uri = 'api/gateway/bills/' + $$stateParams.newId
-            $http.post(uri, newBillId.bills)
-        }*/
     }])
