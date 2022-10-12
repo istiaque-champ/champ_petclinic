@@ -5,16 +5,16 @@
 
     <table class="table table-striped">
         <tr>
-            <td><label>Bill Id: </label><input id="BillId" type="text" ng-model="$ctrl.bills.billId"></td>
+            <td id="BillId">Bill Id:  {{$ctrl.bills.billId}}</td>
         </tr>
         <tr>
-            <td><label>Price: </label><input id="BillCost" type="text" ng-model="$ctrl.bills.amount"></td>
+            <td id="BillCost" >Price:  {{$ctrl.bills.amount}}</td>
         </tr>
         <tr>
             <td><label>Visit Type: </label><input id="BillType" type="text" ng-model="$ctrl.bills.visitType"></td>
         </tr>
         <tr>
-            <td><label>Date/Time: </label><input id="BillDate" type="text" ng-model="$ctrl.bills.date"></td>
+            <td>Date/Time:  {{bill.date}}</td>
         </tr>
         <tr>
             <td><label>Owners: </label><select ng-model="$ctrl.bills.costumerId"><option ng-repeat="owner in $ctrl.owners" value={{owner.id}}>{{owner.firstName}} {{owner.lastName}}</option></select></td>
