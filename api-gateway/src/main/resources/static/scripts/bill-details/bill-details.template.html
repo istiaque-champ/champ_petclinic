@@ -2,37 +2,35 @@
     function printPage() {
         window.print();
     }
+
+    function getAll(){
+
+    }
+
 </script>
 
 <div class="bColor">
-<h2 id="BillDetailsTitle">Bill Details: {{$ctrl.bills.billId}}</h2>
+<h2 id="BillDetailsTitle">Bill Details: </h2>
     <br><br>
 </div>
 
-<table class="table table-striped">
-    <tr>
-        <th>Payment Info for Bill:</th>
-        <td>{{$ctrl.bills.billId}}</td>
-    </tr>
-    <tr>
-        <th>Address:</th>
-        <td>505 Lincoln Str. Queens, New York</td>
-    </tr>
-    <tr>
-        <th>Final price:</th>
-        <td>{{$ctrl.bills.amount}}</td>
-    </tr>
-    <tr>
-        <th>Visit type:</th>
-        <td>{{$ctrl.bills.visitType}}</td>
-    </tr>
-    <tr>
-        <th>Date generated:</th>
-        <td>{{$ctrl.bills.date}}</td>
-    </tr>
-</table>
-    <br>
-    <div>
-        <input class="newBtn btn btn-primary" type="button" value="Print this page" onclick="printPage()" />
-        <a class="btn btn-primary" href="http://localhost:8080/#!/bills">Back to History</a>
-    </div>
+    <table class="table table-striped">
+        <tr>
+            <td><label>Bill Id: </label><input id="BillId" type="text" ng-model="$ctrl.bills.billId"></td>
+        </tr>
+        <tr>
+            <td><label>Price: </label><input id="BillCost" type="text" ng-model="$ctrl.bills.amount"></td>
+        </tr>
+        <tr>
+            <td><label>Visit Type: </label><input id="BillType" type="text" ng-model="$ctrl.bills.visitType"></td>
+        </tr>
+        <tr>
+            <td><label>Date/Time: </label><input id="BillDate" type="text" ng-model="$ctrl.bills.date"></td>
+        </tr>
+    </table>
+
+    <a ui-sref="saveBill">
+        <button ng-click="$ctrl.submitBillDetailsForm()" type="submit">Save</button>
+    </a>
+        <button ng-click="$ctrl.print()" type="print">Print</button>
+
