@@ -26,6 +26,14 @@ angular.module('visits')
             return Date.parse(yyyy + '-' + mm + '-' + dd);
         }
 
+        // Function to parse the visit date into a comparable format
+        function parseDate(date) {
+            var dd = String(date.getDate()).padStart(2, '0');
+            var mm = String(date.getMonth() + 1).padStart(2, '0');
+            var yyyy = date.getFullYear();
+            return Date.parse(yyyy + '-' + mm + '-' + dd);
+        }
+
         // Container div for all alerts
         let alertsContainer = $('#alertsContainer');
 
@@ -562,16 +570,16 @@ angular.module('visits')
 
                 if(sortStatusAscendingUpcomingVisits) {
                     self.upcomingVisits.sort(function (a, b) {
-                        a = self.getStatus(a.status).toLowerCase();
-                        b = self.getStatus(b.status).toLowerCase();
+                        a = self.getStatus(a.status, a.date).toLowerCase();
+                        b = self.getStatus(b.status, b.date).toLowerCase();
 
                         return a < b ? -1 : a > b ? 1 : 0;
                     });
                     $('#sortByStatusButtonUpcomingVisits').text("Sort by status ↓")
                 } else {
                     self.upcomingVisits.sort(function (a, b) {
-                        a = self.getStatus(a.status).toLowerCase();
-                        b = self.getStatus(b.status).toLowerCase();
+                        a = self.getStatus(a.status, a.date).toLowerCase();
+                        b = self.getStatus(b.status, b.date).toLowerCase();
 
                         return a > b ? -1 : a < b ? 1 : 0;
                     });
@@ -584,16 +592,16 @@ angular.module('visits')
 
                 if(sortStatusAscendingPreviousVisits) {
                     self.previousVisits.sort(function (a, b) {
-                        a = self.getStatus(a.status).toLowerCase();
-                        b = self.getStatus(b.status).toLowerCase();
+                        a = self.getStatus(a.status, a.date).toLowerCase();
+                        b = self.getStatus(b.status, b.date).toLowerCase();
 
                         return a < b ? -1 : a > b ? 1 : 0;
                     });
                     $('#sortByStatusButtonPreviousVisits').text("Sort by status ↓")
                 } else {
                     self.previousVisits.sort(function (a, b) {
-                        a = self.getStatus(a.status).toLowerCase();
-                        b = self.getStatus(b.status).toLowerCase();
+                        a = self.getStatus(a.status, a.date).toLowerCase();
+                        b = self.getStatus(b.status, b.date).toLowerCase();
 
                         return a > b ? -1 : a < b ? 1 : 0;
                     });
@@ -666,14 +674,33 @@ angular.module('visits')
             });
         };
 
-        self.getStatus = function (status) {
+        self.getStatus = function (status, date) {
             var statusText = "";
+            // print(date);
+            var currentDate = new Date();
+            // let visitDate = parseDate(date);
+
+            var dd = String(date.getDate()).padStart(2, '0');
+            var mm = String(date.getMonth() + 1).padStart(2, '0');
+            var yyyy = date.getFullYear();
+            currentDate= Date.parse(yyyy + '-' + mm + '-' + dd);
 
             if(status === false){
                 statusText = "Canceled";
             }
             else{
-                statusText = "Not Canceled";
+                if(date > currentDate){
+                    statusText = "Scheduled";
+                }
+                else if(date == currentDate){
+                    statusText = "Today";
+                }
+                else if(date < currentDate){
+                    statusText = "Billed";
+                }
+                else{
+                    statusText = "No comparison working";
+                }
             }
 
             return statusText;
