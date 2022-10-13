@@ -1,16 +1,20 @@
 package com.team2.prescriptionservice.DataLayer;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
+@Repository
 public interface PrescriptionRepo extends CrudRepository<Prescription, Integer> {
 
-        public Prescription findPrescriptionByPrescriptionId(Integer prescriptionId);
+        Prescription findPrescriptionByPrescriptionId(Integer prescriptionId);
 
-        public Prescription findPrescriptionByMedication(String medicationName);
+        Prescription findPrescriptionByMedication(String medicationName);
 
-        public boolean existsPrescriptionByPrescriptionId(Integer prescriptionId);
+        boolean existsPrescriptionByPrescriptionId(Integer prescriptionId);
 
-        public void deletePrescriptionByPrescriptionId(Integer prescriptionId);
+        void deletePrescriptionByPrescriptionId(Integer prescriptionId);
 
 
 }

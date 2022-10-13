@@ -3,9 +3,11 @@ package com.team2.prescriptionservice.BusinessLayer;
 import com.team2.prescriptionservice.DataLayer.Prescription;
 import com.team2.prescriptionservice.DataLayer.PrescriptionRepo;
 import com.team2.prescriptionservice.Exceptions.NotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class PrescriptionServiceImpl implements PrescriptionService  {
     private final PrescriptionRepo repository;
 
@@ -14,13 +16,13 @@ public class PrescriptionServiceImpl implements PrescriptionService  {
     }
 
     @Override
-    public Optional<Prescription> findByPrescriptionId(int id) {
+    public Prescription findByPrescriptionId(int id) {
         try {
             //find prescription by prescriptionId
-            return repository.findById(id);
+            return repository.findPrescriptionByPrescriptionId(id);
         } catch (Exception e) {
             // if prescription not found
-            throw new NotFoundException("User with ID: " + id + " was not found");
+            throw new NotFoundException("prescription with ID: " + id + " was not found");
         }
     }
 }
