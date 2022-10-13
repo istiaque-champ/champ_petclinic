@@ -17,11 +17,11 @@
             <td>Date/Time:  {{bill.date}}</td>
         </tr>
         <tr>
-            <td><label>Owners: </label><select ng-model="$ctrl.bills.costumerId"><option ng-repeat="owner in $ctrl.owners" value={{owner.id}}>{{owner.firstName}} {{owner.lastName}}</option></select></td>
-            <td><label>Pet: </label><select><option></option></select></td>
+            <td><label>Owners: </label><select ng-options="owner.firstName + '' + owner.lastName for owner in $ctrl.owners track by owner.id" ng-model="$ctrl.selectedOwner"></select>
+            <label>  Pet: </label><select ng-options="owner.pet.name for owner in $ctrl.owners track by owner.id" ng-model="$ctrl.selectedPet"></select></td>
         </tr>
         <tr>
-            <td><label>Vet: </label><select ng-model="$ctrl.bills.vetId"><option ng-repeat="vet in $ctrl.vets" value={{vet.id}}>{{vet.firstName}} {{vet.lastName}}</option></select></td>
+            <td><label>Vet: </label><select ng-options="vet.firstName + ' ' + vet.lastName for vet in $ctrl.vets track by vet.id" ng-model="$ctrl.selectedVet"></select></td>
         </tr>
     </table>
 

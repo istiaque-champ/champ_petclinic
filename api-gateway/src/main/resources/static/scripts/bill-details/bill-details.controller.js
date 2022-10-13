@@ -13,18 +13,39 @@ angular.module('billDetails')
 
         $http.get('api/gateway/owners').then(function (resp){
             self.owners = resp.data;
-           /* if(!createBill){
+           if(!createBill){
                 for (let i = 0; i < self.owners.length; i++){
                     if(self.owners[i].customerId == self.bills.ownerID){
                         self.selectedOwner = self.owners[i];
                         break;
                     }
                 }
-            }*/
+            }
+        })
+
+        /*Pet doesn't work*/
+        $http.get('api/gateway/owners').then(function (resp){
+            self.owners = resp.data;
+            if(!createBill){
+                for (let i = 0; i < self.owners.pet.length; i++){
+                    if(self.owners.pet[i] == self.bills.ownerID){
+                        self.selectedPet = self.owners.pet[i];
+                        break;
+                    }
+                }
+            }
         })
 
         $http.get('api/gateway/vets').then(function (resp){
             self.vets = resp.data;
+            if(!createBill){
+                for (let i = 0; i < self.vets.length; i++){
+                    if(self.vets[i].vetId == self.bills.vet.ID){
+                        self.selectedVet = self.vets[i];
+                        break;
+                    }
+                }
+            }
         })
 
         self.submitBillDetailsForm = function (){
