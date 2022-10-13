@@ -8,6 +8,7 @@ import java.util.Optional;
 @Repository
 public interface PrescriptionRepo extends CrudRepository<Prescription, Integer> {
 
+
         Prescription findPrescriptionByPrescriptionId(Integer prescriptionId);
 
         Prescription findPrescriptionByMedication(String medicationName);

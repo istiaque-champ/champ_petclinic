@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.Console;
+import java.util.List;
 import java.util.Optional;
 
 @RequestMapping("/prescriptions")
@@ -26,5 +27,13 @@ public class PrescriptionRessource {
         System.out.println("Try find ");
         return prescriptionService.findByPrescriptionId(prescriptionId);
     }
+
+    @GetMapping(value = "/")
+    public List<Prescription> findPrescriptions() {
+        System.out.println("Try find all ");
+        return prescriptionService.findAllPrescriptions();
+    }
+
+
 
 }

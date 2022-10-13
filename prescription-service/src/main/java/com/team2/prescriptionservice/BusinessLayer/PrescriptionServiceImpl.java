@@ -5,6 +5,7 @@ import com.team2.prescriptionservice.DataLayer.PrescriptionRepo;
 import com.team2.prescriptionservice.Exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,6 +24,17 @@ public class PrescriptionServiceImpl implements PrescriptionService  {
         } catch (Exception e) {
             // if prescription not found
             throw new NotFoundException("prescription with ID: " + id + " was not found");
+        }
+    }
+
+    @Override
+    public List<Prescription> findAllPrescriptions() {
+        try {
+            //find prescription by prescriptionId
+            return (List<Prescription>) repository.findAll();
+        } catch (Exception e) {
+            // if prescription not found
+            throw new NotFoundException("none found");
         }
     }
 }
