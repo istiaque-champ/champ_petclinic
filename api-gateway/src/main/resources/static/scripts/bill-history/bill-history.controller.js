@@ -86,4 +86,8 @@ angular.module('billHistory')
             console.log(fullName);
             return fullName;
         }
+
+        self.createBillDetailsForm = function (){
+
+        }
     }]);
