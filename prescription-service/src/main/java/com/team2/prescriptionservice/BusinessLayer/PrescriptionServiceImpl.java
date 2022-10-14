@@ -2,6 +2,8 @@ package com.team2.prescriptionservice.BusinessLayer;
 
 import com.team2.prescriptionservice.DataLayer.Prescription;
 import com.team2.prescriptionservice.DataLayer.PrescriptionRepo;
+import com.team2.prescriptionservice.Exceptions.DatabaseError;
+import com.team2.prescriptionservice.Exceptions.InvalidInputException;
 import com.team2.prescriptionservice.Exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +37,20 @@ public class PrescriptionServiceImpl implements PrescriptionService  {
         } catch (Exception e) {
             // if prescription not found
             throw new NotFoundException("none found");
+        }
+    }
+
+    @Override
+    public Prescription savePrescription(Prescription prescription){
+        try {
+            if(repository.existsPrescriptionByPrescriptionId(prescription.getPrescriptionId())){
+                //saves prescription
+                return repository.save(prescription);
+            }
+            throw new InvalidInputException("prescriptionId already exists");
+        } catch (Exception e) {
+            // if it does not work
+            throw new DatabaseError("error adding to database");
         }
     }
 }

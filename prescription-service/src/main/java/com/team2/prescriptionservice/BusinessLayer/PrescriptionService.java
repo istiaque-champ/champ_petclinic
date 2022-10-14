@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface PrescriptionService {
     Prescription findByPrescriptionId(int id);
     List<Prescription> findAllPrescriptions();
+    Prescription savePrescription(Prescription prescription);
 }
