@@ -3,6 +3,8 @@ package com.team2.prescriptionservice.PresentationLayer;
 import com.team2.prescriptionservice.BusinessLayer.PrescriptionService;
 import com.team2.prescriptionservice.DataLayer.Prescription;
 import com.team2.prescriptionservice.DataLayer.PrescriptionRepo;
+import com.team2.prescriptionservice.DataLayer.PrescriptionRequest;
+import com.team2.prescriptionservice.DataLayer.PrescriptionResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
@@ -21,19 +23,19 @@ public class PrescriptionRessource {
     PrescriptionRessource(PrescriptionService prescriptionService){this.prescriptionService = prescriptionService;}
 
     @GetMapping(value = "/{prescriptionId}")
-    public Prescription findPrescription(@PathVariable("prescriptionId") int prescriptionId) {
+    public PrescriptionResponse findPrescription(@PathVariable("prescriptionId") int prescriptionId) {
         System.out.println("Try find ");
         return prescriptionService.findByPrescriptionId(prescriptionId);
     }
 
     @GetMapping()
-    public List<Prescription> findPrescriptions() {
+    public List<PrescriptionResponse> findPrescriptions() {
         System.out.println("Try find all ");
         return prescriptionService.findAllPrescriptions();
     }
 
     @PostMapping()
-    public Prescription addPrescription(@RequestBody Prescription prescription) {
+    public PrescriptionResponse addPrescription(@RequestBody PrescriptionRequest prescription) {
         System.out.println("Try add ");
         return prescriptionService.savePrescription(prescription);
     }

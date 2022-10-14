@@ -1,7 +1,6 @@
 package com.team2.prescriptionservice.BusinessLayer;
 
-import com.team2.prescriptionservice.DataLayer.Prescription;
-import com.team2.prescriptionservice.DataLayer.PrescriptionRepo;
+import com.team2.prescriptionservice.DataLayer.*;
 import com.team2.prescriptionservice.Exceptions.DatabaseError;
 import com.team2.prescriptionservice.Exceptions.InvalidInputException;
 import com.team2.prescriptionservice.Exceptions.NotFoundException;
@@ -13,16 +12,18 @@ import java.util.Optional;
 @Service
 public class PrescriptionServiceImpl implements PrescriptionService  {
     private final PrescriptionRepo repository;
+    private final PrescriptionMapper mapper;
 
-    public PrescriptionServiceImpl(PrescriptionRepo repository) {
+    public PrescriptionServiceImpl(PrescriptionRepo repository,PrescriptionMapper mapper) {
         this.repository = repository;
+        this.mapper = mapper;
     }
 
     @Override
-    public Prescription findByPrescriptionId(int id) {
+    public PrescriptionResponse findByPrescriptionId(int id) {
         try {
             //find prescription by prescriptionId
-            return repository.findPrescriptionByPrescriptionId(id);
+            return mapper.entityToResponseModel(repository.findPrescriptionByPrescriptionId(id));
         } catch (Exception e) {
             // if prescription not found
             throw new NotFoundException("prescription with ID: " + id + " was not found");
@@ -30,10 +31,10 @@ public class PrescriptionServiceImpl implements PrescriptionService  {
     }
 
     @Override
-    public List<Prescription> findAllPrescriptions() {
+    public List<PrescriptionResponse> findAllPrescriptions() {
         try {
             //find prescription by prescriptionId
-            return (List<Prescription>) repository.findAll();
+            return mapper.entityListToResponseModelList((List<Prescription>) repository.findAll());
         } catch (Exception e) {
             // if prescription not found
             throw new NotFoundException("none found");
@@ -41,13 +42,11 @@ public class PrescriptionServiceImpl implements PrescriptionService  {
     }
 
     @Override
-    public Prescription savePrescription(Prescription prescription){
+    public PrescriptionResponse savePrescription(PrescriptionRequest prescriptionRequest){
         try {
-            if(repository.existsPrescriptionByPrescriptionId(prescription.getPrescriptionId())){
-                //saves prescription
-                return repository.save(prescription);
-            }
-            throw new InvalidInputException("prescriptionId already exists");
+            Prescription prescription = mapper.RequestModelToEntity(prescriptionRequest);
+            prescription.setPrescriptionId((repository.findTopByOrderByPrescriptionIdDesc().getPrescriptionId())+1);
+            return mapper.entityToResponseModel(repository.save(prescription));
         } catch (Exception e) {
             // if it does not work
             throw new DatabaseError("error adding to database");
