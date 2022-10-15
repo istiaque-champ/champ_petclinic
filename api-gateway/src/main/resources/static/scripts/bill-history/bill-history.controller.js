@@ -67,4 +67,66 @@ angular.module('billHistory')
             child.classList.remove("modalOn");
             child.classList.add("modalOff");
         }
+        //########## Sorting ##########
+        self.sortCol = "none";
+
+        this.sortColForwards = (colId) => {
+            //update sort tracker
+            self.sortCol = `${colId}up`;
+
+            //sort
+            var table, rows, switching, i, x, y, shouldSwitch;
+            table = document.getElementById("TableBill");
+            switching = true;
+            while (switching) {
+                switching = false;
+                rows = table.rows;
+                for (i = 1; i < (rows.length - 1); i++) {
+                    shouldSwitch = false;
+                    x = rows[i].getElementsByTagName("TD")[colId];
+                    y = rows[i + 1].getElementsByTagName("TD")[colId];
+                    if (x.innerHTML > y.innerHTML) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                }
+            }
+        }
+        this.sortColBackwards = (colId) => {
+            //update sort tracker
+            self.sortCol = `${colId}down`;
+
+            //sort
+            var table, rows, switching, i, x, y, shouldSwitch;
+            table = document.getElementById("TableBill");
+            switching = true;
+            while (switching) {
+                //start by saying: no switching is done:
+                switching = false;
+                rows = table.rows;
+                //check all element except first one that have the title
+                for (i = 1; i < (rows.length - 1); i++) {
+                    //remove the switching put back later
+                    shouldSwitch = false;
+                    //take one element and the one after
+                    x = rows[i].getElementsByTagName("TD")[colId];
+                    y = rows[i + 1].getElementsByTagName("TD")[colId];
+                    //look if element should switch place
+                    if (x.innerHTML < y.innerHTML) {
+                        //since yes remade shouldSwitch true
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+                if (shouldSwitch) {
+                    //switch the two element
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                }
+            }
+        }
     }]);
