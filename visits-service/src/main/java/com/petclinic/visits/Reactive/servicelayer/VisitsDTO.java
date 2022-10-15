@@ -13,6 +13,8 @@ import java.util.Date;
 
 
 public class VisitDTO {
+
+
     private String visitId;
     private Date date;
     private String description;
