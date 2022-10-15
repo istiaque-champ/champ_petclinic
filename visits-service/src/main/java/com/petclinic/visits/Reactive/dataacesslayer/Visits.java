@@ -1,4 +1,4 @@
-package com.petclinic.visits.dataacesslayer.Reactive;
+package com.petclinic.visits.Reactive.dataacesslayer;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -10,7 +10,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class Visits {
+public class   Visits {
 
     @Id
     private String id;

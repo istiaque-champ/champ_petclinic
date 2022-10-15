@@ -1,4 +1,4 @@
-package com.petclinic.visits.dataacesslayer.Reactive;
+package com.petclinic.visits.Reactive.dataacesslayer;
 
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Repository;

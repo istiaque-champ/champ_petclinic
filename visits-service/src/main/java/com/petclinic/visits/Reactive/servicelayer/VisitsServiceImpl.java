@@ -1,6 +1,6 @@
-package com.petclinic.visits.servicelayer;
+package com.petclinic.visits.Reactive.servicelayer;
 
-import com.petclinic.visits.dataacesslayer.Reactive.VisitsRepository;
+import com.petclinic.visits.Reactive.dataacesslayer.VisitsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

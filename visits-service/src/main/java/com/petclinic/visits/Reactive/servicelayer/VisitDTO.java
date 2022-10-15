@@ -1,4 +1,4 @@
-package com.petclinic.visits.servicelayer;
+package com.petclinic.visits.Reactive.servicelayer;
 
 import lombok.*;
 
@@ -16,8 +16,8 @@ public class VisitDTO {
     private String visitId;
     private Date date;
     private String description;
-    private int petId;
-    private int practitionerId;
+    private String petId;
+    private String  practitionerId;
     private boolean status;
 
 }
