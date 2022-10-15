@@ -85,6 +85,8 @@ services:
     prescription-service:
         build: prescription-service
         hostname: prescriptions
+        ports:
+            - "8087:8087"
         environment:
             - SPRING_PROFILES_ACTIVE=docker
         depends_on:
