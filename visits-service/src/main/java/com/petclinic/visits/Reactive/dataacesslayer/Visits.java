@@ -10,7 +10,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class   Visits {
+public class Visits {
 
     @Id
     private String id;
@@ -19,8 +19,8 @@ public class   Visits {
     private String visitId;
     private Date date;
     private String description;
-    private String petId;
-    private String practitionerId;
+    private int petId;
+    private int practitionerId;
     private boolean status;
 
 }

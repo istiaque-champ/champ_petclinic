@@ -12,11 +12,13 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class VisitsLessDTO {
-    //changed the int to string petId to make it more conform to the other ids
+
+//dto from the visitsIdLess class in DATAACESSLAYER
+public class VisitsIDLessDTO {
+    private String visitsId;
     private Date date;
     private String description;
-    private String petId;
-    private String practitionerId;
+    private int petId;
+    private int practitionerId;
     private boolean status;
 }

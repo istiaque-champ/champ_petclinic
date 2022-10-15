@@ -11,15 +11,14 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 
-
-public class VisitDTO {
-
+//dto from the visits class in DATAACESSLAYER
+public class VisitsDTO {
 
     private String visitId;
     private Date date;
     private String description;
-    private String petId;
-    private String  practitionerId;
+    private int petId;
+    private int  practitionerId;
     private boolean status;
 
 }
