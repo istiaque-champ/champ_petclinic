@@ -12,10 +12,11 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class VisitsIdLessDTO {
+public class VisitsLessDTO {
+    //changed the int to string petId to make it more conform to the other ids
     private Date date;
     private String description;
-    private int petId;
-    private int practitionerId;
+    private String petId;
+    private String practitionerId;
     private boolean status;
 }
