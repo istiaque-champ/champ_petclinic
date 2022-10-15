@@ -8,15 +8,45 @@
 
 <table id="bill" class="table table-striped">
     <thead>
-        <tr>
-            <th>Bill ID</th>
-            <th>Owner</th>
-            <th>Visit Type</th>
-            <th>Amount</th>
-            <th>Date/Time</th>
-            <th>Details</th>
-            <th>Delete</th>
-        </tr>
+    <tr>
+        <th>Bill ID
+            <div ng-switch="$ctrl.sortCol">
+                <div ng-switch-when="0up" ng-click="$ctrl.sortColBackwards(0)">-UP-</div>
+                <div ng-switch-when="0down" ng-click="$ctrl.sortColForwards(0)">DOWN</div>
+                <div ng-switch-default ng-click="$ctrl.sortColForwards(0)">----</div>
+            </div>
+        </th>
+        <th>Owner
+            <div ng-switch="$ctrl.sortCol">
+                <div ng-switch-when="1up" ng-click="$ctrl.sortColBackwards(1)">-UP-</div>
+                <div ng-switch-when="1down" ng-click="$ctrl.sortColForwards(1)">DOWN</div>
+                <div ng-switch-default ng-click="$ctrl.sortColForwards(1)">----</div>
+            </div>
+        </th>
+        <th>Visit Type
+            <div ng-switch="$ctrl.sortCol">
+                <div ng-switch-when="2up" ng-click="$ctrl.sortColBackwards(2)">-UP-</div>
+                <div ng-switch-when="2down" ng-click="$ctrl.sortColForwards(2)">DOWN</div>
+                <div ng-switch-default ng-click="$ctrl.sortColForwards(2)">----</div>
+            </div>
+        </th>
+        <th>Amount
+            <div ng-switch="$ctrl.sortCol">
+                <div ng-switch-when="3up" ng-click="$ctrl.sortColBackwards(3)">-UP-</div>
+                <div ng-switch-when="3down" ng-click="$ctrl.sortColForwards(3)">DOWN</div>
+                <div ng-switch-default ng-click="$ctrl.sortColForwards(3)">----</div>
+            </div>
+        </th>
+        <th>Date/Time
+            <div ng-switch="$ctrl.sortCol">
+                <div ng-switch-when="4up" ng-click="$ctrl.sortColBackwards(4)">-UP-</div>
+                <div ng-switch-when="4down" ng-click="$ctrl.sortColForwards(4)">DOWN</div>
+                <div ng-switch-default ng-click="$ctrl.sortColForwards(4)">----</div>
+            </div>
+        </th>
+        <th>Details</th>
+        <th>Delete</th>
+    </tr>
     </thead>
 
     <tr id="billId" ng-repeat="bill in $ctrl.billHistory | filter:$ctrl.query track by bill.billId">
