@@ -6,6 +6,8 @@ import com.team2.prescriptionservice.Exceptions.InvalidInputException;
 import com.team2.prescriptionservice.Exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,6 +48,8 @@ public class PrescriptionServiceImpl implements PrescriptionService  {
         try {
             Prescription prescription = mapper.RequestModelToEntity(prescriptionRequest);
             prescription.setPrescriptionId((repository.findTopByOrderByPrescriptionIdDesc().getPrescriptionId())+1);
+            prescription.setDatePrinted(Date.valueOf(prescriptionRequest.getDatePrinted()));
+            System.out.println(prescription.getDatePrinted());
             return mapper.entityToResponseModel(repository.save(prescription));
         } catch (Exception e) {
             // if it does not work

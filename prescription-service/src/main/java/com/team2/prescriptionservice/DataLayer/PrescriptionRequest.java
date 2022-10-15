@@ -16,6 +16,6 @@ import java.util.Date;
 public class PrescriptionRequest extends RepresentationModel<PrescriptionRequest> {
     private String medication;
     private String amount;
-    private Date datePrinted;
+    private String datePrinted;
     private String instructions;
 }

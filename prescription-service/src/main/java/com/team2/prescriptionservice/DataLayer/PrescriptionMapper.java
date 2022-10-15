@@ -12,6 +12,7 @@ public interface PrescriptionMapper {
     @Mappings({
             @Mapping(target="id", ignore = true),
             @Mapping(target = "prescriptionId", ignore = true),
+            @Mapping(target = "datePrinted", ignore = true)
     })
     Prescription RequestModelToEntity(PrescriptionRequest prescriptionRequest);
 
