@@ -13,23 +13,18 @@ angular.module('billDetails')
 
         $http.get('api/gateway/owners').then(function (resp){
             self.owners = resp.data;
+            self.selectedOwner = self.owners[0];
+            self.selectedPet = self.selectedOwner.pets[0];
            if(!createBill){
                 for (let i = 0; i < self.owners.length; i++){
-                    if(self.owners[i].customerId == self.bills.ownerID){
+                    if(self.owners[i].id == self.bills.customerId){
                         self.selectedOwner = self.owners[i];
-                        break;
-                    }
-                }
-            }
-        })
-
-        /*Pet doesn't work*/
-        $http.get('api/gateway/owners').then(function (resp){
-            self.owners = resp.data;
-            if(!createBill){
-                for (let i = 0; i < self.owners.pet.length; i++){
-                    if(self.owners.pet[i] == self.bills.ownerID){
-                        self.selectedPet = self.owners.pet[i];
+                        for (let j = 0; j < self.selectedOwner.pets.length; j++){
+                            if(self.selectedOwner.pets[j].id == self.bills.petId){
+                                self.selectedPet = self.selectedOwner.pets[j];
+                                break;
+                            }
+                        }
                         break;
                     }
                 }
@@ -38,9 +33,10 @@ angular.module('billDetails')
 
         $http.get('api/gateway/vets').then(function (resp){
             self.vets = resp.data;
+            self.selectedVet = self.vets[0];
             if(!createBill){
                 for (let i = 0; i < self.vets.length; i++){
-                    if(self.vets[i].vetId == self.bills.vet.ID){
+                    if(self.vets[i].vetId == self.bills.vetId){
                         self.selectedVet = self.vets[i];
                         break;
                     }
@@ -49,6 +45,10 @@ angular.module('billDetails')
         })
 
         self.submitBillDetailsForm = function (){
+
+            self.bills.customerId = self.selectedOwner.id;
+            self.bills.vetId = self.selectedVet.vetId;
+            self.bills.petId = self.selectedPet.id;
 
             if (createBill){
                 console.log('Creating new bill');
