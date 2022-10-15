@@ -240,6 +240,31 @@ services:
             interval: 15s
             start_period: 30s
 
+    mongo-visits:
+        image: mongo
+        container_name: mongo
+        restart: always
+        ports:
+            - 27017:27017
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: password
+
+    mongo-express-visit:
+        image: mongo-express
+        restart: always
+        environment:
+            - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+            - ME_CONFIG_MONGODB_ADMINPASSWORD=password
+            - ME_CONFIG_MONGODB_SERVER=mongo
+            - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
+        ports:
+            - 9000:8081
+        depends_on:
+            - mongo
+            - visits-service
+
+
     mongo-express:
         image: mongo-express
         restart: always

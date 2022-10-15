@@ -33,7 +33,12 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Visit {
+public class
+
+
+
+
+Visit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
