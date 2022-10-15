@@ -39,9 +39,11 @@
                     </div>
 
                     <div class="col-sm-12">
-                        <input class="form-control" id="phoneNumber" maxlength="4" minlength="4"
-                               name="phoneNumber" ng-model="vet.phoneNumber" placeholder="Phone Number" required
-                               title="Accepts only numbers for 4 characters." type="number">
+                        <input class="form-control" id="phoneNumber" maxlength="10" minlength="4"
+                               name="phoneNumber" ng-model="vet.phoneNumber"
+                               pattern="\b[\w.%-]\b"
+                               placeholder="Phone Number" required
+                               title="Accepts only numbers for 10 characters." type="number">
                     </div>
 
                     <hr class="my-4"/>
