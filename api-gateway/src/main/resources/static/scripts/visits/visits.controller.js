@@ -686,36 +686,41 @@ angular.module('visits')
         };
 
         self.getStatus = function (status, date) {
+            //Initializing variable for status
             var statusText = "";
-            // print(date);
-            //var currentDate = new Date();
-            // let visitDate = parseDate(date);
 
-            // var dd = String(date.getDate() + 1).padStart(2, '0');
-            // var mm = String(date.getMonth() + 1).padStart(2, '0');
-            // var yyyy = date.getFullYear();
+            //Retrieving the current date
             let currentDate= getCurrentDate();
+            //Parsing the visit date for comparison
             let visitDate = Date.parse(date);
 
+            //Checking to see if the visit has been canceled
             if(status === false){
                 statusText = "Canceled";
             }
             else{
+                //Old status message
+                // statusText = "Not Canceled"
+
                 if(visitDate > currentDate){
+                    //Display if visit is in the future
                     statusText = "Scheduled";
                 }
                 else if(visitDate == currentDate){
+                    //Display if visit is today
                     statusText = "Today";
                 }
                 else if(visitDate < currentDate){
+                    //Display if visit is in the past
                     statusText = "Billed";
                 }
                 else{
+                    //Troubleshooting text in case of exception
                     statusText = "No comparison working";
                 }
             }
 
-            //statusText = date.toString() +"<br>"+ currentDate.toString();
+            //Return text to the view
             return statusText;
         };
 
