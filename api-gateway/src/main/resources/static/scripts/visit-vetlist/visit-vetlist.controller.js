@@ -1,14 +1,14 @@
 'use strict';
 
-angular.module('visits')
-    .controller('VisitsController', ['$http', '$state', '$stateParams', '$filter', function ($http, $state, $stateParams, $filter) {
+angular.module('visitVetList')
+    .controller('VisitVetListController', ['$http', '$state', '$stateParams', '$filter', function ($http, $state, $stateParams, $filter) {
         var self = this;
-        var petId = $stateParams.petId || 0;
+        var practitionerId = $stateParams.practitionerId || 0;
         var postURL = "api/gateway/visit/owners/" + ($stateParams.ownerId || 0) + "/pets/" + petId + "/visits";
         var vetsUrl = "api/gateway/vets";
         var billsUrl = "api/gateway/bill";
         var visitId = 0;
-        self.practitionerId = 0;
+        // self.practitionerId = 0;
         self.date = new Date();
         self.desc = "";
 
@@ -111,6 +111,37 @@ angular.module('visits')
 
                             renderCalendar();
                         });
+                    }
+                }
+            }
+        }
+
+        self.getVisitsForPractitionerId = function() {
+            let pId = localStorage.getItem("practitionerId");
+
+            if(pId != null && pId !== "") {
+                let info = pId;
+
+                if(info !== undefined){
+                    console.log(info.toString());
+                    let practitionerId = parseInt(info);
+                    // let startDate = info[1];
+                    // let endDate = info[2];
+
+                    if(!isNaN(practitionerId)) {
+                        // $http.get("api/gateway/visits/calendar/" + practitionerId).then(function (resp) {
+                        //     self.availableVisits = resp.data;
+                        //     availabilities = [];
+                        //
+                        //     $.each(self.availableVisits, function(i, visit) {
+                        //         let date = visit.date.toString().split("-");
+                        //
+                        //         availableDays = availableDays.filter(e => e !== parseInt(date[2]));
+                        //         availabilities.push(parseInt(date[2]));
+                        //     });
+                        //
+                        //     renderCalendar();
+                        // });
                     }
                 }
             }
@@ -691,29 +722,28 @@ angular.module('visits')
             //var currentDate = new Date();
             // let visitDate = parseDate(date);
 
-            // var dd = String(date.getDate() + 1).padStart(2, '0');
-            // var mm = String(date.getMonth() + 1).padStart(2, '0');
-            // var yyyy = date.getFullYear();
-            let currentDate= getCurrentDate();
-            let visitDate = Date.parse(date);
+            var dd = String(date.getDate() + 1).padStart(2, '0');
+            var mm = String(date.getMonth() + 1).padStart(2, '0');
+            var yyyy = date.getFullYear();
+            var currentDate= new Date(yyyy, mm, dd);
 
-            if(status === false){
-                statusText = "Canceled";
-            }
-            else{
-                if(visitDate > currentDate){
-                    statusText = "Scheduled";
-                }
-                else if(visitDate == currentDate){
-                    statusText = "Today";
-                }
-                else if(visitDate < currentDate){
-                    statusText = "Billed";
-                }
-                else{
-                    statusText = "No comparison working";
-                }
-            }
+            // if(status === false){
+            //     statusText = "Canceled";
+            // }
+            // else{
+            //     if(date > currentDate){
+            //         statusText = "Scheduled";
+            //     }
+            //     else if(date == currentDate){
+            //         statusText = "Today";
+            //     }
+            //     else if(date < currentDate){
+            //         statusText = "Billed";
+            //     }
+            //     else{
+            //         statusText = "No comparison working";
+            //     }
+            // }
 
             //statusText = date.toString() +"<br>"+ currentDate.toString();
             return statusText;
