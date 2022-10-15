@@ -19,10 +19,10 @@ public class DataSetup implements CommandLineRunner {
     private static final int VALID_CUSTOMER_ID2 = 2;
     private static final String VALID_VISIT_TYPE = "Examinations";
     private static final Instant VALID_DATE = Instant.now();
-    private static final int VALID_VET_ID1 = 1;
-    private static final int VALID_VET_ID2 = 2;
-    private static final int VALID_PET_ID1 = 234568;
-    private static final int VALID_PET_ID2 = 327874;
+    private static final int VALID_PET_ID1 = 1;
+    private static final int VALID_PET_ID2 = 2;
+    private static final int VALID_VET_ID1 = 234568;
+    private static final int VALID_VET_ID2 = 327874;
 
     @Autowired
     private BillService billService;
