@@ -82,6 +82,16 @@ services:
         env_file:
             - mailer.env
 
+    prescription-service:
+        build: prescription-service
+        hostname: prescriptions
+        environment:
+            - SPRING_PROFILES_ACTIVE=docker
+        depends_on:
+            -   mysql5
+
+
+
     mysql1:
         image: mysql:5.7
         #mem_limit: 350m
@@ -193,6 +203,37 @@ services:
                     "-h",
                     "localhost",
                 ]
+            interval: 10s
+            timeout: 5s
+            retries: 10
+
+    mysql5:
+        image: mysql:5.7
+        deploy:
+            resources:
+                limits:
+                    memory: 350m
+        ports:
+            - "3311:3306"
+        environment:
+            - MYSQL_ROOT_PASSWORD=rootpwd
+            - MYSQL_DATABASE=prescription-db
+            - MYSQL_USER=user
+            - MYSQL_PASSWORD=pwd
+        volumes:
+            - ./data/mysql4:/var/lib/mysql5
+            - ./data/init.d:/docker-entrypoint-initdb.d
+        healthcheck:
+            test:
+              [
+                      "CMD",
+                      "mysqladmin",
+                      "ping",
+                      "-uroot",
+                      "-prootpwd",
+                      "-h",
+                      "localhost",
+              ]
             interval: 10s
             timeout: 5s
             retries: 10

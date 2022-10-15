@@ -6,11 +6,11 @@ import lombok.Setter;
 
 import java.util.Date;
 
-
 @Setter
 @Getter
 @NoArgsConstructor
-public class BillDetails {
+public class BillDetailsExpanded {
+
     private int billId;
     private Date date;
     private int customerId;
@@ -18,5 +18,5 @@ public class BillDetails {
     private int petId;
     private String visitType;
     private double amount;
-
+    private OwnerDetails ownerDetails;
 }
