@@ -17,8 +17,8 @@
             <td>Date/Time:{{$ctrl.bills.date | date:'medium'}}</td>
         </tr>
         <tr>
-            <td><label>Owners: </label><select ng-options="owner.firstName + '' + owner.lastName for owner in $ctrl.owners track by owner.id" ng-model="$ctrl.selectedOwner"></select>
-            <label>  Pet: </label><select ng-options="pet.name for owner in $ctrl.owners track by owner.id" ng-model="$ctrl.selectedPet"></select></td>
+            <td><label>Owners: </label><select ng-options="owner.firstName + ' ' + owner.lastName for owner in $ctrl.owners track by owner.id" ng-model="$ctrl.selectedOwner"></select>
+            <label>  Pet: </label><select ng-options="pet.name for pet in $ctrl.selectedOwner.pets track by pet.id" ng-model="$ctrl.selectedPet"></select></td>
         </tr>
         <tr>
             <td><label>Vet: </label><select ng-options="vet.firstName + ' ' + vet.lastName for vet in $ctrl.vets track by vet.id" ng-model="$ctrl.selectedVet"></select></td>
