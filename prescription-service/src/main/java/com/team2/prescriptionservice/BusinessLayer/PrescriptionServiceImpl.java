@@ -25,6 +25,9 @@ public class PrescriptionServiceImpl implements PrescriptionService  {
     public PrescriptionResponse findByPrescriptionId(int id) {
         try {
             //find prescription by prescriptionId
+            if (!repository.existsPrescriptionByPrescriptionId(id)){
+                throw new Exception();
+            }
             return mapper.entityToResponseModel(repository.findPrescriptionByPrescriptionId(id));
         } catch (Exception e) {
             // if prescription not found

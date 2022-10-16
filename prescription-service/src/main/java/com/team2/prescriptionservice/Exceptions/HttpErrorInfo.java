@@ -19,7 +19,7 @@ public class HttpErrorInfo {
     }
 
     public HttpErrorInfo() {
-        timestamp = null;
+        timestamp = ZonedDateTime.now();
         this.httpStatus = null;
         this.path = null;
         this.message = null;
