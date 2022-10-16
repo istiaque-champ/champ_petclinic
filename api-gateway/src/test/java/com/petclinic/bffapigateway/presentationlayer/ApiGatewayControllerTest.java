@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWeb
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -641,27 +642,54 @@ class ApiGatewayControllerTest {
     }
 
     @Test
-    void getPutBillingRequestNotFound(){
+    void validPutBillingRequest(){
+        BillDetails bill = new BillDetails();
+        bill.setBillId(1);
+
+        bill.setDate(null);
+
+        bill.setAmount(600);
+
+        bill.setVisitType("Adoption");
+
+        BillDetailsExpanded billDetailsExpanded = new BillDetailsExpanded();
+        bill.setBillId(1);
+
+        bill.setDate(null);
+
+        bill.setAmount(600);
+
+        bill.setVisitType("Adoption");
+
+        when(billServiceClient.editBill(anyInt(),any(BillDetails.class)))
+                .thenReturn(Mono.just(billDetailsExpanded));
+
+        OwnerDetails ownerDetails = new OwnerDetails();
+        when(customersServiceClient.getOwner(anyInt())).thenReturn(Mono.just(ownerDetails));
+
         client.put()
-                .uri("/bills/{billId}", 100)
+                .uri("/api/gateway/bills/" + 1)
+                .body(Mono.just(bill), BillDetails.class)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
-                .expectStatus().isNotFound()
-                .expectBody()
-                .jsonPath("$.path").isEqualTo("/bills/100")
-                .jsonPath("$.message").isEqualTo(null);
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody();
+
+
     }
 
     @Test
-    void getPutBillingMissingPath(){
+    void NotFoundPutBilling(){
+        BillDetails bill = new BillDetails();
         client.put()
-                .uri("/bills")
+                .uri("/api/gateway/bills/" + 1)
+                .body(Mono.just(bill), BillDetails.class)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
-                .expectStatus().isNotFound()
-                .expectBody()
-                .jsonPath("$.path").isEqualTo("/bills")
-                .jsonPath("$.message").isEqualTo(null);
+                .expectStatus().isEqualTo(INTERNAL_SERVER_ERROR)
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody();
     }
 
 
