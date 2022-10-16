@@ -9,13 +9,7 @@
 <table id="TableBill" class="table table-striped">
     <thead>
     <tr>
-        <th>Bill ID
-            <span ng-switch="$ctrl.sortCol">
-                <span ng-switch-when="0up" ng-click="$ctrl.sortColBackwards(0)"><i style="min-width: 16px" class="fa-solid fa-chevron-up"></i></span>
-                <span ng-switch-when="0down" ng-click="$ctrl.sortColForwards(0)"><i style="min-width: 16px" class="fa-solid fa-chevron-down"></i></span>
-                <span ng-switch-default ng-click="$ctrl.sortColForwards(0)"><i style="min-width: 16px" class="fa-solid fa-minus"></i></span>
-            </span>
-        </th>
+        <th>Bill ID</th>
         <th>Owner
             <span ng-switch="$ctrl.sortCol">
                 <span ng-switch-when="1up" ng-click="$ctrl.sortColBackwards(1)"><i style="min-width: 16px" class="fa-solid fa-chevron-up"></i></span>
