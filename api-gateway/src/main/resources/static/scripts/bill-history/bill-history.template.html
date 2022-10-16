@@ -6,17 +6,41 @@
     </div>
 </form>
 
-<table id="bill" class="table table-striped">
+<table id="TableBill" class="table table-striped">
     <thead>
-        <tr>
-            <th>Bill ID</th>
-            <th>Owner</th>
-            <th>Visit Type</th>
-            <th>Amount</th>
-            <th>Date/Time</th>
-            <th>Details</th>
-            <th>Delete</th>
-        </tr>
+    <tr>
+        <th>Bill ID</th>
+        <th>Owner
+            <span ng-switch="$ctrl.sortCol">
+                <span id="sortTestUp1" ng-switch-when="1up" ng-click="$ctrl.sortColBackwards(1)"><i style="min-width: 16px" class="fa-solid fa-chevron-down"></i></span>
+                <span id="sortTestDown1" ng-switch-when="1down" ng-click="$ctrl.sortColForwards(1)"><i style="min-width: 16px" class="fa-solid fa-chevron-up"></i></span>
+                <span id="sortTestDefault1" ng-switch-default ng-click="$ctrl.sortColForwards(1)"><i style="min-width: 16px" class="fa-solid fa-minus"></i></span>
+            </span>
+        </th>
+        <th>Visit Type
+            <span ng-switch="$ctrl.sortCol">
+                <span id="sortTestUp2" ng-switch-when="2up" ng-click="$ctrl.sortColBackwards(2)"><i style="min-width: 16px" class="fa-solid fa-chevron-down"></i></span>
+                <span id="sortTestDown2" ng-switch-when="2down" ng-click="$ctrl.sortColForwards(2)"><i style="min-width: 16px" class="fa-solid fa-chevron-up"></i></span>
+                <span id="sortTestDefault2" ng-switch-default ng-click="$ctrl.sortColForwards(2)"><i style="min-width: 16px" class="fa-solid fa-minus"></i></span>
+            </span>
+        </th>
+        <th>Amount
+            <span ng-switch="$ctrl.sortCol">
+                <span id="sortTestUp3" ng-switch-when="3up" ng-click="$ctrl.sortColBackwards(3)"><i style="min-width: 16px" class="fa-solid fa-chevron-down"></i></span>
+                <span id="sortTestDown3" ng-switch-when="3down" ng-click="$ctrl.sortColForwards(3)"><i style="min-width: 16px" class="fa-solid fa-chevron-up"></i></span>
+                <span id="sortTestDefault3" ng-switch-default ng-click="$ctrl.sortColForwards(3)"><i style="min-width: 16px" class="fa-solid fa-minus"></i></span>
+            </span>
+        </th>
+        <th>Date/Time
+            <span ng-switch="$ctrl.sortCol">
+                <span id="sortTestUp4" ng-switch-when="4up" ng-click="$ctrl.sortColBackwards(4)"><i style="min-width: 16px" class="fa-solid fa-chevron-down"></i></span>
+                <span id="sortTestDown4" ng-switch-when="4down" ng-click="$ctrl.sortColForwards(4)"><i style="min-width: 16px" class="fa-solid fa-chevron-up"></i></span>
+                <span id="sortTestDefault4" ng-switch-default ng-click="$ctrl.sortColForwards(4)"><i style="min-width: 16px" class="fa-solid fa-minus"></i></span>
+            </span>
+        </th>
+        <th>Details</th>
+        <th>Delete</th>
+    </tr>
     </thead>
 
     <tr id="billId" ng-repeat="bill in $ctrl.billHistory | filter:$ctrl.query track by bill.billId">
