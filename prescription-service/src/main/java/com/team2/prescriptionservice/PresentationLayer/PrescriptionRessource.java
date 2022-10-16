@@ -48,6 +48,12 @@ public class PrescriptionRessource {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
+    @PutMapping("/{prescriptionId}")
+    public ResponseEntity<PrescriptionResponse> updatePrescription(@RequestBody PrescriptionRequest prescription, @PathVariable int id){
+        PrescriptionResponse responseModel = prescriptionService.updatePrescription(prescription, id);
 
+
+        return ResponseEntity.status(HttpStatus.OK).body(responseModel);
+    }
 
 }

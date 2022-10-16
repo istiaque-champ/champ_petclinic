@@ -11,4 +11,5 @@ public interface PrescriptionService {
     PrescriptionResponse savePrescription(PrescriptionRequest prescriptionRequest);
 
       void deletePrescription(int id);
+    PrescriptionResponse updatePrescription(PrescriptionRequest prescription, int id);
 }

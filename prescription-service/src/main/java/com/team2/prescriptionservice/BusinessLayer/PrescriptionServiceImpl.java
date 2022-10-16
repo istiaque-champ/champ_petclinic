@@ -67,5 +67,25 @@ public class PrescriptionServiceImpl implements PrescriptionService  {
         throw new NotFoundException("Unknown prescription provided: " + id);
     }
 
+    @Override
+    public PrescriptionResponse updatePrescription(PrescriptionRequest prescription, int id) {
+        if(repository.existsPrescriptionByPrescriptionId(id)){
+            Prescription inDbPrescription = repository.findPrescriptionByPrescriptionId(id);
+
+
+            Prescription updatedData = mapper.RequestModelToEntity(prescription);
+
+            inDbPrescription.setMedication(updatedData.getMedication());
+            inDbPrescription.setAmount(updatedData.getAmount());
+            inDbPrescription.setDatePrinted(updatedData.getDatePrinted());
+            inDbPrescription.setInstructions(updatedData.getInstructions());
+
+
+            return mapper.entityToResponseModel(repository.save(inDbPrescription));
+        }
+
+        throw new NotFoundException("Unknown prescription Id provided: " + id);
+    }
+
 
 }
