@@ -17,7 +17,7 @@ angular.module('visitVetList')
             self.sortFetchedVisits();
         });
 
-        // Function to... get the current date ;)
+        // Function to get the current date
         function getCurrentDate() {
             let dateObj = new Date();
             var dd = String(dateObj.getDate()).padStart(2, '0');
@@ -34,38 +34,42 @@ angular.module('visitVetList')
             return Date.parse(yyyy + '-' + mm + '-' + dd);
         }
 
+        // NOT NEEDED ON THIS PAGE
+        //  START ALERT NOTIFICATIONS
+
         // Container div for all alerts
-        let alertsContainer = $('#alertsContainer');
+        // let alertsContainer = $('#alertsContainer');
 
         // Function to delete last added alert
-        function deleteAlertAfter(alertId, time) {
-            setTimeout(function() {
-                if(alertsContainer.children().length === 1 && alertsContainer.children(".alert:first-child").attr("id") === alertId) {
-                    alertsContainer.children(".alert:first-child").remove();
-                }
-            }, time);
-        }
+        // function deleteAlertAfter(alertId, time) {
+        //     setTimeout(function() {
+        //         if(alertsContainer.children().length === 1 && alertsContainer.children(".alert:first-child").attr("id") === alertId) {
+        //             alertsContainer.children(".alert:first-child").remove();
+        //         }
+        //     }, time);
+        // }
 
-        let alertId = 0;
+        // let alertId = 0;
         // Function to create alert
-        function createAlert(alertType, alertMessage) {
-            // Create an alert based on parameters
-            alertsContainer.append(
-                "<div id=\"alert-"+ ++alertId +"\" class=\"alert alert-"+ alertType +"\" role=\"alert\">" +
-                "<p>" + alertMessage + "</p>" +
-                "</div>"
-            );
-
-            // If there is already an alert make place for new one
-            if(alertsContainer.children().length > 1) {
-                alertsContainer.children(".alert:first-child").remove();
-            }
-
-            console.log(alertsContainer.children().length);
-
-            // Delete the alert after x amount of time (millis)
-            deleteAlertAfter("alert-" + alertId, 3000);
-        }
+        // function createAlert(alertType, alertMessage) {
+        //     // Create an alert based on parameters
+        //     alertsContainer.append(
+        //         "<div id=\"alert-"+ ++alertId +"\" class=\"alert alert-"+ alertType +"\" role=\"alert\">" +
+        //         "<p>" + alertMessage + "</p>" +
+        //         "</div>"
+        //     );
+        //
+        //     // If there is already an alert make place for new one
+        //     if(alertsContainer.children().length > 1) {
+        //         alertsContainer.children(".alert:first-child").remove();
+        //     }
+        //
+        //     console.log(alertsContainer.children().length);
+        //
+        //     // Delete the alert after x amount of time (millis)
+        //     deleteAlertAfter("alert-" + alertId, 3000);
+        // }
+        //  END ALERT NOTIFICATIONS
 
         // Lists holding visits for the table to display
         self.upcomingVisits = [];
@@ -85,6 +89,7 @@ angular.module('visitVetList')
             });
         }
 
+        //FUNCTION TO GET VALID DATES FOR CALENDAR
         self.getVisitsForPractitionerIdAndMonth = function() {
             let pIdAndMonth = localStorage.getItem("practitionerIdAndMonth");
 
@@ -116,6 +121,7 @@ angular.module('visitVetList')
             }
         }
 
+        // MUST EDIT TO GET ALL VISITS WITH THE PRACTITIONER ID
         self.getVisitsForPractitionerId = function() {
             let pId = localStorage.getItem("practitionerId");
 
@@ -147,10 +153,12 @@ angular.module('visitVetList')
             }
         }
 
+        // GET LIST OF VETS/PRACTITIONERS
         $http.get(vetsUrl).then(function (resp) {
             self.vets = resp.data;
         });
 
+        // GET AND ASSIGN VET/PRACTITIONER INFORMATION
         self.loadVetInfo = function() {
             let selectedVetsId = $("#selectedVet").val();
 
@@ -194,6 +202,7 @@ angular.module('visitVetList')
             }
         }
 
+        // GET PRACTITIONER NAME WITH ID
         self.getPractitionerName = function (id){
             var practitionerName = "";
             $.each(self.vets, function (i, vet){
@@ -205,6 +214,7 @@ angular.module('visitVetList')
             return practitionerName;
         };
 
+        // GET OWNER NAME WITH ID
         self.getOwnerName = function (id){
             var ownerName = "";
             $.each(self.owner, function (i, owner){
@@ -292,8 +302,9 @@ angular.module('visitVetList')
             $('#date_input').val(date);
             console.log(date);
             $('#description_textarea').val(description);
-            $('#submit_button').text("Update Visit");
-            $('#cancel_button').css("visibility", "visible");
+            //not needed
+            // $('#submit_button').text("Update Visit");
+            // $('#cancel_button').css("visibility", "visible");
 
             let d = date.toString().split("-");
             editDateParsing(d[0], d[1], d[2]);
@@ -313,6 +324,7 @@ angular.module('visitVetList')
                     status: visitStatus
                 };
 
+                // Might not be needed
                 let putURL = "api/gateway/owners/*/pets/" + petId + "/visits/" + visitId;
 
                 $http.put(putURL, data).then(function(response) {
@@ -399,7 +411,7 @@ angular.module('visitVetList')
             $('#cancel_button').css("visibility", "hidden");
 
             // Restore default functionality of form submit
-            //HAVE TO CHANGE SUBMIT FUNCTION
+            //HAVE TO UPDATE SUBMIT FUNCTION
             self.submit = function () {
                 var data = {
                     date: getCurrentDate(),
@@ -458,6 +470,7 @@ angular.module('visitVetList')
             }
         }
 
+        // Sort by Date
         let sortTableDateAscendingUpcomingVisits = false;
         let sortTableDateAscendingPreviousVisits = false;
         self.SortTableByDate = function(isForUpcoming, flipSortingBool = true) {
@@ -499,6 +512,7 @@ angular.module('visitVetList')
             }
         }
 
+        // Sort by Description
         let sortDescriptionAscendingUpcomingVisits = false;
         let sortDescriptionAscendingPreviousVisits = false;
         self.SortTableByDesc = function(isForUpcoming, flipSortingBool = true) {
@@ -552,7 +566,7 @@ angular.module('visitVetList')
             }
         }
 
-        // Added Sorting by Owner Name
+        // Sort by Owner Name
         let sortOwnerAscendingUpcomingVisits = false;
         let sortOwnerAscendingPreviousVisits = false;
         self.SortTableByOwner = function(isForUpcoming, flipSortingBool = true) {
@@ -606,7 +620,7 @@ angular.module('visitVetList')
             }
         }
 
-
+        // Sort by Vet Name
         let sortVetAscendingUpcomingVisits = false;
         let sortVetAscendingPreviousVisits = false;
         self.SortTableByVet = function(isForUpcoming, flipSortingBool = true) {
@@ -660,6 +674,7 @@ angular.module('visitVetList')
             }
         }
 
+        // Sort by Status
         let sortStatusAscendingUpcomingVisits = false;
         let sortStatusAscendingPreviousVisits = false;
         self.SortTableByStatus = function(isForUpcoming, flipSortingBool = true) {
