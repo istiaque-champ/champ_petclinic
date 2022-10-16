@@ -394,6 +394,7 @@ angular.module('visitVetList')
             $('#cancel_button').css("visibility", "hidden");
 
             // Restore default functionality of form submit
+            //HAVE TO CHANGE SUBMIT FUNCTION
             self.submit = function () {
                 var data = {
                     date: getCurrentDate(),
@@ -706,158 +707,165 @@ angular.module('visitVetList')
             }
         }
 
-        self.submit = function () {
-            var data = {
-                date: $filter('date')(self.date, "yyyy-MM-dd"),
-                description: self.desc,
-                practitionerId: self.practitionerId,
-                status: true
-            };
-            
-            var billData = {
-                ownerId: $stateParams.ownerId,
-                date: $filter('date')(self.date, "yyyy-MM-dd"),
-                visitType : $("#selectedVisitType").val()
-            }
+        // self.submit = function () {
+        //     var data = {
+        //         date: $filter('date')(self.date, "yyyy-MM-dd"),
+        //         description: self.desc,
+        //         practitionerId: self.practitionerId,
+        //         status: true
+        //     };
+        //
+        //     var billData = {
+        //         ownerId: $stateParams.ownerId,
+        //         date: $filter('date')(self.date, "yyyy-MM-dd"),
+        //         visitType : $("#selectedVisitType").val()
+        //     }
+        //
+        //     $http.post(postURL, data).then(function(response) {
+        //         let currentDate = getCurrentDate();
+        //
+        //         // Add the visit to one of the lists depending on its date
+        //         let isForUpcomingVisitsTable = Date.parse(response.data.date) >= currentDate;
+        //         if(isForUpcomingVisitsTable) {
+        //             self.upcomingVisits.push(response.data);
+        //         } else {
+        //             self.previousVisits.push(response.data);
+        //         }
+        //
+        //         // Call the last sort after adding if there is one
+        //         callLastSort(isForUpcomingVisitsTable);
+        //
+        //         createAlert("success", "Successfully created visit!");
+        //     },function () {
+        //         createAlert("danger", "Failed to add visit!");
+        //     });
+        //
+        //     $http.post(billsUrl, billData).then(function () {
+        //
+        //     }, function () {
+        //         console.log("Failed to create corresponding bill!");
+        //     });
+        // }
 
-            $http.post(postURL, data).then(function(response) {
-                let currentDate = getCurrentDate();
-
-                // Add the visit to one of the lists depending on its date
-                let isForUpcomingVisitsTable = Date.parse(response.data.date) >= currentDate;
-                if(isForUpcomingVisitsTable) {
-                    self.upcomingVisits.push(response.data);
-                } else {
-                    self.previousVisits.push(response.data);
-                }
-
-                // Call the last sort after adding if there is one
-                callLastSort(isForUpcomingVisitsTable);
-
-                createAlert("success", "Successfully created visit!");
-            },function () {
-                createAlert("danger", "Failed to add visit!");
-            });
-
-            $http.post(billsUrl, billData).then(function () {
-
-            }, function () {
-                console.log("Failed to create corresponding bill!");
-            });
-        }
-
-        self.deleteVisit = function (visitId){
-            $http.delete("api/gateway/visits/" + visitId).then(function () {
-                // Get the parent row of the sender
-                let modalConfirmButton = $('#confirmationModalConfirmButton');
-
-                // Get the index of the sender from the parent table row data attribute
-                let index = parseInt(modalConfirmButton.data("delete-index"));
-
-                // See if the sender is in upcoming or previous visits
-                let deleteFromUpcomingVisits = modalConfirmButton.data("delete-table-name") === "upcomingVisits";
-
-                // Remove the visit from the list of either upcoming or previous visits
-                if(deleteFromUpcomingVisits) {
-                    self.upcomingVisits.splice(index, 1);
-                } else {
-                    self.previousVisits.splice(index, 1);
-                }
-
-                createAlert("success", "Successfully deleted visit!");
-            }, function () {
-                createAlert("danger", "Failed to delete visit!");
-            });
-        };
+        // self.deleteVisit = function (visitId){
+        //     $http.delete("api/gateway/visits/" + visitId).then(function () {
+        //         // Get the parent row of the sender
+        //         let modalConfirmButton = $('#confirmationModalConfirmButton');
+        //
+        //         // Get the index of the sender from the parent table row data attribute
+        //         let index = parseInt(modalConfirmButton.data("delete-index"));
+        //
+        //         // See if the sender is in upcoming or previous visits
+        //         let deleteFromUpcomingVisits = modalConfirmButton.data("delete-table-name") === "upcomingVisits";
+        //
+        //         // Remove the visit from the list of either upcoming or previous visits
+        //         if(deleteFromUpcomingVisits) {
+        //             self.upcomingVisits.splice(index, 1);
+        //         } else {
+        //             self.previousVisits.splice(index, 1);
+        //         }
+        //
+        //         createAlert("success", "Successfully deleted visit!");
+        //     }, function () {
+        //         createAlert("danger", "Failed to delete visit!");
+        //     });
+        // };
 
         self.getStatus = function (status, date) {
+            //Initializing variable for status
             var statusText = "";
-            // print(date);
-            //var currentDate = new Date();
-            // let visitDate = parseDate(date);
 
-            var dd = String(date.getDate() + 1).padStart(2, '0');
-            var mm = String(date.getMonth() + 1).padStart(2, '0');
-            var yyyy = date.getFullYear();
-            var currentDate= new Date(yyyy, mm, dd);
+            //Retrieving the current date
+            let currentDate= getCurrentDate();
+            //Parsing the visit date for comparison
+            let visitDate = Date.parse(date);
 
-            // if(status === false){
-            //     statusText = "Canceled";
-            // }
-            // else{
-            //     if(date > currentDate){
-            //         statusText = "Scheduled";
-            //     }
-            //     else if(date == currentDate){
-            //         statusText = "Today";
-            //     }
-            //     else if(date < currentDate){
-            //         statusText = "Billed";
-            //     }
-            //     else{
-            //         statusText = "No comparison working";
-            //     }
-            // }
+            //Checking to see if the visit has been canceled
+            if(status === false){
+                statusText = "Canceled";
+            }
+            else{
+                //Old status message
+                // statusText = "Not Canceled"
 
-            //statusText = date.toString() +"<br>"+ currentDate.toString();
+                if(visitDate > currentDate){
+                    //Display if visit is in the future
+                    statusText = "Scheduled";
+                }
+                else if(visitDate == currentDate){
+                    //Display if visit is today
+                    statusText = "Today";
+                }
+                else if(visitDate < currentDate){
+                    //Display if visit is in the past
+                    statusText = "Billed";
+                }
+                else{
+                    //Troubleshooting text in case of exception
+                    statusText = "No comparison working";
+                }
+            }
+
+            //Return text to the view
             return statusText;
         };
 
-        self.cancelVisit = function (id, visitStatus, visitPractitionerId, visitDate, visitDescription){
-            visitId = id;
-            var data = {};
+        // self.cancelVisit = function (id, visitStatus, visitPractitionerId, visitDate, visitDescription){
+        //     visitId = id;
+        //     var data = {};
+        //
+        //     if (visitStatus) {
+        //         data = {
+        //             date: visitDate,
+        //             description: visitDescription,
+        //             practitionerId: visitPractitionerId,
+        //             status: false
+        //         };
+        //     }else {
+        //         data = {
+        //             date: visitDate,
+        //             description: visitDescription,
+        //             practitionerId: visitPractitionerId,
+        //             status: true
+        //         };
+        //     }
 
-            if (visitStatus) {
-                data = {
-                    date: visitDate,
-                    description: visitDescription,
-                    practitionerId: visitPractitionerId,
-                    status: false
-                };
-            }else {
-                data = {
-                    date: visitDate,
-                    description: visitDescription,
-                    practitionerId: visitPractitionerId,
-                    status: true
-                };
-            }
+        //     let putURL = "api/gateway/owners/*/pets/" + petId + "/visits/" + visitId;
+        //
+        //     $http.put(putURL, data).then(function(response) {
+        //         let index = parseInt($('#confirmationModalConfirmButton').data("cancel-index"));
+        //
+        //         // Delete that visit (must delete in order to update index when sorted)
+        //         self.upcomingVisits[index] = response.data;
+        //
+        //         // Call the last sort if there was one
+        //         callLastSort(true);
+        //
+        //         if(!visitStatus) {
+        //             createAlert("success", "Successfully reverted cancel on visit!");
+        //         } else {
+        //             createAlert("success", "Successfully cancelled visit!");
+        //         }
+        //     },function() {
+        //         if(!visitStatus) {
+        //             createAlert("danger", "Failed to revert cancel on visit!");
+        //         } else {
+        //             createAlert("danger", "Failed to cancel visit!");
+        //         }
+        //     });
+        // };
 
-            let putURL = "api/gateway/owners/*/pets/" + petId + "/visits/" + visitId;
-
-            $http.put(putURL, data).then(function(response) {
-                let index = parseInt($('#confirmationModalConfirmButton').data("cancel-index"));
-
-                // Delete that visit (must delete in order to update index when sorted)
-                self.upcomingVisits[index] = response.data;
-
-                // Call the last sort if there was one
-                callLastSort(true);
-
-                if(!visitStatus) {
-                    createAlert("success", "Successfully reverted cancel on visit!");
-                } else {
-                    createAlert("success", "Successfully cancelled visit!");
-                }
-            },function() {
-                if(!visitStatus) {
-                    createAlert("danger", "Failed to revert cancel on visit!");
-                } else {
-                    createAlert("danger", "Failed to cancel visit!");
-                }
-            });
-        };
-
-        self.setCancelButtonText = function (visitStatus){
-            var cancelText = "";
-
-            if (visitStatus){
-                cancelText = "Cancel";
-            }
-            else {
-                cancelText = "Revert Cancel";
-            }
-
-            return cancelText;
-        };
+    //     self.setCancelButtonText = function (visitStatus){
+    //         var cancelText = "";
+    //
+    //         if (visitStatus){
+    //             cancelText = "Cancel";
+    //         }
+    //         else {
+    //             cancelText = "Revert Cancel";
+    //         }
+    //
+    //         return cancelText;
+    //     };
+        
     }]);
