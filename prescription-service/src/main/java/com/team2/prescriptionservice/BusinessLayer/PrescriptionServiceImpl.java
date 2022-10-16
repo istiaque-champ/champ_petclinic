@@ -2,14 +2,13 @@ package com.team2.prescriptionservice.BusinessLayer;
 
 import com.team2.prescriptionservice.DataLayer.*;
 import com.team2.prescriptionservice.Exceptions.DatabaseError;
-import com.team2.prescriptionservice.Exceptions.InvalidInputException;
 import com.team2.prescriptionservice.Exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Optional;
+
+import static com.team2.prescriptionservice.Exceptions.GlobalControllerExceptionHandler.LOG;
 
 @Service
 public class PrescriptionServiceImpl implements PrescriptionService  {
@@ -56,4 +55,12 @@ public class PrescriptionServiceImpl implements PrescriptionService  {
             throw new DatabaseError("error adding to database");
         }
     }
+
+    @Override
+    public void deletePrescription(int id) {
+        repository.findById(id).ifPresent(o -> repository.delete(o));
+        LOG.debug("Prescription with ID: " + id + " has been deleted successfully.");
+    }
+
+
 }

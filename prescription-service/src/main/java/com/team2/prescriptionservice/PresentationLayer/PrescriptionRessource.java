@@ -40,6 +40,11 @@ public class PrescriptionRessource {
         return prescriptionService.savePrescription(prescription);
     }
 
+    @DeleteMapping(value = "/{prescriptionId}")
+    public void deletePrescription(@PathVariable("prescriptionId") int prescriptionId) {
+        prescriptionService.deletePrescription(prescriptionId);
+    }
+
 
 
 }
