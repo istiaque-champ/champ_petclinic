@@ -4,15 +4,15 @@ angular.module('visitVetList')
     .controller('VisitVetListController', ['$http', '$state', '$stateParams', '$filter', function ($http, $state, $stateParams, $filter) {
         var self = this;
         var practitionerId = $stateParams.practitionerId || 0;
-        var postURL = "api/gateway/visit/owners/" + ($stateParams.ownerId || 0) + "/pets/" + petId + "/visits";
+        var postURL = "api/gateway/visits/vets/" + ($stateParams.practitionerId || 0);
         var vetsUrl = "api/gateway/vets";
-        var billsUrl = "api/gateway/bill";
+        // var billsUrl = "api/gateway/bill";
         var visitId = 0;
         // self.practitionerId = 0;
         self.date = new Date();
         self.desc = "";
 
-        $http.get("api/gateway/visits/"+petId).then(function (resp) {
+        $http.get("api/gateway/visits/vets/"+practitionerId).then(function (resp) {
             self.visits = resp.data;
             self.sortFetchedVisits();
         });

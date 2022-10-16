@@ -1,11 +1,11 @@
 'use strict';
 
-angular.module('visitVetlist', ['ui.router'])
+angular.module('visitVetList', ['ui.router'])
     .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
-            .state('visits', {
+            .state('vetVisits', {
                 parent: 'app',
-                url: '/vets/visits',
+                url: 'visits/vets',
                 template: '<visit-vetlist></visit-vetlist>'
             })
     }]);
