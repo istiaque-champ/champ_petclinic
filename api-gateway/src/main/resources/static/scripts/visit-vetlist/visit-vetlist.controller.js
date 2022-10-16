@@ -867,5 +867,5 @@ angular.module('visitVetList')
     //
     //         return cancelText;
     //     };
-        
+
     }]);
