@@ -62,6 +62,15 @@ public class BFFApiGatewayController {
                 );
     }
 
+    @PutMapping(value = "bills/{billId}", produces = "application/json", consumes = "application/json")
+    public Mono<BillDetailsExpanded> updateBill(@RequestBody BillDetails bill, @PathVariable int billId){
+        return billServiceClient.editBill(billId, bill)
+                .flatMap(billDetails ->
+                        customersServiceClient.getOwner(billDetails.getCustomerId())
+                                .map(addOwnersToBillDetails(billDetails))
+                );
+    }
+
     @GetMapping(value = "bills")
     public Flux<BillDetailsExpanded> getAllBilling() {
         return billServiceClient.getAllBilling()

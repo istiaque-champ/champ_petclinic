@@ -21,7 +21,7 @@
             <label>  Pet: </label><select ng-options="pet.name for pet in $ctrl.selectedOwner.pets track by pet.id" ng-model="$ctrl.selectedPet"></select></td>
         </tr>
         <tr>
-            <td><label>Vet: </label><select ng-options="vet.firstName + ' ' + vet.lastName for vet in $ctrl.vets track by vet.id" ng-model="$ctrl.selectedVet"></select></td>
+            <td><label>Vet: </label><select ng-options="vet.firstName + ' ' + vet.lastName for vet in $ctrl.vets track by vet.vetId" ng-model="$ctrl.selectedVet"></select></td>
         </tr>
     </table>
 
