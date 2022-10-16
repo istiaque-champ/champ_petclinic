@@ -58,7 +58,6 @@ public class BillServiceClient {
     }
 
     public Mono<BillDetailsExpanded> editBill(final int billId, BillDetails dt){
-        log.debug("Update Bill Method");
         return webClientBuilder.build().put()
                 .uri(billServiceUrl + "/" + billId)
                 .body(Mono.just(dt), BillDetails.class)
