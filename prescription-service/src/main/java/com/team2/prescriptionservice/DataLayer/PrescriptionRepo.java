@@ -21,4 +21,6 @@ public interface PrescriptionRepo extends CrudRepository<Prescription, Integer> 
 
         Prescription deletePrescriptionById(Integer prescriptionId);
 
+
+
 }

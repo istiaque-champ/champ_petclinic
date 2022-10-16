@@ -6,6 +6,8 @@ import com.team2.prescriptionservice.DataLayer.PrescriptionRepo;
 import com.team2.prescriptionservice.DataLayer.PrescriptionRequest;
 import com.team2.prescriptionservice.DataLayer.PrescriptionResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
@@ -40,9 +42,10 @@ public class PrescriptionRessource {
         return prescriptionService.savePrescription(prescription);
     }
 
-    @DeleteMapping(value = "/{prescriptionId}")
-    public void deletePrescription(@PathVariable("prescriptionId") int prescriptionId) {
-        prescriptionService.deletePrescription(prescriptionId);
+    @DeleteMapping("/{prescriptionId}")
+    public ResponseEntity<?> deleteMovie(@PathVariable int id){
+        prescriptionService.deletePrescription(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
 

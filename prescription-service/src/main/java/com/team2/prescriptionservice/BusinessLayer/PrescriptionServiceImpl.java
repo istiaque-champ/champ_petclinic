@@ -5,6 +5,7 @@ import com.team2.prescriptionservice.Exceptions.DatabaseError;
 import com.team2.prescriptionservice.Exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.sql.Date;
 import java.util.List;
 
@@ -57,9 +58,13 @@ public class PrescriptionServiceImpl implements PrescriptionService  {
     }
 
     @Override
+    @Transactional
     public void deletePrescription(int id) {
-        repository.findById(id).ifPresent(o -> repository.delete(o));
-        LOG.debug("Prescription with ID: " + id + " has been deleted successfully.");
+        if(repository.existsPrescriptionByPrescriptionId(id)){
+            repository.deletePrescriptionById(id);
+            return;
+        }
+        throw new NotFoundException("Unknown prescription provided: " + id);
     }
 
 
