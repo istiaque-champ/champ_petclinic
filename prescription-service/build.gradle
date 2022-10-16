@@ -56,6 +56,8 @@ jacocoTestReport {
         classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it, exclude: [
                     "com/petclinic/**/PrescriptionServiceApplication.class",
+                    "com/team2/prescriptionservice/Exceptions/GlobalControllerExceptionHandler.class",
+                    "**/*MapperImpl.class"
             ])
         }))
     }
@@ -65,7 +67,7 @@ jacocoTestCoverageVerification {
     violationRules {
         rule {
             limit {
-                minimum = 0.33 // TEMP VALUE, CHANGE THIS VALUE TO 0.90 !!
+                minimum = 0.8 // TEMP VALUE, CHANGE THIS VALUE TO 0.90 !!
             }
         }
     }
