@@ -2,14 +2,14 @@ package com.team2.prescriptionservice.BusinessLayer;
 
 import com.team2.prescriptionservice.DataLayer.*;
 import com.team2.prescriptionservice.Exceptions.DatabaseError;
-import com.team2.prescriptionservice.Exceptions.InvalidInputException;
 import com.team2.prescriptionservice.Exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Optional;
+
+import static com.team2.prescriptionservice.Exceptions.GlobalControllerExceptionHandler.LOG;
 
 @Service
 public class PrescriptionServiceImpl implements PrescriptionService  {
@@ -59,4 +59,38 @@ public class PrescriptionServiceImpl implements PrescriptionService  {
             throw new DatabaseError("error adding to database");
         }
     }
+
+    @Override
+    @Transactional
+    public void deletePrescription(int id) {
+        if(repository.existsPrescriptionByPrescriptionId(id)){
+            repository.deletePrescriptionByPrescriptionId(id);
+            return;
+        }
+        throw new NotFoundException("Unknown prescription provided: " + id);
+    }
+
+    @Override
+    public PrescriptionResponse updatePrescription(PrescriptionRequest prescription, int id) {
+        if(repository.existsPrescriptionByPrescriptionId(id)){
+            Prescription inDbPrescription = repository.findPrescriptionByPrescriptionId(id);
+
+
+            Prescription updatedData = mapper.RequestModelToEntity(prescription);
+
+            inDbPrescription.setMedication(updatedData.getMedication());
+            inDbPrescription.setAmount(updatedData.getAmount());
+            inDbPrescription.setInstructions(updatedData.getInstructions());
+            updatedData.setId(inDbPrescription.getId());
+
+            repository.save(inDbPrescription);
+            return findByPrescriptionId(id);
+
+
+        }
+
+        throw new NotFoundException("Unknown prescription Id provided: " + id);
+    }
+
+
 }

@@ -129,6 +129,11 @@ public class BFFApiGatewayController {
         return customersServiceClient.updatePet(petId,ownerId, pet);
     }
 
+    @PutMapping(value = "owners/pets/{petId}" , produces = "application/json", consumes = "application/json")
+    public Mono<PetDetails> updatePet(@RequestBody PetDetails pet, @PathVariable int petId){
+        return customersServiceClient.updatePet(petId, pet);
+    }
+
     @GetMapping(value = "owners/{ownerId}/pets/{petId}")
     public Mono<PetDetails> getPet(@PathVariable int ownerId, @PathVariable int petId){
         return customersServiceClient.getPet(ownerId, petId);
