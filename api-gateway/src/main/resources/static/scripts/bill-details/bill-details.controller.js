@@ -62,13 +62,16 @@ angular.module('billDetails')
         }
 
         self.printPage = function (){
-            var prtContent = document.getElementById("details");
-            var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
-            WinPrint.document.write(prtContent.innerHTML);
-            WinPrint.document.close();
-            WinPrint.focus();
-            WinPrint.print();
-            WinPrint.close();
+            var  buttons = document.getElementById("buttons");
+            var nav = document.getElementById("navBar");
+            var footer = document.getElementById("footerImage");
+            buttons.style.visibility = 'hidden';
+            nav.style.visibility = 'hidden';
+            footer.style.visibility = 'hidden';
+            window.print();
+            buttons.style.visibility = 'visible';
+            nav.style.visibility = 'visible';
+            footer.style.visibility = 'visible';
         }
 
     }])

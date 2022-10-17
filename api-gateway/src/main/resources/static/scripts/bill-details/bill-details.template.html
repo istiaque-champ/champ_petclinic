@@ -11,23 +11,25 @@
             <td id="BillCost" >Price:{{$ctrl.bills.amount}}</td>
         </tr>
         <tr>
-            <td><label>Visit Type: </label><input id="BillType" type="text" ng-model="$ctrl.bills.visitType"></td>
+            <td id="BillVisit"><label>Visit Type: </label><input id="BillType" type="text" ng-model="$ctrl.bills.visitType"></td>
         </tr>
         <tr>
-            <td>Date/Time:{{$ctrl.bills.date | date:'medium'}}</td>
+            <td id="BillDate">Date/Time:{{$ctrl.bills.date | date:'medium'}}</td>
         </tr>
-        <tr>
-            <td><label>Owners: </label><select ng-options="owner.firstName + ' ' + owner.lastName for owner in $ctrl.owners track by owner.id" ng-model="$ctrl.selectedOwner"></select>
+        <tr id="BillOwner">
+            <td ><label>Owners: </label><select ng-options="owner.firstName + ' ' + owner.lastName for owner in $ctrl.owners track by owner.id" ng-model="$ctrl.selectedOwner"></select>
             <label>  Pet: </label><select ng-options="pet.name for pet in $ctrl.selectedOwner.pets track by pet.id" ng-model="$ctrl.selectedPet"></select></td>
         </tr>
         <tr>
-            <td><label>Vet: </label><select ng-options="vet.firstName + ' ' + vet.lastName for vet in $ctrl.vets track by vet.vetId" ng-model="$ctrl.selectedVet"></select></td>
+            <td id="BillVet"><label>Vet: </label><select ng-options="vet.firstName + ' ' + vet.lastName for vet in $ctrl.vets track by vet.vetId" ng-model="$ctrl.selectedVet"></select></td>
         </tr>
     </table>
 
+<div id="buttons">
     <a ui-sref="saveBill">
         <button id="saveBillButton" class="save-bill-button btn btn-success" ng-click="$ctrl.submitBillDetailsForm()" type="submit">Save</button>
     </a>
     <a ui-sref="printBill">
         <button class="print-bill-button btn btn-success" ng-click="$ctrl.printPage()" type="print">Print</button>
     </a>
+</div>
