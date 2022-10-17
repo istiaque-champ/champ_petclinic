@@ -77,12 +77,12 @@ public class PrescriptionServiceImpl implements PrescriptionService  {
 
             inDbPrescription.setMedication(updatedData.getMedication());
             inDbPrescription.setAmount(updatedData.getAmount());
-            inDbPrescription.setDatePrinted(updatedData.getDatePrinted());
             inDbPrescription.setInstructions(updatedData.getInstructions());
             updatedData.setId(inDbPrescription.getId());
 
             repository.save(inDbPrescription);
-            findByPrescriptionId(id);
+            return findByPrescriptionId(id);
+
 
         }
 
