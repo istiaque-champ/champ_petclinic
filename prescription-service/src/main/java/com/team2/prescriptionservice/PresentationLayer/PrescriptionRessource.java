@@ -43,14 +43,14 @@ public class PrescriptionRessource {
     }
 
     @DeleteMapping("/{prescriptionId}")
-    public ResponseEntity<?> deleteMovie(@PathVariable int id){
-        prescriptionService.deletePrescription(id);
+    public ResponseEntity<?> deletePrescription(@PathVariable int prescriptionId){
+        prescriptionService.deletePrescription(prescriptionId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
     @PutMapping("/{prescriptionId}")
-    public ResponseEntity<PrescriptionResponse> updatePrescription(@RequestBody PrescriptionRequest prescription, @PathVariable int id){
-        PrescriptionResponse responseModel = prescriptionService.updatePrescription(prescription, id);
+    public ResponseEntity<PrescriptionResponse> updatePrescription(@RequestBody PrescriptionRequest prescription, @PathVariable int prescriptionId){
+        PrescriptionResponse responseModel = prescriptionService.updatePrescription(prescription, prescriptionId);
         return ResponseEntity.status(HttpStatus.OK).body(responseModel);
     }
 

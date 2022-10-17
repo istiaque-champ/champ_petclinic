@@ -13,6 +13,7 @@ public interface PrescriptionRepo extends CrudRepository<Prescription, Integer> 
         boolean existsPrescriptionByPrescriptionId(Integer prescriptionId);
         Prescription findTopByOrderByPrescriptionIdDesc();
         Prescription deletePrescriptionById(Integer prescriptionId);
+        void  deletePrescriptionByPrescriptionId(Integer prescriptionId);
 
 
 

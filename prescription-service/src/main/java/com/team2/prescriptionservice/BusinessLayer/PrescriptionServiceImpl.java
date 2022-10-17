@@ -61,7 +61,7 @@ public class PrescriptionServiceImpl implements PrescriptionService  {
     @Transactional
     public void deletePrescription(int id) {
         if(repository.existsPrescriptionByPrescriptionId(id)){
-            repository.deletePrescriptionById(id);
+            repository.deletePrescriptionByPrescriptionId(id);
             return;
         }
         throw new NotFoundException("Unknown prescription provided: " + id);
@@ -79,9 +79,11 @@ public class PrescriptionServiceImpl implements PrescriptionService  {
             inDbPrescription.setAmount(updatedData.getAmount());
             inDbPrescription.setDatePrinted(updatedData.getDatePrinted());
             inDbPrescription.setInstructions(updatedData.getInstructions());
+            updatedData.setId(inDbPrescription.getId());
 
+            repository.save(inDbPrescription);
+            findByPrescriptionId(id);
 
-            return mapper.entityToResponseModel(repository.save(inDbPrescription));
         }
 
         throw new NotFoundException("Unknown prescription Id provided: " + id);
