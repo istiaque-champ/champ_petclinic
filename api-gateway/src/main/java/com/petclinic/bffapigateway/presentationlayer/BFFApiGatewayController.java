@@ -39,6 +39,8 @@ public class BFFApiGatewayController {
 
     private final BillServiceClient billServiceClient;
 
+    private final PrescriptionServiceClient prescriptionServiceClient;
+
 
     @GetMapping(value = "bills/{billId}")
     public Mono<BillDetailsExpanded> getBillingInfo(final @PathVariable int billId)
@@ -354,6 +356,13 @@ public class BFFApiGatewayController {
     /**
      * End of Owner Methods
      * **/
+
+    //Prescription Methods
+    @GetMapping(value = "prescriptions/{prescriptionId}")
+    public Mono<PrescriptionDetails> getPrescriptionDetails(final @PathVariable int prescriptionId) {
+        return prescriptionServiceClient.getPrescription(prescriptionId);
+    }
+    //Prescription
 
     @GetMapping("/verification/{token}")
     public Mono<UserDetails> verifyUser(@PathVariable final String token) {
