@@ -9,6 +9,7 @@
 package com.team2.prescriptionservice.Exceptions;
 
 
+import jdk.nashorn.internal.lookup.MethodHandleFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 @RestControllerAdvice
 public class GlobalControllerExceptionHandler {
 
-    private static final Logger LOG = LoggerFactory.getLogger(GlobalControllerExceptionHandler.class);
+    public static final Logger LOG = LoggerFactory.getLogger(GlobalControllerExceptionHandler.class);
 
     @ResponseStatus(NOT_FOUND)
     @ExceptionHandler(NotFoundException.class)

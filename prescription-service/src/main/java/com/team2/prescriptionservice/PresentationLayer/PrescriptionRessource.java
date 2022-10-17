@@ -8,6 +8,8 @@ import com.team2.prescriptionservice.DataLayer.PrescriptionResponse;
 import com.team2.prescriptionservice.Exceptions.InvalidInputException;
 import com.team2.prescriptionservice.Utils.date;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
@@ -53,6 +55,16 @@ public class PrescriptionRessource {
         }
     }
 
+    @DeleteMapping("/{prescriptionId}")
+    public ResponseEntity<?> deletePrescription(@PathVariable int prescriptionId){
+        prescriptionService.deletePrescription(prescriptionId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+    }
 
+    @PutMapping("/{prescriptionId}")
+    public ResponseEntity<PrescriptionResponse> updatePrescription(@RequestBody PrescriptionRequest prescription, @PathVariable int prescriptionId){
+        PrescriptionResponse responseModel = prescriptionService.updatePrescription(prescription, prescriptionId);
+        return ResponseEntity.status(HttpStatus.OK).body(responseModel);
+    }
 
 }

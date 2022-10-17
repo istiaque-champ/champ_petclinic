@@ -54,6 +54,29 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
+    public Pet updatePet(int id, Pet newPet) {
+        try{
+            Optional<Pet> optionalPet = petRepository.findById(id);
+            Pet foundPet = optionalPet.get();
+            foundPet.setName(newPet.getName());
+            foundPet.setBirthDate(newPet.getBirthDate());
+            foundPet.setType(newPet.getType());
+            foundPet.setOwner(newPet.getOwner());
+            LOG.debug("updatePet: Pet with id {} updated",id);
+            return petRepository.save(foundPet);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            throw new NotFoundException("updatePet failed, Pet with id: " + id + " not found.");
+        }
+    }
+
+
+
+
+
+    @Override
     public Pet updatePet(int id, PetRequest newPet) {
         try{
             Optional<Pet> optionalPet = petRepository.findById(id);
