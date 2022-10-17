@@ -3,7 +3,9 @@
 
     <table class="table table-striped">
         <tr>
+            <h3>
             <th class="bg-success white">Pet Info</th>
+            </h3>
         </tr>
         <tr>
             <td><input id="petName" type="text" ng-model="$ctrl.pet.name"></td>
@@ -15,13 +17,16 @@
             <td><input id="petTypeName" type="text" ng-model="$ctrl.pet.type.name"></td>
         </tr>
     </table>
-
-    <h3>
+</div>
+<div class="bColor">
+    <h3 class="titleOwner form">
         Add Notes
     </h3>
-    <textarea id="notesTA" class="form-control" cols="50" ng-model="$ctrl.pet.notes"></textarea>
+</div>
+<div>
+<textarea id="notesTA" class="form-control" cols="50" ng-model="$ctrl.pet.notes"></textarea>
 
     <!--Button should send back to owner list???-->
     <button ng-click="$ctrl.submitPetDetailsForm()" type="submit" ui-sref="owners">Save</button>
-
 </div>
+
