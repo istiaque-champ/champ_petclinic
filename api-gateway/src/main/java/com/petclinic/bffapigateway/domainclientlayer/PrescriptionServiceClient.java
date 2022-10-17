@@ -3,6 +3,7 @@ package com.petclinic.bffapigateway.domainclientlayer;
 import com.petclinic.bffapigateway.dtos.OwnerDetails;
 import com.petclinic.bffapigateway.dtos.PrescriptionDetails;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
@@ -35,5 +36,14 @@ public class PrescriptionServiceClient {
                 .uri(prescriptionServiceUrl)
                 .retrieve()
                 .bodyToFlux(PrescriptionDetails.class);
+    }
+
+    public Mono<PrescriptionDetails> createPrescription (PrescriptionDetails model){
+        return webClientBuilder.build().post()
+                .uri(prescriptionServiceUrl)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(Mono.just(model), PrescriptionDetails.class)
+                .retrieve().bodyToMono(PrescriptionDetails.class);
+
     }
 }
