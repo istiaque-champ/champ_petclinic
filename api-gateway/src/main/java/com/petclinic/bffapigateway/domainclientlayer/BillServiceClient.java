@@ -2,7 +2,6 @@ package com.petclinic.bffapigateway.domainclientlayer;
 
 import com.petclinic.bffapigateway.dtos.BillDetails;
 import com.petclinic.bffapigateway.dtos.BillDetailsExpanded;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -12,7 +11,6 @@ import reactor.core.publisher.Mono;
 
 
 @Component
-@Slf4j
 public class BillServiceClient {
 
     private final WebClient.Builder webClientBuilder;
@@ -42,48 +40,33 @@ public class BillServiceClient {
                 .bodyToMono(BillDetailsExpanded.class);
     }
 
-    public Flux<BillDetailsExpanded> getAllBilling() {
+    public Flux<BillDetails> getAllBilling() {
         return webClientBuilder.build().get()
                 .uri(billServiceUrl)
                 .retrieve()
-                .bodyToFlux(BillDetailsExpanded.class);
+                .bodyToFlux(BillDetails.class);
     }
 
-    public Mono<BillDetailsExpanded> createBill(final BillDetails model){
+    public Mono<BillDetails> createBill(final BillDetails model){
         return webClientBuilder.build().post()
                 .uri(billServiceUrl)
                 .body(Mono.just(model),BillDetails.class)
                 .accept(MediaType.APPLICATION_JSON)
-                .retrieve().bodyToMono(BillDetailsExpanded.class);
+                .retrieve().bodyToMono(BillDetails.class);
     }
 
-    public Mono<BillDetailsExpanded> editBill(final int billId, BillDetails dt){
-        return webClientBuilder.build().put()
-                .uri(billServiceUrl + "/" + billId)
-                .body(Mono.just(dt), BillDetails.class)
-                .retrieve().bodyToMono(BillDetailsExpanded.class);
-    }
-
-    public Flux<BillDetailsExpanded> getBillsByVetId(final int vetId){
+    public Flux<BillDetails> getBillsByVetId(final int vetId){
         return webClientBuilder.build().get()
                 .uri(billServiceUrl + "/vets/" + vetId)
                 .retrieve()
-                .bodyToFlux(BillDetailsExpanded.class);
+                .bodyToFlux(BillDetails.class);
     }
-    
-    public Flux<BillDetailsExpanded> getBillsByPetId(final int petId){
+
+    public Flux<BillDetails> getBillsByPetId(final int petId){
         return webClientBuilder.build().get()
                 .uri(billServiceUrl + "/pets/" + petId)
                 .retrieve()
-                .bodyToFlux(BillDetailsExpanded.class);
-    }
-    
-    public Flux<BillDetailsExpanded> getBillsByCustomerId(final int customerId){
-        return webClientBuilder.build()
-                .get()
-                .uri(billServiceUrl + "/customer/" + customerId)
-                .retrieve()
-                .bodyToFlux(BillDetailsExpanded.class);
+                .bodyToFlux(BillDetails.class);
     }
 
     public Mono<Void> deleteBill(final int billId) {

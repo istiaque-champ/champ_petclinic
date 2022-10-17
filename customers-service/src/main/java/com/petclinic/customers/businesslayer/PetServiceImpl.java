@@ -54,14 +54,14 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public Pet updatePet(int id, Pet newPet) {
+    public Pet updatePet(int id, PetRequest newPet) {
         try{
             Optional<Pet> optionalPet = petRepository.findById(id);
             Pet foundPet = optionalPet.get();
             foundPet.setName(newPet.getName());
             foundPet.setBirthDate(newPet.getBirthDate());
             foundPet.setType(newPet.getType());
-            foundPet.setOwner(newPet.getOwner());
+            foundPet.setNotes(newPet.getNotes());
             LOG.debug("updatePet: Pet with id {} updated",id);
             return petRepository.save(foundPet);
         }

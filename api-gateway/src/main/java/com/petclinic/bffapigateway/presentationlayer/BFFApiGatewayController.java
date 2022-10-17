@@ -54,59 +54,24 @@ public class BFFApiGatewayController {
     @PostMapping(value = "bills",
             consumes = "application/json",
             produces = "application/json")
-    public Mono<BillDetailsExpanded> createBill(@RequestBody BillDetails model) {
-        return billServiceClient.createBill(model)
-                .flatMap(billDetails ->
-                    customersServiceClient.getOwner(billDetails.getCustomerId())
-                            .map(addOwnersToBillDetails(billDetails))
-                );
-    }
-
-    @PutMapping(value = "bills/{billId}", produces = "application/json", consumes = "application/json")
-    public Mono<BillDetailsExpanded> updateBill(@RequestBody BillDetails bill, @PathVariable int billId){
-        return billServiceClient.editBill(billId, bill)
-                .flatMap(billDetails ->
-                        customersServiceClient.getOwner(billDetails.getCustomerId())
-                                .map(addOwnersToBillDetails(billDetails))
-                );
+    public Mono<BillDetails> createBill(@RequestBody BillDetails model) {
+        return billServiceClient.createBill(model);
     }
 
     @GetMapping(value = "bills")
-    public Flux<BillDetailsExpanded> getAllBilling() {
-        return billServiceClient.getAllBilling()
-                .flatMap(billDetails ->
-                        customersServiceClient.getOwner(billDetails.getCustomerId())
-                                .map(addOwnersToBillDetails(billDetails))
-                );
+    public Flux<BillDetails> getAllBilling() {
+        return billServiceClient.getAllBilling();
     }
 
     @GetMapping(value = "/bills/vets/{vetId}")
-    public Flux<BillDetailsExpanded> getBillsByVetId(final @PathVariable int vetId){
-        return billServiceClient.getBillsByVetId(vetId)
-                .flatMap(billDetails ->
-                        customersServiceClient.getOwner(billDetails.getCustomerId())
-                                .map(addOwnersToBillDetails(billDetails))
-                );
+    public Flux<BillDetails> getBillsByVetId(final @PathVariable int vetId){
+        return billServiceClient.getBillsByVetId(vetId);
     }
 
     @GetMapping(value = "/bills/pets/{petId}")
-    public Flux<BillDetailsExpanded> getBillsByPetId(final @PathVariable int petId){
-        return billServiceClient.getBillsByPetId(petId)
-                .flatMap(billDetails ->
-                        customersServiceClient.getOwner(billDetails.getCustomerId())
-                                .map(addOwnersToBillDetails(billDetails))
-                );
+    public Flux<BillDetails> getBillsByPetId(final @PathVariable int petId){
+        return billServiceClient.getBillsByPetId(petId);
     }
-    
-    @GetMapping(value = "/bills/customers/{customerId}")
-    public Flux<BillDetailsExpanded> getBillsByCustomerId(final @PathVariable int customerId){
-        return billServiceClient.getBillsByCustomerId(customerId)
-                .flatMap(billDetails ->
-                        customersServiceClient.getOwner(billDetails.getCustomerId())
-                                .map(addOwnersToBillDetails(billDetails))
-                );
-    }
-    
     @DeleteMapping(value = "bills/{billId}")
     public Mono<Void> deleteBill(final @PathVariable int billId){
         return billServiceClient.deleteBill(billId);
@@ -127,11 +92,6 @@ public class BFFApiGatewayController {
     @PutMapping(value = "owners/{ownerId}/pets/{petId}" , produces = "application/json", consumes = "application/json")
     public Mono<PetDetails> updatePet(@RequestBody PetDetails pet, @PathVariable int petId, @PathVariable int ownerId){
         return customersServiceClient.updatePet(petId,ownerId, pet);
-    }
-
-    @PutMapping(value = "owners/pets/{petId}" , produces = "application/json", consumes = "application/json")
-    public Mono<PetDetails> updatePet(@RequestBody PetDetails pet, @PathVariable int petId){
-        return customersServiceClient.updatePet(petId, pet);
     }
 
     @GetMapping(value = "owners/{ownerId}/pets/{petId}")

@@ -26,6 +26,14 @@ angular.module('visits')
             return Date.parse(yyyy + '-' + mm + '-' + dd);
         }
 
+        // Function to parse the visit date into a comparable format
+        function parseDate(date) {
+            var dd = String(date.getDate()).padStart(2, '0');
+            var mm = String(date.getMonth() + 1).padStart(2, '0');
+            var yyyy = date.getFullYear();
+            return Date.parse(yyyy + '-' + mm + '-' + dd);
+        }
+
         // Container div for all alerts
         let alertsContainer = $('#alertsContainer');
 
@@ -164,6 +172,17 @@ angular.module('visits')
                }
             });
             return practitionerName;
+        };
+
+        self.getOwnerName = function (id){
+            var ownerName = "";
+            $.each(self.owner, function (i, owner){
+                if (owner.ownerId == id){
+                    ownerName = owner.firstName + " " + owner.lastName;
+                    return false;
+                }
+            });
+            return ownerName;
         };
 
         self.showConfirmationModal = function(e, visitId = 0, status = 0, practitionerId = 0, date = null, description = "") {
@@ -562,16 +581,16 @@ angular.module('visits')
 
                 if(sortStatusAscendingUpcomingVisits) {
                     self.upcomingVisits.sort(function (a, b) {
-                        a = self.getStatus(a.status).toLowerCase();
-                        b = self.getStatus(b.status).toLowerCase();
+                        a = self.getStatus(a.status, a.date).toLowerCase();
+                        b = self.getStatus(b.status, b.date).toLowerCase();
 
                         return a < b ? -1 : a > b ? 1 : 0;
                     });
                     $('#sortByStatusButtonUpcomingVisits').text("Sort by status ↓")
                 } else {
                     self.upcomingVisits.sort(function (a, b) {
-                        a = self.getStatus(a.status).toLowerCase();
-                        b = self.getStatus(b.status).toLowerCase();
+                        a = self.getStatus(a.status, a.date).toLowerCase();
+                        b = self.getStatus(b.status, b.date).toLowerCase();
 
                         return a > b ? -1 : a < b ? 1 : 0;
                     });
@@ -584,16 +603,16 @@ angular.module('visits')
 
                 if(sortStatusAscendingPreviousVisits) {
                     self.previousVisits.sort(function (a, b) {
-                        a = self.getStatus(a.status).toLowerCase();
-                        b = self.getStatus(b.status).toLowerCase();
+                        a = self.getStatus(a.status, a.date).toLowerCase();
+                        b = self.getStatus(b.status, b.date).toLowerCase();
 
                         return a < b ? -1 : a > b ? 1 : 0;
                     });
                     $('#sortByStatusButtonPreviousVisits').text("Sort by status ↓")
                 } else {
                     self.previousVisits.sort(function (a, b) {
-                        a = self.getStatus(a.status).toLowerCase();
-                        b = self.getStatus(b.status).toLowerCase();
+                        a = self.getStatus(a.status, a.date).toLowerCase();
+                        b = self.getStatus(b.status, b.date).toLowerCase();
 
                         return a > b ? -1 : a < b ? 1 : 0;
                     });
@@ -666,16 +685,42 @@ angular.module('visits')
             });
         };
 
-        self.getStatus = function (status) {
+        self.getStatus = function (status, date) {
+            //Initializing variable for status
             var statusText = "";
 
+            //Retrieving the current date
+            let currentDate= getCurrentDate();
+            //Parsing the visit date for comparison
+            let visitDate = Date.parse(date);
+
+            //Checking to see if the visit has been canceled
             if(status === false){
                 statusText = "Canceled";
             }
             else{
-                statusText = "Not Canceled";
+                //Old status message
+                // statusText = "Not Canceled"
+
+                if(visitDate > currentDate){
+                    //Display if visit is in the future
+                    statusText = "Scheduled";
+                }
+                else if(visitDate == currentDate){
+                    //Display if visit is today
+                    statusText = "Today";
+                }
+                else if(visitDate < currentDate){
+                    //Display if visit is in the past
+                    statusText = "Billed";
+                }
+                else{
+                    //Troubleshooting text in case of exception
+                    statusText = "No comparison working";
+                }
             }
 
+            //Return text to the view
             return statusText;
         };
 

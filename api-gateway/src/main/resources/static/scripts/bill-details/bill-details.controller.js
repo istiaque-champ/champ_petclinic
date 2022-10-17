@@ -62,16 +62,7 @@ angular.module('billDetails')
         }
 
         self.printPage = function (){
-            var  buttons = document.getElementById("buttons");
-            var nav = document.getElementById("navBar");
-            var footer = document.getElementById("footerImage");
-            buttons.style.visibility = 'hidden';
-            nav.style.visibility = 'hidden';
-            footer.style.visibility = 'hidden';
             window.print();
-            buttons.style.visibility = 'visible';
-            nav.style.visibility = 'visible';
-            footer.style.visibility = 'visible';
         }
 
     }])

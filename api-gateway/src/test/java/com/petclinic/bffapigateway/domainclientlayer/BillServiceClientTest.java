@@ -107,30 +107,6 @@ class BillServiceClientTest {
     }
 
     @Test
-    void updateBill() throws JsonProcessingException{
-        BillDetails entity = new BillDetails();
-
-        entity.setBillId(1);
-
-        entity.setAmount(599);
-
-        entity.setCustomerId(2);
-
-        entity.setVetId(1);
-        entity.setPetId(1);
-
-        final String body = objectMapper.writeValueAsString(objectMapper.convertValue(entity, BillDetails.class));
-
-        prepareResponse(response -> response
-                .setHeader("Content-Type", "application/json")
-                .setBody(body));
-
-        Mono<BillDetailsExpanded> billDetailsMono = billServiceClient.editBill(1, entity);
-
-        assertEquals(1, billDetailsMono.block().getBillId());
-    }
-
-    @Test
     void getBillsByVetId() {
         prepareResponse(response -> response
                 .setHeader("Content-Type", "application/json")
