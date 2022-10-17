@@ -5,6 +5,7 @@ import com.petclinic.bffapigateway.dtos.PrescriptionDetails;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Component
@@ -27,5 +28,12 @@ public class PrescriptionServiceClient {
                 .uri(prescriptionServiceUrl + prescriptionId)
                 .retrieve()
                 .bodyToMono(PrescriptionDetails.class);
+    }
+
+    public Flux<PrescriptionDetails> getPrescriptions() {
+        return webClientBuilder.build().get()
+                .uri(prescriptionServiceUrl)
+                .retrieve()
+                .bodyToFlux(PrescriptionDetails.class);
     }
 }

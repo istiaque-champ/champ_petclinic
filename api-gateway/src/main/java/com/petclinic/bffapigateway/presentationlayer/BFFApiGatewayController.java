@@ -362,6 +362,10 @@ public class BFFApiGatewayController {
     public Mono<PrescriptionDetails> getPrescriptionDetails(final @PathVariable int prescriptionId) {
         return prescriptionServiceClient.getPrescription(prescriptionId);
     }
+    @GetMapping(value = "prescriptions")
+    public Flux<PrescriptionDetails> getPrescriptionDetails() {
+        return prescriptionServiceClient.getPrescriptions();
+    }
     //Prescription
 
     @GetMapping("/verification/{token}")
