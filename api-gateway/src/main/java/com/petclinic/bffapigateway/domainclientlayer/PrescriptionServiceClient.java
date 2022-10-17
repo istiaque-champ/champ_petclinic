@@ -3,9 +3,11 @@ package com.petclinic.bffapigateway.domainclientlayer;
 import com.petclinic.bffapigateway.dtos.OwnerDetails;
 import com.petclinic.bffapigateway.dtos.PrescriptionDetails;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+@Component
 public class PrescriptionServiceClient {
 
     private final WebClient.Builder webClientBuilder;
