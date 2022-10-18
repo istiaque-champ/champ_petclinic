@@ -62,9 +62,6 @@ public class PetServiceImpl implements PetService {
             foundPet.setBirthDate(newPet.getBirthDate());
             foundPet.setType(newPet.getType());
             foundPet.setNotes(newPet.getNotes());
-            if(newPet.getPrescriptions()!=null){
-                foundPet.setPrescriptions(newPet.getPrescriptions());
-            }
             LOG.debug("updatePet: Pet with id {} updated",id);
             return petRepository.save(foundPet);
         }

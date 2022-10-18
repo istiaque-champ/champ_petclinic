@@ -6,7 +6,6 @@ import lombok.Data;
 
 import javax.validation.constraints.Size;
 import java.util.Date;
-import java.util.Set;
 
 /**
  * @author mszarlinski@bravurasolutions.com on 2016-12-05.
@@ -27,8 +26,6 @@ public class PetRequest {
     private String notes;
 
     private PetType type;
-
-    private Set<Integer> prescriptions;
 
     //USED FOR TESTING PURPOSE
     public PetRequest()
