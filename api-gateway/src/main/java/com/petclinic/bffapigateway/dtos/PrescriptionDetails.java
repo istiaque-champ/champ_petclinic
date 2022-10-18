@@ -9,6 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PrescriptionDetails {
     private Integer prescriptionId;
+    private Integer petId;
     private String medication;
     private String amount;
     private String datePrinted;

@@ -38,7 +38,8 @@ public class PrescriptionServiceClient {
                 .bodyToFlux(PrescriptionDetails.class);
     }
 
-    public Mono<PrescriptionDetails> createPrescription (Integer petId,PrescriptionDetails model){
+    public Mono<PrescriptionDetails> createPrescription (PrescriptionDetails model){
+
         return webClientBuilder.build().post()
                 .uri(prescriptionServiceUrl)
                 .accept(MediaType.APPLICATION_JSON)

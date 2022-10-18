@@ -370,7 +370,8 @@ public class BFFApiGatewayController {
             consumes = "application/json",
             produces = "application/json")
     public Mono<PrescriptionDetails> createPrescription(@PathVariable Integer petId,@RequestBody PrescriptionDetails model){
-        return prescriptionServiceClient.createPrescription(petId,model);
+        model.se
+        return prescriptionServiceClient.createPrescription(model);
     }
     //Prescription
 
