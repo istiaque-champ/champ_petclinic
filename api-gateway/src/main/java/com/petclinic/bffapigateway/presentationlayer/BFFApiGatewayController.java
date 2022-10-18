@@ -366,11 +366,11 @@ public class BFFApiGatewayController {
     public Flux<PrescriptionDetails> getPrescriptionDetails() {
         return prescriptionServiceClient.getPrescriptions();
     }
-    @PostMapping(value = "prescriptions",
+    @PostMapping(value = "owners/{ownerId}/pets/{petId}/prescriptions",
             consumes = "application/json",
             produces = "application/json")
-    public Mono<PrescriptionDetails> createPrescription(@RequestBody PrescriptionDetails model){
-        return prescriptionServiceClient.createPrescription(model);
+    public Mono<PrescriptionDetails> createPrescription(@PathVariable Integer petId,@RequestBody PrescriptionDetails model){
+        return prescriptionServiceClient.createPrescription(petId,model);
     }
     //Prescription
 
