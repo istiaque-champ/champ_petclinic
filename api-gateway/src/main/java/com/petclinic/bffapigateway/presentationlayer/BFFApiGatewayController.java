@@ -358,12 +358,13 @@ public class BFFApiGatewayController {
      * **/
 
     //Prescription Methods
-    @GetMapping(value = "prescriptions/{prescriptionId}")
+    @GetMapping(value = "owners/{ownerId}/pets/{petId}/prescriptions/{prescriptionId}")
     public Mono<PrescriptionDetails> getPrescriptionDetails(final @PathVariable int prescriptionId) {
         return prescriptionServiceClient.getPrescription(prescriptionId);
     }
-    @GetMapping(value = "prescriptions")
-    public Flux<PrescriptionDetails> getPrescriptionDetails() {
+
+    @GetMapping(value = "owners/{ownerId}/pets/{petId}/prescriptions")
+    public Flux<PrescriptionDetails> getAllPrescriptionDetails() {
         return prescriptionServiceClient.getPrescriptions();
     }
     @PostMapping(value = "owners/{ownerId}/pets/{petId}/prescriptions",
