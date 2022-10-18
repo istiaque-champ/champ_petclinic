@@ -30,12 +30,6 @@ public class PrescriptionRessource {
         return prescriptionService.findByPrescriptionId(prescriptionId);
     }
 
-    @GetMapping()
-    public List<PrescriptionResponse> findPrescriptions() {
-        System.out.println("Try find all ");
-        return prescriptionService.findAllPrescriptions();
-    }
-
     @PostMapping()
     public PrescriptionResponse addPrescription(@RequestBody PrescriptionRequest prescription) {
         System.out.println("Try add ");
