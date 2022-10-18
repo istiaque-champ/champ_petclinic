@@ -21,19 +21,19 @@ public class PrescriptionServiceClient {
             @Value("${app.prescription-service.port}") String prescriptionServicePort
     ) {
         this.webClientBuilder = webClientBuilder;
-        prescriptionServiceUrl = "http://" + prescriptionServiceHost + ":" + prescriptionServicePort + "/prescriptions/";
+        prescriptionServiceUrl = "http://" + prescriptionServiceHost + ":" + prescriptionServicePort;
     }
 
     public Mono<PrescriptionDetails> getPrescription(final int prescriptionId) {
         return webClientBuilder.build().get()
-                .uri(prescriptionServiceUrl + prescriptionId)
+                .uri(prescriptionServiceUrl +"/1/prescriptions/"+ prescriptionId)
                 .retrieve()
                 .bodyToMono(PrescriptionDetails.class);
     }
 
     public Flux<PrescriptionDetails> getPrescriptions(Integer petId) {
         return webClientBuilder.build().get()
-                .uri(petId+"/"+prescriptionServiceUrl)
+                .uri(prescriptionServiceUrl+"/"+petId+"/prescriptions")
                 .retrieve()
                 .bodyToFlux(PrescriptionDetails.class);
     }
@@ -41,7 +41,7 @@ public class PrescriptionServiceClient {
     public Mono<PrescriptionDetails> createPrescription (PrescriptionDetails model){
 
         return webClientBuilder.build().post()
-                .uri(prescriptionServiceUrl)
+                .uri(prescriptionServiceUrl+"/1/prescriptions")
                 .accept(MediaType.APPLICATION_JSON)
                 .body(Mono.just(model), PrescriptionDetails.class)
                 .retrieve().bodyToMono(PrescriptionDetails.class);
