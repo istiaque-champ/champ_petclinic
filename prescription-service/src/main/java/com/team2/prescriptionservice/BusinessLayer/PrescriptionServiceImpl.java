@@ -62,6 +62,6 @@ public class PrescriptionServiceImpl implements PrescriptionService  {
 
     @Override
     public List<PrescriptionResponse> findAllPrescriptionsByPetId(Integer petId) {
-        return null;
+        return mapper.entityListToResponseModelList(repository.findPrescriptionsByPetId(petId));
     }
 }
