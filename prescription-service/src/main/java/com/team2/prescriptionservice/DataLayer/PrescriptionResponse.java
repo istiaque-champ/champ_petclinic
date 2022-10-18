@@ -12,6 +12,7 @@ import org.springframework.hateoas.RepresentationModel;
 @NoArgsConstructor
 public class PrescriptionResponse extends RepresentationModel<PrescriptionResponse>{
     private Integer prescriptionId;
+    private Integer petId;
     private String medication;
     private String amount;
     private Date datePrinted;
