@@ -24,6 +24,7 @@ class PrescriptionRepoTest {
 
     public static final Integer VALID_PRESCRIPTION_ID = 2001;
     public static final String VALID_MEDICATION = "Amitraz";
+    public static final Integer VALID_PET_ID = 1;
 
     Prescription savedPrescription;
 
@@ -39,6 +40,7 @@ class PrescriptionRepoTest {
         Prescription prescription = new Prescription();
         prescription.setPrescriptionId(VALID_PRESCRIPTION_ID);
         prescription.setMedication(VALID_MEDICATION);
+        prescription.setPetId(VALID_PET_ID);
         prescription.setAmount("30 Tabs");
         prescription.setDatePrinted(cal.getTime());
         prescription.setInstructions("Mix with food");
