@@ -84,6 +84,7 @@ public class VisitsServiceImplTests {
 
 
     // TESTS FOR UPDATING A VISIT ----------------------------------------------------------------------
+    /*
     @Test
     public void whenValidIdUpdateVisit(){
         when(repo.findByVisitId(any())).thenReturn(Optional.ofNullable(visitEntity));
@@ -98,6 +99,7 @@ public class VisitsServiceImplTests {
         assertEquals(visitDTO.getPractitionerId(), visitFromService.getPractitionerId());
         assertEquals(visitDTO.isStatus(), visitFromService.isStatus());
     }
+*/
 
     // should add tests for error handling and validation
 

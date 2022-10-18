@@ -63,9 +63,13 @@
     let selectedDate = date.getDate();
     let selectedTime;
     let availableDays = [];
+    let availableTime = [];
     let vetAvailabilityStr;
     let nameOnCalenderStr;
     let availabilities = [];
+    let count = 11;
+    let selday=false;
+    let ButtonClicked=false;
 
     const renderCalendar = () => {
 
@@ -154,6 +158,7 @@
 
         //get the week days that the vet works
         for(let i = 1; i <= lastDay; i++) {
+            availableDays.push(i)
 
             let workDay = false;
             for(let w of vetWorkDays) {
@@ -204,10 +209,15 @@
                 }
             }
 
+            else if(selectedDate === i.toString() && count>=6){
+                days += `<div id="day${i}" data-target="${i}" class="date-selected unavailable day">${i}</div>`;
+                availableDays.push(i)
+            }
+
             //check for date selected by user
             else if(selectedDate === i.toString()) {
                 days += `<div id="day${i}" data-target="${i}" class="date-selected day">${i}</div>`;
-                availableDays.push(i);
+                selday=true;
             }
 
             //specify the date of today
@@ -217,10 +227,13 @@
 
             //regular days
             else {
+
                 days += `<div id="day${i}" data-target="${i}" class="day">${i}</div>`;
-                availableDays.push(i);
             }
+            //days += `<div id="day${i}" data-target="${i}" class="day">${i}</div>`;
+            //availableDays.push(i);
         }
+
 
         //insert the days for the next month
         for(let j = 1; j <= nextDays; j++) {
@@ -237,6 +250,7 @@
         let numberOfDays = document.getElementsByClassName("day").length;
         let numberOfNext = document.getElementsByClassName("next-date").length;
         let numberOfRows;
+
 
         if(numberOfDays === 28) {
             numberOfRows = 2;
@@ -260,6 +274,7 @@
 
         let slots = "";
         let timeIsSelected = false;
+        let Selectthis;
 
         //create time slots
         for(let i = 9; i < 17; i++) {
@@ -284,25 +299,38 @@
                 is2AM = false;
                 is1AM = false;
             }
+            //for time try to make an array that holds all the times that were selected and then do a for loop to iterate through it and hide the div
 
             firstTime = getAMorPM(is1AM);
             secondTime = getAMorPM(is2AM);
+
 
             //Make time unavailable
             if(isMonthUnavailable || formattedDate === date.getFullYear().toString() || (new Date().getDate() === parseInt(selectedDate)) && new Date().getMonth() === date.getMonth() && new Date().getFullYear() === date.getFullYear()) {
                 slots += `<div data-target="${i} " class="time-slots time-unavailable">${val} ${firstTime} - ${val + addition} ${secondTime}</div>`;
             }
-
-            //check time selected
+            //make selected time unavailable
             else if(i === parseInt(selectedTime)) {
-                slots += `<div data-target="${i} " class="time-slots time-selected">${val} ${firstTime} - ${val + addition} ${secondTime}</div>`;
+                slots += `<div data-target="${i} " class="time-slots time-selected time-unavailable">${val} ${firstTime} - ${val + addition} ${secondTime}</div>`;
                 timeIsSelected = true;
+                count=11;
+                availableTime.push(i);
+            }
+            //check time selected
+            else if(i === parseInt(selectedTime)){
+                slots += `<div data-target="${i} " class="time-slots time-selected">${val} ${firstTime} - ${val + addition} ${secondTime}</div>`;
+
+
+            }
+            //Show user available time ranges
+            else{
+
+                slots += `<div data-target="${i} " class="time-slots">${val} ${firstTime} - ${val + addition} ${secondTime}</div>`;
+
+
             }
 
-            //Show user available time ranges
-            else {
-                slots += `<div data-target="${i} " class="time-slots">${val} ${firstTime} - ${val + addition} ${secondTime}</div>`;
-            }
+
         }
 
         //make confirmation button appear if time was selected
@@ -311,10 +339,14 @@
                     <div class="submitBTN">Confirm</div>
                   </div>`;
 
+            // ButtonClicked = true;
             document.querySelector(".time-picker").classList.add("time-picker-selected");
+
         } else {
             document.querySelector(".time-picker").classList.remove("time-picker-selected");
         }
+
+
 
         timeSlots.innerHTML = slots;
 
@@ -399,8 +431,43 @@
     const selectChanged = () => {
         vetAvailabilityStr = $('#vetWorkdays').val();
         nameOnCalenderStr = $("#selectedVet :selected").attr("data-target");
-
         renderCalendar();
+    }
+
+    var option1 = "";
+
+
+    //hide all and only unhide available options
+    const displayOptions = () => {
+        let option = document.getElementById("selectedVisitType").value;
+        //let optionInput = document.getElementById("optionInput").value;
+
+        switch (option){
+            //For Visit Type Examination Only general doctors can be selected
+            case("Examinations"):     //Visit Type
+                option1 = "general"; //speciality of doctor
+                break;
+
+            case("Injury"):
+                option1 = "radio";
+                break;
+
+            case("Medical"):
+                option1 = "general";
+                break;
+
+            case("Chronic"):
+                option1 = "general";
+                break;
+
+            case("Consultations"):
+                option1 = "dentistry";
+                break;
+
+            case("Operations"):
+                option1 = "radio";
+                break;
+        }
     }
 
     //get value either for PM or AM for the time slots
@@ -520,11 +587,14 @@
     });
 </script>
 
-<h2>Visits</h2>
+
+<div class="mydiv">
+    <h2>Visits</h2>
+</div>
 
 <form id="visitForm" ng-submit="$ctrl.submit()" onsubmit="return false;">
     <!-- Sensitive Action Confirmation Modal -->
-    <div class="visitModal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="visitModal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-hidden="true" >
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -544,11 +614,28 @@
         </div>
     </div>
 
+    <div class="form-group" style="margin-top: 12px">
+        <label for="selectedVisitType">Visit Type:</label>
+        <select id="selectedVisitType" name="selectedVisitType" ng-model="$ctrl.visitType" onchange=displayOptions()>
+            <option disabled selected value>Please Select A Visit Type</option>
+            <option value="Examinations">Examinations</option>
+            <option value="Injury">Injury</option>
+            <option value="Medical">Medical</option>
+            <option value="Chronic">Chronic</option>
+            <option value="Consultations">Consultations</option>
+            <option value="Operations">Operations</option>
+        </select>
+    </div>
+
+    <br>
+
     <div class="form-group">
         <label for="selectedVet">Practitioner</label>
+        <input type="text" id="option1" ng-model="testfilter" value="{{option1}}">
         <select id="selectedVet" ng-model="$ctrl.practitionerId" ng-change="$ctrl.loadVetInfo();$ctrl.getVisitsForPractitionerIdAndMonth()" required>
             <option disabled selected value>Please Select A Veterinarian</option>
-            <option ng-repeat="p in $ctrl.vets" data-target="{{p.firstName}} {{p.lastName}}" value="{{p.vetId}}">{{p.firstName}} {{p.lastName}}</option>
+            <option ng-repeat="p in $ctrl.vets | filter: testfilter " data-target="{{p.firstName}} {{p.lastName}} " value="{{p.vetId}}">{{p.firstName}} {{p.lastName}}
+                {{p.specialties}}</option>
         </select>
 
         <br>
@@ -564,19 +651,6 @@
 
         <label for="vetWorkdays">Workdays:</label>
         <input id="vetWorkdays" disabled="disabled" style="background-color: #dbd9ce;" onchange=selectChanged() />
-    </div>
-
-    <div class="form-group" style="margin-top: 12px">
-        <label for="selectedVisitType">Visit Type:</label>
-        <select id="selectedVisitType" name="selectedVisitType" ng-model="$ctrl.visitType">
-            <option disabled selected value>Please Select A Visit Type</option>
-            <option value="Examinations">Examinations</option>
-            <option value="Injury">Injury</option>
-            <option value="Medical">Medical</option>
-            <option value="Chronic">Chronic</option>
-            <option value="Consultations">Consultations</option>
-            <option value="Operations">Operations</option>
-        </select>
     </div>
 
     <div class="form-group" style="margin-top: 4px">
@@ -628,16 +702,17 @@
 <h3 style="margin-top: 6px">Previous Visits</h3>
 <table class="table">
     <thead>
-        <tr>
-            <th> <button class="btn btn-default" id="sortByDateButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByDate(false)" style="color: white">Sort by date ⇅</button> </th>
-            <th> <button class="btn btn-default" id="sortByDescButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByDesc(false)" style="color: white">Sort by description ⇅</button> </th>
-            <th> <button class="btn btn-default" id="sortByVetButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByVet(false)" style="color: white">Sort by veterinarian ⇅</button> </th>
-            <th> <button class="btn btn-default" id="sortByStatusButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByStatus(false)" style="color: white">Sort by status ⇅</button>  </th>
-            <th style="text-align:center; vertical-align:middle"> <label>Edit</label> </th>
-            <th style="text-align:center; vertical-align:middle"> <label>Delete</label> </th>
-        </tr>
+    <tr>
+        <th> <button class="btn btn-default" id="sortByDateButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByDate(false)" style="color: white">Sort by date ⇅</button> </th>
+        <th> <button class="btn btn-default" id="sortByDescButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByDesc(false)" style="color: white">Sort by description ⇅</button> </th>
+        <th> <button class="btn btn-default" id="sortByVetButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByVet(false)" style="color: white">Sort by veterinarian ⇅</button> </th>
+        <th> <button class="btn btn-default" id="sortByStatusButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByStatus(false)" style="color: white">Sort by status ⇅</button>  </th>
+        <th style="text-align:center; vertical-align:middle"> <label>Edit</label> </th>
+        <th style="text-align:center; vertical-align:middle"> <label>Delete</label> </th>
+    </tr>
     </thead>
     <tbody>
+
         <tr ng-repeat="v in $ctrl.previousVisits" data-index="{{$index}}" data-table-name="previousVisits">
             <td class="col-sm-2">{{v.date}}</td>
             <td style="white-space: pre-line">{{v.description}}</td>
@@ -646,5 +721,6 @@
             <td style="text-align:center; vertical-align:middle"><button class="btn btn-default" style="background-color: royalblue; color: white" ng-click="$ctrl.switchToUpdateForm($event, v.practitionerId, v.date, v.description, v.visitId, v.status)">Edit Visit</button></td>
             <td style="text-align:center; vertical-align:middle"><button class="btn btn-danger" ng-click="$ctrl.showConfirmationModal($event, v.visitId)">Delete visit</button></td>
         </tr>
+
     </tbody>
 </table>
