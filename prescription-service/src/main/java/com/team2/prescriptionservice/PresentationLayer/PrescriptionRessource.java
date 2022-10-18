@@ -15,7 +15,7 @@ import java.io.Console;
 import java.util.List;
 import java.util.Optional;
 
-@RequestMapping("/prescriptions")
+@RequestMapping("{petId}/prescriptions")
 @RestController
 @Slf4j
 public class PrescriptionRessource {
@@ -53,6 +53,11 @@ public class PrescriptionRessource {
         }
     }
 
+    @GetMapping()
+    public List<PrescriptionResponse> findPrescriptionsByPetId(@PathVariable Integer petId) {
+        System.out.println("Try find all ");
+        return prescriptionService.findAllPrescriptionsByPetId(petId);
+    }
 
 
 }
