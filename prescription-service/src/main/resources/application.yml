@@ -1,0 +1,40 @@
+server:
+  error:
+    include-message: always
+
+logging:
+  level:
+    root: INFO
+    com.baldacchino: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+
+---
+#for docker
+
+spring:
+  datasource:
+    url: jdbc:mysql://mysql5/prescription-db
+    username: user
+    password: pwd
+
+    hikari:
+      initialization-fail-timeout: 60000
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+
+  config:
+    activate:
+      on-profile: docker
+
+  sql:
+    init:
+      platform: mysql
+      mode: always
+
+server:
+  port: 8087

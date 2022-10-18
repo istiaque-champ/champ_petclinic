@@ -24,6 +24,14 @@ public class EntityDTOUtil {
             throw new InvalidInputException("That customer id is invalid");
         }
 
+        if(billDTO.getVetId() <= 0){
+            throw new InvalidInputException("That vet id is invalid");
+        }
+
+        if(billDTO.getPetId() <= 0){
+            throw new InvalidInputException("That pet id is invalid");
+        }
+
         //checks for valid visit type
         if(BillServiceImpl.visitTypePrices.getOrDefault(billDTO.getVisitType(), null) == null){
             throw new InvalidInputException("That visit type does not exist");

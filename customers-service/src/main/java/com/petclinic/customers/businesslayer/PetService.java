@@ -1,5 +1,6 @@
 package com.petclinic.customers.businesslayer;
 
+import com.petclinic.customers.datalayer.Owner;
 import com.petclinic.customers.datalayer.Pet;
 import com.petclinic.customers.datalayer.PetType;
 import com.petclinic.customers.presentationlayer.PetRequest;
@@ -14,6 +15,10 @@ public interface PetService {
 
     //FIND ALL PETS
     public List<Pet> findAll(int ownerId);
+    public Pet updatePet(int id, PetRequest pet);
+
+
+    //UPDATE PET
     public Pet updatePet(int id, Pet pet);
 
     //CREATE PET

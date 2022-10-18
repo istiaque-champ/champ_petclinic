@@ -39,6 +39,7 @@ class BillResourceUnitTest {
     private final String VALID_VISIT_TYPE = "Examinations";
     private final Instant VALID_DATE = Instant.now();
     private final Double VALID_AMOUNT = BillServiceImpl.visitTypePrices.get(VALID_VISIT_TYPE);
+    private final Integer VALID_VET_ID = 1;
 
     private final Integer NOT_FOUND_BILL_ID = 2;
 
@@ -61,7 +62,8 @@ class BillResourceUnitTest {
                 .jsonPath("$.billId").isEqualTo(VALID_BILL_ID)
                 .jsonPath("$.customerId").isEqualTo(VALID_CUSTOMER_ID)
                 .jsonPath("$.visitType").isEqualTo(VALID_VISIT_TYPE)
-                .jsonPath("$.amount").isEqualTo(VALID_AMOUNT);
+                .jsonPath("$.amount").isEqualTo(VALID_AMOUNT)
+                .jsonPath("$.vetId").isEqualTo(VALID_VET_ID);
     }
 
     @Test
@@ -90,12 +92,13 @@ class BillResourceUnitTest {
                 .jsonPath("$.billId").isEqualTo(VALID_BILL_ID)
                 .jsonPath("$.customerId").isEqualTo(VALID_CUSTOMER_ID)
                 .jsonPath("$.visitType").isEqualTo(VALID_VISIT_TYPE)
-                .jsonPath("$.amount").isEqualTo(VALID_AMOUNT);
+                .jsonPath("$.amount").isEqualTo(VALID_AMOUNT)
+                .jsonPath("$.vetId").isEqualTo(VALID_VET_ID);
     }
 
     @Test
     void getBillByCustomerIdUnitTest() {
-        when(service.GetBillByCustomerId(VALID_CUSTOMER_ID)).thenReturn(Flux.just(VALID_BILL_RESPONSE_MODEL));
+        when(service.GetBillsByCustomerId(VALID_CUSTOMER_ID)).thenReturn(Flux.just(VALID_BILL_RESPONSE_MODEL));
 
         webTestClient.get()
                 .uri(BASE_URI + "/customer/" + VALID_CUSTOMER_ID)
@@ -107,7 +110,26 @@ class BillResourceUnitTest {
                 .jsonPath("$[0].billId").isEqualTo(VALID_BILL_ID)
                 .jsonPath("$[0].customerId").isEqualTo(VALID_CUSTOMER_ID)
                 .jsonPath("$[0].visitType").isEqualTo(VALID_VISIT_TYPE)
-                .jsonPath("$[0].amount").isEqualTo(VALID_AMOUNT);
+                .jsonPath("$[0].amount").isEqualTo(VALID_AMOUNT)
+                .jsonPath("$[0].vetId").isEqualTo(VALID_VET_ID);
+    }
+
+    @Test
+    void getBillByVetIdUnitTest(){
+        when(service.GetBillsByVetId(VALID_VET_ID)).thenReturn(Flux.just(VALID_BILL_RESPONSE_MODEL));
+
+        webTestClient.get()
+                .uri(BASE_URI + "/vets/" + VALID_VET_ID)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody()
+                .jsonPath("$[0].billId").isEqualTo(VALID_BILL_ID)
+                .jsonPath("$[0].customerId").isEqualTo(VALID_CUSTOMER_ID)
+                .jsonPath("$[0].visitType").isEqualTo(VALID_VISIT_TYPE)
+                .jsonPath("$[0].amount").isEqualTo(VALID_AMOUNT)
+                .jsonPath("$[0].vetId").isEqualTo(VALID_VET_ID);
     }
 
     @Test
@@ -125,7 +147,8 @@ class BillResourceUnitTest {
                 .jsonPath("$.billId").isEqualTo(VALID_BILL_ID)
                 .jsonPath("$.customerId").isEqualTo(VALID_CUSTOMER_ID)
                 .jsonPath("$.visitType").isEqualTo(VALID_VISIT_TYPE)
-                .jsonPath("$.amount").isEqualTo(VALID_AMOUNT);
+                .jsonPath("$.amount").isEqualTo(VALID_AMOUNT)
+                .jsonPath("$.vetId").isEqualTo(VALID_VET_ID);
     }
 
     @Test
@@ -142,7 +165,8 @@ class BillResourceUnitTest {
                 .jsonPath("$[0].billId").isEqualTo(VALID_BILL_ID)
                 .jsonPath("$[0].customerId").isEqualTo(VALID_CUSTOMER_ID)
                 .jsonPath("$[0].visitType").isEqualTo(VALID_VISIT_TYPE)
-                .jsonPath("$[0].amount").isEqualTo(VALID_AMOUNT);
+                .jsonPath("$[0].amount").isEqualTo(VALID_AMOUNT)
+                .jsonPath("$[0].vetId").isEqualTo(VALID_VET_ID);
     }
 
     @Test
@@ -173,10 +197,24 @@ class BillResourceUnitTest {
     @Test
     void testEmptyCustomerIdUnitTest(){
         int NOT_FOUND_CUSTOMER_ID = 2;
-        when(service.GetBillByCustomerId(NOT_FOUND_CUSTOMER_ID)).thenReturn(Flux.empty());
+        when(service.GetBillsByCustomerId(NOT_FOUND_CUSTOMER_ID)).thenReturn(Flux.empty());
 
         webTestClient.get()
                 .uri(BASE_URI + "/customer/" + NOT_FOUND_CUSTOMER_ID)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$[0]").doesNotExist();
+    }
+
+    @Test
+    void testEmptyVetIdUnitTest(){
+        int NOT_FOUND_VET_ID = 2;
+        when(service.GetBillsByCustomerId(NOT_FOUND_VET_ID)).thenReturn(Flux.empty());
+
+        webTestClient.get()
+                .uri(BASE_URI + "/vets/" + NOT_FOUND_VET_ID)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
@@ -244,6 +282,18 @@ class BillResourceUnitTest {
     }
 
     @Test
+    void getBillsByInvalidVetIdUnit(){
+        int INVALID_VET_ID = -1;
+        webTestClient.get()
+                .uri(BASE_URI + "/vets/" + INVALID_VET_ID)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
+                .expectBody()
+                .jsonPath("$.message").isEqualTo("That id is invalid");
+    }
+
+    @Test
     void updateBillInvalidBillIdUnit(){
 
         webTestClient.put()
@@ -276,6 +326,7 @@ class BillResourceUnitTest {
         billDTO.setVisitType(VALID_VISIT_TYPE);
         billDTO.setAmount(VALID_AMOUNT);
         billDTO.setDate(VALID_DATE);
+        billDTO.setVetId(VALID_VET_ID);
 
         return billDTO;
     }
@@ -287,6 +338,7 @@ class BillResourceUnitTest {
         billDTO.setVisitType(VALID_VISIT_TYPE);
         billDTO.setAmount(VALID_AMOUNT);
         billDTO.setDate(VALID_DATE);
+        billDTO.setVetId(VALID_VET_ID);
 
         return billDTO;
     }

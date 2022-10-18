@@ -1,20 +1,21 @@
 package com.petclinic.bffapigateway.dtos;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
-import static java.util.stream.Collectors.toList;
 
 
-@Data
+@Setter
+@Getter
+@NoArgsConstructor
 public class BillDetails {
     private int billId;
     private Date date;
     private int customerId;
+    private int vetId;
+    private int petId;
     private String visitType;
     private double amount;
 

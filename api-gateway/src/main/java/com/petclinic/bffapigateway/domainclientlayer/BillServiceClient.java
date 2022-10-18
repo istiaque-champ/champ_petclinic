@@ -1,8 +1,8 @@
 package com.petclinic.bffapigateway.domainclientlayer;
 
 import com.petclinic.bffapigateway.dtos.BillDetails;
-import com.petclinic.bffapigateway.dtos.OwnerDetails;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.petclinic.bffapigateway.dtos.BillDetailsExpanded;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -12,9 +12,15 @@ import reactor.core.publisher.Mono;
 
 
 @Component
+@Slf4j
 public class BillServiceClient {
 
     private final WebClient.Builder webClientBuilder;
+
+    public void setBillServiceUrl(String billServiceUrl) {
+        this.billServiceUrl = billServiceUrl;
+    }
+
     private String billServiceUrl;
 
 
@@ -29,26 +35,55 @@ public class BillServiceClient {
 
     }
 
-    public Mono<BillDetails> getBilling(final int billId) {
+    public Mono<BillDetailsExpanded> getBilling(final int billId) {
         return webClientBuilder.build().get()
                 .uri(billServiceUrl + "/{billId}", billId)
                 .retrieve()
-                .bodyToMono(BillDetails.class);
+                .bodyToMono(BillDetailsExpanded.class);
     }
 
-    public Flux<BillDetails> getAllBilling() {
+    public Flux<BillDetailsExpanded> getAllBilling() {
         return webClientBuilder.build().get()
                 .uri(billServiceUrl)
                 .retrieve()
-                .bodyToFlux(BillDetails.class);
+                .bodyToFlux(BillDetailsExpanded.class);
     }
 
-    public Mono<BillDetails> createBill(final BillDetails model){
+    public Mono<BillDetailsExpanded> createBill(final BillDetails model){
         return webClientBuilder.build().post()
                 .uri(billServiceUrl)
                 .body(Mono.just(model),BillDetails.class)
                 .accept(MediaType.APPLICATION_JSON)
-                .retrieve().bodyToMono(BillDetails.class);
+                .retrieve().bodyToMono(BillDetailsExpanded.class);
+    }
+
+    public Mono<BillDetailsExpanded> editBill(final int billId, BillDetails dt){
+        return webClientBuilder.build().put()
+                .uri(billServiceUrl + "/" + billId)
+                .body(Mono.just(dt), BillDetails.class)
+                .retrieve().bodyToMono(BillDetailsExpanded.class);
+    }
+
+    public Flux<BillDetailsExpanded> getBillsByVetId(final int vetId){
+        return webClientBuilder.build().get()
+                .uri(billServiceUrl + "/vets/" + vetId)
+                .retrieve()
+                .bodyToFlux(BillDetailsExpanded.class);
+    }
+    
+    public Flux<BillDetailsExpanded> getBillsByPetId(final int petId){
+        return webClientBuilder.build().get()
+                .uri(billServiceUrl + "/pets/" + petId)
+                .retrieve()
+                .bodyToFlux(BillDetailsExpanded.class);
+    }
+    
+    public Flux<BillDetailsExpanded> getBillsByCustomerId(final int customerId){
+        return webClientBuilder.build()
+                .get()
+                .uri(billServiceUrl + "/customer/" + customerId)
+                .retrieve()
+                .bodyToFlux(BillDetailsExpanded.class);
     }
 
     public Mono<Void> deleteBill(final int billId) {
