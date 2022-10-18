@@ -5,6 +5,7 @@ import org.springframework.core.style.ToStringCreator;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * Simple business object representing a pet.
@@ -42,6 +43,9 @@ public class    Pet {
     @JoinColumn(name = "owner_id")
     @JsonIgnore
     private Owner owner;
+
+    @Column(name="prescriptions")
+    private Set<Integer> prescriptions;
 
     public Integer getId() {
         return id;
@@ -86,6 +90,10 @@ public class    Pet {
     public void setOwner(final Owner owner) {
         this.owner = owner;
     }
+
+    public void setPrescriptions(Set<Integer> prescriptions){this.prescriptions = prescriptions;}
+
+    public Set<Integer> getPrescriptions(){return prescriptions;}
     
     @Override
     public String toString()

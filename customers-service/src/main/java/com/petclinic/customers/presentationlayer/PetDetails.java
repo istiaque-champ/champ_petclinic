@@ -6,6 +6,7 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.Set;
 
 /**
  * @author mszarlinski@bravurasolutions.com on 2016-12-05.
@@ -29,6 +30,8 @@ class PetDetails {
 
     private PetType type;
 
+    private Set<Integer> prescriptions;
+
     public PetDetails()
     {
 
@@ -41,6 +44,7 @@ class PetDetails {
         this.notes = pet.getNotes();
         this.birthDate = pet.getBirthDate();
         this.type = pet.getType();
+        this.prescriptions = pet.getPrescriptions();
     }
 }
 
