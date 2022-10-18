@@ -35,9 +35,10 @@ class PrescriptionRessourceIntegrationTest {
     @Autowired
     PrescriptionRepo repository;
 
-    private final String ENDPOINT = "/prescriptions";
+    private final String ENDPOINT = "1/prescriptions";
 
     private final Integer VALID_PRESCRIPTION_ID = 1001;
+    private final Integer VALID_PET_ID = 1;
     private final String VALID_MEDICATION = "Amoxicillin";
     private final String VALID_AMOUNT = "30 Tabs";
     private final Date VALID_DATE_PRINTED =  new java.util.Date();
@@ -45,6 +46,7 @@ class PrescriptionRessourceIntegrationTest {
     private final String VALID_INSTRUCTIONS = "Mix with their food";
 
     private final Integer VALID_PRESCRIPTION_ID_2 = 1002;
+    private final Integer VALID_PET_ID_2 = 2;
     private final String VALID_MEDICATION_2 = "Advil";
     private final String VALID_AMOUNT_2 = "20 Pills";
     private final String VALID_INSTRUCTIONS_2 = "Mix with their water";
@@ -56,6 +58,7 @@ class PrescriptionRessourceIntegrationTest {
     void createPrescriptions(){
         Prescription firstPrescription = new Prescription();
         firstPrescription.setPrescriptionId(VALID_PRESCRIPTION_ID);
+        firstPrescription.setPetId(VALID_PET_ID);
         firstPrescription.setAmount(VALID_AMOUNT);
         firstPrescription.setDatePrinted(VALID_DATE_PRINTED);
         firstPrescription.setInstructions(VALID_INSTRUCTIONS);
@@ -65,6 +68,7 @@ class PrescriptionRessourceIntegrationTest {
 
         Prescription secondPrescription = new Prescription();
         secondPrescription.setPrescriptionId(VALID_PRESCRIPTION_ID_2);
+        secondPrescription.setPetId(VALID_PET_ID);
         secondPrescription.setAmount(VALID_AMOUNT_2);
         secondPrescription.setDatePrinted(VALID_DATE_PRINTED);
         secondPrescription.setInstructions(VALID_INSTRUCTIONS_2);
@@ -93,6 +97,7 @@ class PrescriptionRessourceIntegrationTest {
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
                 .expectBody()
                 .jsonPath("$.prescriptionId").isEqualTo(VALID_PRESCRIPTION_ID)
+                .jsonPath("$.petId").isEqualTo(VALID_PET_ID)
                 .jsonPath("$.medication").isEqualTo(VALID_MEDICATION)
                 .jsonPath("$.amount").isEqualTo(VALID_AMOUNT)
                 .jsonPath("$.datePrinted").isEqualTo(new SimpleDateFormat("yyyy-MM-dd").format(VALID_DATE_PRINTED))
@@ -111,11 +116,13 @@ class PrescriptionRessourceIntegrationTest {
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
                 .expectBody()
                 .jsonPath("$[0].prescriptionId").isEqualTo(VALID_PRESCRIPTION_ID)
+                .jsonPath("$[0].petId").isEqualTo(VALID_PET_ID)
                 .jsonPath("$[0].medication").isEqualTo(VALID_MEDICATION)
                 .jsonPath("$[0].amount").isEqualTo(VALID_AMOUNT)
                 .jsonPath("$[0].datePrinted").isEqualTo(new SimpleDateFormat("yyyy-MM-dd").format(VALID_DATE_PRINTED))
                 .jsonPath("$[0].instructions").isEqualTo(VALID_INSTRUCTIONS)
                 .jsonPath("$[1].prescriptionId").isEqualTo(VALID_PRESCRIPTION_ID_2)
+                .jsonPath("$[1].petId").isEqualTo(VALID_PET_ID)
                 .jsonPath("$[1].medication").isEqualTo(VALID_MEDICATION_2)
                 .jsonPath("$[1].amount").isEqualTo(VALID_AMOUNT_2)
                 .jsonPath("$[1].datePrinted").isEqualTo(new SimpleDateFormat("yyyy-MM-dd").format(VALID_DATE_PRINTED))
@@ -130,6 +137,7 @@ class PrescriptionRessourceIntegrationTest {
         request.setDatePrinted(VALID_DATE_PRINTED_REQUEST);
         request.setInstructions(VALID_INSTRUCTIONS);
         request.setMedication(VALID_MEDICATION);
+        request.setPetId(VALID_PET_ID);
 
 
         System.out.println(BodyInserters.fromValue(request));
@@ -165,6 +173,7 @@ class PrescriptionRessourceIntegrationTest {
         request.setAmount(VALID_AMOUNT);
         request.setDatePrinted(VALID_DATE_PRINTED_REQUEST);
         request.setInstructions(VALID_INSTRUCTIONS);
+        request.setPetId(VALID_PET_ID);
 
         webTestClient.post()
                 .uri(ENDPOINT)
@@ -182,6 +191,7 @@ class PrescriptionRessourceIntegrationTest {
         request.setDatePrinted(INVALID_DATE_PRINTED_REQUEST);
         request.setInstructions(VALID_INSTRUCTIONS);
         request.setMedication(VALID_MEDICATION);
+        request.setPetId(VALID_PET_ID);
 
         webTestClient.post()
                 .uri(ENDPOINT)
