@@ -31,9 +31,9 @@ public class PrescriptionServiceClient {
                 .bodyToMono(PrescriptionDetails.class);
     }
 
-    public Flux<PrescriptionDetails> getPrescriptions() {
+    public Flux<PrescriptionDetails> getPrescriptions(Integer petId) {
         return webClientBuilder.build().get()
-                .uri(prescriptionServiceUrl)
+                .uri(petId+"/"+prescriptionServiceUrl)
                 .retrieve()
                 .bodyToFlux(PrescriptionDetails.class);
     }
