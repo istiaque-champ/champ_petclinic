@@ -59,4 +59,9 @@ public class PrescriptionServiceImpl implements PrescriptionService  {
             throw new DatabaseError("error adding to database");
         }
     }
+
+    @Override
+    public List<PrescriptionResponse> findAllPrescriptionsByPetId(Integer petId) {
+        return null;
+    }
 }
