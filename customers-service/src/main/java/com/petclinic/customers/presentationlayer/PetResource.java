@@ -55,7 +55,6 @@ class PetResource {
     {
         return petService.findByPetId(ownerId, petId);
     }
-
     @DeleteMapping(value = "/{petId}")
     public void DeletePet(@PathVariable("petId") int petId, @PathVariable("ownerId") int ownerId)
     {

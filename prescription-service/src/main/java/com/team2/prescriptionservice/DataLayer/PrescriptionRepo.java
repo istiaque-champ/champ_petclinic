@@ -11,14 +11,12 @@ public interface PrescriptionRepo extends CrudRepository<Prescription, Integer> 
 
 
         Prescription findPrescriptionByPrescriptionId(Integer prescriptionId);
-
-        Prescription findPrescriptionByMedication(String medicationName);
-
         boolean existsPrescriptionByPrescriptionId(Integer prescriptionId);
-
-        void deletePrescriptionByPrescriptionId(Integer prescriptionId);
-
         Prescription findTopByOrderByPrescriptionIdDesc();
+        Prescription deletePrescriptionById(Integer prescriptionId);
+        void  deletePrescriptionByPrescriptionId(Integer prescriptionId);
+
+
 
         List<Prescription> findPrescriptionsByPetId(Integer petId);
 
