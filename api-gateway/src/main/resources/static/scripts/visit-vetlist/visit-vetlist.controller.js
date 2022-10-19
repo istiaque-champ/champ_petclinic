@@ -12,6 +12,7 @@ angular.module('visitVetList')
         self.date = new Date();
         self.desc = "";
 
+        //Fetch visits according to vet id
         $http.get("api/gateway/visits/vets/"+practitionerId).then(function (resp) {
             self.visits = resp.data;
             self.sortFetchedVisits();
@@ -89,69 +90,70 @@ angular.module('visitVetList')
             });
         }
 
+        //No Calendar No Need
         //FUNCTION TO GET VALID DATES FOR CALENDAR
-        self.getVisitsForPractitionerIdAndMonth = function() {
-            let pIdAndMonth = localStorage.getItem("practitionerIdAndMonth");
-
-            if(pIdAndMonth != null && pIdAndMonth !== "") {
-                let info = pIdAndMonth.split(",");
-
-                if(info[0] !== undefined){
-                    console.log(info[0].toString());
-                    let practitionerId = parseInt(info[0]);
-                    let startDate = info[1];
-                    let endDate = info[2];
-
-                    if(!isNaN(practitionerId)) {
-                        $http.get("api/gateway/visits/calendar/" + practitionerId + "?dates=" + startDate + "," + endDate).then(function (resp) {
-                            self.availableVisits = resp.data;
-                            availabilities = [];
-
-                            $.each(self.availableVisits, function(i, visit) {
-                                let date = visit.date.toString().split("-");
-
-                                availableDays = availableDays.filter(e => e !== parseInt(date[2]));
-                                availabilities.push(parseInt(date[2]));
-                            });
-
-                            renderCalendar();
-                        });
-                    }
-                }
-            }
-        }
+        // self.getVisitsForPractitionerIdAndMonth = function() {
+        //     let pIdAndMonth = localStorage.getItem("practitionerIdAndMonth");
+        //
+        //     if(pIdAndMonth != null && pIdAndMonth !== "") {
+        //         let info = pIdAndMonth.split(",");
+        //
+        //         if(info[0] !== undefined){
+        //             console.log(info[0].toString());
+        //             let practitionerId = parseInt(info[0]);
+        //             let startDate = info[1];
+        //             let endDate = info[2];
+        //
+        //             if(!isNaN(practitionerId)) {
+        //                 $http.get("api/gateway/visits/calendar/" + practitionerId + "?dates=" + startDate + "," + endDate).then(function (resp) {
+        //                     self.availableVisits = resp.data;
+        //                     availabilities = [];
+        //
+        //                     $.each(self.availableVisits, function(i, visit) {
+        //                         let date = visit.date.toString().split("-");
+        //
+        //                         availableDays = availableDays.filter(e => e !== parseInt(date[2]));
+        //                         availabilities.push(parseInt(date[2]));
+        //                     });
+        //
+        //                     renderCalendar();
+        //                 });
+        //             }
+        //         }
+        //     }
+        // }
 
         // MUST EDIT TO GET ALL VISITS WITH THE PRACTITIONER ID
-        self.getVisitsForPractitionerId = function() {
-            let pId = localStorage.getItem("practitionerId");
-
-            if(pId != null && pId !== "") {
-                let info = pId;
-
-                if(info !== undefined){
-                    console.log(info.toString());
-                    let practitionerId = parseInt(info);
-                    // let startDate = info[1];
-                    // let endDate = info[2];
-
-                    if(!isNaN(practitionerId)) {
-                        // $http.get("api/gateway/visits/calendar/" + practitionerId).then(function (resp) {
-                        //     self.availableVisits = resp.data;
-                        //     availabilities = [];
-                        //
-                        //     $.each(self.availableVisits, function(i, visit) {
-                        //         let date = visit.date.toString().split("-");
-                        //
-                        //         availableDays = availableDays.filter(e => e !== parseInt(date[2]));
-                        //         availabilities.push(parseInt(date[2]));
-                        //     });
-                        //
-                        //     renderCalendar();
-                        // });
-                    }
-                }
-            }
-        }
+        // self.getVisitsForPractitionerId = function() {
+        //     let pId = localStorage.getItem("practitionerId");
+        //
+        //     if(pId != null && pId !== "") {
+        //         let info = pId;
+        //
+        //         if(info !== undefined){
+        //             console.log(info.toString());
+        //             let practitionerId = parseInt(info);
+        //             // let startDate = info[1];
+        //             // let endDate = info[2];
+        //
+        //             if(!isNaN(practitionerId)) {
+        //                 // $http.get("api/gateway/visits/calendar/" + practitionerId).then(function (resp) {
+        //                 //     self.availableVisits = resp.data;
+        //                 //     availabilities = [];
+        //                 //
+        //                 //     $.each(self.availableVisits, function(i, visit) {
+        //                 //         let date = visit.date.toString().split("-");
+        //                 //
+        //                 //         availableDays = availableDays.filter(e => e !== parseInt(date[2]));
+        //                 //         availabilities.push(parseInt(date[2]));
+        //                 //     });
+        //                 //
+        //                 //     renderCalendar();
+        //                 // });
+        //             }
+        //         }
+        //     }
+        // }
 
         // GET LIST OF VETS/PRACTITIONERS
         $http.get(vetsUrl).then(function (resp) {
@@ -273,28 +275,29 @@ angular.module('visitVetList')
         //     $('#confirmationModal').modal('show');
         // }
 
-        self.completeFormAction = function() {
-            // Check which button modal was called by and perform appropriate action
-            let modalTitle = $('#confirmationModalTitle').text();
-            let modalButton = $('#confirmationModalConfirmButton');
-
-            if(modalTitle === $('#submit_button').text()) {
-                $('#visitForm').submit();
-
-                if(modalTitle.toLowerCase() === "update visit") {
-                    self.resetForm();
-                }
-            }
-            else if(modalTitle.toLowerCase() === "delete visit") {
-                self.deleteVisit(modalButton.data("targetVisit"));
-            }
-            else if(modalTitle.toLowerCase().includes("cancel")) {
-                self.cancelVisit(modalButton.data("targetVisit"), modalButton.data("targetStatus"), modalButton.data("targetPractitionerId"), modalButton.data("targetDate"), modalButton.data("targetDescription"));
-            }
-
-            // Hide modal after performing action
-            $('#confirmationModal').modal('hide');
-        }
+        // Form no longer has button, simply on change
+        // self.completeFormAction = function() {
+        //     // Check which button modal was called by and perform appropriate action
+        //     let modalTitle = $('#confirmationModalTitle').text();
+        //     let modalButton = $('#confirmationModalConfirmButton');
+        //
+        //     if(modalTitle === $('#submit_button').text()) {
+        //         $('#visitForm').submit();
+        //
+        //         if(modalTitle.toLowerCase() === "update visit") {
+        //             self.resetForm();
+        //         }
+        //     }
+        //     else if(modalTitle.toLowerCase() === "delete visit") {
+        //         self.deleteVisit(modalButton.data("targetVisit"));
+        //     }
+        //     else if(modalTitle.toLowerCase().includes("cancel")) {
+        //         self.cancelVisit(modalButton.data("targetVisit"), modalButton.data("targetStatus"), modalButton.data("targetPractitionerId"), modalButton.data("targetDate"), modalButton.data("targetDescription"));
+        //     }
+        //
+        //     // Hide modal after performing action
+        //     $('#confirmationModal').modal('hide');
+        // }
 
         self.switchToUpdateForm = function (e, practitionerId, date, description, id, visitStatus){
             visitId = id;
