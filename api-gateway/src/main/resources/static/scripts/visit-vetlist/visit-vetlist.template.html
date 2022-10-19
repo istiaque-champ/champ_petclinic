@@ -102,26 +102,26 @@
     </tbody>
 </table>
 
-<h3 style="margin-top: 6px">Previous Visits</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <th> <button class="btn btn-default" id="sortByDateButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByDate(false)" style="color: white">Sort by date ⇅</button> </th>
-            <th> <button class="btn btn-default" id="sortByDescButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByDesc(false)" style="color: white">Sort by description ⇅</button> </th>
-            <th> <button class="btn btn-default" id="sortByOwnerButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByOwner(false)" style="color: white">Sort by owner ⇅</button> </th>
-            <th> <button class="btn btn-default" id="sortByStatusButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByStatus(false)" style="color: white">Sort by status ⇅</button>  </th>
-<!--            <th style="text-align:center; vertical-align:middle"> <label>Edit</label> </th>-->
-<!--            <th style="text-align:center; vertical-align:middle"> <label>Delete</label> </th>-->
-        </tr>
-    </thead>
-    <tbody>
-        <tr ng-repeat="v in $ctrl.previousVisits" data-index="{{$index}}" data-table-name="previousVisits">
-            <td class="col-sm-2">{{v.date}}</td>
-            <td style="white-space: pre-line">{{v.description}}</td>
-            <td style="white-space: pre-line">{{$ctrl.getOwnerName(v.ownerId)}}</td>
-            <td class="status-text" style="white-space: pre-line">{{$ctrl.getStatus(v.status, v.date)}}</td>
-<!--            <td style="text-align:center; vertical-align:middle"><button class="btn btn-default" style="background-color: royalblue; color: white" ng-click="$ctrl.switchToUpdateForm($event, v.practitionerId, v.date, v.description, v.visitId, v.status)">Edit Visit</button></td>-->
-<!--            <td style="text-align:center; vertical-align:middle"><button class="btn btn-danger" ng-click="$ctrl.showConfirmationModal($event, v.visitId)">Delete visit</button></td>-->
-        </tr>
-    </tbody>
-</table>
+<!--<h3 style="margin-top: 6px">Previous Visits</h3>-->
+<!--<table class="table">-->
+<!--    <thead>-->
+<!--        <tr>-->
+<!--            <th> <button class="btn btn-default" id="sortByDateButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByDate(false)" style="color: white">Sort by date ⇅</button> </th>-->
+<!--            <th> <button class="btn btn-default" id="sortByDescButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByDesc(false)" style="color: white">Sort by description ⇅</button> </th>-->
+<!--            <th> <button class="btn btn-default" id="sortByOwnerButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByOwner(false)" style="color: white">Sort by owner ⇅</button> </th>-->
+<!--            <th> <button class="btn btn-default" id="sortByStatusButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByStatus(false)" style="color: white">Sort by status ⇅</button>  </th>-->
+<!--&lt;!&ndash;            <th style="text-align:center; vertical-align:middle"> <label>Edit</label> </th>&ndash;&gt;-->
+<!--&lt;!&ndash;            <th style="text-align:center; vertical-align:middle"> <label>Delete</label> </th>&ndash;&gt;-->
+<!--        </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--        <tr ng-repeat="v in $ctrl.previousVisits" data-index="{{$index}}" data-table-name="previousVisits">-->
+<!--            <td class="col-sm-2">{{v.date}}</td>-->
+<!--            <td style="white-space: pre-line">{{v.description}}</td>-->
+<!--            <td style="white-space: pre-line">{{$ctrl.getOwnerName(v.ownerId)}}</td>-->
+<!--            <td class="status-text" style="white-space: pre-line">{{$ctrl.getStatus(v.status, v.date)}}</td>-->
+<!--&lt;!&ndash;            <td style="text-align:center; vertical-align:middle"><button class="btn btn-default" style="background-color: royalblue; color: white" ng-click="$ctrl.switchToUpdateForm($event, v.practitionerId, v.date, v.description, v.visitId, v.status)">Edit Visit</button></td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td style="text-align:center; vertical-align:middle"><button class="btn btn-danger" ng-click="$ctrl.showConfirmationModal($event, v.visitId)">Delete visit</button></td>&ndash;&gt;-->
+<!--        </tr>-->
+<!--    </tbody>-->
+<!--</table>-->
