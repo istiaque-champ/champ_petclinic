@@ -75,6 +75,18 @@ public class Vet {
 
     @Column(name = "is_active")
     private Integer isActive;
+
+    @Column(name = "rating")
+    private int rating;
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     @JoinTable(name = "vet_specialties", joinColumns = @JoinColumn(name = "vet_id"),
             inverseJoinColumns = @JoinColumn(name = "specialty_id"))
