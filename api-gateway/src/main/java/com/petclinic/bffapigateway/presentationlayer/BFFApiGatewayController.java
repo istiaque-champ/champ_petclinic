@@ -389,7 +389,7 @@ public class BFFApiGatewayController {
 
     @DeleteMapping(value = "owners/{ownerId}/pets/{petId}/prescriptions/{prescriptionId}")
     public Mono<PrescriptionDetails> deletePrescriptionByPrescriptionId(@PathVariable Integer prescriptionId){
-        return prescriptionServiceClient.deletePrescription(prescriptionId);
+        return prescriptionServiceClient.deletePrescriptionByPrescriptionId(prescriptionId);
     }
     //End of Prescription Methods
 
