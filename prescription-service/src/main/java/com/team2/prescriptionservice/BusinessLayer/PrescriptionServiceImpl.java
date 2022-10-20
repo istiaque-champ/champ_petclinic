@@ -68,12 +68,22 @@ public class PrescriptionServiceImpl implements PrescriptionService  {
 
     @Override
     @Transactional
-    public void deletePrescription(int id) {
+    public void deletePrescriptionByPrescriptionId(int id) {
         if(repository.existsPrescriptionByPrescriptionId(id)){
             repository.deletePrescriptionByPrescriptionId(id);
             return;
         }
         throw new NotFoundException("Unknown prescription provided: " + id);
+    }
+
+    @Override
+    @Transactional
+    public void deletePrescriptionByPetId(int petId) {
+        if(repository.existsPrescriptionByPetId(petId)){
+            repository.deletePrescriptionsByPetId(petId);
+            return;
+        }
+        throw new NotFoundException("Unknown pet provided: " + petId);
     }
 
     @Override
