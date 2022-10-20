@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface PrescriptionService {
     PrescriptionResponse findByPrescriptionId(int id);
-    List<PrescriptionResponse> findAllPrescriptions();
     PrescriptionResponse savePrescription(PrescriptionRequest prescriptionRequest);
     List<PrescriptionResponse> findAllPrescriptionsByPetId(Integer petId);
     void deletePrescriptionByPrescriptionId(int id);
