@@ -47,4 +47,18 @@ public class PrescriptionServiceClient {
                 .retrieve().bodyToMono(PrescriptionDetails.class);
 
     }
+
+    public Mono<PrescriptionDetails> updatePrescription(Integer prescriptionId, PrescriptionDetails model) {
+        return webClientBuilder.build().put()
+                .uri(prescriptionServiceUrl+"/1/prescriptions/"+prescriptionId)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(Mono.just(model), PrescriptionDetails.class)
+                .retrieve().bodyToMono(PrescriptionDetails.class);
+    }
+
+    public Mono<PrescriptionDetails> deletePrescription(Integer prescriptionId) {
+        return webClientBuilder.build().delete()
+                .uri(prescriptionServiceUrl+"/1/prescriptions/"+prescriptionId)
+                .retrieve().bodyToMono(PrescriptionDetails.class);
+    }
 }
