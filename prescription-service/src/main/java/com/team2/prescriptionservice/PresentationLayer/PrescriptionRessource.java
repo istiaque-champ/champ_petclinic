@@ -55,9 +55,15 @@ public class PrescriptionRessource {
         return ResponseEntity.status(HttpStatus.OK).body(prescriptionService.findAllPrescriptionsByPetId(petId));
     }
 
+    @DeleteMapping()
+    public ResponseEntity<?> deletePrescriptionByPetId(@PathVariable int petId){
+        prescriptionService.deletePrescriptionByPetId(petId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+    }
+
     @DeleteMapping("/{prescriptionId}")
     public ResponseEntity<?> deletePrescription(@PathVariable int prescriptionId){
-        prescriptionService.deletePrescription(prescriptionId);
+        prescriptionService.deletePrescriptionByPrescriptionId(prescriptionId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
