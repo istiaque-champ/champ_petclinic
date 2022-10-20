@@ -1,6 +1,5 @@
 package com.petclinic.bffapigateway.domainclientlayer;
 
-import com.petclinic.bffapigateway.dtos.OwnerDetails;
 import com.petclinic.bffapigateway.dtos.PrescriptionDetails;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -56,7 +55,7 @@ public class PrescriptionServiceClient {
                 .retrieve().bodyToMono(PrescriptionDetails.class);
     }
 
-    public Mono<PrescriptionDetails> deletePrescription(Integer prescriptionId) {
+    public Mono<PrescriptionDetails> deletePrescriptionByPrescriptionId(Integer prescriptionId) {
         return webClientBuilder.build().delete()
                 .uri(prescriptionServiceUrl+"/1/prescriptions/"+prescriptionId)
                 .retrieve().bodyToMono(PrescriptionDetails.class);
