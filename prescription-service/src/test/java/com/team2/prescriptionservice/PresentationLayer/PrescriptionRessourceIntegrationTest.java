@@ -206,9 +206,45 @@ class PrescriptionRessourceIntegrationTest {
     }
 
     @Test
-    void IfNoPrescriptionIdFoundThrow404(){
+    void IfNoPrescriptionIdFoundOnGetThrow404(){
         webTestClient.get()
                 .uri(ENDPOINT + "/" + INVALID_PRESCRIPTION_ID)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
+    void IfNoPrescriptionIdFoundOnDeleteByPrescriptionIdThrow404(){
+        webTestClient.delete()
+                .uri(ENDPOINT + "/" + INVALID_PRESCRIPTION_ID)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
+    void IfNoPrescriptionIdFoundOnDeleteByPetIdThrow404(){
+        webTestClient.delete()
+                .uri(ENDPOINT + "/" + INVALID_PRESCRIPTION_ID)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
+    void IfNoPrescriptionIdFoundOnPutThrow404(){
+
+        PrescriptionRequest request = new PrescriptionRequest();
+        request.setAmount(VALID_AMOUNT_2);
+        request.setDatePrinted(VALID_DATE_PRINTED_REQUEST);
+        request.setInstructions(VALID_INSTRUCTIONS_2);
+        request.setMedication(VALID_MEDICATION_2);
+        request.setPetId(VALID_PET_ID);
+
+        webTestClient.put()
+                .uri(ENDPOINT + "/" + INVALID_PRESCRIPTION_ID)
+                .body(BodyInserters.fromValue(request))
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isNotFound();
@@ -232,7 +268,7 @@ class PrescriptionRessourceIntegrationTest {
     }
 
     @Test
-    void IfInvalidDateFormatThrow422(){
+    void IfInvalidOnPostDateFormatThrow422(){
 
         PrescriptionRequest request = new PrescriptionRequest();
         request.setAmount(VALID_AMOUNT);
