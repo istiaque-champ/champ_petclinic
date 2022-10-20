@@ -8,6 +8,8 @@ import com.team2.prescriptionservice.DataLayer.PrescriptionResponse;
 import com.team2.prescriptionservice.Exceptions.InvalidInputException;
 import com.team2.prescriptionservice.Utils.date;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
@@ -25,13 +27,13 @@ public class PrescriptionRessource {
     PrescriptionRessource(PrescriptionService prescriptionService){this.prescriptionService = prescriptionService;}
 
     @GetMapping(value = "/{prescriptionId}")
-    public PrescriptionResponse findPrescription(@PathVariable("prescriptionId") int prescriptionId) {
+    public ResponseEntity<PrescriptionResponse> findPrescription(@PathVariable("prescriptionId") int prescriptionId) {
         System.out.println("Try find ");
-        return prescriptionService.findByPrescriptionId(prescriptionId);
+        return ResponseEntity.status(HttpStatus.OK).body(prescriptionService.findByPrescriptionId(prescriptionId));
     }
 
     @PostMapping()
-    public PrescriptionResponse addPrescription(@RequestBody PrescriptionRequest prescription) {
+    public ResponseEntity<PrescriptionResponse> addPrescription(@RequestBody PrescriptionRequest prescription) {
         System.out.println("Try add ");
         try{
             if(prescription.getAmount()==null || prescription.getPetId()==null || prescription.getDatePrinted()==null||prescription.getInstructions()==null||prescription.getMedication()==null){
@@ -40,7 +42,7 @@ public class PrescriptionRessource {
             if(!date.isValid(prescription.getDatePrinted())){
                 throw new InvalidInputException("Invalid date format");
             }
-            return prescriptionService.savePrescription(prescription);
+            return ResponseEntity.status(HttpStatus.OK).body(prescriptionService.savePrescription(prescription));
 
         } catch(Exception e){
             throw new InvalidInputException("Input Error");
@@ -48,10 +50,21 @@ public class PrescriptionRessource {
     }
 
     @GetMapping()
-    public List<PrescriptionResponse> findPrescriptionsByPetId(@PathVariable Integer petId) {
+    public ResponseEntity<List<PrescriptionResponse>> findPrescriptionsByPetId(@PathVariable Integer petId) {
         System.out.println("Try find all ");
-        return prescriptionService.findAllPrescriptionsByPetId(petId);
+        return ResponseEntity.status(HttpStatus.OK).body(prescriptionService.findAllPrescriptionsByPetId(petId));
     }
 
+    @DeleteMapping("/{prescriptionId}")
+    public ResponseEntity<?> deletePrescription(@PathVariable int prescriptionId){
+        prescriptionService.deletePrescription(prescriptionId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+    }
+
+    @PutMapping("/{prescriptionId}")
+    public ResponseEntity<PrescriptionResponse> updatePrescription(@RequestBody PrescriptionRequest prescription, @PathVariable int prescriptionId){
+        PrescriptionResponse responseModel = prescriptionService.updatePrescription(prescription, prescriptionId);
+        return ResponseEntity.status(HttpStatus.OK).body(responseModel);
+    }
 
 }
