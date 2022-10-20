@@ -37,17 +37,6 @@ public class PrescriptionServiceImpl implements PrescriptionService  {
     }
 
     @Override
-    public List<PrescriptionResponse> findAllPrescriptions() {
-        try {
-            //find prescription by prescriptionId
-            return mapper.entityListToResponseModelList((List<Prescription>) repository.findAll());
-        } catch (Exception e) {
-            // if prescription not found
-            throw new NotFoundException("none found");
-        }
-    }
-
-    @Override
     public PrescriptionResponse savePrescription(PrescriptionRequest prescriptionRequest){
         try {
             Prescription prescription = mapper.RequestModelToEntity(prescriptionRequest);
