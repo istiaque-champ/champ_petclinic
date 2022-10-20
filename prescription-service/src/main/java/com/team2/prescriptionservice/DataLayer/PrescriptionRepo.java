@@ -15,7 +15,7 @@ public interface PrescriptionRepo extends CrudRepository<Prescription, Integer> 
         Prescription findTopByOrderByPrescriptionIdDesc();
         Prescription deletePrescriptionById(Integer prescriptionId);
         void  deletePrescriptionByPrescriptionId(Integer prescriptionId);
-
+        void deletePrescriptionsByPetId(Integer petId);
 
 
         List<Prescription> findPrescriptionsByPetId(Integer petId);
