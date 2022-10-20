@@ -60,4 +60,10 @@ public class PrescriptionServiceClient {
                 .uri(prescriptionServiceUrl+"/1/prescriptions/"+prescriptionId)
                 .retrieve().bodyToMono(PrescriptionDetails.class);
     }
+
+    public Mono<PrescriptionDetails> deletePrescriptionByPetId(Integer petId) {
+        return webClientBuilder.build().delete()
+                .uri(prescriptionServiceUrl+"/"+petId +"/prescriptions")
+                .retrieve().bodyToMono(PrescriptionDetails.class);
+    }
 }
