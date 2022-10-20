@@ -42,7 +42,7 @@ class PrescriptionRessourceIntegrationTest {
     private final String VALID_MEDICATION = "Amoxicillin";
     private final String VALID_AMOUNT = "30 Tabs";
     private final Date VALID_DATE_PRINTED =  new java.util.Date();
-    private final String VALID_DATE_PRINTED_REQUEST = "2022-09-08";
+    private final String VALID_DATE_PRINTED_REQUEST = new SimpleDateFormat("yyyy-MM-dd").format(VALID_DATE_PRINTED);
     private final String VALID_INSTRUCTIONS = "Mix with their food";
 
     private final Integer VALID_PRESCRIPTION_ID_2 = 1002;
@@ -155,6 +155,54 @@ class PrescriptionRessourceIntegrationTest {
                 .jsonPath("$.amount").isEqualTo(VALID_AMOUNT)
                 .jsonPath("$.datePrinted").isEqualTo(VALID_DATE_PRINTED_REQUEST)
                 .jsonPath("$.instructions").isEqualTo(VALID_INSTRUCTIONS);
+    }
+
+    @Test
+    void PutPrescriptionTest() {
+
+        PrescriptionRequest request = new PrescriptionRequest();
+        request.setAmount(VALID_AMOUNT_2);
+        request.setDatePrinted(VALID_DATE_PRINTED_REQUEST);
+        request.setInstructions(VALID_INSTRUCTIONS_2);
+        request.setMedication(VALID_MEDICATION_2);
+        request.setPetId(VALID_PET_ID);
+
+
+        System.out.println(BodyInserters.fromValue(request));
+
+        webTestClient.put()
+                .uri(ENDPOINT+"/"+VALID_PRESCRIPTION_ID)
+                .body(BodyInserters.fromValue(request))
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody()
+                .jsonPath("$.prescriptionId").isEqualTo(VALID_PRESCRIPTION_ID)
+                .jsonPath("$.medication").isEqualTo(VALID_MEDICATION_2)
+                .jsonPath("$.amount").isEqualTo(VALID_AMOUNT_2)
+                .jsonPath("$.datePrinted").isEqualTo(VALID_DATE_PRINTED_REQUEST)
+                .jsonPath("$.instructions").isEqualTo(VALID_INSTRUCTIONS_2)
+                .jsonPath("$.petId").isEqualTo(VALID_PET_ID);
+    }
+
+    @Test
+    void deleteByPrescriptionIdTest() {
+
+        webTestClient.delete()
+                .uri(ENDPOINT+"/"+VALID_PRESCRIPTION_ID)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isNoContent();
+    }
+    @Test
+    void deleteByPetIdTest() {
+
+        webTestClient.delete()
+                .uri(VALID_PET_ID+"/prescriptions")
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isNoContent();
     }
 
     @Test
