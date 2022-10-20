@@ -5,6 +5,7 @@ import com.team2.prescriptionservice.Exceptions.DatabaseError;
 import com.team2.prescriptionservice.Exceptions.InvalidInputException;
 import com.team2.prescriptionservice.Exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -63,5 +64,37 @@ public class PrescriptionServiceImpl implements PrescriptionService  {
     @Override
     public List<PrescriptionResponse> findAllPrescriptionsByPetId(Integer petId) {
         return mapper.entityListToResponseModelList(repository.findPrescriptionsByPetId(petId));
+    }
+
+    @Override
+    @Transactional
+    public void deletePrescription(int id) {
+        if(repository.existsPrescriptionByPrescriptionId(id)){
+            repository.deletePrescriptionByPrescriptionId(id);
+            return;
+        }
+        throw new NotFoundException("Unknown prescription provided: " + id);
+    }
+
+    @Override
+    public PrescriptionResponse updatePrescription(PrescriptionRequest prescription, int id) {
+        if(repository.existsPrescriptionByPrescriptionId(id)){
+            Prescription inDbPrescription = repository.findPrescriptionByPrescriptionId(id);
+
+
+            Prescription updatedData = mapper.RequestModelToEntity(prescription);
+
+            inDbPrescription.setMedication(updatedData.getMedication());
+            inDbPrescription.setAmount(updatedData.getAmount());
+            inDbPrescription.setInstructions(updatedData.getInstructions());
+            updatedData.setId(inDbPrescription.getId());
+
+            repository.save(inDbPrescription);
+            return findByPrescriptionId(id);
+
+
+        }
+
+        throw new NotFoundException("Unknown prescription Id provided: " + id);
     }
 }
