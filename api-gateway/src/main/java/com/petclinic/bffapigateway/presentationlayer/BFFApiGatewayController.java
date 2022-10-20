@@ -391,6 +391,10 @@ public class BFFApiGatewayController {
     public Mono<PrescriptionDetails> deletePrescriptionByPrescriptionId(@PathVariable Integer prescriptionId){
         return prescriptionServiceClient.deletePrescriptionByPrescriptionId(prescriptionId);
     }
+    @DeleteMapping(value = "owners/{ownerId}/pets/{petId}/prescriptions")
+    public Mono<PrescriptionDetails> deletePrescriptionByPetId(@PathVariable Integer petId){
+        return prescriptionServiceClient.deletePrescriptionByPetId(petId);
+    }
     //End of Prescription Methods
 
     @GetMapping("/verification/{token}")
