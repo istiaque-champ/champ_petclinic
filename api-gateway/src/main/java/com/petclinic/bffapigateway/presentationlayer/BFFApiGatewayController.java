@@ -380,7 +380,18 @@ public class BFFApiGatewayController {
         model.setPetId(petId);
         return prescriptionServiceClient.createPrescription(model);
     }
-    //Prescription
+    @PutMapping(value = "owners/{ownerId}/pets/{petId}/prescriptions/{prescriptionId}",
+            consumes = "application/json",
+            produces = "application/json")
+    public Mono<PrescriptionDetails> updatePrescription(@PathVariable Integer prescriptionId,@RequestBody PrescriptionDetails model){
+        return prescriptionServiceClient.updatePrescription(prescriptionId,model);
+    }
+
+    @DeleteMapping(value = "owners/{ownerId}/pets/{petId}/prescriptions/{prescriptionId}")
+    public Mono<PrescriptionDetails> deletePrescriptionByPrescriptionId(@PathVariable Integer prescriptionId){
+        return prescriptionServiceClient.deletePrescription(prescriptionId);
+    }
+    //End of Prescription Methods
 
     @GetMapping("/verification/{token}")
     public Mono<UserDetails> verifyUser(@PathVariable final String token) {
