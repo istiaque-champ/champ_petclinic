@@ -10,6 +10,7 @@ public interface PrescriptionService {
     List<PrescriptionResponse> findAllPrescriptions();
     PrescriptionResponse savePrescription(PrescriptionRequest prescriptionRequest);
     List<PrescriptionResponse> findAllPrescriptionsByPetId(Integer petId);
-    void deletePrescription(int id);
+    void deletePrescriptionByPrescriptionId(int id);
+    void deletePrescriptionByPetId(int petId);
     PrescriptionResponse updatePrescription(PrescriptionRequest prescription, int id);
 }
