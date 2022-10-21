@@ -32,7 +32,6 @@ import org.springframework.security.config.annotation.authentication.configurers
 import org.springframework.security.config.annotation.authentication.configurers.userdetails.DaoAuthenticationConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -66,7 +65,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
             "/webjars/**",
             // -- Swagger UI v3 (OpenAPI)
             "/v3/api-docs/**",
-            "/swagger-ui/**"
+            "/swagger-ui/**",
             // other public endpoints of your API may be appended to this array
     };
 
@@ -79,8 +78,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/roles").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET,"/users/verification/*").permitAll()
                 .antMatchers(HttpMethod.POST,"/users/login").permitAll()
-                // .antMatchers("/users").permitAll()
-                // .antMatchers("/users/*").permitAll()
+                //.antMatchers("/users").permitAll()
+                .antMatchers("/users/*").permitAll()
                 .antMatchers(HttpMethod.HEAD, "/users").authenticated()
                 .antMatchers(HttpMethod.POST, "/users").permitAll()
                 .antMatchers(AUTH_WHITELIST).permitAll()
