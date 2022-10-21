@@ -5,3 +5,14 @@
     position: absolute;
     z-index: 100000;
 }
+
+.addBillStyleButton{
+    float: right;
+    margin-bottom: 1%;
+}
+
+.billSearchBar{
+    float: left;
+    padding-right: 20px;
+    margin-bottom: 1%;
+}
