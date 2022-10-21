@@ -17,7 +17,7 @@ import java.io.Console;
 import java.util.List;
 import java.util.Optional;
 
-@RequestMapping("/prescriptions")
+@RequestMapping("{petId}/prescriptions")
 @RestController
 @Slf4j
 public class PrescriptionRessource {
@@ -27,37 +27,43 @@ public class PrescriptionRessource {
     PrescriptionRessource(PrescriptionService prescriptionService){this.prescriptionService = prescriptionService;}
 
     @GetMapping(value = "/{prescriptionId}")
-    public PrescriptionResponse findPrescription(@PathVariable("prescriptionId") int prescriptionId) {
+    public ResponseEntity<PrescriptionResponse> findPrescription(@PathVariable("prescriptionId") int prescriptionId) {
         System.out.println("Try find ");
-        return prescriptionService.findByPrescriptionId(prescriptionId);
-    }
-
-    @GetMapping()
-    public List<PrescriptionResponse> findPrescriptions() {
-        System.out.println("Try find all ");
-        return prescriptionService.findAllPrescriptions();
+        return ResponseEntity.status(HttpStatus.OK).body(prescriptionService.findByPrescriptionId(prescriptionId));
     }
 
     @PostMapping()
-    public PrescriptionResponse addPrescription(@RequestBody PrescriptionRequest prescription) {
+    public ResponseEntity<PrescriptionResponse> addPrescription(@RequestBody PrescriptionRequest prescription) {
         System.out.println("Try add ");
         try{
-            if(prescription.getAmount()==null || prescription.getDatePrinted()==null||prescription.getInstructions()==null||prescription.getMedication()==null){
+            if(prescription.getAmount()==null || prescription.getPetId()==null || prescription.getDatePrinted()==null||prescription.getInstructions()==null||prescription.getMedication()==null){
                 throw new InvalidInputException("Missing fields");
             }
             if(!date.isValid(prescription.getDatePrinted())){
                 throw new InvalidInputException("Invalid date format");
             }
-            return prescriptionService.savePrescription(prescription);
+            return ResponseEntity.status(HttpStatus.OK).body(prescriptionService.savePrescription(prescription));
 
         } catch(Exception e){
             throw new InvalidInputException("Input Error");
         }
     }
 
+    @GetMapping()
+    public ResponseEntity<List<PrescriptionResponse>> findPrescriptionsByPetId(@PathVariable Integer petId) {
+        System.out.println("Try find all ");
+        return ResponseEntity.status(HttpStatus.OK).body(prescriptionService.findAllPrescriptionsByPetId(petId));
+    }
+
+    @DeleteMapping()
+    public ResponseEntity<?> deletePrescriptionByPetId(@PathVariable int petId){
+        prescriptionService.deletePrescriptionByPetId(petId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+    }
+
     @DeleteMapping("/{prescriptionId}")
     public ResponseEntity<?> deletePrescription(@PathVariable int prescriptionId){
-        prescriptionService.deletePrescription(prescriptionId);
+        prescriptionService.deletePrescriptionByPrescriptionId(prescriptionId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 

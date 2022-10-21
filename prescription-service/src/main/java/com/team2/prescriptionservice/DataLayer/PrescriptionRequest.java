@@ -14,6 +14,7 @@ import java.util.Date;
 @Getter
 @NoArgsConstructor
 public class PrescriptionRequest extends RepresentationModel<PrescriptionRequest> {
+    private Integer petId;
     private String medication;
     private String amount;
     private String datePrinted;
