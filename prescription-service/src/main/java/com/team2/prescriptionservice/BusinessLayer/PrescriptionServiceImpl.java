@@ -2,14 +2,15 @@ package com.team2.prescriptionservice.BusinessLayer;
 
 import com.team2.prescriptionservice.DataLayer.*;
 import com.team2.prescriptionservice.Exceptions.DatabaseError;
+import com.team2.prescriptionservice.Exceptions.InvalidInputException;
 import com.team2.prescriptionservice.Exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
-
-import static com.team2.prescriptionservice.Exceptions.GlobalControllerExceptionHandler.LOG;
+import java.util.Optional;
 
 @Service
 public class PrescriptionServiceImpl implements PrescriptionService  {
@@ -36,17 +37,6 @@ public class PrescriptionServiceImpl implements PrescriptionService  {
     }
 
     @Override
-    public List<PrescriptionResponse> findAllPrescriptions() {
-        try {
-            //find prescription by prescriptionId
-            return mapper.entityListToResponseModelList((List<Prescription>) repository.findAll());
-        } catch (Exception e) {
-            // if prescription not found
-            throw new NotFoundException("none found");
-        }
-    }
-
-    @Override
     public PrescriptionResponse savePrescription(PrescriptionRequest prescriptionRequest){
         try {
             Prescription prescription = mapper.RequestModelToEntity(prescriptionRequest);
@@ -61,14 +51,31 @@ public class PrescriptionServiceImpl implements PrescriptionService  {
     }
 
     @Override
+    public List<PrescriptionResponse> findAllPrescriptionsByPetId(Integer petId) {
+        return mapper.entityListToResponseModelList(repository.findPrescriptionsByPetId(petId));
+    }
+
+    @Override
     @Transactional
-    public void deletePrescription(int id) {
+    public void deletePrescriptionByPrescriptionId(int id) {
         if(repository.existsPrescriptionByPrescriptionId(id)){
             repository.deletePrescriptionByPrescriptionId(id);
             return;
         }
         throw new NotFoundException("Unknown prescription provided: " + id);
     }
+
+    @Override
+    @Transactional
+    public void deletePrescriptionByPetId(int petId) {
+        if(repository.existsPrescriptionByPetId(petId)){
+            repository.deletePrescriptionsByPetId(petId);
+            return;
+        }
+        throw new NotFoundException("Unknown pet provided: " + petId);
+    }
+
+
 
     @Override
     public PrescriptionResponse updatePrescription(PrescriptionRequest prescription, int id) {
@@ -91,6 +98,4 @@ public class PrescriptionServiceImpl implements PrescriptionService  {
 
         throw new NotFoundException("Unknown prescription Id provided: " + id);
     }
-
-
 }

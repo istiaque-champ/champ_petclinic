@@ -9,7 +9,6 @@
 package com.team2.prescriptionservice.Exceptions;
 
 
-import jdk.nashorn.internal.lookup.MethodHandleFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

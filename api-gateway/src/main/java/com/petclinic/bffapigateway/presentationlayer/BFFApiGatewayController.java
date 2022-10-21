@@ -39,6 +39,8 @@ public class BFFApiGatewayController {
 
     private final BillServiceClient billServiceClient;
 
+    private final PrescriptionServiceClient prescriptionServiceClient;
+
 
     @GetMapping(value = "bills/{billId}")
     public Mono<BillDetailsExpanded> getBillingInfo(final @PathVariable int billId)
@@ -141,6 +143,7 @@ public class BFFApiGatewayController {
 
     @DeleteMapping("owners/{ownerId}/pets/{petId}")
     public Mono<PetDetails> deletePet(@PathVariable int ownerId, @PathVariable int petId){
+        prescriptionServiceClient.deletePrescriptionByPetId(petId);
         return customersServiceClient.deletePet(ownerId,petId);
     }
 
@@ -359,6 +362,41 @@ public class BFFApiGatewayController {
     /**
      * End of Owner Methods
      * **/
+
+    //Prescription Methods
+    @GetMapping(value = "owners/{ownerId}/pets/{petId}/prescriptions/{prescriptionId}")
+    public Mono<PrescriptionDetails> getPrescriptionDetails(@PathVariable int prescriptionId) {
+
+        return prescriptionServiceClient.getPrescription(prescriptionId);
+    }
+
+    @GetMapping(value = "owners/{ownerId}/pets/{petId}/prescriptions")
+    public Flux<PrescriptionDetails> getAllPrescriptionDetails(@PathVariable Integer petId) {
+        return prescriptionServiceClient.getPrescriptions(petId);
+    }
+    @PostMapping(value = "owners/{ownerId}/pets/{petId}/prescriptions",
+            consumes = "application/json",
+            produces = "application/json")
+    public Mono<PrescriptionDetails> createPrescription(@PathVariable Integer petId,@RequestBody PrescriptionDetails model){
+        model.setPetId(petId);
+        return prescriptionServiceClient.createPrescription(model);
+    }
+    @PutMapping(value = "owners/{ownerId}/pets/{petId}/prescriptions/{prescriptionId}",
+            consumes = "application/json",
+            produces = "application/json")
+    public Mono<PrescriptionDetails> updatePrescription(@PathVariable Integer prescriptionId,@RequestBody PrescriptionDetails model){
+        return prescriptionServiceClient.updatePrescription(prescriptionId,model);
+    }
+
+    @DeleteMapping(value = "owners/{ownerId}/pets/{petId}/prescriptions/{prescriptionId}")
+    public Mono<PrescriptionDetails> deletePrescriptionByPrescriptionId(@PathVariable Integer prescriptionId){
+        return prescriptionServiceClient.deletePrescriptionByPrescriptionId(prescriptionId);
+    }
+    @DeleteMapping(value = "owners/{ownerId}/pets/{petId}/prescriptions")
+    public Mono<PrescriptionDetails> deletePrescriptionByPetId(@PathVariable Integer petId){
+        return prescriptionServiceClient.deletePrescriptionByPetId(petId);
+    }
+    //End of Prescription Methods
 
     @GetMapping("/verification/{token}")
     public Mono<UserDetails> verifyUser(@PathVariable final String token) {

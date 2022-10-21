@@ -1,20 +1,17 @@
-package com.team2.prescriptionservice.DataLayer;
-
-import java.util.Date;
+package com.petclinic.bffapigateway.dtos;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.hateoas.RepresentationModel;
 
 @Setter
 @Getter
 @NoArgsConstructor
-public class PrescriptionResponse extends RepresentationModel<PrescriptionResponse>{
+public class PrescriptionDetails {
     private Integer prescriptionId;
     private Integer petId;
     private String medication;
     private String amount;
-    private Date datePrinted;
+    private String datePrinted;
     private String instructions;
 }
