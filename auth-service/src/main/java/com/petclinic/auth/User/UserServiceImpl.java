@@ -154,14 +154,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserTokenPair login(UserIDLessRoleLessDTO user) throws IncorrectPasswordException {
         try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword())
-            );
 
+            Authentication authentication = null;
+            try {
+                authentication = authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword())
+                );
+            } catch (Exception e){
+                log.info(e.toString());
+                throw new IncorrectPasswordException("Shit happened");
+            }
             final Object rawPrincipal = authentication.getPrincipal();
             User principal;
             if(rawPrincipal instanceof User) {
-
                 principal = (User) authentication.getPrincipal();
             } else {
                 final UserDetails userDetails = (UserDetails) rawPrincipal;
@@ -179,7 +184,6 @@ public class UserServiceImpl implements UserService {
                                 .collect(Collectors.toSet()))
                         .build();
             }
-
             return UserTokenPair.builder()
                     .token(jwtService.encrypt(principal))
                     .user(principal)
