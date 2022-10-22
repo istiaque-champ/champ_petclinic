@@ -36,6 +36,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -51,6 +52,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserRepo userRepo;
     private final JWTFilter jwtFilter;
+    private final LogoutSuccessHandler logoutSuccessHandler;
     @Value("${default-admin.username:admin}")
     private String DEFAULT_ADMIN_USERNAME;
     @Value("${default-admin.password:admin}")
@@ -80,6 +82,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/roles").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET,"/users/verification/*").permitAll()
                 .antMatchers(HttpMethod.POST,"/users/login").permitAll()
+                .antMatchers(HttpMethod.POST,"/users/logout").permitAll()
                 //.antMatchers("/users").permitAll()
                 .antMatchers("/users/*").permitAll()
                 .antMatchers(HttpMethod.HEAD, "/users").authenticated()
@@ -93,7 +96,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(
                         jwtFilter,
                         UsernamePasswordAuthenticationFilter.class
-                );
+                )
+                .logout()
+                .logoutUrl("/users/logout")
+                .logoutSuccessUrl("/")
+                .logoutSuccessHandler(logoutSuccessHandler)
+                .invalidateHttpSession(true);
     }
 
     @Override
