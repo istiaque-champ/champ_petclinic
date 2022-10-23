@@ -61,7 +61,6 @@
                                    onchange="uploadPicture(event)"
                                    type="file"/>
                             <div id = "display-image"></div>
-                            <script src ="vet-form.controller.js"></script>
 
                         </div>
                         <div class="col-sm-6">
@@ -74,18 +73,20 @@
                     </div>
 
                     <script>
-                        let uploadPicture = function (event) {
-                            let preview = document.getElementById('preview');
-                            let checkmark = document.getElementById('checkmarkPic');
-                            if (document.getElementById('profilePicture') != null) {
-                                checkmark.style.display = "inline";
-                            }
-                            preview.src = URL.createObjectURL(event.target.files[0]);
-                            preview.onload = function () {
-                                URL.revokeObjectURL(preview.src)
-                            }
-                        };
+                  const image_input = document.querySelector("#image_input");
+                  var uploaded_image = " ";
+
+                   image_input.addEventListener("change", function(){
+                   const reader = new FileReader();
+                   reader.addEventListener("load",() => {
+                   uploaded_image = reader.result;
+                   document.querySelector("#display_image").style.backgroundImage = `url(${uploaded_image})`;
+                   });
+                   reader.readDataAsDataURL(this.files[0]);
+                   })
+
                     </script>
+
                     <hr class="my-4"/>
 
                     <div class="col-sm-12">
