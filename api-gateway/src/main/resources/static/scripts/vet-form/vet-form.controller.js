@@ -89,8 +89,9 @@ angular.module('vetForm')
             reader.addEventListener("load",() => {
             uploaded_image = reader.result;
             document.querySelector("#display_image").style.backgroundImage = `url(${uploaded_image})`;
-            }
-            }
+            });
+            reader.readDataAsDataURL(this.files[0]);
+            })
 
             req.then(function () {
                 $state.go('vets');
