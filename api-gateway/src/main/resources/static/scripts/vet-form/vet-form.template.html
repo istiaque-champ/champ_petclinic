@@ -50,18 +50,18 @@
 
 
                     <div class="row g-3">
-                        <div class="col-sm-6">
-                            <h5 class="form-label">Profile Picture</h5>
-                            <span id="checkmarkPic" style="display: none">&#10003;</span>
-                            <input type = "file" id="image_input" accept="image/*"
-                                   class="form-control"
-                                   id="profilePicture"
-                                   name="profilePicture"
-                                   ng-model="vet.profilePicture"
-                                   onchange="image_input(event)"
-                                   type="file"/>
+                    <div class="col-sm-6">
+                        <h5 class="form-label">Profile Picture</h5>
+                        <span id="checkmarkPic" style="display: none">&#10003;</span>
+                        <input type = "file" id="image_input" accept="image/*"
+                               class="form-control"
+                               id="profilePicture"
+                               name="profilePicture"
+                               ng-model="vet.profilePicture"
+                               onchange="getImagePreview(event)"
+                               type="file"/>
 
-                            <img id = "preview-image"></img>
+                        <input type="file" name="upload_file" class="form-control" placeholder="Enter Name" id="upload_file" onchange="getImagePreview(event)">
 
                         </div>
                         <div class="col-sm-6">
@@ -74,16 +74,21 @@
                     </div>
 
                     <script>
-                  var imageInput = document.getElementById("image_input");
-                  var previewImage= document.getElementById("preview-image");
+               input type="file" name="upload_file" class="form-control" placeholder="Enter Name" id="upload_file" onchange="getImagePreview(event)"
 
-                   image_input.addEventListener("change", function(event){
-                   if(event.target.files.length == 0){
-                   return;
-                   }
-                   var tempUrl = URL.createObjectURL(event.target.files[0]);
-                   previewImage.setAttribute("src", tempUrl);
-                   });
+                div id="preview"
+
+                function getImagePreview(event)
+                 {
+                var image=URL.createObjectURL(event.target.files[0]);
+                var imagediv= document.getElementById('preview');
+                var newimg=document.createElement('img');
+                imagediv.innerHTML='';
+                newimg.src=image;
+                newimg.width="300";
+                imagediv.appendChild(newimg);
+              }
+
 
                     </script>
 
