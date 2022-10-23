@@ -81,6 +81,17 @@ angular.module('vetForm')
                 console.log(self.vet)
             }
 
+            const image_input = document.querySelector("#image_input");
+            var uploaded_image = " ";
+
+            image_input.addEventListener("change", function(){
+            const reader = new FileReader();
+            reader.addEventListener("load",() => {
+            uploaded_image = reader.result;
+            document.querySelector("#display_image").style.backgroundImage = `url(${uploaded_image})`;
+            }
+            }
+
             req.then(function () {
                 $state.go('vets');
             }, function (response) {
