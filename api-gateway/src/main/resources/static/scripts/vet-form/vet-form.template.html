@@ -53,14 +53,15 @@
                         <div class="col-sm-6">
                             <h5 class="form-label">Profile Picture</h5>
                             <span id="checkmarkPic" style="display: none">&#10003;</span>
-                            <input type = "file" id="image_input" accept="image/png,image/jpg"
+                            <input type = "file" id="image_input" accept="image/*"
                                    class="form-control"
                                    id="profilePicture"
                                    name="profilePicture"
                                    ng-model="vet.profilePicture"
                                    onchange="uploaded_image(event)"
                                    type="file"/>
-                            <div id = "display-image"></div>
+
+                            <img id = "preview-image"></img>
 
                         </div>
                         <div class="col-sm-6">
@@ -73,17 +74,16 @@
                     </div>
 
                     <script>
-                  const image_input = document.querySelector("#image_input");
-                  var uploaded_image = " ";
+                  var imageInput = document.getElementById("image_input");
+                  var previewImage= document.getElementById("preview-image");
 
-                   image_input.addEventListener("change", function(){
-                   const reader = new FileReader();
-                   reader.addEventListener("load",() => {
-                   uploaded_image = reader.result;
-                   document.querySelector("#display_image").style.backgroundImage = `url(${uploaded_image})`;
+                   image_input.addEventListener("change", function(event){
+                   if(event.target.files.length == 0){
+                   return;
+                   }
+                   var tempUrl = URL.createObjectURL(event.target.files[0]);
+                   previewImage.setAttribute("src", tempUrl);
                    });
-                   reader.readDataAsDataURL(this.files[0]);
-                   })
 
                     </script>
 
