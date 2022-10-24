@@ -120,7 +120,7 @@ public class AuthServiceClient {
                 .exchange()
                 .doOnNext(n -> {
                     if(n.statusCode().is4xxClientError()) {
-                        throw new GenericHttpException(n.releaseBody().toString(), UNAUTHORIZED);
+                        throw new GenericHttpException("Unauthorized", UNAUTHORIZED);
                     }
                 })
                 .doOnSuccess(n ->  {
