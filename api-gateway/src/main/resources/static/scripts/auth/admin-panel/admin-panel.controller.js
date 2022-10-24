@@ -1,6 +1,6 @@
 'use strict';
 angular.module('adminPanel')
-    .controller('AdminPanelController', ['$http', '$scope', function ($http, $scope) {
+    .controller('AdminPanelController', ['$http', '$scope', 'authProvider', '$location',  function ($http, $scope, authProvider, $location) {
 
         var self = this;
 
@@ -15,7 +15,16 @@ angular.module('adminPanel')
                 });
             });
         };
+
+        self.logout = function (){
+            $http.post("api/gateway/users/logout", null).then(function (){
+                authProvider.setUser({});
+                $location.path("/login");
+            });
+        }
     }
+
+
     ]);
 
 
