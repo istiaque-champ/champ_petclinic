@@ -140,6 +140,6 @@ public class AuthServiceUserEntityTests {
     @Test
     @DisplayName("Given unverified user, account is enabled")
     void isNotEnabled() {
-        assertFalse(new User().isEnabled());
+        assertTrue(new User().isEnabled());
     }
 }
