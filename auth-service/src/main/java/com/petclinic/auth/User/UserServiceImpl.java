@@ -162,7 +162,7 @@ public class UserServiceImpl implements UserService {
                 );
             } catch (Exception e){
                 log.info(e.toString());
-                throw new IncorrectPasswordException("Shit happened");
+                throw new IncorrectPasswordException(format("Password not valid for email %s", user.getEmail()));
             }
             final Object rawPrincipal = authentication.getPrincipal();
             User principal;
