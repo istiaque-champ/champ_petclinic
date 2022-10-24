@@ -157,5 +157,13 @@ public class AuthServiceClient {
                 .retrieve()
                 .bodyToMono(Void.class);
     }
+
+    public Mono<Void> logout(){
+        return webClientBuilder.build()
+                .post()
+                .uri(authServiceUrl + "/users/logout")
+                .retrieve()
+                .bodyToMono(Void.class);
+    }
 }
 

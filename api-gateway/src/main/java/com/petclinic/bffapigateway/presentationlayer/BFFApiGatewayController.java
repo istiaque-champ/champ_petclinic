@@ -411,4 +411,9 @@ public class BFFApiGatewayController {
                         .body(n.getT2())
                 );
     }
+
+    @PostMapping("/users/logout")
+    public Mono<ResponseEntity<Void>> logout(){
+        return null;
+    }
 }
