@@ -17,10 +17,8 @@ angular.module('adminPanel')
         };
 
         self.logout = function (){
-            $http.post("api/gateway/users/logout", null).then(function (){
-                authProvider.setUser({});
-                $location.path("/login");
-            });
+            authProvider.purgeUser();
+            $location.path("/login")
         }
     }
 
