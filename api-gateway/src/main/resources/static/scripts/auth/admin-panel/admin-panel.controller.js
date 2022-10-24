@@ -15,11 +15,6 @@ angular.module('adminPanel')
                 });
             });
         };
-
-        self.logout = function (){
-            authProvider.purgeUser();
-            $location.path("/login")
-        }
     }
 
 
