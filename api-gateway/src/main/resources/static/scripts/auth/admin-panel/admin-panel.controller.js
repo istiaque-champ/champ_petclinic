@@ -1,6 +1,6 @@
 'use strict';
 angular.module('adminPanel')
-    .controller('AdminPanelController', ['$http', '$scope', 'authProvider', '$location',  function ($http, $scope, authProvider, $location) {
+    .controller('AdminPanelController', ['$http', '$scope',  function ($http, $scope) {
 
         var self = this;
 
