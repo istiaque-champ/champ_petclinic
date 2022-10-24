@@ -36,8 +36,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
-import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -53,8 +51,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserRepo userRepo;
     private final JWTFilter jwtFilter;
-    @Bean
-    public LogoutSuccessHandler logoutSuccessHandler() {return new SimpleUrlLogoutSuccessHandler(); };
     @Value("${default-admin.username:admin}")
     private String DEFAULT_ADMIN_USERNAME;
     @Value("${default-admin.password:admin}")
@@ -98,12 +94,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(
                         jwtFilter,
                         UsernamePasswordAuthenticationFilter.class
-                )
-                .logout()
-                .logoutUrl("/users/logout")
-                .logoutSuccessUrl("/")
-                .logoutSuccessHandler(logoutSuccessHandler())
-                .invalidateHttpSession(true);
+                );
     }
 
     @Override
