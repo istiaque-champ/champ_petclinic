@@ -31,7 +31,7 @@
         <td>{{owner.city}}</td>
         <td>{{owner.telephone}}</td>
         <td class="hidden-xs">
-            <span ng-repeat-start="pet in owner.pets track by pet.id">{{pet.name}}</span>
+            <span ng-repeat-start="pet in owner.pets track by pet.id"><a ui-sref="petDetails({petId:{{pet.id}}, ownerId:{{owner.id}}})">{{pet.name}}</a></span>
             <span ng-repeat-end>{{$last ? '' : ', '}}</span>
         </td>
     </tr>

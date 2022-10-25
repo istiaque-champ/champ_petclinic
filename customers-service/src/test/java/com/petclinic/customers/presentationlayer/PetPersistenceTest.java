@@ -51,6 +51,7 @@ public class PetPersistenceTest {
         Pet pet = new Pet();
         pet.setName("Daisy");
         pet.setId(2);
+        pet.setNotes("");
 
         PetType petType = new PetType();
         petType.setId(6);
@@ -73,6 +74,7 @@ public class PetPersistenceTest {
         Pet pet = new Pet();
         pet.setName("Daisy");
         pet.setId(2);
+        pet.setNotes("Fake Pet");
         pet.setType(petType);
         pet.setOwner(owner);
 

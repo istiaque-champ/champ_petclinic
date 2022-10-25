@@ -28,7 +28,7 @@ public class MailServiceImpl implements MailService {
             log.info("Mail service returned {} status code", execute.code());
             return execute.body();
         } catch (IOException e) {
-            log.error(e.toString());
+            log.error("Error: " + e);
             throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to send mail");
         }
     }

@@ -13,7 +13,11 @@ public interface BillService {
 
     Mono<Void> DeleteBill(int billId);
 
-    Flux<BillDTO> GetBillByCustomerId(int customerId);
+    Flux<BillDTO> GetBillsByCustomerId(int customerId);
+
+    Flux<BillDTO> GetBillsByVetId(int vetId);
+
+    Flux<BillDTO> GetBillsByPetId(int petId);
 
     Mono<BillDTO> UpdateBill(Mono<BillDTO> model, int billId);
 }

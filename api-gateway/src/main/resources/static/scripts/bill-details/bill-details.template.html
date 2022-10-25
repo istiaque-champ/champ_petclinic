@@ -1,38 +1,35 @@
-<script>
-    function printPage() {
-        window.print();
-    }
-</script>
-
 <div class="bColor">
-<h2>Bill Details: {{$ctrl.bills.billId}}</h2>
+<h2 id="BillDetailsTitle">Bill Details: </h2>
     <br><br>
 </div>
 
-<table class="table table-striped">
-    <tr>
-        <th>Payment Info for Bill:</th>
-        <td>{{$ctrl.bills.billId}}</td>
-    </tr>
-    <tr>
-        <th>Address:</th>
-        <td>505 Lincoln Str. Queens, New York</td>
-    </tr>
-    <tr>
-        <th>Final price:</th>
-        <td>{{$ctrl.bills.amount}}</td>
-    </tr>
-    <tr>
-        <th>Visit type:</th>
-        <td>{{$ctrl.bills.visitType}}</td>
-    </tr>
-    <tr>
-        <th>Date generated:</th>
-        <td>{{$ctrl.bills.date}}</td>
-    </tr>
-</table>
-    <br>
-    <div>
-        <input class="newBtn btn btn-primary" type="button" value="Print this page" onclick="printPage()" />
-        <a class="btn btn-primary" href="http://localhost:8080/#!/bills">Back to History</a>
-    </div>
+    <table class="table table-striped" id="details">
+        <tr>
+            <td id="BillId">Bill Id:{{$ctrl.bills.billId}}</td>
+        </tr>
+        <tr>
+            <td id="BillCost" >Price:{{$ctrl.bills.amount}}</td>
+        </tr>
+        <tr>
+            <td id="BillVisit"><label>Visit Type: </label><input id="BillType" type="text" ng-model="$ctrl.bills.visitType"></td>
+        </tr>
+        <tr>
+            <td id="BillDate">Date/Time:{{$ctrl.bills.date | date:'medium'}}</td>
+        </tr>
+        <tr id="BillOwner">
+            <td ><label>Owners: </label><select ng-options="owner.firstName + ' ' + owner.lastName for owner in $ctrl.owners track by owner.id" ng-model="$ctrl.selectedOwner"></select>
+            <label>  Pet: </label><select ng-options="pet.name for pet in $ctrl.selectedOwner.pets track by pet.id" ng-model="$ctrl.selectedPet"></select></td>
+        </tr>
+        <tr>
+            <td id="BillVet"><label>Vet: </label><select ng-options="vet.firstName + ' ' + vet.lastName for vet in $ctrl.vets track by vet.vetId" ng-model="$ctrl.selectedVet"></select></td>
+        </tr>
+    </table>
+
+<div id="buttons">
+    <a ui-sref="saveBill">
+        <button id="saveBillButton" class="save-bill-button btn btn-success" ng-click="$ctrl.submitBillDetailsForm()" type="submit">Save</button>
+    </a>
+    <a ui-sref="printBill">
+        <button class="print-bill-button btn btn-success" ng-click="$ctrl.printPage()" type="print">Print</button>
+    </a>
+</div>

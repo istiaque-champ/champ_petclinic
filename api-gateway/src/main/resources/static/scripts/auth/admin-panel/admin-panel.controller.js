@@ -1,6 +1,6 @@
 'use strict';
 angular.module('adminPanel')
-    .controller('AdminPanelController', ['$http', '$scope', function ($http, $scope) {
+    .controller('AdminPanelController', ['$http', '$scope',  function ($http, $scope) {
 
         var self = this;
 
@@ -16,6 +16,8 @@ angular.module('adminPanel')
             });
         };
     }
+
+
     ]);
 
 
