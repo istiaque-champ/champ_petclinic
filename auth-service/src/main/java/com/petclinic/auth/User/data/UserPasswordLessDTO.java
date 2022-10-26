@@ -32,4 +32,10 @@ public class UserPasswordLessDTO {
     private String email;
 
     private Set<Role> roles;
+
+    @NotEmpty
+    private UserType userType;
+
+    @NotEmpty
+    private Integer userTypeId;
 }
