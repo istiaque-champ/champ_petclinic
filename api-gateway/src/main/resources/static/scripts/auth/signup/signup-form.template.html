@@ -27,12 +27,8 @@
                     <span ng-show="signupForm.email.$error.required" class="help-block">Email is required.</span>
                 </div>
 
-                <div class="form-group text-center" ng-if="signup">
+                <div class="form-group text-center">
                     <button ng-click="$ctrl.add()" class="btn btn-default" type="submit">Submit</button>
-                </div>
-
-                <div class="form-group text-center" ng-if="!signup">
-                    <button ng-click="$ctrl.update()" class="btn btn-default" type="submit">Update</button>
                 </div>
             </form>
         </div>

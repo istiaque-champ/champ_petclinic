@@ -7,32 +7,38 @@
 angular.module('signupForm')
     .controller('SignupFormController', ['$http', '$scope', "$location", "$stateParams", function ($http, $scope, $location, $stateParams) {
 
-        var signup = $stateParams.method === "signupForm";
-        self.signup = signup;
+        self.updating = $stateParams.userId != null;
 
-        this.update = () => $http.put("/api/gateway/users/" + $stateParams.id, {
-            username: $scope.signup.username,
-            password: $scope.signup.password,
-            email: $scope.signup.email,
-        })
-            .then(() => {
-                $location.path("/adminPanel");
-            })
-            .catch(n => {
-                $scope.errorMessages = n.data.message.split`\n`;
-                console.log(n);
-            });
 
-        this.add = () => $http.post('/api/gateway/users/', {
-            username: $scope.signup.username,
-            password: $scope.signup.password,
-            email: $scope.signup.email,
-        })
-            .then(() => $location.path(signup ? "/login" : "/adminPanel"))
-            .catch(n => {
-                $scope.errorMessages = n.data.message.split`\n`;
-                console.log(n);
-            });
+        this.add = function() {
+            if(!self.updating){
+                $http.post('/api/gateway/users/', {
+                    username: $scope.signup.username,
+                    password: $scope.signup.password,
+                    email: $scope.signup.email,
+                })
+                    .then(() => $location.path($stateParams.method === 'signupForm' ? "/login" : "/adminPanel"))
+                    .catch(n => {
+                        $scope.errorMessages = n.data.message.split`\n`;
+                        console.log(n);
+                    });
+            } else {
+                $http.put("/api/gateway/users/" + $stateParams.userId, {
+                    username: $scope.signup.username,
+                    password: $scope.signup.password,
+                    email: $scope.signup.email,
+                })
+                    .then(() => {
+                        $location.path("/adminPanel");
+                    })
+                    .catch(n => {
+                        $scope.errorMessages = n.data.message.split`\n`;
+                        console.log(n);
+                    });
+
+            }
+
+        }
 
         this.keypress = ({ originalEvent: { key } }) => key === 'Enter' && this.add()
     }]);

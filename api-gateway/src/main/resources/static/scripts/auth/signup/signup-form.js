@@ -19,7 +19,7 @@ angular.module('signupForm', ['ui.router'])
             })
             .state('updateUser', {
                 parent: 'app',
-                url: "/users/:id",
+                url: "/users/:userId",
                 template: '<signup-form></signup-form>'
             })
     }]);
