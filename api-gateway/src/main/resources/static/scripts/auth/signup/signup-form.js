@@ -14,7 +14,12 @@ angular.module('signupForm', ['ui.router'])
             })
             .state('createUser', {
                 parent: 'app',
-                url: "/users/create",
+                url: "/users",
+                template: '<signup-form></signup-form>'
+            })
+            .state('updateUser', {
+                parent: 'app',
+                url: "/users/:id",
                 template: '<signup-form></signup-form>'
             })
     }]);

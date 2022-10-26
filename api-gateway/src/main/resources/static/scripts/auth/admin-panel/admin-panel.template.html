@@ -8,7 +8,7 @@
 </form>
 
 <a ui-sref="createUser">
-    <a class="add-bill-button btn btn-success" href="http://localhost:8080/#!/users/create">Add A User</a>
+    <a class="add-bill-button btn btn-success" href="http://localhost:8080/#!/users">Add A User</a>
 </a>
 
 <table id="users" class="table table-striped">
@@ -23,6 +23,9 @@
     <tr id="userTd" ng-repeat="user in $ctrl.users | filter:$ctrl.query track by user.id">
         <td>{{user.username}}</td>
         <td>{{user.email}}</td>
+        <td>
+            <a class="add-bill-button btn btn-success" href="http://localhost:8080/#!/users/{{user.id}}">Update</a>
+        </td>
         <td>
             <input class="add-vet-button btn btn-success" type="button" value="Delete" ng-click="removeUser(user.id)"/>
         </td>
