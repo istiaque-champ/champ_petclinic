@@ -23,6 +23,12 @@ angular.module('loginForm')
                 $scope.errorMessages = n.data.message.split`\n`;
             })
 
+        var logout = function (){
+            authProvider.purgeUser();
+        }
+
+        logout()
+
         this.keypress = ({ originalEvent: { key } }) => key === 'Enter' && this.add()
     }]);
 

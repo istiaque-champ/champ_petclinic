@@ -37,4 +37,4 @@ spring:
       mode: always
 
 server:
-  port: 8087
+  port: 8080

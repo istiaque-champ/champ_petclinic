@@ -22,6 +22,9 @@ public class Prescription {
     @Column(name = "prescriptionid", nullable = false)
     private Integer prescriptionId;
 
+    @Column(name = "petid", nullable = false)
+    private Integer petId;
+
     @Column(name = "medication", nullable = false)
     private String medication;
 
