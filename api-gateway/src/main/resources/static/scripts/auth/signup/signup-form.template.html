@@ -10,7 +10,7 @@
             <form ng-submit="$ctrl.submitSignupForm()" style="max-width: 25em; justify-content: center;">
                 <div class="form-group">
                     <label>Username</label>
-                    <input class="form-control" ng-model="signup.username" name="username" required/>
+                    <input class="form-control" ng-model="signup.username" name="username" ng-value="self.user.username" required/>
                     <span ng-show="signupForm.username.$error.required" class="help-block"> Username is required.</span>
                 </div>
 
@@ -23,12 +23,16 @@
 
                 <div class="form-group">
                     <label>Email</label>
-                    <input class="form-control" ng-model="signup.email" name="email" required/>
+                    <input class="form-control" ng-model="signup.email" name="email" ng-value="self.user.email" required/>
                     <span ng-show="signupForm.email.$error.required" class="help-block">Email is required.</span>
                 </div>
 
-                <div class="form-group text-center">
+                <div class="form-group text-center" ng-if="signup">
                     <button ng-click="$ctrl.add()" class="btn btn-default" type="submit">Submit</button>
+                </div>
+
+                <div class="form-group text-center" ng-if="!signup">
+                    <button ng-click="$ctrl.update()" class="btn btn-default" type="submit">Update</button>
                 </div>
             </form>
         </div>
