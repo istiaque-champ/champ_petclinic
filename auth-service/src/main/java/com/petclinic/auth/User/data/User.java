@@ -71,6 +71,9 @@ public class User implements UserDetails {
     @NotEmpty
     private UserType userType;
 
+    @NotEmpty
+    private Integer userTypeId;
+
     public User(String username, String password, String email) {
         this.username = username;
         this.password = password;
