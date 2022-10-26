@@ -5,14 +5,16 @@
 'use strict';
 
 angular.module('signupForm')
-    .controller('SignupFormController', ['$http', '$scope', "$location", function ($http, $scope, $location) {
+    .controller('SignupFormController', ['$http', '$scope', "$location", "$stateParams", function ($http, $scope, $location, $stateParams) {
+
+        var method = $stateParams.method;
 
         this.add = () => $http.post('/api/gateway/users/', {
             username: $scope.signup.username,
             password: $scope.signup.password,
             email: $scope.signup.email,
         })
-            .then(() => $location.path("/login"))
+            .then(() => $location.path(method === "signupForm" ? "/login" : "/adminPanel"))
             .catch(n => {
                 $scope.errorMessages = n.data.message.split`\n`;
                 console.log(n);
