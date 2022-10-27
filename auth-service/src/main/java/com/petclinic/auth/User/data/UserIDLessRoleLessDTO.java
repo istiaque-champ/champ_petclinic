@@ -44,9 +44,7 @@ public class UserIDLessRoleLessDTO {
     @Email(message = "Email must be valid")
     private String email;
 
-    @NotEmpty
     private Integer userType;
 
-    @NotEmpty
     private Integer userTypeId;
 }
