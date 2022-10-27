@@ -365,7 +365,7 @@ public class BFFApiGatewayController {
 
     //Prescription Methods
     @GetMapping(value = "owners/{ownerId}/pets/{petId}/prescriptions/{prescriptionId}")
-    public Mono<PrescriptionDetails> getPrescriptionDetails(@PathVariable int prescriptionId) {
+    public Mono<PrescriptionDetails> getPrescriptionDetails(@PathVariable int prescriptionId, @PathVariable int ownerId, @PathVariable int petId) {
 
         return prescriptionServiceClient.getPrescription(prescriptionId);
     }
