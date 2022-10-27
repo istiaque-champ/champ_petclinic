@@ -68,11 +68,9 @@ public class User implements UserDetails {
 
     private boolean verified;
 
-    @NotEmpty
     @Column(name = "usertype")
     private Integer userType;
 
-    @NotEmpty
     @Column(name = "usertypeid")
     private Integer userTypeId;
 
