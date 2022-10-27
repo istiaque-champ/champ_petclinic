@@ -12,7 +12,6 @@ angular.module('signupForm')
 
         this.add = function() {
             if(!self.updating){
-            } else {
                 $http.post('/api/gateway/users/', {
                     username: $scope.signup.username,
                     password: $scope.signup.password,
@@ -25,6 +24,7 @@ angular.module('signupForm')
                         $scope.errorMessages = n.data.message.split`\n`;
                         console.log(n);
                     });
+            } else {
                 $http.put("/api/gateway/users/" + $stateParams.userId, {
                     username: $scope.signup.username,
                     password: $scope.signup.password,
