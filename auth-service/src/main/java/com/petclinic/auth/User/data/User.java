@@ -69,7 +69,7 @@ public class User implements UserDetails {
     private boolean verified;
 
     @NotEmpty
-    private UserType userType;
+    private Integer userType;
 
     @NotEmpty
     private Integer userTypeId;

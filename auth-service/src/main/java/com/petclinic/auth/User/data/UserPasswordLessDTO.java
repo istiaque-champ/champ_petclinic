@@ -34,7 +34,7 @@ public class UserPasswordLessDTO {
     private Set<Role> roles;
 
     @NotEmpty
-    private UserType userType;
+    private Integer userType;
 
     @NotEmpty
     private Integer userTypeId;

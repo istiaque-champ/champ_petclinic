@@ -45,7 +45,7 @@ public class UserIDLessRoleLessDTO {
     private String email;
 
     @NotEmpty
-    private UserType userType;
+    private Integer userType;
 
     @NotEmpty
     private Integer userTypeId;
