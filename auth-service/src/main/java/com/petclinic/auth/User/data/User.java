@@ -69,9 +69,11 @@ public class User implements UserDetails {
     private boolean verified;
 
     @NotEmpty
+    @Column(name = "userType")
     private Integer userType;
 
     @NotEmpty
+    @Column(name = "userTypeId")
     private Integer userTypeId;
 
     public User(String username, String password, String email) {
