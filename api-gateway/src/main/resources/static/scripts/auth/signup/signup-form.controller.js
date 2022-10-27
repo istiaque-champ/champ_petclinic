@@ -12,21 +12,25 @@ angular.module('signupForm')
 
         this.add = function() {
             if(!self.updating){
+            } else {
                 $http.post('/api/gateway/users/', {
                     username: $scope.signup.username,
                     password: $scope.signup.password,
                     email: $scope.signup.email,
+                    userType: 1,
+                    userTypeId: 1
                 })
-                    .then(() => $location.path($stateParams.method === 'signupForm' ? "/login" : "/adminPanel"))
+                    .then(() => $location.path("/adminPanel"))
                     .catch(n => {
                         $scope.errorMessages = n.data.message.split`\n`;
                         console.log(n);
                     });
-            } else {
                 $http.put("/api/gateway/users/" + $stateParams.userId, {
                     username: $scope.signup.username,
                     password: $scope.signup.password,
                     email: $scope.signup.email,
+                    userType: 1,
+                    userTypeId: 1
                 })
                     .then(() => {
                         $location.path("/adminPanel");
