@@ -42,6 +42,24 @@ deletePet():
 
 
 
+/// DataLayer ///
+
+    The data layer contains two pet related models
+
+    The Pet model and the PetType Model
+
+    The PetType Model is used in the Pet Model to determine the type of pet (bird, cat, hamster)
+    To see this you can check out a pets details page to see the pet type
+
+    The pet model also includes the associated owner in a many to one meaning the Owner model
+
+
+/// Testing ///
+
+
+
+
+
 
 
 
