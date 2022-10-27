@@ -69,11 +69,11 @@ public class User implements UserDetails {
     private boolean verified;
 
     @NotEmpty
-    @Column(name = "userType")
+    @Column(name = "usertype")
     private Integer userType;
 
     @NotEmpty
-    @Column(name = "userTypeId")
+    @Column(name = "usertypeid")
     private Integer userTypeId;
 
     public User(String username, String password, String email) {
