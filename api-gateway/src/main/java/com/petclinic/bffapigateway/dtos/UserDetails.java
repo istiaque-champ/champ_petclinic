@@ -22,7 +22,7 @@ public class UserDetails {
     private String email;
 
     private Set<Role> roles;
-    private UserType userType;
+    private Integer userType;
     private Integer userTypeId;
 }
 
