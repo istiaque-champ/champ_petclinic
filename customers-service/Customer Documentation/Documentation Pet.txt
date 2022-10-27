@@ -56,6 +56,16 @@ deletePet():
 
 /// Testing ///
 
+Testing data:
+    The testing data can be found in the ./src/main/resources/db folder
+
+    If any of the models are ever updated you will need to edit the schema and values to match these new models in order for your test
+    to pass
+
+
+
+
+
 
 
 
