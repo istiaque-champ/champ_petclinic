@@ -1,0 +1,35 @@
+All Pet Endpoints can be found in the "PetResources.java" file found in the presentation layer
+
+/// Service Implementation ///
+
+findAll():
+    This method is used for front end purposes in order to display the correct pets associated with a specific owner
+    To do this the ownerService is called in order to get the associated pet id's
+
+    The find all method doesn't actually get all pets but instead gets all the pets of an owner
+
+findPetByPetId():
+    This method is similar to the previous  method in which it will only find a specific pet of a single owner instead of every single pet
+
+updatePet():
+    This method is used to update a pet
+
+    BOTH OF THEM ARE THE SAME
+    Not sure why there are duplicates
+
+CreatePet():
+    The create pet utilises no mappers and directly grabs the value from the pet request model and puts it into a new Pet Object
+
+
+
+deletePet():
+    This just deletes a pet and removes the association with it's owner
+    That's about all there is to it really
+    why are you still reading this? I already told you all that it does
+
+/// Pet Resource ///
+
+
+
+
+
