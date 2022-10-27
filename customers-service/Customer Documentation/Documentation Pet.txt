@@ -29,6 +29,20 @@ deletePet():
 
 /// Pet Resource ///
 
+    The pet resource class is used as a controller
+    Each method utilises the methods from the PetService interface
+
+    The find pet returns a petDetails which can be thought of as a response model.
+    The reason why there is another find pet by id is because the findpetbyid method returns a normal pet which is needed to convert
+    to a PetDetails.
+
+    Pretty much the findPet uses the findPetById
+
+    The rest of the methods just use their associated service method i.e put mapping uses the put service method
+
+
+
+
 
 
 
