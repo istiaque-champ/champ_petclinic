@@ -1,4 +1,4 @@
-<h2 id="BillHistoryTitle">Bill History</h2>
+<h2 id="BillHistoryTitle">{{bill_history}}</h2>
 
 <form onsubmit="void(0)" style="max-width: 20em; margin-top: 2em; margin-bottom: 2em;">
     <div class="form-group">
@@ -9,15 +9,15 @@
 <table id="TableBill" class="table table-striped">
     <thead>
     <tr>
-        <th>Bill ID</th>
-        <th>Owner
+        <th>{{bill_id}}</th>
+        <th>{{owner_label}}
             <span ng-switch="$ctrl.sortCol">
                 <span id="sortTestUp1" ng-switch-when="1up" ng-click="$ctrl.sortColBackwards(1)"><i style="min-width: 16px" class="fa-solid fa-chevron-down"></i></span>
                 <span id="sortTestDown1" ng-switch-when="1down" ng-click="$ctrl.sortColForwards(1)"><i style="min-width: 16px" class="fa-solid fa-chevron-up"></i></span>
                 <span id="sortTestDefault1" ng-switch-default ng-click="$ctrl.sortColForwards(1)"><i style="min-width: 16px" class="fa-solid fa-minus"></i></span>
             </span>
         </th>
-        <th>Visit Type
+        <th>{{visit_type}}
             <span ng-switch="$ctrl.sortCol">
                 <span id="sortTestUp2" ng-switch-when="2up" ng-click="$ctrl.sortColBackwards(2)"><i style="min-width: 16px" class="fa-solid fa-chevron-down"></i></span>
                 <span id="sortTestDown2" ng-switch-when="2down" ng-click="$ctrl.sortColForwards(2)"><i style="min-width: 16px" class="fa-solid fa-chevron-up"></i></span>

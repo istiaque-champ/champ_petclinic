@@ -2,7 +2,21 @@
 
 
 angular.module('billHistory')
-    .controller('BillHistoryController', ['$http', '$scope', '$stateParams', function ($http, $scope, $stateParams) {
+    .controller('BillHistoryController', ['$http', '$scope', '$stateParams','$translate', function ($http, $scope, $stateParams, $translate) {
+        $translate.use("en");
+
+        $translate(['BILL_HISTORY', 'BILL_ID', 'NAMESPACE.BILL_ID', 'OWNER', 'VISIT_TYPE']).then(function (translations) {
+            $scope.bill_history = translations.BILL_HISTORY;
+            $scope.bill_id = translations.BILL_ID;
+            $scope.owner_label = translations.OWNER;
+            $scope.visit_type = translations.VISIT_TYPE;
+        }, function (translationIds) {
+            $scope.bill_history = translationIds.bill_history;
+            $scope.bill_id = translationIds.bill_id;
+            $scope.owner_label = translationIds.owner_label;
+            $scope.visit_type = translationIds.visit_type;
+        });
+
         var self = this;
 
         let requestUrl = "api/gateway/bills/";

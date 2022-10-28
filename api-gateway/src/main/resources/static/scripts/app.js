@@ -7,14 +7,14 @@ const whiteList = new Set([
 
 /* App Module */
 var petClinicApp = angular.module('petClinicApp', [
-    'ui.router', 'layoutNav', 'layoutFooter', 'layoutWelcome', 'petDetails' , 'ownerList', 'ownerDetails', 'ownerForm', 'petForm'
-    , 'visits', 'vetList','vetForm','vetDetails', 'loginForm', 'rolesDetails', 'signupForm', 'billDetails', 'billHistory'
-    , 'verification' , 'adminPanel']);
+    'ui.router', 'layoutNav', 'layoutFooter', 'layoutWelcome', 'petDetails', 'ownerList', 'ownerDetails', 'ownerForm', 'petForm'
+    , 'visits', 'vetList', 'vetForm', 'vetDetails', 'loginForm', 'rolesDetails', 'signupForm', 'billDetails', 'billHistory'
+    , 'verification', 'adminPanel', 'pascalprecht.translate']);
 
 petClinicApp.factory("authProvider", ["$window", function ($window) {
 
     return {
-        setUser: ({ token, username, email }) => {
+        setUser: ({token, username, email}) => {
             $window.localStorage.setItem("token", token)
             $window.localStorage.setItem("username", username)
             $window.localStorage.setItem("email", email)
@@ -52,7 +52,7 @@ petClinicApp.factory("httpErrorInterceptor", ["$q", "$location", "authProvider",
 petClinicApp.run(['$rootScope', '$location', 'authProvider', function ($rootScope, $location, authProvider) {
     $rootScope.$on('$locationChangeSuccess', function (event) {
 
-        if(whiteList.has($location.path().substring(1))) {
+        if (whiteList.has($location.path().substring(1))) {
             return console.log("WHITE LISTED: Ignoring");
         }
 
@@ -60,15 +60,25 @@ petClinicApp.run(['$rootScope', '$location', 'authProvider', function ($rootScop
             console.log('DENY : Redirecting to Login');
             event.preventDefault();
             $location.path('/login');
-        }
-        else {
+        } else {
             console.log('ALLOW');
         }
     });
 }])
 
-petClinicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', function (
-    $stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+var translations = {
+    BILL_HISTORY: 'Bill History :',
+    BILL_ID: 'Bill Id:',
+    OWNER: "Owner",
+    VISIT_TYPE: "Visit Type",
+    NAMESPACE: {
+        BILL_ID: 'Bill Id in namespace'
+    }
+};
+console.table(translations);
+
+petClinicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$translateProvider', function (
+    $stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $translateProvider) {
 
     // safari turns to be lazy sending the Cache-Control header
     $httpProvider.defaults.headers.common["Cache-Control"] = 'no-cache';
@@ -89,11 +99,16 @@ petClinicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider'
         });
 
     $httpProvider.interceptors.push('httpErrorInterceptor');
+
+    // add translation table
+    console.log("HELLO FROM CONFIG");
+    $translateProvider.translations('en', translations);
+    $translateProvider.preferredLanguage('en');
 }]);
 
 ['welcome', 'nav', 'footer'].forEach(function (c) {
     var mod = 'layout' + c.toUpperCase().substring(0, 1) + c.substring(1);
-    const controller = mod+"Controller";
+    const controller = mod + "Controller";
 
     angular.module(mod, []);
     angular.module(mod)
@@ -101,16 +116,16 @@ petClinicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider'
 
             const load = () => {
                 $scope.isLoggedIn = authProvider.isLoggedIn();
-                if(!$scope.isLoggedIn)return;
+                if (!$scope.isLoggedIn) return;
 
-                const { email, username } = authProvider.getUser();
+                const {email, username} = authProvider.getUser();
                 $scope.email = email;
                 $scope.username = username;
             }
 
             $rootScope.$on('$locationChangeSuccess', load);
             load();
-    }]);
+        }]);
 
     angular.module(mod).component(mod, {
         templateUrl: "scripts/fragments/" + c + ".html",
