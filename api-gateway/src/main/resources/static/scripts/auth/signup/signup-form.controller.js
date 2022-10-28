@@ -9,6 +9,13 @@ angular.module('signupForm')
 
         self.updating = $stateParams.userId != null;
 
+        let signup = window.location.href === "http://localhost:8080/#!/signup"
+
+        if(signup){
+            const el = document.getElementById("userType");
+            el.style.display = "none";
+        }
+
 
         this.add = function() {
             if(!self.updating){
@@ -16,7 +23,7 @@ angular.module('signupForm')
                     username: $scope.signup.username,
                     password: $scope.signup.password,
                     email: $scope.signup.email,
-                    userType: $scope.signup.userType,
+                    userType: signup ? 2 : $scope.signup.userType,
                     userTypeId: 1
                 })
                     .then(() => $location.path("/adminPanel"))
@@ -29,7 +36,7 @@ angular.module('signupForm')
                     username: $scope.signup.username,
                     password: $scope.signup.password,
                     email: $scope.signup.email,
-                    userType: $scope.signup.userType,
+                    userType: signup ? 2 : $scope.signup.userType,
                     userTypeId: 1
                 })
                     .then(() => {
