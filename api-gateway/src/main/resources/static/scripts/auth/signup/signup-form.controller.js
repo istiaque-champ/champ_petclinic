@@ -16,7 +16,7 @@ angular.module('signupForm')
                     username: $scope.signup.username,
                     password: $scope.signup.password,
                     email: $scope.signup.email,
-                    userType: 1,
+                    userType: $scope.signup.userType,
                     userTypeId: 1
                 })
                     .then(() => $location.path("/adminPanel"))
@@ -29,7 +29,7 @@ angular.module('signupForm')
                     username: $scope.signup.username,
                     password: $scope.signup.password,
                     email: $scope.signup.email,
-                    userType: 1,
+                    userType: $scope.signup.userType,
                     userTypeId: 1
                 })
                     .then(() => {

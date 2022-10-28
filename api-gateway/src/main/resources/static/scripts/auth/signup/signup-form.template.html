@@ -27,6 +27,12 @@
                     <span ng-show="signupForm.email.$error.required" class="help-block">Email is required.</span>
                 </div>
 
+                <div class="form-group">
+                    <label>Type</label>
+                    <input class="form-control" ng-model="signup.userType" name="userType" required/>
+                    <span ng-show="signupForm.userType.$error.required" class="help-block">UserType is required.</span>
+                </div>
+
                 <div class="form-group text-center">
                     <button ng-click="$ctrl.add()" class="btn btn-default" type="submit">Submit</button>
                 </div>
