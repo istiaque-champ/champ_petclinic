@@ -29,7 +29,11 @@
 
                 <div class="form-group">
                     <label>Type</label>
-                    <input class="form-control" ng-model="signup.userType" name="userType" required/>
+                    <select ng-model="signup.userType">
+                        <option value="0">ADMIN</option>
+                        <option value="1">VET</option>
+                        <option value="2">CUSTOMER</option>
+                    </select>
                     <span ng-show="signupForm.userType.$error.required" class="help-block">UserType is required.</span>
                 </div>
 
