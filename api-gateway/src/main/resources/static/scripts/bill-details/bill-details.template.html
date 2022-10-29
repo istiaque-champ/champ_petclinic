@@ -24,7 +24,7 @@
             </td>
         </tr>
         <tr>
-            <td id="BillDate"><label>Date/Time: </label><input type="datetime-local" ng-model="$ctrl.bills.date | date:'medium'"></td>
+            <td id="BillDate"><label>Date/Time: </label><input id="datetimepicker" type="text"></td>
         </tr>
         <tr id="BillOwner">
             <td ><label>Owners: </label><select ng-options="owner.firstName + ' ' + owner.lastName for owner in $ctrl.owners track by owner.id" ng-model="$ctrl.selectedOwner"></select>

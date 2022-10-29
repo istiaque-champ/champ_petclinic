@@ -61,6 +61,10 @@ angular.module('billDetails')
             }
         }
 
+        self.datepicker = function (){
+            jQuery('#datetimepicker').datetimepicker();
+        }
+
         self.printPage = function (){
             var  buttons = document.getElementById("buttons");
             var nav = document.getElementById("navBar");
