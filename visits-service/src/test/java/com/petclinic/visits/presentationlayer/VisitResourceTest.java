@@ -1,37 +1,23 @@
 package com.petclinic.visits.presentationlayer;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.petclinic.visits.businesslayer.VisitsService;
-import com.petclinic.visits.datalayer.Visit;
 import com.petclinic.visits.datalayer.VisitDTO;
 import com.petclinic.visits.datalayer.VisitIdLessDTO;
 import com.petclinic.visits.utils.exceptions.InvalidInputException;
 import com.petclinic.visits.utils.exceptions.NotFoundException;
-import com.petclinic.visits.utils.http.ControllerExceptionHandler;
-import com.petclinic.visits.utils.http.HttpErrorInfo;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.server.reactive.ServerHttpRequestDecorator;
-import org.springframework.mock.http.server.reactive.MockServerHttpRequest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static java.util.Arrays.asList;
@@ -39,7 +25,6 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static com.petclinic.visits.datalayer.Visit.visit;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;

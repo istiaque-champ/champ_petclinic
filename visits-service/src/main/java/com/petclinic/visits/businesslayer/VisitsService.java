@@ -1,6 +1,5 @@
 package com.petclinic.visits.businesslayer;
 
-import com.petclinic.visits.datalayer.Visit;
 import com.petclinic.visits.datalayer.VisitDTO;
 import com.petclinic.visits.datalayer.VisitIdLessDTO;
 import reactor.core.publisher.Flux;
@@ -30,7 +29,7 @@ public interface VisitsService {
 
 
     //public VisitDTO getVisitByVisitId(String visitId);
-    Mono<VisitDTO> getVisitByVisitId(String visitId);
+    VisitDTO getVisitByVisitId(String visitId);
 
 
    // public void deleteVisit(String visitId);
