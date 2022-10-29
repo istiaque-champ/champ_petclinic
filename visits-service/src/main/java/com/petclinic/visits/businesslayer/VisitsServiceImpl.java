@@ -140,7 +140,7 @@ public class VisitsServiceImpl implements VisitsService {
                 .collect(Collectors.toList());
         return (Flux<VisitDTO>) visitDTOList;
     }
-//Get visits for a practitioner 
+//get vistsi for a practitioner
     @Override
     public Flux<VisitDTO> getVisitsForPractitioner(int practitionerId) {
         if(practitionerId < 0)
@@ -152,7 +152,7 @@ public class VisitsServiceImpl implements VisitsService {
                 .collect(Collectors.toList());
         return (Flux<VisitDTO>) visitDTOList;
     }
-
+//get  getVisitsByPractitionerIdAndMonth, we are checking if the id is negative and then continuing from there
     @Override
     public Flux<VisitDTO> getVisitsByPractitionerIdAndMonth(int practitionerId, Date startDate, Date EndDate) {
 
@@ -168,7 +168,7 @@ public class VisitsServiceImpl implements VisitsService {
                 .map(visit -> mapper.entityToModel(visit))
                 .collect(Collectors.toList());
 
-        return visitDTOList;
+        return (Flux<VisitDTO>) visitDTOList;
     }
 
     @Override
