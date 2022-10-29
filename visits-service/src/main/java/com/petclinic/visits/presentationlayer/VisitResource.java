@@ -98,7 +98,7 @@ public class VisitResource {
             consumes = "application/json",
             produces = "application/json")
     public Mono<VisitDTO> update(@Valid @RequestBody Mono<VisitDTO> visitDTO, @PathVariable("petId") int petId, @PathVariable("visitId") String visitId) {
-        Visit visitEntity = EntityDTOUtil.dtoToEntity(visitDTO);
+        Mono<Visit> visitEntity = EntityDTOUtil.dtoToEntity(visitDTO);
 
         visitEntity.setVisitId(UUID.fromString(visitId));
         visitEntity.setPetId(petId);

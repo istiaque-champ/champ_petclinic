@@ -6,21 +6,21 @@ import com.petclinic.visits.datalayer.VisitDTO;
 import com.petclinic.visits.utils.exceptions.InvalidInputException;
 import lombok.Generated;
 import org.springframework.beans.BeanUtils;
+import reactor.core.publisher.Mono;
 
-import java.util.Optional;
 import java.util.UUID;
 
 public class EntityDTOUtil{
   @Generated
   public EntityDTOUtil(){}
 
-  public static VisitDTO entityToDTO(Optional<Visit> visit){
+  public static VisitDTO entityToDTO(Mono<Visit> visit){
     VisitDTO visitDTO = new VisitDTO();
     BeanUtils.copyProperties(visit, visitDTO);
     return visitDTO;
   }
 
-  public static Visit dtoToEntity(VisitDTO visitDTO){
+  public static Mono<Visit> dtoToEntity(VisitDTO visitDTO){
     visitDTO.setVisitId(String.valueOf(UUID.randomUUID()));
 
     //Check Valid IDs
@@ -33,7 +33,7 @@ public class EntityDTOUtil{
 
     //if(VisitsServiceImpl.)
 
-    Visit visit = new Visit();
+    Mono<Visit> visit = new Visit();
     BeanUtils.copyProperties(visitDTO, visit);
 
     return visit;

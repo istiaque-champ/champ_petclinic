@@ -51,9 +51,9 @@ public class VisitsServiceImpl implements VisitsService {
             throw new InvalidInputException("Visit description required.");
         }
         try{
-            Visit visitEntity = EntityDTOUtil.dtoToEntity(visit);
+            Mono<Visit> visitEntity = EntityDTOUtil.dtoToEntity(visit);
             log.info("Calling visit repo to create a visit for pet with petId: {}", visit.getPetId());
-            Visit createdEntity = visitRepository.save(visitEntity);
+            Mono<Mono<Visit>> createdEntity = visitRepository.save(visitEntity);
             return createdEntity
                     .map();
         }
@@ -77,7 +77,7 @@ public class VisitsServiceImpl implements VisitsService {
                 .collect(Collectors.toList());
         return visitDTOList;
     }
-//logic behind the get visits for pet, the get date and stream arent working 
+//logic behind the get visits for pet, the get date and stream arent working
     @Override
     public Flux<VisitDTO> getVisitsForPet(int petId, boolean scheduled) {
         Date now = new Date(System.currentTimeMillis());
@@ -94,13 +94,13 @@ public class VisitsServiceImpl implements VisitsService {
         }
         return visitsForPet;
     }
-
+//logic behind the getvisitbyvisit id, having issue with the .get dependency
     @Override
     public VisitDTO getVisitByVisitId(String visitId) {
         if (!validateVisitId(visitId))
             throw new InvalidInputException("VisitId not in the right format.");
 
-        Optional<Visit> returnedVisit = visitRepository.findByVisitId(UUID.fromString(visitId));
+        Mono<Visit> returnedVisit = visitRepository.findByVisitId(UUID.fromString(visitId));
 
         if(returnedVisit.get.getDescription() == null)
             throw new NotFoundException("Visit with visitId: " + visitId + " does not exist.");
@@ -109,7 +109,7 @@ public class VisitsServiceImpl implements VisitsService {
 
         return visitDTO;
     }
-
+//the delete, pretty straight foward.
     @Override
     public void deleteVisit(String visitId) {
         log.debug("Visit object is deleted with this id: " + visitId);
@@ -120,25 +120,25 @@ public class VisitsServiceImpl implements VisitsService {
         log.debug("Visit deleted");
 
     }
-
+//update logic, you are basically getting the id from the request and modifying its fields then returning a updated object of type visit.
     @Override
     public Mono<VisitDTO> updateVisit(Mono<VisitDTO> visit) {
-        Visit visitEntity = EntityDTOUtil.dtoToEntity(visit);
+        Mono<Visit> visitEntity = EntityDTOUtil.dtoToEntity(visit);
         Optional<Visit> entity = visitRepository.findByVisitId(UUID.fromString(visit.getVisitId()));
         visitEntity.setId(entity.get().getId());
         log.info("Updating visit with petId: {} and visitId: {}", visit.getPetId(), visit.getVisitId());
-        Visit updatedVisitEntity = visitRepository.save(visitEntity);
+        Mono<Mono<Visit>> updatedVisitEntity = visitRepository.save(visitEntity);
         return mapper.entityToModel(updatedVisitEntity);
     }
-
+//get visits for pets logic
     @Override
     public Flux<VisitDTO> getVisitsForPets(List<Integer> petIds) {
-        List<Visit> returnedVisits = visitRepository.findByPetIdIn(petIds);
+        List<Visit> returnedVisits = (List<Visit>) visitRepository.findByPetIdIn(petIds);
         List<VisitDTO> visitDTOList = returnedVisits.stream()
                 .filter(v -> v != null)
                 .map(visit -> mapper.entityToModel(visit))
                 .collect(Collectors.toList());
-        return visitDTOList;
+        return (Flux<VisitDTO>) visitDTOList;
     }
 
     @Override
