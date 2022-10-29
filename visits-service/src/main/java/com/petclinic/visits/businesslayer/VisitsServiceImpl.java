@@ -173,6 +173,9 @@ public class VisitsServiceImpl implements VisitsService {
 
     @Override
     public boolean validateVisitId(String visitId) {
+        String uuidRegex = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}";
+        if(visitId.matches(uuidRegex))
+            return true;
         return false;
     }
 }
