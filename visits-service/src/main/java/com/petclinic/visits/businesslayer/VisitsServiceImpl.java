@@ -43,7 +43,7 @@ public class VisitsServiceImpl implements VisitsService {
         return visitMap;
     }
 
-
+//logic behind adding a visit, we are currently having problems trying to figure out how to add it propery
     @Override
     public Mono<VisitDTO> addVisit(Mono<VisitIdLessDTO> visit) {
 
@@ -61,7 +61,7 @@ public class VisitsServiceImpl implements VisitsService {
             throw new InvalidInputException("Duplicate visitId.", dke);
         }
     }
-
+//logic behind get visits for pet
     @Override
     public Flux<VisitDTO> getVisitsForPet(int petId) {
 
@@ -70,14 +70,14 @@ public class VisitsServiceImpl implements VisitsService {
 
         log.info("Calling visit repo to get visits for pet with petId: {}", petId);
         Flux<Visit> returnedVisits = (Flux<Visit>) visitRepository.findByPetId(petId);
-        //What to switch stream with???
+        //having trouble understanding the use for stream
         Flux<VisitDTO> visitDTOList = returnedVisits.stream()
                 .filter(v -> v != null)
                 .map(EntityDTOUtil::entityToDTO)
                 .collect(Collectors.toList());
         return visitDTOList;
     }
-
+//logic behind the get visits for pet, the get date and stream arent working 
     @Override
     public Flux<VisitDTO> getVisitsForPet(int petId, boolean scheduled) {
         Date now = new Date(System.currentTimeMillis());
