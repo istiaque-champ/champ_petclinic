@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
+import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Indexed;
 
 import javax.persistence.*;
@@ -26,30 +27,26 @@ import java.util.UUID;
  */
 
 @Data
-@Entity
-@Table(name = "visits")
+//@Entity
+//@Table(name = "visits")
 @Builder(builderMethodName = "visit")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class
+public class Visit {
 
 
+   //@GeneratedValue(strategy = GenerationType.IDENTITY)
+   @Id
+   private int id;
 
-
-Visit {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @GeneratedValue(generator = "uuid2")
+  /*  @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Type(type = "uuid-char")
     @Column(name = "visit_id",unique = true, nullable = false)
     @Builder.Default
-    private UUID visitId = UUID.randomUUID();
+    private UUID visitId = UUID.randomUUID();*/
 
     @Builder.Default
     @Column(name = "visit_date")
