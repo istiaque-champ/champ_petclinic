@@ -140,17 +140,17 @@ public class VisitsServiceImpl implements VisitsService {
                 .collect(Collectors.toList());
         return (Flux<VisitDTO>) visitDTOList;
     }
-
+//Get visits for a practitioner 
     @Override
     public Flux<VisitDTO> getVisitsForPractitioner(int practitionerId) {
         if(practitionerId < 0)
             throw new InvalidInputException("PractitionerId can't be negative.");
-        List<Visit> returnedVisits = visitRepository.findVisitsByPractitionerId(practitionerId);
+        List<Visit> returnedVisits = (List<Visit>) visitRepository.findVisitsByPractitionerId(practitionerId);
         List<VisitDTO> visitDTOList = returnedVisits.stream()
                 .filter(v -> v != null)
                 .map(visit -> mapper.entityToModel(visit))
                 .collect(Collectors.toList());
-        return visitDTOList;
+        return (Flux<VisitDTO>) visitDTOList;
     }
 
     @Override
