@@ -6,11 +6,12 @@ import com.petclinic.visits.businesslayer.VisitsService;
 import com.petclinic.visits.datalayer.Visit;
 import com.petclinic.visits.datalayer.VisitDTO;
 import com.petclinic.visits.datalayer.VisitIdLessDTO;
-import io.micrometer.core.annotation.Timed;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 import java.text.ParseException;
@@ -33,20 +34,23 @@ import java.util.UUID;
  */
 @RestController
 @Slf4j
-@Timed("petclinic.visit")
+//@Timed("petclinic.visit")
 public class VisitResource {
 
     private final VisitsService visitsService;
 
     public VisitResource(VisitsService service){
+
         this.visitsService = service;
     }
 
     @PostMapping("owners/*/pets/{petId}/visits")
     @ResponseStatus(HttpStatus.CREATED)
-    public VisitDTO create(
+   /* public VisitDTO create(
             @Valid @RequestBody VisitIdLessDTO visit,
-            @PathVariable("petId") int petId) {
+            @PathVariable("petId") int petId) */
+    public Mono<ResponseEntity<VisitDTO>> create(@Valid @RequestBody VisitIdLessDTO visit, @PathVariable("petId") int petId)
+        {
 
         visit.setPetId(petId);
         log.debug("Calling VisitService:addVisit for pet with petId: {}", petId);
