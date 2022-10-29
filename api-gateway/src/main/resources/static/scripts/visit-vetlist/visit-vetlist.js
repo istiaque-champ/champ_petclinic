@@ -8,9 +8,9 @@ angular.module('visitVetList', ['ui.router'])
                 url: '/visits/vets',
                 template: '<visit-vetlist></visit-vetlist>'
             })
-            .state('chosen',{
-                parent: 'app',
-                url: '/visits/vets/:practitionerId',
-                template: '<visit-vetlist></visit-vetlist>'
-            })
+            // .state('chosen',{
+            //     parent: 'app',
+            //     url: '/visits/vets/:practitionerId',
+            //     template: '<visit-vetlist></visit-vetlist>'
+            // })
     }]);
