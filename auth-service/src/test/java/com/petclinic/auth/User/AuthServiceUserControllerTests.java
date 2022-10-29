@@ -101,6 +101,8 @@ public class AuthServiceUserControllerTests {
     final String EMAIL = "email@gmail.com";
 
     private final String VALID_TOKEN = "a.fake.token";
+    final Integer VALID_TYPE = 1;
+    final Integer VALID_TYPE_ID = 1;
 
 
     private Validator validator;
@@ -136,7 +138,7 @@ public class AuthServiceUserControllerTests {
     @SpyBean
     private UserService userService;
 
-    private final UserIDLessRoleLessDTO ID_LESS_USER = new UserIDLessRoleLessDTO(USER, PASS, EMAIL);
+    private final UserIDLessRoleLessDTO ID_LESS_USER = new UserIDLessRoleLessDTO(USER, PASS, EMAIL, VALID_TYPE, VALID_TYPE_ID);
 
     @Test
     @DisplayName("Create a user from controller")
@@ -169,7 +171,7 @@ public class AuthServiceUserControllerTests {
     void check_empty_username() {
 
 
-        UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO(null, PASS,EMAIL);
+        UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO(null, PASS,EMAIL, VALID_TYPE, VALID_TYPE_ID);
 
         assertThrows(ConstraintViolationException.class, () -> userController.createUser(userIDLessDTO, null));
     }
@@ -179,7 +181,7 @@ public class AuthServiceUserControllerTests {
     void check_empty_password() {
 
 
-        UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO( USER, null,EMAIL);
+        UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO( USER, null,EMAIL, VALID_TYPE, VALID_TYPE_ID);
 
         assertThrows(ConstraintViolationException.class, () -> userController.createUser(userIDLessDTO, null));
     }
@@ -188,7 +190,7 @@ public class AuthServiceUserControllerTests {
     void check_missing_specialchar_password() {
 
 
-        UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO( USER, "Password123",EMAIL);
+        UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO( USER, "Password123",EMAIL, VALID_TYPE, VALID_TYPE_ID);
         Set<ConstraintViolation<UserIDLessRoleLessDTO>> violations = validator.validate(userIDLessDTO);
         assertFalse(violations.isEmpty());
     }
@@ -197,7 +199,7 @@ public class AuthServiceUserControllerTests {
     void check_missing_number_password() {
 
 
-        UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO( USER, "Pas$word",EMAIL);
+        UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO( USER, "Pas$word",EMAIL, VALID_TYPE, VALID_TYPE_ID);
 
         Set<ConstraintViolation<UserIDLessRoleLessDTO>> violations = validator.validate(userIDLessDTO);
         assertFalse(violations.isEmpty());
@@ -207,7 +209,7 @@ public class AuthServiceUserControllerTests {
     void check_missing_uppercase_password() {
 
 
-        UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO( USER, "pas$word123",EMAIL);
+        UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO( USER, "pas$word123",EMAIL, VALID_TYPE, VALID_TYPE_ID);
 
         Set<ConstraintViolation<UserIDLessRoleLessDTO>> violations = validator.validate(userIDLessDTO);
         assertFalse(violations.isEmpty());
@@ -217,7 +219,7 @@ public class AuthServiceUserControllerTests {
     void check_missing_lowercase_password() {
 
 
-        UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO( USER, "PAS$WORD123",EMAIL);
+        UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO( USER, "PAS$WORD123",EMAIL, VALID_TYPE, VALID_TYPE_ID);
 
         Set<ConstraintViolation<UserIDLessRoleLessDTO>> violations = validator.validate(userIDLessDTO);
         assertFalse(violations.isEmpty());
@@ -226,7 +228,7 @@ public class AuthServiceUserControllerTests {
     @DisplayName("Check the email field in order to refused if it is empty")
     void check_empty_email(){
 
-        UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO(USER, PASS,null);
+        UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO(USER, PASS,null, VALID_TYPE, VALID_TYPE_ID);
 
         assertThrows(ConstraintViolationException.class, () -> userController.createUser(userIDLessDTO, null));
     }
@@ -241,7 +243,7 @@ public class AuthServiceUserControllerTests {
                 STARTING_PAGE = 1;
 
         for (int i = 0; i < USER_COUNT; i++) {
-            userRepo.save(new User("Username-1", "password"+i, "email@gmail.com"+i));
+            userRepo.save(new User("Username-1", "password"+i, "email@gmail.com"+i, VALID_TYPE, VALID_TYPE_ID));
         }
 
         final Page<User> all = userRepo.findAll(PageRequest.of(STARTING_PAGE - 1, PAGE_LIM));
@@ -284,7 +286,7 @@ public class AuthServiceUserControllerTests {
     @WithMockUser
     public void  reset_password() throws Exception {
 
-        User entity = new User("Username", "password", "email@gmail.com");
+        User entity = new User("Username", "password", "email@gmail.com", VALID_TYPE, VALID_TYPE_ID);
         String newPass = "newPassword";
         User saved = userRepo.save(entity);
 
@@ -310,7 +312,7 @@ public class AuthServiceUserControllerTests {
     @DisplayName("When POST on users endpoint with valid data, allow any")
     void allow_any_on_users() throws Exception {
 
-        final UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO(USER, PASS, EMAIL);
+        final UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO(USER, PASS, EMAIL, VALID_TYPE, VALID_TYPE_ID);
         final String asString = objectMapper.writeValueAsString(userIDLessDTO);
 
         when(jwtService.encrypt(any()))
@@ -442,7 +444,7 @@ public class AuthServiceUserControllerTests {
     @DisplayName("Given non-registered exception, then rethrow")
     void duplicate_email_climb_non_registered() throws Exception {
 
-        final UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO(USER, PASS, EMAIL);
+        final UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO(USER, PASS, EMAIL, VALID_TYPE, VALID_TYPE_ID);
         final String asString = objectMapper.writeValueAsString(userIDLessDTO);
         final String unregistered_exception = "unregistered exception";
 
@@ -477,7 +479,7 @@ public class AuthServiceUserControllerTests {
     @DisplayName("Given unsatisfactory password, return sensical message and 400 status code")
     void bad_password_response() throws Exception {
 
-        final UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO(USER, "a", EMAIL);
+        final UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO(USER, "a", EMAIL, VALID_TYPE, VALID_TYPE_ID);
         final String asString = objectMapper.writeValueAsString(userIDLessDTO);
         mockMvc.perform(post("/users").contentType(APPLICATION_JSON).content(asString))
                 .andDo(print())

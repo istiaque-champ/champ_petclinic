@@ -199,4 +199,15 @@ public class UserServiceImpl implements UserService {
         return userRepo.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("No account found for email: " + email));
     }
+
+    @Override
+    public User updateUser(UserIDLessRoleLessDTO user, long id) {
+        User saved = userRepo.findById(id).get();
+
+        saved.setEmail(user.getEmail());
+        saved.setPassword(passwordEncoder.encode(user.getPassword()));
+        saved.setUsername(user.getUsername());
+
+        return userRepo.save(saved);
+    }
 }
