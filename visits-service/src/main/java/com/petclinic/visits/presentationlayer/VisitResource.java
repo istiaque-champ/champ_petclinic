@@ -108,19 +108,19 @@ public class VisitResource {
     }
 
     @GetMapping("visits/previous/{petId}")
-    public List<VisitDTO> getPreviousVisitsForPet(@PathVariable("petId") int petId){
+    public Flux<VisitDTO> getPreviousVisitsForPet(@PathVariable("petId") int petId){
         log.debug("Calling VisitsService:getVisitsForPet:previous:petId={}", petId);
         return visitsService.getVisitsForPet(petId, false);
     }
 
     @GetMapping("visits/scheduled/{petId}")
-    public List<VisitDTO> getScheduledVisitsForPet(@PathVariable("petId") int petId){
+    public Flux<VisitDTO> getScheduledVisitsForPet(@PathVariable("petId") int petId){
         log.debug("Calling VisitsService:getVisitsForPet:scheduled:petId={}", petId);
         return visitsService.getVisitsForPet(petId, true);
     }
 
     @GetMapping("visits/vets/{practitionerId}")
-    public List<VisitDTO> getVisitsForPractitioner(@PathVariable("practitionerId") int practitionerId){
+    public Flux<VisitDTO> getVisitsForPractitioner(@PathVariable("practitionerId") int practitionerId){
         log.debug("Calling VisitsService:getVisitsForPractitioner:practitionerId={}", practitionerId);
         return visitsService.getVisitsForPractitioner(practitionerId);
     }
