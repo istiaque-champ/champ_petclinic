@@ -15,6 +15,7 @@ import java.util.UUID;
 public class VisitDTO {
     //it is a string due to the fact it is a UUID
     private String visitId;
+// json format for the date and the pattern
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date date;
     private String description;
@@ -22,6 +23,7 @@ public class VisitDTO {
     private int petId;
     //id for the practitioner
     private int practitionerId;
+    //status is a boolean, if is active or not 
     private boolean status;
 
 }
