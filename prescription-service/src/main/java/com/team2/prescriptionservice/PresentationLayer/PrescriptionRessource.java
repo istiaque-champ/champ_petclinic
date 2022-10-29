@@ -37,6 +37,7 @@ public class PrescriptionRessource {
 
     @PostMapping()
     public ResponseEntity<PrescriptionResponse> addPrescription(@RequestBody PrescriptionRequest prescription) {
+        System.out.println("Try add");
         try {
             if (prescription.getAmount() == null || prescription.getPetId() == null || prescription.getDatePrinted() == null || prescription.getInstructions() == null || prescription.getMedication() == null) {
                 throw new InvalidInputException("Missing fields");
