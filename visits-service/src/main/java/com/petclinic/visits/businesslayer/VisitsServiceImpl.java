@@ -38,6 +38,10 @@ public class VisitsServiceImpl implements VisitsService {
         this.visitRepository = repo;
     }
 
+    private static HashMap<Integer, String> setUpVisit(){
+        HashMap<Integer, String> visitMap = new HashMap<>();
+        return visitMap;
+    }
 
     @Override
     public VisitDTO addVisit(VisitIdLessDTO visit) {
