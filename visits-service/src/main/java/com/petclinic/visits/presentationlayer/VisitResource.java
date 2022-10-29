@@ -126,8 +126,8 @@ public class VisitResource {
     }
 
     @GetMapping("visits/calendar/{practitionerId}")
-    public List<VisitDTO> getVisitsByPractitionerIdAndMonth(@PathVariable("practitionerId") int practitionerId,
-                                                         @RequestParam("dates") List<String> dates)
+    public Flux<VisitDTO> getVisitsByPractitionerIdAndMonth(@PathVariable("practitionerId") int practitionerId,
+                                                            @RequestParam("dates") List<String> dates)
                                                          throws ParseException {
 
         Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(dates.get(0));
