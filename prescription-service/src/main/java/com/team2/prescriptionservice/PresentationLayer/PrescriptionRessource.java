@@ -5,6 +5,7 @@ import com.team2.prescriptionservice.DataLayer.Prescription;
 import com.team2.prescriptionservice.DataLayer.PrescriptionRepo;
 import com.team2.prescriptionservice.DataLayer.PrescriptionRequest;
 import com.team2.prescriptionservice.DataLayer.PrescriptionResponse;
+import com.team2.prescriptionservice.Exceptions.ConflictException;
 import com.team2.prescriptionservice.Exceptions.InvalidInputException;
 import com.team2.prescriptionservice.Utils.date;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +38,12 @@ public class PrescriptionRessource {
     @PostMapping()
     public ResponseEntity<PrescriptionResponse> addPrescription(@RequestBody PrescriptionRequest prescription) {
         try {
-            validate(prescription);
+            if (prescription.getAmount() == null || prescription.getPetId() == null || prescription.getDatePrinted() == null || prescription.getInstructions() == null || prescription.getMedication() == null) {
+                throw new InvalidInputException("Missing fields");
+            }
+            if (!date.isValid(prescription.getDatePrinted())) {
+                throw new InvalidInputException("Invalid date format");
+            }
             return ResponseEntity.status(HttpStatus.OK).body(prescriptionService.savePrescription(prescription));
 
         } catch (Exception e) {
@@ -84,6 +90,10 @@ public class PrescriptionRessource {
         }
         if(prescription.getPetId() != prescription.getPetId()){
             throw new InvalidInputException("Invalid Pet Id provided");
+        }
+        if(prescription.getPetId() == null){
+            throw new ConflictException("Prescription id does not exist");
+
         }
     }
 }
