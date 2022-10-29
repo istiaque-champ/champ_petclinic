@@ -2,13 +2,9 @@ package com.petclinic.visits.datalayer;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
-
-import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.UUID;
 
