@@ -24,7 +24,9 @@ public class PrescriptionRessource {
 
     private final PrescriptionService prescriptionService;
 
-    PrescriptionRessource(PrescriptionService prescriptionService){this.prescriptionService = prescriptionService;}
+    PrescriptionRessource(PrescriptionService prescriptionService) {
+        this.prescriptionService = prescriptionService;
+    }
 
     @GetMapping(value = "/{prescriptionId}")
     public ResponseEntity<PrescriptionResponse> findPrescription(@PathVariable("prescriptionId") int prescriptionId) {
@@ -34,17 +36,11 @@ public class PrescriptionRessource {
 
     @PostMapping()
     public ResponseEntity<PrescriptionResponse> addPrescription(@RequestBody PrescriptionRequest prescription) {
-        System.out.println("Try add ");
-        try{
-            if(prescription.getAmount()==null || prescription.getPetId()==null || prescription.getDatePrinted()==null||prescription.getInstructions()==null||prescription.getMedication()==null){
-                throw new InvalidInputException("Missing fields");
-            }
-            if(!date.isValid(prescription.getDatePrinted())){
-                throw new InvalidInputException("Invalid date format");
-            }
+        try {
+            validate(prescription);
             return ResponseEntity.status(HttpStatus.OK).body(prescriptionService.savePrescription(prescription));
 
-        } catch(Exception e){
+        } catch (Exception e) {
             throw new InvalidInputException("Input Error");
         }
     }
@@ -56,21 +52,35 @@ public class PrescriptionRessource {
     }
 
     @DeleteMapping()
-    public ResponseEntity<?> deletePrescriptionByPetId(@PathVariable int petId){
+    public ResponseEntity<?> deletePrescriptionByPetId(@PathVariable int petId) {
         prescriptionService.deletePrescriptionByPetId(petId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
     @DeleteMapping("/{prescriptionId}")
-    public ResponseEntity<?> deletePrescription(@PathVariable int prescriptionId){
+    public ResponseEntity<?> deletePrescription(@PathVariable int prescriptionId) {
         prescriptionService.deletePrescriptionByPrescriptionId(prescriptionId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
     @PutMapping("/{prescriptionId}")
-    public ResponseEntity<PrescriptionResponse> updatePrescription(@RequestBody PrescriptionRequest prescription, @PathVariable int prescriptionId){
+    public ResponseEntity<PrescriptionResponse> updatePrescription(@RequestBody PrescriptionRequest prescription, @PathVariable int prescriptionId) {
         PrescriptionResponse responseModel = prescriptionService.updatePrescription(prescription, prescriptionId);
-        return ResponseEntity.status(HttpStatus.OK).body(responseModel);
+        try {
+            validate(prescription);
+            return ResponseEntity.status(HttpStatus.OK).body(responseModel);
+        } catch (Exception e) {
+            throw new InvalidInputException("Input Error");
+        }
+
     }
 
+    private void validate(@RequestBody PrescriptionRequest prescription) {
+        if (prescription.getAmount() == null || prescription.getPetId() == null || prescription.getDatePrinted() == null || prescription.getInstructions() == null || prescription.getMedication() == null) {
+            throw new InvalidInputException("Missing fields");
+        }
+        if (!date.isValid(prescription.getDatePrinted())) {
+            throw new InvalidInputException("Invalid date format");
+        }
+    }
 }
