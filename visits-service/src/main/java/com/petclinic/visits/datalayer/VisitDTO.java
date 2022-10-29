@@ -23,7 +23,7 @@ public class VisitDTO {
     private int petId;
     //id for the practitioner
     private int practitionerId;
-    //status is a boolean, if is active or not 
+    //status is a boolean, if is active or not
     private boolean status;
 
 }

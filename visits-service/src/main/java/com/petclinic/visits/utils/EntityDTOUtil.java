@@ -6,6 +6,7 @@ import com.petclinic.visits.datalayer.VisitDTO;
 import com.petclinic.visits.utils.exceptions.InvalidInputException;
 import lombok.Generated;
 import org.springframework.beans.BeanUtils;
+import reactor.core.CoreSubscriber;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;
@@ -33,7 +34,12 @@ public class EntityDTOUtil{
 
     //if(VisitsServiceImpl.)
 
-    Mono<Visit> visit = new Visit();
+    Mono<Visit> visit = new Mono<Visit>() {
+      @Override
+      public void subscribe(CoreSubscriber<? super Visit> actual) {
+
+      }
+    };
     BeanUtils.copyProperties(visitDTO, visit);
 
     return visit;
