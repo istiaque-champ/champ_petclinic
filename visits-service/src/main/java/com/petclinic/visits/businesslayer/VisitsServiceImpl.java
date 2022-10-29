@@ -68,6 +68,14 @@ public class VisitsServiceImpl implements VisitsService {
         if(petId < 0)
             throw new InvalidInputException("PetId can't be negative.");
 
+        log.info("Calling visit repo to get visits for pet with petId: {}", petId);
+        Flux<Visit> returnedVisits = (Flux<Visit>) visitRepository.findByPetId(petId);
+        //What to switch stream with???
+        Flux<VisitDTO> visitDTOList = returnedVisits.stream()
+                .filter(v -> v != null)
+                .map(EntityDTOUtil::entityToDTO)
+                .collect(Collectors.toList());
+        return visitDTOList;
     }
 
     @Override
