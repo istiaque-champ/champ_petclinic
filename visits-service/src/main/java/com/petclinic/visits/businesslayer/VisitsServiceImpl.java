@@ -11,6 +11,8 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import com.petclinic.visits.utils.EntityDTOUtil;
+
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -28,14 +30,10 @@ import java.util.stream.Collectors;
 public class VisitsServiceImpl implements VisitsService {
 
     private final VisitRepository visitRepository;
-/*
-   private final VisitMapper mapper;
 
-    public VisitsServiceImpl(VisitRepository repo, VisitMapper mapper){
-        this.visitRepository = repo;
-        this.mapper = mapper;
-    }*/
+    //    private final VisitMapper mapper;
     public static final HashMap<Integer, String> visitMap= setUpVisit();
+
     public VisitsServiceImpl(VisitRepository repo){
         this.visitRepository = repo;
     }
@@ -48,11 +46,20 @@ public class VisitsServiceImpl implements VisitsService {
 
     @Override
     public Mono<VisitDTO> addVisit(Mono<VisitIdLessDTO> visit) {
-        
+
         if(visit.getDescription() == null || visit.getDescription().isEmpty()){
             throw new InvalidInputException("Visit description required.");
         }
-
+        try{
+            Visit visitEntity = EntityDTOUtil.dtoToEntity(visit);
+            log.info("Calling visit repo to create a visit for pet with petId: {}", visit.getPetId());
+            Visit createdEntity = visitRepository.save(visitEntity);
+            return createdEntity
+                    .map();
+        }
+        catch(DuplicateKeyException dke){
+            throw new InvalidInputException("Duplicate visitId.", dke);
+        }
     }
 
     @Override

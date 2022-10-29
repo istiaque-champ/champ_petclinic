@@ -1,18 +1,20 @@
-package com.petclinic.visits.Reactive.Util;
+package com.petclinic.visits.utils;
 
 import com.petclinic.visits.Reactive.dataacesslayer.Visits;
 import com.petclinic.visits.Reactive.servicelayer.VisitDTO;
+import com.petclinic.visits.datalayer.Visit;
+import com.petclinic.visits.datalayer.VisitIdLessDTO;
 import lombok.Generated;
-
+import reactor.core.publisher.Mono;
 
 import java.util.Date;
 import java.util.Random;
 
 
-public class EntityDtoUtil {
+public class EntityDTOUtil {
 
   @Generated
-    public EntityDtoUtil(){}
+    public EntityDTOUtil(){}
 
     public static VisitDTO toDTO(Visits visits){
 
@@ -49,5 +51,6 @@ public class EntityDtoUtil {
   }
 
 
-
+  public static Visit dtoToEntity(Mono<VisitIdLessDTO> visit) {
+  }
 }
