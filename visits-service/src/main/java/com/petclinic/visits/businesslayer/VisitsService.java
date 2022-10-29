@@ -3,6 +3,8 @@ package com.petclinic.visits.businesslayer;
 import com.petclinic.visits.datalayer.Visit;
 import com.petclinic.visits.datalayer.VisitDTO;
 import com.petclinic.visits.datalayer.VisitIdLessDTO;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.Date;
 import java.util.List;
@@ -16,12 +18,18 @@ import java.util.List;
 
 public interface VisitsService {
 //changing the visits service to be
-    public VisitDTO addVisit(VisitIdLessDTO visit);
+  //  public VisitDTO addVisit(VisitIdLessDTO visit);
+    Mono<VisitDTO> addVisit(Mono<VisitIdLessDTO> visit);
 
-    public List<VisitDTO> getVisitsForPet(int petId);
+//public List<VisitDTO> getVisitsForPet(int petId);
+    Flux<VisitDTO> getVisitsForPet(int petId);
 
-    List<VisitDTO> getVisitsForPet(int petId, boolean scheduled);
-  
+
+    //List<VisitDTO> getVisitsForPet(int petId, boolean scheduled);
+
+    Flux<VisitDTO> getVisitsForPet(int petId, boolean scheduled);
+
+
     public VisitDTO getVisitByVisitId(String visitId);
 
     public void deleteVisit(String visitId);
