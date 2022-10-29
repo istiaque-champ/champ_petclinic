@@ -11,6 +11,10 @@ angular.module('billDetails')
             })
         }
 
+        self.visitType = function() {
+            self.selectedVisit = self.selectedVisitType
+        }
+
         $http.get('api/gateway/owners').then(function (resp){
             self.owners = resp.data;
             self.selectedOwner = self.owners[0];
@@ -44,11 +48,13 @@ angular.module('billDetails')
             }
         })
 
+
         self.submitBillDetailsForm = function (){
 
             self.bills.customerId = self.selectedOwner.id;
             self.bills.vetId = self.selectedVet.vetId;
             self.bills.petId = self.selectedPet.id;
+            self.selectedVisit = self.selectedVisitType;
 
             if (createBill){
                 console.log('Creating new bill');
@@ -59,10 +65,6 @@ angular.module('billDetails')
                 var uri = 'api/gateway/bills/' + $stateParams.billId;
                 $http.put(uri, self.bills)
             }
-        }
-
-        self.datepicker = function (){
-            jQuery('#datetimepicker').datetimepicker();
         }
 
         self.printPage = function (){
