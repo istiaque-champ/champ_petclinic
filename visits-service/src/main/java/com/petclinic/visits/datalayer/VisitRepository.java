@@ -32,9 +32,13 @@ public interface VisitRepository extends ReactiveMongoRepository<Visit, Integer>
    // List<Visit> findByPetIdIn(Collection<Integer> petIds);
    Flux<Visit> findByPetIdIn(Collection<Integer> petIds);
 
-    List<Visit> findVisitsByPractitionerId(int practitionerId);
+    //List<Visit> findVisitsByPractitionerId(int practitionerId);
+    Flux<Visit> findVisitsByPractitionerId(int practitionerId);
 
-    List<Visit> findAllByDateBetween(Date startingDate, Date EndDate);
+    //List<Visit> findAllByDateBetween(Date startingDate, Date EndDate);
+    Flux<Visit> findAllByDateBetween(Date startingDate, Date EndDate);
 
-    Optional<Visit> findByVisitId(UUID visitId);
+    //Optional<Visit> findByVisitId(UUID visitId);
+    Mono<Visit> findByVisitId(UUID visitId);
+
 }
