@@ -112,6 +112,12 @@ public class VisitsServiceImpl implements VisitsService {
 
     @Override
     public void deleteVisit(String visitId) {
+        log.debug("Visit object is deleted with this id: " + visitId);
+        Visit visit = visitRepository.findByVisitId(UUID.fromString(visitId)).orElse(new Visit());
+        if(visit.getVisitId() != null)
+            visitRepository.delete(visit);
+
+        log.debug("Visit deleted");
 
     }
 
