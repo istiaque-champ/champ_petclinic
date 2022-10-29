@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
@@ -47,15 +48,19 @@ public class VisitResource {
     @PostMapping("owners/*/pets/{petId}/visits")
     @ResponseStatus(HttpStatus.CREATED)
    /* public VisitDTO create(
-            @Valid @RequestBody VisitIdLessDTO visit,
+            @Valid @RequestBody VisitIdLessDTO visit
             @PathVariable("petId") int petId) */
     public Mono<ResponseEntity<VisitDTO>> create(@Valid @RequestBody VisitIdLessDTO visit, @PathVariable("petId") int petId)
         {
 
         visit.setPetId(petId);
         log.debug("Calling VisitService:addVisit for pet with petId: {}", petId);
-        VisitDTO savedVisit = visitsService.addVisit(visit);
-        return savedVisit;
+         //VisitDTO savedVisit = visitsService.addVisit(visit);
+        //return savedVisit;
+            //returns an added visit that is mapped to a response
+            return visitsService.addVisit(visit)
+                    .map(ResponseEntity::ok)
+                    .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("visits/{visitId}")
@@ -64,8 +69,11 @@ public class VisitResource {
         visitsService.deleteVisit(visitId);
     }
 
+
+
+    //returns visits by a pets ID 
     @GetMapping("visits/{petId}")
-    public List<VisitDTO> getVisitsForPet(@PathVariable("petId") int petId){
+    public Flux<VisitDTO> getVisitsForPet(@PathVariable("petId") int petId){
         log.info("Getting visits for pet with petid: {}", petId );
         return visitsService.getVisitsForPet(petId);
     }
