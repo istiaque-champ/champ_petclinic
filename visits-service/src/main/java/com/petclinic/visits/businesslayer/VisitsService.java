@@ -40,11 +40,16 @@ public interface VisitsService {
     Mono<VisitDTO> updateVisit(Mono<VisitDTO> visit);
 
 
-    public List<VisitDTO> getVisitsForPets(List<Integer> petIds);
+    //public List<VisitDTO> getVisitsForPets(List<Integer> petIds);
+    Flux<VisitDTO> getVisitsForPets(List<Integer> petIds);
 
-    List<VisitDTO> getVisitsForPractitioner(int practitionerId);
 
-    List<VisitDTO> getVisitsByPractitionerIdAndMonth(int practitionerId, Date startDate, Date EndDate);
+    //List<VisitDTO> getVisitsForPractitioner(int practitionerId);
+    Flux<VisitDTO> getVisitsForPractitioner(int practitionerId);
+
+
+    //List<VisitDTO> getVisitsByPractitionerIdAndMonth(int practitionerId, Date startDate, Date EndDate);
+    Flux<VisitDTO> getVisitsByPractitionerIdAndMonth(int practitionerId, Date startDate, Date EndDate);
 
     boolean validateVisitId(String visitId);
 
