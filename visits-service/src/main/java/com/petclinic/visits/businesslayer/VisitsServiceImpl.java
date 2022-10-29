@@ -170,7 +170,7 @@ public class VisitsServiceImpl implements VisitsService {
 
         return (Flux<VisitDTO>) visitDTOList;
     }
-
+//validate a UUID id 
     @Override
     public boolean validateVisitId(String visitId) {
         String uuidRegex = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}";
