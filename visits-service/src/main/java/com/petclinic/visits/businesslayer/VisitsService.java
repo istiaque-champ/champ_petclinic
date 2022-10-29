@@ -21,20 +21,24 @@ public interface VisitsService {
   //  public VisitDTO addVisit(VisitIdLessDTO visit);
     Mono<VisitDTO> addVisit(Mono<VisitIdLessDTO> visit);
 
-//public List<VisitDTO> getVisitsForPet(int petId);
+    //public List<VisitDTO> getVisitsForPet(int petId)
     Flux<VisitDTO> getVisitsForPet(int petId);
 
 
     //List<VisitDTO> getVisitsForPet(int petId, boolean scheduled);
-
     Flux<VisitDTO> getVisitsForPet(int petId, boolean scheduled);
 
 
-    public VisitDTO getVisitByVisitId(String visitId);
+    //public VisitDTO getVisitByVisitId(String visitId);
+    Mono<VisitDTO> getVisitByVisitId(String visitId);
 
-    public void deleteVisit(String visitId);
 
-    public VisitDTO updateVisit(VisitDTO visit);
+   // public void deleteVisit(String visitId);
+    void deleteVisit(String visitId);
+
+    //public VisitDTO updateVisit(VisitDTO visit);
+    Mono<VisitDTO> updateVisit(Mono<VisitDTO> visit);
+
 
     public List<VisitDTO> getVisitsForPets(List<Integer> petIds);
 
