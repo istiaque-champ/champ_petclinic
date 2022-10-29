@@ -9,6 +9,8 @@ import com.petclinic.visits.utils.exceptions.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -44,4 +46,53 @@ public class VisitsServiceImpl implements VisitsService {
     }
 
 
+    @Override
+    public Mono<VisitDTO> addVisit(Mono<VisitIdLessDTO> visit) {
+        return null;
+    }
+
+    @Override
+    public Flux<VisitDTO> getVisitsForPet(int petId) {
+        return null;
+    }
+
+    @Override
+    public Flux<VisitDTO> getVisitsForPet(int petId, boolean scheduled) {
+        return null;
+    }
+
+    @Override
+    public Mono<VisitDTO> getVisitByVisitId(String visitId) {
+        return null;
+    }
+
+    @Override
+    public void deleteVisit(String visitId) {
+
+    }
+
+    @Override
+    public Mono<VisitDTO> updateVisit(Mono<VisitDTO> visit) {
+        return null;
+    }
+
+    @Override
+    public Flux<VisitDTO> getVisitsForPets(List<Integer> petIds) {
+        return null;
+    }
+
+    @Override
+    public Flux<VisitDTO> getVisitsForPractitioner(int practitionerId) {
+        return null;
+    }
+
+    @Override
+    public Flux<VisitDTO> getVisitsByPractitionerIdAndMonth(int practitionerId, Date startDate, Date EndDate) {
+        return null;
+    }
+
+    @Override
+    public boolean validateVisitId(String visitId) {
+        return false;
+    }
 }
