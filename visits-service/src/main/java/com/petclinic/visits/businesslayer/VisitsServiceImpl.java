@@ -26,13 +26,18 @@ import java.util.stream.Collectors;
 public class VisitsServiceImpl implements VisitsService {
 
     private final VisitRepository visitRepository;
-
-    private final VisitMapper mapper;
+/*
+   private final VisitMapper mapper;
 
     public VisitsServiceImpl(VisitRepository repo, VisitMapper mapper){
         this.visitRepository = repo;
         this.mapper = mapper;
+    }*/
+    public static final HashMap<Integer, String> visitMap= setUpVisit();
+    public VisitsServiceImpl(VisitRepository repo){
+        this.visitRepository = repo;
     }
+
 
     @Override
     public VisitDTO addVisit(VisitIdLessDTO visit) {
