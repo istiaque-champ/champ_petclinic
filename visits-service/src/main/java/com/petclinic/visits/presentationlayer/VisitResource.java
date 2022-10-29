@@ -2,8 +2,10 @@ package com.petclinic.visits.presentationlayer;
 
 
 import com.petclinic.visits.businesslayer.VisitsService;
+import com.petclinic.visits.datalayer.Visit;
 import com.petclinic.visits.datalayer.VisitDTO;
 import com.petclinic.visits.datalayer.VisitIdLessDTO;
+import com.petclinic.visits.utils.EntityDTOUtil;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 /*
  * This class is a REST Controller that handles all the requests coming from the API Gateway.
  *
@@ -84,19 +87,24 @@ public class VisitResource {
 
     //This method will return every visits of people that have multiple pets
     @GetMapping("pets/visits")
-    public Visits visitsMultiGet(@RequestParam("petId") List<Integer> petIds) {
-        final List<VisitDTO> byPetIdIn = visitsService.getVisitsForPets(petIds);
-        return new Visits(byPetIdIn);
-    }
+    public Flux<VisitDTO> visitsMultiGet(@RequestParam("petId") List<Integer> petIds) {
+        final Flux<VisitDTO> byPetIdIn = visitsService.getVisitsForPets(petIds);
+        return byPetIdIn;
 
+        //return new Visits(byPetIdIn);
+    }
+    //Update
     @PutMapping(value = "owners/*/pets/{petId}/visits/{visitId}",
             consumes = "application/json",
             produces = "application/json")
-    public VisitDTO update(@Valid @RequestBody VisitDTO visitDTO, @PathVariable("petId") int petId, @PathVariable("visitId") String visitId) {
-        visitDTO.setVisitId(visitId);
-        visitDTO.setPetId(petId);
+    public Mono<VisitDTO> update(@Valid @RequestBody Mono<VisitDTO> visitDTO, @PathVariable("petId") int petId, @PathVariable("visitId") String visitId) {
+        Visit visitEntity = EntityDTOUtil.dtoToEntity(visitDTO);
+
+        visitEntity.setVisitId(UUID.fromString(visitId));
+        visitEntity.setPetId(petId);
+
         log.info("Updating visit {}", visitDTO);
-        return visitsService.updateVisit(visitDTO);
+        return visitsService.updateVisit(EntityDTOUtil.entityToDTO(visitEntity));
     }
 
     @GetMapping("visits/previous/{petId}")
