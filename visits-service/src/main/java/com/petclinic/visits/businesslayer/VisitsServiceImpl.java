@@ -6,6 +6,7 @@ import com.petclinic.visits.datalayer.VisitIdLessDTO;
 import com.petclinic.visits.datalayer.VisitRepository;
 import com.petclinic.visits.utils.exceptions.InvalidInputException;
 import com.petclinic.visits.utils.exceptions.NotFoundException;
+import jogamp.opengl.glu.nurbs.Flist;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -80,7 +81,17 @@ public class VisitsServiceImpl implements VisitsService {
 
     @Override
     public Flux<VisitDTO> getVisitsForPet(int petId, boolean scheduled) {
-        return null;
+        if (!validateVisitId(visitId))
+            throw new InvalidInputException("VisitId not in the right format.");
+
+        Mono<Visit> returnedVisit = visitRepository.findByVisitId(UUID.fromString(visitId));
+
+        if(returnedVisit.get.getDescription() == null)
+            throw new NotFoundException("Visit with visitId: " + visitId + " does not exist.");
+
+        Mono<VisitDTO> visitDTO = EntityDTOUtil.entityToDTO(returnedVisit);
+
+        return visitDTO;
     }
 
     @Override
