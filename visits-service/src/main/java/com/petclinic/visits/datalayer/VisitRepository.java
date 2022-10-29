@@ -2,6 +2,7 @@ package com.petclinic.visits.datalayer;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.*;
@@ -18,7 +19,7 @@ import java.util.*;
  * Copied from https://github.com/spring-petclinic/spring-petclinic-microservices
  */
 
-public interface VisitRepository extends JpaRepository<Visit, Integer> {
+public interface VisitRepository extends ReactiveMongoRepository<Visit, Integer> {
 
     Optional<Visit> findById(int visitId);
 
