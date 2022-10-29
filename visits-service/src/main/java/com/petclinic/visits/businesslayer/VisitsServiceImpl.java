@@ -48,7 +48,11 @@ public class VisitsServiceImpl implements VisitsService {
 
     @Override
     public Mono<VisitDTO> addVisit(Mono<VisitIdLessDTO> visit) {
-        return null;
+        
+        if(visit.getDescription() == null || visit.getDescription().isEmpty()){
+            throw new InvalidInputException("Visit description required.");
+        }
+
     }
 
     @Override
