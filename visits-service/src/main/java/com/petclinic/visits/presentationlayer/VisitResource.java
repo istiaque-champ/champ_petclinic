@@ -1,9 +1,7 @@
 package com.petclinic.visits.presentationlayer;
 
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.petclinic.visits.businesslayer.VisitsService;
-import com.petclinic.visits.datalayer.Visit;
 import com.petclinic.visits.datalayer.VisitDTO;
 import com.petclinic.visits.datalayer.VisitIdLessDTO;
 import lombok.Value;
@@ -19,7 +17,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 /*
  * This class is a REST Controller that handles all the requests coming from the API Gateway.
  *
@@ -71,7 +68,7 @@ public class VisitResource {
 
 
 
-    //returns visits by a pets ID 
+    //returns visits by a pets ID
     @GetMapping("visits/{petId}")
     public Flux<VisitDTO> getVisitsForPet(@PathVariable("petId") int petId){
         log.info("Getting visits for pet with petid: {}", petId );
