@@ -124,7 +124,7 @@ public class VisitResource {
         log.debug("Calling VisitsService:getVisitsForPractitioner:practitionerId={}", practitionerId);
         return visitsService.getVisitsForPractitioner(practitionerId);
     }
-
+//get visit by the calendar date and by the practitioner ID
     @GetMapping("visits/calendar/{practitionerId}")
     public Flux<VisitDTO> getVisitsByPractitionerIdAndMonth(@PathVariable("practitionerId") int practitionerId,
                                                             @RequestParam("dates") List<String> dates)

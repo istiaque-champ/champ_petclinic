@@ -13,12 +13,14 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class VisitDTO {
+    //it is a string due to the fact it is a UUID
     private String visitId;
-
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date date;
     private String description;
+    //Id for the pet selected
     private int petId;
+    //id for the practitioner
     private int practitionerId;
     private boolean status;
 
