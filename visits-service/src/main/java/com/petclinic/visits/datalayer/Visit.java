@@ -5,7 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.Id;
-import org.springframework.stereotype.Indexed;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -47,24 +47,26 @@ public class Visit {
     @Column(name = "visit_id",unique = true, nullable = false)
     @Builder.Default
     private UUID visitId = UUID.randomUUID();*/
+  @Indexed(unique = true)
+  private UUID visitId = UUID.randomUUID();
 
-    @Builder.Default
+ /*   @Builder.Default
     @Column(name = "visit_date")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)*/
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date date = new Date();
 
-    @Size(max = 8192)
-    @Column(name = "description")
+   /* @Size(max = 8192)
+    @Column(name = "description")*/
     private String description;
 
-    @Column(name = "pet_id")
+    //@Column(name = "pet_id")
     private int petId;
     
-    @Column(name = "practitioner_id")
+    //@Column(name = "practitioner_id")
     private int practitionerId;
 
-    @Column(name = "status")
+    //@Column(name = "status")
     private boolean status;
 
 }
