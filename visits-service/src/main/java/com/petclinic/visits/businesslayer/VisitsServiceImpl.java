@@ -64,7 +64,10 @@ public class VisitsServiceImpl implements VisitsService {
 
     @Override
     public Flux<VisitDTO> getVisitsForPet(int petId) {
-        return null;
+
+        if(petId < 0)
+            throw new InvalidInputException("PetId can't be negative.");
+
     }
 
     @Override
