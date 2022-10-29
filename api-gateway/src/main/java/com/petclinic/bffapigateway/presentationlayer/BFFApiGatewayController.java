@@ -39,7 +39,7 @@ public class BFFApiGatewayController {
 
     private final BillServiceClient billServiceClient;
 
-
+    //Billing Microservice Mapping
     @GetMapping(value = "bills/{billId}")
     public Mono<BillDetailsExpanded> getBillingInfo(final @PathVariable int billId)
     {
@@ -84,6 +84,7 @@ public class BFFApiGatewayController {
         };
     }
 
+    //Customer/Owner Microservice Mapping
     @PostMapping(value = "owners/{ownerId}/pets" , produces = "application/json", consumes = "application/json")
     public Mono<PetDetails> createPet(@RequestBody PetDetails pet, @PathVariable int ownerId){
         return customersServiceClient.createPet(pet, ownerId);
@@ -121,6 +122,7 @@ public class BFFApiGatewayController {
         return visitsServiceClient.updateVisitForPet(visit);
     }
 
+    //Visits Microservice Mapping
     @DeleteMapping (value = "visits/{visitId}")
     public Mono<Void> deleteVisitsByVisitId(final @PathVariable String visitId){
         return visitsServiceClient.deleteVisitByVisitId(visitId);
@@ -183,7 +185,8 @@ public class BFFApiGatewayController {
         return visitsServiceClient.createVisitForPet(visit);
     }
 
-    /**
+    //Vets Microservice Mapping
+    /*
      * Retrieve all vets from DB
      */
     @GetMapping(value = "vets")
@@ -191,7 +194,7 @@ public class BFFApiGatewayController {
         return vetsServiceClient.getVets();
     }
 
-    /**
+    /*
      * Get a single vet given its vetID
      */
     @GetMapping(value = "vets/{vetId}")
@@ -199,7 +202,7 @@ public class BFFApiGatewayController {
         return vetsServiceClient.getVet(vetId);
     }
 
-    /**
+    /*
      * Create Vet
      */
     @PostMapping(value = "vets",
@@ -209,7 +212,7 @@ public class BFFApiGatewayController {
         return vetsServiceClient.createVet(model);
     }
 
-    /**
+    /*
      * Delete vet from DB given the vetID
      */
     @DeleteMapping(value = "vets/{vetId}")
@@ -217,7 +220,7 @@ public class BFFApiGatewayController {
         return vetsServiceClient.deleteVet(vetId);
     }
 
-    /**
+    /*
      * Update vet details
      */
     @PutMapping(
@@ -230,6 +233,7 @@ public class BFFApiGatewayController {
         return vetsServiceClient.updateVet(vetId, vet);
     }
 
+    //User Mapping
     @PostMapping(value = "users",
             consumes = "application/json",
             produces = "application/json")
@@ -258,6 +262,7 @@ public class BFFApiGatewayController {
         return authServiceClient.updateUser(userId, model);
     }
 
+    //Admin Mapping
     @GetMapping(value = "admin/roles")
     public Flux<Role> getRoles() {
         return authServiceClient.getRoles();
@@ -273,10 +278,10 @@ public class BFFApiGatewayController {
         return authServiceClient.addRole(model);
     }
 
-
-    /**
+    //Owner Mapping
+    /*
      * Owners Methods
-     * **/
+     */
 
     @GetMapping(value = "owners")
     public Flux<OwnerDetails> getOwners() {
@@ -316,9 +321,9 @@ public class BFFApiGatewayController {
         return customersServiceClient.deleteOwner(ownerId);
     }
 
-    /**
+    /*
      * End of Owner Methods
-     * **/
+     */
 
     @GetMapping("/verification/{token}")
     public Mono<UserDetails> verifyUser(@PathVariable final String token) {
