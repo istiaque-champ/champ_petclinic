@@ -1,3 +1,4 @@
+/*
 package com.petclinic.visits.businesslayer;
 
 import com.petclinic.visits.datalayer.Visit;
@@ -22,7 +23,7 @@ public interface VisitMapper {
 
     @Mappings({
             @Mapping(target = "id", ignore = true),
-            @Mapping(target = "visitId", ignore = true)
     })
     Visit VisitIdLessDtoToEntity(VisitIdLessDTO visit);
 }
+*/

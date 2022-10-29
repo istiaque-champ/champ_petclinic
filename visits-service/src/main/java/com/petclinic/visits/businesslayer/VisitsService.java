@@ -15,7 +15,7 @@ import java.util.List;
  */
 
 public interface VisitsService {
-
+//changing the visits service to be
     public VisitDTO addVisit(VisitIdLessDTO visit);
 
     public List<VisitDTO> getVisitsForPet(int petId);
