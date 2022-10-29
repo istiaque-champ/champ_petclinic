@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.data.repository.query.Param;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.*;
 
@@ -21,11 +23,14 @@ import java.util.*;
 
 public interface VisitRepository extends ReactiveMongoRepository<Visit, Integer> {
 
-    Optional<Visit> findById(int visitId);
+    //Optional<Visit> findById(int visitId);
+    Mono<Visit> findById(int visitId);
 
-    List<Visit> findByPetId(int petId);
+    //List<Visit> findByPetId(int petId);
+    Flux<Visit> findByPetId(int petId);
 
-    List<Visit> findByPetIdIn(Collection<Integer> petIds);
+   // List<Visit> findByPetIdIn(Collection<Integer> petIds);
+   Flux<Visit> findByPetIdIn(Collection<Integer> petIds);
 
     List<Visit> findVisitsByPractitionerId(int practitionerId);
 
