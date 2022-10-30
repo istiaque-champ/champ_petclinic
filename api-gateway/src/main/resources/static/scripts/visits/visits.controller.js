@@ -10,10 +10,10 @@ angular.module('visits')
         $scope.phoneNumber = translations.PHONE_NUMBER;
         $scope.email = translations.EMAIL_ADDRESS;
         $scope.specialties = translations.SPECIALITIES;
-        $scope.workday = translationIds.workday;
-        $scope.date = translationIds.date;
-        $scope.description = translationIds.description;
-        $scope.previousVisits = translationIds.previousVisits;
+        $scope.workday = translations.WORKDAYS;
+        $scope.dates = translations.DATE;
+        $scope.description = translations.DESCRIPTION;
+        $scope.previousVisits = translations.PREVIOUS_VISITS;
     }, function (translationIds) {
         $scope.visit_type = translationIds.visit_type;
         $scope.upcomingVisits = translationIds.upcomingVisits;
