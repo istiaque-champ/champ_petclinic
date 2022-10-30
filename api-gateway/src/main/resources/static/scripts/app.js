@@ -72,6 +72,8 @@ var translations = {
     VISITS: "Visits",
     PHONE_NUMBER: "Phone Number",
     EMAIL_ADDRESS: "Email Address" ,
+    SPECIALITIES: "Specialities",
+s
 
 
 
