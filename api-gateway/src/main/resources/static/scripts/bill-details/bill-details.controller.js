@@ -9,6 +9,8 @@ angular.module('billDetails')
             $http.get('api/gateway/bills/' + $stateParams.billId).then(function (resp) {
                 self.bills = resp.data;
             })
+        } else {
+            self.bills = {};
         }
 
         self.visitType = function() {
@@ -54,7 +56,7 @@ angular.module('billDetails')
             self.bills.customerId = self.selectedOwner.id;
             self.bills.vetId = self.selectedVet.vetId;
             self.bills.petId = self.selectedPet.id;
-            self.bills.selectedVisitType = self.selectedVisitType;
+            self.bills.visitType = self.selectedVisitType;
 
             if (createBill){
                 console.log('Creating new bill');
