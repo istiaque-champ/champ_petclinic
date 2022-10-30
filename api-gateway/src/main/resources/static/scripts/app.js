@@ -75,6 +75,8 @@ var translations = {
     SPECIALITIES: "Specialities",
     WORKDAYS: "Workdays",
     DATE: "date",
+    DESCRIPTION: "Description",
+
 
 
 
