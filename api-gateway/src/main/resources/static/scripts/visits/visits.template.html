@@ -44,7 +44,9 @@
     </div>
 </div>
 <script>
+//this script is used to generate the calendar
 
+//initialize new date
     let date = new Date();
 
     //specify which months goes with which numbers
@@ -64,6 +66,7 @@
         "December",
     ];
 
+    //constants for functions used in script
     let selectedDate = date.getDate();
     let selectedTime;
     let availableDays = [];
@@ -73,6 +76,7 @@
     let availabilities = [];
     let count = 11;
     let selday=false;
+    //unused, to check again
     let ButtonClicked=false;
 
     const renderCalendar = () => {
