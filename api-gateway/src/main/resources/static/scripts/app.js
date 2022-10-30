@@ -76,12 +76,7 @@ var translations = {
     WORKDAYS: "Workdays",
     DATE: "date",
     DESCRIPTION: "Description",
-
-
-
-
-
-
+    VISITS_TYPE:'Visits Type',
 };
 
 petClinicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$translateProvider', function (
