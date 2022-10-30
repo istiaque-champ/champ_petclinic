@@ -70,6 +70,8 @@ var translations = {
     UPCOMING_VISITS: 'Upcoming Visits:',
     PREVIOUS_VISITS: 'Previous Visits:',
     VISITS: "Visits",
+    PHONE_NUMBER: "Phone Number",
+
 
 
 };
