@@ -54,7 +54,7 @@ angular.module('billDetails')
             self.bills.customerId = self.selectedOwner.id;
             self.bills.vetId = self.selectedVet.vetId;
             self.bills.petId = self.selectedPet.id;
-            self.selectedVisit = self.selectedVisitType;
+            self.bills.selectedVisitType = self.selectedVisitType;
 
             if (createBill){
                 console.log('Creating new bill');
