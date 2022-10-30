@@ -66,6 +66,9 @@ petClinicApp.run(['$rootScope', '$location', 'authProvider', function ($rootScop
         }
     });
 }])
+var translations = {
+    UPCOMING_VISITS: 'Upcoming Visits:',
+};
 
 petClinicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$translateProvider', function (
     $stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $translateProvider) {
