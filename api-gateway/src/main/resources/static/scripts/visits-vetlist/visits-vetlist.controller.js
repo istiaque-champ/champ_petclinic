@@ -143,7 +143,7 @@ angular.module('visitsVetList')
                     let endDate = info[2];
 
                     if(!isNaN(practitionerId)) {
-                        $http.get(postUrl).then(function (resp) {
+                        $http.get("api/gateway/visits/vets/" + practitionerId).then(function (resp) {
                             
                         });
                     }
