@@ -395,8 +395,8 @@ angular.module('visitsVetList')
                 case descSortName:
                     self.SortTableByDesc(isForUpcoming, false);
                     break;
-                case vetSortName:
-                    self.SortTableByVet(isForUpcoming, false);
+                case ownerSortName:
+                    self.SortTableByOwner(isForUpcoming, false);
                     break;
                 case statusSortName:
                     self.SortTableByStatus(isForUpcoming, false);
@@ -404,6 +404,7 @@ angular.module('visitsVetList')
             }
         }
 
+        // This function might not be necessary
         self.resetForm = function() {
             // Reset the Add Visit Form to default functionality
             $('#visitForm')[0].reset();
@@ -462,16 +463,19 @@ angular.module('visitsVetList')
             if(isForUpcoming) {
                 $('#sortByDateButtonUpcomingVisits').text("Sort by date ⇅");
                 $('#sortByDescButtonUpcomingVisits').text("Sort by description ⇅");
-                $('#sortByVetButtonUpcomingVisits').text("Sort by veterinarian ⇅");
+                // $('#sortByVetButtonUpcomingVisits').text("Sort by veterinarian ⇅");
+                $('#sortByOwnerButtonUpcomingVisits').text("Sort by veterinarian ⇅");
                 $('#sortByStatusButtonUpcomingVisits').text("Sort by status ⇅");
             } else {
                 $('#sortByDateButtonPreviousVisits').text("Sort by date ⇅");
                 $('#sortByDescButtonPreviousVisits').text("Sort by description ⇅");
-                $('#sortByVetButtonPreviousVisits').text("Sort by veterinarian ⇅");
+                // $('#sortByVetButtonPreviousVisits').text("Sort by veterinarian ⇅");
+                $('#sortByOwnerButtonPreviousVisits').text("Sort by owner ⇅");
                 $('#sortByStatusButtonPreviousVisits').text("Sort by status ⇅");
             }
         }
 
+        //Sort by Date
         let sortTableDateAscendingUpcomingVisits = false;
         let sortTableDateAscendingPreviousVisits = false;
         self.SortTableByDate = function(isForUpcoming, flipSortingBool = true) {
