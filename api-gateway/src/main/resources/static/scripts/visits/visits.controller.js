@@ -11,6 +11,8 @@ angular.module('visits')
         $scope.email = translations.EMAIL_ADDRESS;
         $scope.specialties = translations.SPECIALITIES;
         $scope.workday = translationIds.workday;
+        $scope.date = translationIds.date;
+
 
 
 
