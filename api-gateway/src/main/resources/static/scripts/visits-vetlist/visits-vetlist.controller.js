@@ -166,83 +166,8 @@ angular.module('visitsVetList')
 
 
 
-        
 
-        // self.switchToUpdateForm = function (e, practitionerId, date, description, id, visitStatus){
-        //     visitId = id;
-        //     $("#selectedVet option[value='"+practitionerId+"']").prop("selected", true);
-        //     $('#date_input').val(date);
-        //     console.log(date);
-        //     $('#description_textarea').val(description);
-        //     //not needed
-        //     // $('#submit_button').text("Update Visit");
-        //     // $('#cancel_button').css("visibility", "visible");
-        //
-        //     let d = date.toString().split("-");
-        //     editDateParsing(d[0], d[1], d[2]);
-        //
-        //     self.loadVetInfo();
-        //
-        //     // Save the sender's index to data attribute on visitForm called data-update-index
-        //     let modalConfirmButton = $('#confirmationModalConfirmButton');
-        //     modalConfirmButton.data("update-table", $(e.target).closest('tr').data("table-name"));
-        //     modalConfirmButton.data("update-index", $(e.target).closest('tr').data("index"));
-        //
-        //     self.submit = function () {
-        //         var data = {
-        //             date: $('#date_input').val(),
-        //             description: $('#description_textarea').val(),
-        //             practitionerId: $("#selectedVet").val(),
-        //             status: visitStatus
-        //         };
-        //
-        //         // Might not be needed
-        //         let putURL = "api/gateway/owners/*/pets/" + petId + "/visits/" + visitId;
-        //
-        //         $http.put(putURL, data).then(function(response) {
-        //             let currentDate = getCurrentDate();
-        //             let modalConfirmButton = $('#confirmationModalConfirmButton');
-        //
-        //             // Get the index of the visit to be updated
-        //             let index = parseInt(modalConfirmButton.data("update-index"));
-        //
-        //             // See if the unedited visit was in upcoming
-        //             let outdatedVisitWasInUpcoming = modalConfirmButton.data("update-table") === "upcomingVisits";
-        //
-        //             // See if the edited visit will be in upcoming or not
-        //             let updatedVisitWillBeInUpcoming = Date.parse(response.data.date) >= currentDate;
-        //
-        //             // Perform an action depending on where the visit was located and where it will be
-        //             if(outdatedVisitWasInUpcoming === true && updatedVisitWillBeInUpcoming === true) {
-        //                 self.upcomingVisits[index] = response.data;
-        //             }
-        //             if(outdatedVisitWasInUpcoming === false && updatedVisitWillBeInUpcoming === false) {
-        //                 self.previousVisits[index] = response.data;
-        //             }
-        //             if(outdatedVisitWasInUpcoming === true && updatedVisitWillBeInUpcoming === false) {
-        //                 // Remove the old visit from upcoming
-        //                 self.upcomingVisits.splice(index, 1);
-        //
-        //                 // Add the edited visit to previous visits
-        //                 self.previousVisits.push(response.data);
-        //             }
-        //             if(outdatedVisitWasInUpcoming === false && updatedVisitWillBeInUpcoming === true) {
-        //                 // Remove the old visit from upcoming
-        //                 self.previousVisits.splice(index, 1);
-        //
-        //                 // Add the edited visit to previous visits
-        //                 self.upcomingVisits.push(response.data);
-        //             }
-        //
-        //             // Call the last sort after adding if there is one
-        //             callLastSort(updatedVisitWillBeInUpcoming);
-        //
-        //             createAlert("success", "Successfully updated visit!");
-        //         }, function () {
-        //             createAlert("danger", "Failed to update visit!");
-        //         });
-        //     };
-        // };
+
 
         // This function might not be necessary
         // self.resetForm = function() {
