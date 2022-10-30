@@ -144,7 +144,19 @@ angular.module('visitsVetList')
 
                     if(!isNaN(practitionerId)) {
                         $http.get("api/gateway/visits/vets/" + practitionerId).then(function (resp) {
-                            
+                            //getting current date for comparison
+                            let currentDate = getCurrentDate();
+
+                            // Add the visit to one of the lists depending on its date
+                            let isForUpcomingVisitsTable = Date.parse(resp.data.date) >= currentDate;
+                            if (isForUpcomingVisitsTable) {
+                                self.upcomingVisits.push(resp.data);
+                            } else {
+                                self.previousVisits.push(resp.data);
+                            }
+
+                            // Call the last sort after adding if there is one
+                            callLastSort(isForUpcomingVisitsTable);
                         });
                     }
                 }
