@@ -180,12 +180,11 @@
 
             let workDay = false;
             for(let w of vetWorkDays) {
-                if(getWeekDay(i, 0) === w) {
+                if (getWeekDay(i, 0) === w) {
                     workDay = true;
                 }
             }
 
-            //get the already scheduled visits
             let scheduledVisits = false;
             if(availabilities != null) {
                 for (let a of availabilities) {
@@ -195,12 +194,12 @@
                 }
             }
 
-            //check if day is weekend
+            //Check for weekday
             if(CheckWeekend(i, 0) && getDateFullFormatEqualsTo(i) && vetAvailabilityStr !== null) {
                 days += `<div id="day${i}" data-target="${i}" class="today_weekend day">${i}</div>`;
             }
 
-            //check if day unavailable
+            //check if day is unavailable
             else if((CheckWeekend(i, 0) || vetAvailabilityStr === null) ||
                 (i < new Date().getDate() && date.getMonth() <= new Date().getMonth() && date.getFullYear() === new Date().getFullYear()) ||
                 (date.getMonth() < new Date().getMonth() && date.getFullYear() === new Date().getFullYear()) || date.getFullYear() < new Date().getFullYear()) {
