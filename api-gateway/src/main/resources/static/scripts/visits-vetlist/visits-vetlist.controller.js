@@ -21,10 +21,10 @@ angular.module('visitsVetList')
 
         //MIGHT NEED TO EDIT SO IT'S NOT RUN ON GET
         //Fetch visits according to vet id
-        // $http.get("api/gateway/visits/vets/"+practitionerId).then(function (resp) {
-        //     self.visits = resp.data;
-        //     self.sortFetchedVisits();
-        // });
+        $http.get("api/gateway/visits/vets/"+practitionerId).then(function (resp) {
+            self.visits = resp.data;
+            self.sortFetchedVisits();
+        });
 
         // GET AND ASSIGN VET/PRACTITIONER INFORMATION
         self.loadVetInfo = function() {
