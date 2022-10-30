@@ -25,29 +25,7 @@ angular.module('visits')
         $scope.date = translationIds.date;
         $scope.description = translationIds.description;
         $scope.previousVisits = translationIds.previousVisits;
-
-
-
-
-
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     var self = this;
         var petId = $stateParams.petId || 0;
         var postURL = "api/gateway/visit/owners/" + ($stateParams.ownerId || 0) + "/pets/" + petId + "/visits";
