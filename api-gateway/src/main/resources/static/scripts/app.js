@@ -1,5 +1,7 @@
 'use strict';
 // Whitelist for all things related to auth and Q 401/403 handling
+
+//Can erase everything that is commented under. Its all for internationalization but it didnt work
 const whiteList = new Set([
     'login',
     'signup',
