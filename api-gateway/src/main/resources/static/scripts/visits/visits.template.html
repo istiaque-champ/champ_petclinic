@@ -580,6 +580,7 @@
         renderCalendar();
     });
 
+    //select time
     document.querySelector('.times').addEventListener('click',(event) => {
 
         let selected = event.target.dataset.target;
@@ -620,7 +621,9 @@
 
     <div class="form-group" style="margin-top: 12px">
         <label for="selectedVisitType">Visit Type:</label>
-        <select id="selectedVisitType" name="selectedVisitType" ng-model="testfilter" > //onchange=displayOptions()>
+        <!-- Create angular model named test filter to filter vets by visit type -->
+        <select id="selectedVisitType" name="selectedVisitType" ng-model="testfilter" >
+            <!-- values are used to filter, hence they are not the same as the text displayed -->
             <option disabled selected value>Please Select A Visit Type</option>
             <option value="general">Examinations</option>
             <option value="surgery">Injury</option>
