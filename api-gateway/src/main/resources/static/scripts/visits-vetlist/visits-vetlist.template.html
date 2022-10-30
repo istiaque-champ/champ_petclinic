@@ -31,7 +31,7 @@
     <div class="form-group">
         <label for="selectedVet">Practitioner</label>
 <!--        <input type="text" id="option1" ng-model="testfilter" value="{{option1}}">-->
-        <select id="selectedVet" ng-model="$ctrl.practitionerId" ng-change="$ctrl.loadVetInfo();" required>
+        <select id="selectedVet" ng-model="$ctrl.practitionerId" ng-change="$ctrl.loadVetInfo();$ctrl.getVisitsForPractitionerId();" required>
             <option disabled selected value>Please Select A Veterinarian</option>
             <option ng-repeat="p in $ctrl.vets" data-target="{{p.firstName}} {{p.lastName}} " value="{{p.vetId}}">{{p.firstName}} {{p.lastName}}</option>
         </select>
