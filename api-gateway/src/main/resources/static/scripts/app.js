@@ -69,6 +69,8 @@ petClinicApp.run(['$rootScope', '$location', 'authProvider', function ($rootScop
 var translations = {
     UPCOMING_VISITS: 'Upcoming Visits:',
     PREVIOUS_VISITS: 'Previous Visits:',
+    VISITS: "Visits",
+
 
 };
 
