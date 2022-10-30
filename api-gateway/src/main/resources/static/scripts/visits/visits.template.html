@@ -621,12 +621,13 @@
 
     <div class="form-group" style="margin-top: 12px">
         <label for="selectedVisitType">Visit Type:</label>
-        <!-- Create angular model named test filter to filter vets by visit type -->
+        <!-- Create angular two-way binding model to filter vets by visit type -->
         <select id="selectedVisitType" name="selectedVisitType" ng-model="testfilter" >
             <!-- values are used to filter, hence they are not the same as the text displayed -->
             <option disabled selected value>Please Select A Visit Type</option>
             <option value="general">Examinations</option>
             <option value="surgery">Injury</option>
+            <!-- There are no values here because any doctor can perform these visits -->
             <option value="">Medical</option>
             <option value="radiology">Chronic</option>
             <option value="general">Consultations</option>
@@ -639,6 +640,7 @@
 
     <div class="form-group">
         <label for="selectedVet">Practitioner</label>
+        <!-- Creating the actual model named testfilter. It is set to hidden because it should not be shown. -->
         <input type="text" id="optionInput" ng-model="testfilter" value="" hidden>
         <select id="selectedVet" ng-model="$ctrl.practitionerId" ng-change="$ctrl.loadVetInfo();$ctrl.getVisitsForPractitionerIdAndMonth()" required>
             <option disabled selected value>Please Select A Veterinarian</option>
