@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('visits')
-    .controller('VisitsController', ['$http', '$state', '$stateParams', '$filter', function ($http, $state, $stateParams, $filter) {
+angular.module('visitsVetList')
+    .controller('VisitsVetListController', ['$http', '$state', '$stateParams', '$filter', function ($http, $state, $stateParams, $filter) {
         var self = this;
         var petId = $stateParams.petId || 0;
         var postURL = "api/gateway/visit/owners/" + ($stateParams.ownerId || 0) + "/pets/" + petId + "/visits";
