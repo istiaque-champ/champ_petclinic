@@ -23,6 +23,8 @@ public class PetRequest {
     @Size(min = 1)
     private String name;
 
+    private String notes;
+
     private PetType type;
 
     //USED FOR TESTING PURPOSE
@@ -36,5 +38,7 @@ public class PetRequest {
         this.birthDate = birthDate;
         this.type = type;
     }
+
+
 }
 

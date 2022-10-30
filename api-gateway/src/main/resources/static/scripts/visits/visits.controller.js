@@ -25,6 +25,14 @@ angular.module('visits')
             return Date.parse(yyyy + '-' + mm + '-' + dd);
         }
 
+        // Function to parse the visit date into a comparable format
+        function parseDate(date) {
+            var dd = String(date.getDate()).padStart(2, '0');
+            var mm = String(date.getMonth() + 1).padStart(2, '0');
+            var yyyy = date.getFullYear();
+            return Date.parse(yyyy + '-' + mm + '-' + dd);
+        }
+
         // Container div for all alerts
         let alertsContainer = $('#alertsContainer');
 
@@ -162,6 +170,17 @@ angular.module('visits')
                }
             });
             return practitionerName;
+        };
+
+        self.getOwnerName = function (id){
+            var ownerName = "";
+            $.each(self.owner, function (i, owner){
+                if (owner.ownerId == id){
+                    ownerName = owner.firstName + " " + owner.lastName;
+                    return false;
+                }
+            });
+            return ownerName;
         };
 
         self.showConfirmationModal = function(e, visitId = 0, status = 0, practitionerId = 0, date = null, description = "") {
@@ -665,22 +684,45 @@ angular.module('visits')
         };
 
         self.getStatus = function (status, date) {
+
+            //Initializing variable for status
+
             var statusText = "";
             let currentDate = getCurrentDate();
 
-            if (status === false) {
+
+            //Retrieving the current date
+            let currentDate= getCurrentDate();
+            //Parsing the visit date for comparison
+            let visitDate = Date.parse(date);
+
+            //Checking to see if the visit has been canceled
+            if(status === false){
                 statusText = "Canceled";
             }
-            else if (date > currentDate) {
-                statusText = "Scheduled";
-            }
-            else if (date == currentDate) {
-                statusText = "Today";
-            }
-            else if (date < currentDate) {
-                statusText = "Billed";
+            else{
+                //Old status message
+                // statusText = "Not Canceled"
+
+                if(visitDate > currentDate){
+                    //Display if visit is in the future
+                    statusText = "Scheduled";
+                }
+                else if(visitDate == currentDate){
+                    //Display if visit is today
+                    statusText = "Today";
+                }
+                else if(visitDate < currentDate){
+                    //Display if visit is in the past
+                    statusText = "Billed";
+                }
+                else{
+                    //Troubleshooting text in case of exception
+                    statusText = "No comparison working";
+                }
             }
 
+            //Return text to the view
             return statusText;
         };
 

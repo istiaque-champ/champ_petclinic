@@ -1,6 +1,5 @@
 package com.petclinic.bffapigateway.domainclientlayer;
 
-import com.petclinic.bffapigateway.dtos.*;
 import com.petclinic.bffapigateway.dtos.Login;
 import com.petclinic.bffapigateway.dtos.Register;
 import com.petclinic.bffapigateway.dtos.Role;
@@ -121,7 +120,6 @@ public class AuthServiceClient {
                 .exchange()
                 .doOnNext(n -> {
                     if(n.statusCode().is4xxClientError()) {
-                        n.releaseBody();
                         throw new GenericHttpException("Unauthorized", UNAUTHORIZED);
                     }
                 })

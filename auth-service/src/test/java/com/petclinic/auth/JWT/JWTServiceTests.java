@@ -45,6 +45,8 @@ public class JWTServiceTests {
             "pwd",
             "a@b.c",
             false,
+            1,
+            1,
             ROLES);
 
     @Test

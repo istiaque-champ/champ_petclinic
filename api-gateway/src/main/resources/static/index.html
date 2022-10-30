@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en" ng-app="petClinicApp">
+<html lang="en" ng-app="petClinicApp" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
@@ -13,6 +13,9 @@
 
     <title>PetClinic :: a Spring Framework demonstration</title>
     <link href="/css/petclinic.css" rel="stylesheet" type="text/css "/>
+
+    <!--Bills styling-->
+    <link rel="stylesheet" href="css/billsStyles.css" type="text/css"/>
 
     <!--Vet service styling for modal on vet hover-->
     <link href="/css/vets/modal.css" rel="stylesheet" type="text/css"/>
@@ -27,6 +30,10 @@
     <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
           integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!--FontAwesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/js/all.min.js" integrity="sha512-naukR7I+Nk6gp7p5TMA4ycgfxaZBJ7MO5iC3Fp6ySQyKFHOGfpkSZkYVWV5R7u7cfAicxanwYQ5D1e17EfJcMA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script crossorigin="anonymous"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -107,6 +114,11 @@
     <script src="scripts/auth/verification/verification.js"></script>
     <script src="scripts/auth/verification/verification.controller.js"></script>
     <script src="scripts/auth/verification/verification.component.js"></script>
+
+    <script src="scripts/pet-details/pet-details.js"></script>
+    <script src="scripts/pet-details/pet-details.controller.js"></script>
+    <script src="scripts/pet-details/pet-details.component.js"></script>
+
 </head>
 
 <body id="bg">

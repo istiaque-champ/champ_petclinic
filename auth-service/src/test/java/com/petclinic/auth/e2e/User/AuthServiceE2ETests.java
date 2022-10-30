@@ -11,12 +11,12 @@ package com.petclinic.auth.e2e.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.petclinic.auth.Mail.Mail;
 import com.petclinic.auth.Mail.MailService;
-import com.petclinic.auth.Role.data.Role;
 import com.petclinic.auth.Role.RoleRepo;
-import com.petclinic.auth.User.data.User;
-import com.petclinic.auth.User.data.UserIDLessRoleLessDTO;
+import com.petclinic.auth.Role.data.Role;
 import com.petclinic.auth.User.UserRepo;
 import com.petclinic.auth.User.UserService;
+import com.petclinic.auth.User.data.User;
+import com.petclinic.auth.User.data.UserIDLessRoleLessDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,7 +41,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -76,6 +75,8 @@ public class AuthServiceE2ETests {
             .email("e@mail.com")
             .password("MyV3ryC00lP@$$w0rd")
             .username("my cool username")
+            .userType(1)
+            .userTypeId(1)
             .build();
 
     private UserIDLessRoleLessDTO ID_LESS_USER;

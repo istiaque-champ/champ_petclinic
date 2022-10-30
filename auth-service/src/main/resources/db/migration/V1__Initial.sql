@@ -13,5 +13,7 @@ CREATE TABLE auth.users(
     email VARCHAR(2048) NOT NULL UNIQUE,
     username VARCHAR(2048) NOT NULL,
     password VARCHAR(2048) NOT NULL,
+    usertype INT NOT NULL,
+    usertypeid INT NOT NULL,
     PRIMARY KEY(id)
 );

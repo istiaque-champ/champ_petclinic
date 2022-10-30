@@ -1,16 +1,27 @@
 package com.petclinic.billing.datalayer;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
-
-import java.util.List;
-import java.util.Optional;
-
-public interface BillRepository extends JpaRepository<Bill, Integer> {
+//Changed from JPA to ReactiveCRUD, makes the repo reactive without changing the entity
+//Note: Mongo would also work, but this makes the conversion easier and faster
+@Repository
+public interface BillRepository extends ReactiveMongoRepository<Bill, Integer> {
     @Transactional(readOnly = true)
-    List<Bill> findByBillId(int billId);
+    Mono<Bill> findBillByBillId(int billId);
 
     @Transactional(readOnly = true)
-    List<Bill> findByCustomerId(int customerId);
+    Flux<Bill> findBillsByCustomerId(int customerId);
+
+    @Transactional(readOnly = true)
+    Flux<Bill> findBillsByVetId(int vetId);
+
+    @Transactional(readOnly = true)
+    Flux<Bill> findBillsByPetId(int petId);
+
+    @Transactional
+    Mono<Void> deleteBillByBillId(int billId);
 }

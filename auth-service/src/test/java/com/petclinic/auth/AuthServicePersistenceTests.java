@@ -20,11 +20,10 @@
  */
 package com.petclinic.auth;
 
-import com.petclinic.auth.Role.data.Role;
 import com.petclinic.auth.Role.RoleRepo;
-import com.petclinic.auth.User.data.User;
-import com.petclinic.auth.User.UserIDLessUsernameLessDTO;
+import com.petclinic.auth.Role.data.Role;
 import com.petclinic.auth.User.UserRepo;
+import com.petclinic.auth.User.data.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -227,7 +226,7 @@ public class AuthServicePersistenceTests {
     void add_user() {
 
 
-        final User testUser = userRepo.save(new User("testUsername", "testPa$sword123", "test@email.com"));
+        final User testUser = userRepo.save(new User("testUsername", "testPa$sword123", "test@email.com", 1, 1));
 
         assertEquals(testUser.getUsername(), "testUsername");
         assertEquals(testUser.getPassword(), "testPa$sword123");
@@ -260,6 +259,8 @@ public class AuthServicePersistenceTests {
     private User addDefaultUser() {
         User deepCopy = DEFAULT_USER.toBuilder()
                 .id(AuthServicePersistenceTests.rng.nextInt())
+                .userType(1)
+                .userTypeId(1)
                 .build();
         return userRepo.save(deepCopy);
     }
