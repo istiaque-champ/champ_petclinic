@@ -67,6 +67,9 @@ petClinicApp.run(['$rootScope', '$location', 'authProvider', function ($rootScop
     });
 }])
 
+
+console.table(translations);
+
 petClinicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', function (
     $stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
 
@@ -89,7 +92,10 @@ petClinicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider'
         });
 
     $httpProvider.interceptors.push('httpErrorInterceptor');
+
+
 }]);
+
 
 ['welcome', 'nav', 'footer'].forEach(function (c) {
     var mod = 'layout' + c.toUpperCase().substring(0, 1) + c.substring(1);

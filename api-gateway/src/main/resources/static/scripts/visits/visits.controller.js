@@ -2,6 +2,7 @@
 
 angular.module('visits')
     .controller('VisitsController', ['$http', '$state', '$stateParams', '$filter', function ($http, $state, $stateParams, $filter) {
+        $translate.use("en");
         var self = this;
         var petId = $stateParams.petId || 0;
         var postURL = "api/gateway/visit/owners/" + ($stateParams.ownerId || 0) + "/pets/" + petId + "/visits";
@@ -11,6 +12,7 @@ angular.module('visits')
         self.practitionerId = 0;
         self.date = new Date();
         self.desc = "";
+
 
         $http.get("api/gateway/visits/"+petId).then(function (resp) {
             self.visits = resp.data;
@@ -234,7 +236,7 @@ angular.module('visits')
             $('#confirmationModal').modal('hide');
         }
 
-        self.switchToUpdateForm = function (e, practitionerId, date, description, id, visitStatus){
+        self.switchToUpdateForm = function (e, practitionerId, date,     description, id, visitStatus){
             visitId = id;
             $("#selectedVet option[value='"+practitionerId+"']").prop("selected", true);
             $('#date_input').val(date);
