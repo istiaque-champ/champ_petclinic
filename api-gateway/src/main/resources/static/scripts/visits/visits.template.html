@@ -644,11 +644,12 @@
         <input type="text" id="optionInput" ng-model="testfilter" value="" hidden>
         <select id="selectedVet" ng-model="$ctrl.practitionerId" ng-change="$ctrl.loadVetInfo();$ctrl.getVisitsForPractitionerIdAndMonth()" required>
             <option disabled selected value>Please Select A Veterinarian</option>
+            <!-- Filtering vets using the custom model defined before -->
             <option ng-repeat="p in $ctrl.vets | filter: testfilter" data-target="{{p.firstName}} {{p.lastName}}" value="{{p.vetId}}">{{p.firstName}} {{p.lastName}}</option>
         </select>
-
         <br>
 
+        <!-- displaying chosen vet info -->
         <label for="vetPhoneNumber" style="margin-top: 10px;">Phone Number:</label>
         <input id="vetPhoneNumber" disabled="disabled" style="background-color: #dbd9ce;"/>
 
@@ -696,6 +697,7 @@
     </tr>
     </thead>
     <tbody>
+    <!-- Listing upcoming visits using ng-repeat -->
         <tr ng-repeat="v in $ctrl.upcomingVisits" data-index="{{$index}}" data-table-name="upcomingVisits">
             <td class="col-sm-2">{{v.date}}</td>
             <td style="white-space: pre-line">{{v.description}}</td>
@@ -721,7 +723,7 @@
     </tr>
     </thead>
     <tbody>
-
+    <!-- Listing previous visits using ng-repeat -->
         <tr ng-repeat="v in $ctrl.previousVisits" data-index="{{$index}}" data-table-name="previousVisits">
             <td class="col-sm-2">{{v.date}}</td>
             <td style="white-space: pre-line">{{v.description}}</td>
