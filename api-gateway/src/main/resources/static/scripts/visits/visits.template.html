@@ -125,6 +125,7 @@
             vetsArray = null;
         }
 
+        //verifies if array is != null and pushes elements to vetWorkDays array
         if(vetsArray !== null) {
             for (const d of vetsArray) {
                 switch (d.toLowerCase().trim()) {
@@ -152,6 +153,7 @@
             selectedDate = null;
         }
 
+        //Defines year with current if it is undefined
         if(nameOnCalenderStr === undefined) {
             nameOnCalenderStr = date.getFullYear().toString();
         }
@@ -164,6 +166,7 @@
         for(let x = firstDayIndex; x > 0; x--) {
             let d = prevLastDay - x + 1;
 
+            //Makes weekend unavailable
             if(CheckWeekend(d, -1)) {
                 days += `<div id="day${d}" data-target="previous-page-${d}" class="prev-date unavailable day">${d}</div>`;
             } else {
@@ -171,7 +174,7 @@
             }
         }
 
-        //get the week days that the vet works
+        //get the work days available for the chosen vet
         for(let i = 1; i <= lastDay; i++) {
             availableDays.push(i)
 
