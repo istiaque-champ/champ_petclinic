@@ -1,3 +1,4 @@
+/*
 package com.petclinic.visits.Reactive.dataacesslayer;
 
 import lombok.AllArgsConstructor;
@@ -17,3 +18,4 @@ public class VisitsIdLess {
     private int practitionerId;
     private boolean status;
 }
+*/
