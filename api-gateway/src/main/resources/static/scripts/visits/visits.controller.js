@@ -6,6 +6,7 @@ angular.module('visits')
     $translate(['UPCOMING_VISITS', 'VISITS','PHONE_NUMBER', 'EMAIL_ADDRESS','SPECIALITIES', 'WORKDAYS', 'DATE', 'DESCRIPTION', 'PREVIOUS_VISITS', 'VISIT_TYPE']).then(function (translations) {
         $scope.visit_type = translations.VISITS_TYPE;
         $scope.upcomingVisits = translations.UPCOMING_VISITS;
+        $scope.visits = translations.VISITS;
 
 
     }
