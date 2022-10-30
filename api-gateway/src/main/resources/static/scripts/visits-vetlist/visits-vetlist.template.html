@@ -595,55 +595,17 @@
     <h2>Visits By Practitioner</h2>
 </div>
 
+<!--<form id="visitForm" ng-submit="$ctrl.submit()" onsubmit="return false;">-->
 <form id="visitForm" ng-submit="$ctrl.submit()" onsubmit="return false;">
-    <!-- Sensitive Action Confirmation Modal -->
-<!--    Not needed for this page      -->
-<!--    <div class="visitModal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-hidden="true" >-->
-<!--        <div class="modal-dialog modal-dialog-centered" role="document">-->
-<!--            <div class="modal-content">-->
-<!--                <div class="modal-header">-->
-<!--                    <h5 class="modal-title" id="confirmationModalTitle">PLACEHOLDER</h5>-->
-<!--                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">-->
-<!--                        <span aria-hidden="true">&times;</span>-->
-<!--                    </button>-->
-<!--                </div>-->
-<!--                <div class="modal-body">-->
-<!--                    <p id="confirmationModalBody">PLACEHOLDER</p>-->
-<!--                </div>-->
-<!--                <div class="modal-footer">-->
-<!--                    <button type="button" class="btn btn-secondary" id="confirmationModalDismissButton" data-dismiss="modal">Cancel</button>-->
-<!--                    <button type="button" class="btn btn-primary" id="confirmationModalConfirmButton" ng-click="$ctrl.completeFormAction()">Confirm</button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <div class="form-group" style="margin-top: 12px">-->
-<!--        <label for="selectedVisitType">Visit Type:</label>-->
-<!--        <select id="selectedVisitType" name="selectedVisitType" ng-model="$ctrl.visitType" onchange=displayOptions()>-->
-<!--            <option disabled selected value>Please Select A Visit Type</option>-->
-<!--            <option value="Examinations">Examinations</option>-->
-<!--            <option value="Injury">Injury</option>-->
-<!--            <option value="Medical">Medical</option>-->
-<!--            <option value="Chronic">Chronic</option>-->
-<!--            <option value="Consultations">Consultations</option>-->
-<!--            <option value="Operations">Operations</option>-->
-<!--        </select>-->
-<!--    </div>-->
-
     <br>
-
     <div class="form-group">
         <label for="selectedVet">Practitioner</label>
 <!--        <input type="text" id="option1" ng-model="testfilter" value="{{option1}}">-->
-        <select id="selectedVet" ng-model="$ctrl.practitionerId" ng-change="$ctrl.loadVetInfo();$ctrl.getVisitsForPractitionerIdAndMonth()" required>
+        <select id="selectedVet" ng-model="$ctrl.practitionerId" ng-change="$ctrl.loadVetInfo();" required>
             <option disabled selected value>Please Select A Veterinarian</option>
-            <option ng-repeat="p in $ctrl.vets" data-target="{{p.firstName}} {{p.lastName}} " value="{{p.vetId}}">{{p.firstName}} {{p.lastName}}
-                {{p.specialties}}</option>
+            <option ng-repeat="p in $ctrl.vets" data-target="{{p.firstName}} {{p.lastName}} " value="{{p.vetId}}">{{p.firstName}} {{p.lastName}}</option>
         </select>
-
         <br>
-
         <label for="vetPhoneNumber" style="margin-top: 10px;">Phone Number:</label>
         <input id="vetPhoneNumber" disabled="disabled" style="background-color: #dbd9ce;"/>
         <br>
@@ -656,23 +618,6 @@
         <label for="vetWorkdays">Workdays:</label>
         <input id="vetWorkdays" disabled="disabled" style="background-color: #dbd9ce;" onchange=selectChanged() />
     </div>
-
-<!--    Not needed for this page        -->
-<!--    <div class="form-group" style="margin-top: 4px">-->
-<!--        <label for="date_input">Date</label>-->
-<!--        <input id="date_input" type="date" class="form-control" ng-model='$ctrl.date' required disabled/>-->
-<!--    </div>-->
-
-<!--    <div class="form-group">-->
-<!--        <label for="description_textarea">Description</label>-->
-<!--        <textarea id="description_textarea" class="form-control" ng-model="$ctrl.desc" style="resize:vertical;" required></textarea>-->
-<!--    </div>-->
-
-<!--  Might not be needed for this form as vets is auto run on change-->
-<!--    <div class="form-group" style="margin-top: 6px; margin-bottom: 6px">-->
-<!--        <button id="submit_button" ng-click="$ctrl.showConfirmationModal($event)" class="btn btn-default" type="button" style="border: 1px solid gray; border-radius: 4px">Add New Visit</button>-->
-<!--        <button id="cancel_button" ng-click="$ctrl.resetForm()" onclick="dateReset()" class="btn btn-default" type="button" style="visibility: hidden; border: 1px solid gray; border-radius: 4px">Cancel</button>-->
-<!--    </div>-->
 </form>
 
 <h3 style="margin-top: 18px">Upcoming Visits</h3>
