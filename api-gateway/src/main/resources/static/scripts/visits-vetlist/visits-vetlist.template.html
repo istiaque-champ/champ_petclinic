@@ -674,9 +674,10 @@
     </div>
 </form>
 
+<!-- Notifications not needed for this page-->
 <!-- Notifications Container-->
-<h3 style="margin-top: 12px">Notifications</h3>
-<div id="alertsContainer" class="form-group"></div>
+<!--<h3 style="margin-top: 12px">Notifications</h3>-->
+<!--<div id="alertsContainer" class="form-group"></div>-->
 
 <h3 style="margin-top: 18px">Upcoming Visits</h3>
 <table class="table">
@@ -686,9 +687,9 @@
         <th> <button class="btn btn-default" id="sortByDescButtonUpcomingVisits" ng-click="$ctrl.SortTableByDesc(true)" style="color: white">Sort by description ⇅</button> </th>
         <th> <button class="btn btn-default" id="sortByVetButtonUpcomingVisits" ng-click="$ctrl.SortTableByVet(true)" style="color: white">Sort by veterinarian ⇅</button> </th>
         <th> <button class="btn btn-default" id="sortByStatusButtonUpcomingVisits" ng-click="$ctrl.SortTableByStatus(true)" style="color: white">Sort by status ⇅</button> </th>
-        <th style="text-align:center; vertical-align:middle"> <label>Cancel</label> </th>
-        <th style="text-align:center; vertical-align:middle"> <label>Edit</label> </th>
-        <th style="text-align:center; vertical-align:middle"> <label>Delete</label> </th>
+<!--        <th style="text-align:center; vertical-align:middle"> <label>Cancel</label> </th>-->
+<!--        <th style="text-align:center; vertical-align:middle"> <label>Edit</label> </th>-->
+<!--        <th style="text-align:center; vertical-align:middle"> <label>Delete</label> </th>-->
     </tr>
     </thead>
     <tbody>
@@ -697,9 +698,9 @@
             <td style="white-space: pre-line">{{v.description}}</td>
             <td style="white-space: pre-line">{{$ctrl.getPractitionerName(v.practitionerId)}}</td>
             <td class="status-text" style="white-space: pre-line">{{$ctrl.getStatus(v.status, v.date)}}</td>
-            <td style="text-align:center; vertical-align:middle"><button class="btn btn-default cancel-button" type="button" style="background-color: orangered; color: white" ng-click="$ctrl.showConfirmationModal($event, v.visitId, v.status, v.practitionerId, v.date, v.description)">{{$ctrl.setCancelButtonText(v.status)}}</button></td>
-            <td style="text-align:center; vertical-align:middle"><button class="btn btn-default" type="button" style="background-color: royalblue; color: white" ng-click="$ctrl.switchToUpdateForm($event, v.practitionerId, v.date, v.description, v.visitId, v.status)">Edit Visit</button></td>
-            <td style="text-align:center; vertical-align:middle"><button class="btn btn-danger" type="button" ng-click="$ctrl.showConfirmationModal($event, v.visitId)">Delete visit</button></td>
+<!--            <td style="text-align:center; vertical-align:middle"><button class="btn btn-default cancel-button" type="button" style="background-color: orangered; color: white" ng-click="$ctrl.showConfirmationModal($event, v.visitId, v.status, v.practitionerId, v.date, v.description)">{{$ctrl.setCancelButtonText(v.status)}}</button></td>-->
+<!--            <td style="text-align:center; vertical-align:middle"><button class="btn btn-default" type="button" style="background-color: royalblue; color: white" ng-click="$ctrl.switchToUpdateForm($event, v.practitionerId, v.date, v.description, v.visitId, v.status)">Edit Visit</button></td>-->
+<!--            <td style="text-align:center; vertical-align:middle"><button class="btn btn-danger" type="button" ng-click="$ctrl.showConfirmationModal($event, v.visitId)">Delete visit</button></td>-->
         </tr>
     </tbody>
 </table>
@@ -712,8 +713,8 @@
         <th> <button class="btn btn-default" id="sortByDescButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByDesc(false)" style="color: white">Sort by description ⇅</button> </th>
         <th> <button class="btn btn-default" id="sortByVetButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByVet(false)" style="color: white">Sort by veterinarian ⇅</button> </th>
         <th> <button class="btn btn-default" id="sortByStatusButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByStatus(false)" style="color: white">Sort by status ⇅</button>  </th>
-        <th style="text-align:center; vertical-align:middle"> <label>Edit</label> </th>
-        <th style="text-align:center; vertical-align:middle"> <label>Delete</label> </th>
+<!--        <th style="text-align:center; vertical-align:middle"> <label>Edit</label> </th>-->
+<!--        <th style="text-align:center; vertical-align:middle"> <label>Delete</label> </th>-->
     </tr>
     </thead>
     <tbody>
@@ -723,8 +724,8 @@
             <td style="white-space: pre-line">{{v.description}}</td>
             <td style="white-space: pre-line">{{$ctrl.getPractitionerName(v.practitionerId)}}</td>
             <td class="status-text" style="white-space: pre-line">{{$ctrl.getStatus(v.status, v.date)}}</td>
-            <td style="text-align:center; vertical-align:middle"><button class="btn btn-default" style="background-color: royalblue; color: white" ng-click="$ctrl.switchToUpdateForm($event, v.practitionerId, v.date, v.description, v.visitId, v.status)">Edit Visit</button></td>
-            <td style="text-align:center; vertical-align:middle"><button class="btn btn-danger" ng-click="$ctrl.showConfirmationModal($event, v.visitId)">Delete visit</button></td>
+<!--            <td style="text-align:center; vertical-align:middle"><button class="btn btn-default" style="background-color: royalblue; color: white" ng-click="$ctrl.switchToUpdateForm($event, v.practitionerId, v.date, v.description, v.visitId, v.status)">Edit Visit</button></td>-->
+<!--            <td style="text-align:center; vertical-align:middle"><button class="btn btn-danger" ng-click="$ctrl.showConfirmationModal($event, v.visitId)">Delete visit</button></td>-->
         </tr>
 
     </tbody>
