@@ -885,16 +885,17 @@ angular.module('visitsVetList')
         //     });
         // };
 
-        self.setCancelButtonText = function (visitStatus){
-            var cancelText = "";
-
-            if (visitStatus){
-                cancelText = "Cancel";
-            }
-            else {
-                cancelText = "Revert Cancel";
-            }
-
-            return cancelText;
-        };
+        // No need for cancel button
+        // self.setCancelButtonText = function (visitStatus){
+        //     var cancelText = "";
+        //
+        //     if (visitStatus){
+        //         cancelText = "Cancel";
+        //     }
+        //     else {
+        //         cancelText = "Revert Cancel";
+        //     }
+        //
+        //     return cancelText;
+        // };
     }]);
