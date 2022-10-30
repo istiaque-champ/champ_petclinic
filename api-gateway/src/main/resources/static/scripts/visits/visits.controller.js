@@ -20,6 +20,9 @@ angular.module('visits')
         $scope.visits = translationIds.visits;
         $scope.phoneNumber = translationIds.phoneNumber;
         $scope.email = translationIds.email;
+        $scope.specialties = translationIds.specialties;
+
+    });
 
 
 
@@ -35,7 +38,7 @@ angular.module('visits')
 
 
 
-    }
+
 
     var self = this;
         var petId = $stateParams.petId || 0;
