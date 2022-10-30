@@ -24,7 +24,7 @@
             </td>
         </tr>
         <tr>
-            <td id="BillDate" class="ng-binding">Date/Time:</td>
+            <td id="BillDate" class="ng-binding">Date/Time:{{$ctrl.bills.date | date:'medium'}}</td>
         </tr>
         <tr id="BillOwner">
             <td ><label>Owners: </label><select ng-options="owner.firstName + ' ' + owner.lastName for owner in $ctrl.owners track by owner.id" ng-model="$ctrl.selectedOwner"></select>
