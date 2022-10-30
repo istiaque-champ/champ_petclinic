@@ -7,6 +7,7 @@ angular.module('visits')
         $scope.visit_type = translations.VISITS_TYPE;
         $scope.upcomingVisits = translations.UPCOMING_VISITS;
         $scope.visits = translations.VISITS;
+        $scope.phoneNumber = translations.PHONE_NUMBER;
 
 
     }
