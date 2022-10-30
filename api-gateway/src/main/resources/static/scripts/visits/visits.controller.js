@@ -23,6 +23,8 @@ angular.module('visits')
         $scope.specialties = translationIds.specialties;
         $scope.workday = translationIds.workday;
         $scope.date = translationIds.date;
+        $scope.description = translationIds.description;
+
 
 
 
