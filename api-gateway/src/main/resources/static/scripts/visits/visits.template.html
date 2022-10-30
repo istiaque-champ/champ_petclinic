@@ -79,6 +79,7 @@
     //unused, to check again
     let ButtonClicked=false;
 
+    //function for calendar rendering
     const renderCalendar = () => {
 
         date.setDate(1);
@@ -95,6 +96,7 @@
 
         const nextDays = 7 - lastDayIndex - 1;
 
+        //setting localstorage variable using getFormatPractitionerIdAndMonth() function
         localStorage.setItem("practitionerIdAndMonth", getFormatPractitionerIdAndMonth());
 
         let showSelectedDate = new Date("" + months[date.getMonth()] + " " + selectedDate + ", " + date.getFullYear());
@@ -102,6 +104,8 @@
         let formattedDate = showSelectedDate.toDateString().substring(0, 3) + ", " + showSelectedDate.toDateString().substring(3, 10).trim() + ", " + date.getFullYear();
 
         let isMonthUnavailable = false;
+
+        //verifying if the selected month is in the past
         if((new Date("" + months[date.getMonth()] + " " + (parseInt(selectedDate) + 1) + ", " + date.getFullYear()) < new Date())) {
             isMonthUnavailable = true;
             formattedDate = date.getFullYear().toString();
@@ -112,7 +116,10 @@
         let days = "";
 
         let vetsArray;
+
+        //verifying if the vets availability string is not null or empty
         if (vetAvailabilityStr !== undefined && vetAvailabilityStr !== null) {
+            //formatting availability to a readable format
             vetsArray = vetAvailabilityStr.split(",");
         } else {
             vetsArray = null;
