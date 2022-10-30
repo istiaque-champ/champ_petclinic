@@ -22,7 +22,7 @@ angular.module('visits')
         $scope.email = translationIds.email;
         $scope.specialties = translationIds.specialties;
         $scope.workday = translationIds.workday;
-        $scope.date = translationIds.date;
+        $scope.dates = translationIds.date;
         $scope.description = translationIds.description;
         $scope.previousVisits = translationIds.previousVisits;
     });
