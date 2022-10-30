@@ -165,53 +165,6 @@ angular.module('visitsVetList')
 
 
 
-        // No confirmation needed since data should only be viewable
-
-        // self.showConfirmationModal = function(e, visitId = 0, status = 0, practitionerId = 0, date = null, description = "") {
-        //     // Get the name of button sender
-        //     let buttonText = $(e.target).text();
-        //
-        //     // Check if form needs to be valid for adding and updating a visit
-        //     if(buttonText === "Add New Visit" || buttonText === "Update Visit") {
-        //         var form = document.querySelector('form');
-        //
-        //         // If form isn't valid then don't display confirmation popup and alert required fields
-        //         if(!form.reportValidity()) {
-        //             return false;
-        //         }
-        //     }
-        //
-        //     // Set modal's title and body to match the sender's request
-        //     $('#confirmationModalTitle').text(buttonText);
-        //     $('#confirmationModalBody').text("Are you sure you want to " + buttonText.toLowerCase() + "?");
-        //
-        //     // The confirm button on the popup modal
-        //     let modalConfirmButton = $('#confirmationModalConfirmButton');
-        //
-        //     // Check if the sender was the Add New Visit Button
-        //     if(buttonText !== "Add New Visit") {
-        //         // Set the targeted visit data attribute to the visit's id
-        //         modalConfirmButton.data("targetVisit", visitId);
-        //
-        //         // Set other data attributes if the button is for cancel
-        //         if(buttonText.toLowerCase().includes("cancel")) {
-        //             modalConfirmButton.data("targetStatus", status);
-        //             modalConfirmButton.data("targetPractitionerId", practitionerId);
-        //             modalConfirmButton.data("targetDate", date);
-        //             modalConfirmButton.data("targetDescription", description);
-        //             modalConfirmButton.data("cancel-index", $(e.target).closest("tr").data("index"));
-        //         }
-        //
-        //         if(buttonText.toLowerCase() === "delete visit") {
-        //             modalConfirmButton.data("delete-index", $(e.target).closest("tr").data("index"));
-        //             modalConfirmButton.data("delete-table-name", $(e.target).closest("tr").data("table-name"));
-        //         }
-        //     }
-        //
-        //     // Show the modal
-        //     $('#confirmationModal').modal('show');
-        // }
-
         // Form no longer has button, simply on change
         // self.completeFormAction = function() {
         //     // Check which button modal was called by and perform appropriate action
