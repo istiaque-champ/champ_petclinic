@@ -67,8 +67,8 @@ petClinicApp.run(['$rootScope', '$location', 'authProvider', function ($rootScop
     });
 }])
 
-petClinicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', function (
-    $stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+petClinicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$translateProvider', function (
+    $stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $translateProvider) {
 
     // safari turns to be lazy sending the Cache-Control header
     $httpProvider.defaults.headers.common["Cache-Control"] = 'no-cache';
