@@ -14,6 +14,12 @@ angular.module('visits')
         $scope.date = translationIds.date;
         $scope.description = translationIds.description;
         $scope.previousVisits = translationIds.previousVisits;
+    }, function (translationIds) {
+        $scope.visit_type = translationIds.visit_type;
+
+
+
+
 
 
 
