@@ -3,28 +3,28 @@ angular.module('visits')
     .controller('VisitsController', ['$http', '$state', '$stateParams', '$filter', '$translate', function ($http, $state, $stateParams, $filter, $translate) {
     $translate.use("en");
 
-    $translate(['UPCOMING_VISITS', 'VISITS','PHONE_NUMBER', 'EMAIL_ADDRESS','SPECIALITIES', 'WORKDAYS', 'DATE', 'DESCRIPTION', 'PREVIOUS_VISITS', 'VISIT_TYPE']).then(function (translations) {
-        $scope.visit_type = translations.VISITS_TYPE;
-        $scope.upcomingVisits = translations.UPCOMING_VISITS;
-        $scope.visits = translations.VISITS;
-        $scope.phoneNumber = translations.PHONE_NUMBER;
-        $scope.email = translations.EMAIL_ADDRESS;
-        $scope.specialties = translations.SPECIALITIES;
-        $scope.workday = translations.WORKDAYS;
-        $scope.dates = translations.DATE;
-        $scope.description = translations.DESCRIPTION;
-        $scope.previousVisits = translations.PREVIOUS_VISITS;
-    }, function (translationIds) {
-        $scope.visit_type = translationIds.visit_type;
-        $scope.upcomingVisits = translationIds.upcomingVisits;
-        $scope.visits = translationIds.visits;
-        $scope.phoneNumber = translationIds.phoneNumber;
-        $scope.email = translationIds.email;
-        $scope.specialties = translationIds.specialties;
-        $scope.workday = translationIds.workday;
-        $scope.dates = translationIds.date;
-        $scope.description = translationIds.description;
-        $scope.previousVisits = translationIds.previousVisits;
+    $translate(['UPCOMING_VISITS', 'VISITS','PHONE_NUMBER', 'EMAIL_ADDRESS','SPECIALITIES', 'WORKDAYS', 'DATE', 'DESCRIPTION', 'PREVIOUS_VISITS', 'VISIT_TYPE']).then(function (visits_translations) {
+        $scope.visit_type = visits_translations.VISITS_TYPE;
+        $scope.upcomingVisits = visits_translations.UPCOMING_VISITS;
+        $scope.visits = visits_translations.VISITS;
+        $scope.phoneNumber = visits_translations.PHONE_NUMBER;
+        $scope.email = visits_translations.EMAIL_ADDRESS;
+        $scope.specialties = visits_translations.SPECIALITIES;
+        $scope.workday = visits_translations.WORKDAYS;
+        $scope.dates = visits_translations.DATE;
+        $scope.description = visits_translations.DESCRIPTION;
+        $scope.previousVisits = visits_translations.PREVIOUS_VISITS;
+    }, function (visits_translationIds) {
+        $scope.visit_type = visits_translationIds.visit_type;
+        $scope.upcomingVisits = visits_translationIds.upcomingVisits;
+        $scope.visits = visits_translationIds.visits;
+        $scope.phoneNumber = visits_translationIds.phoneNumber;
+        $scope.email = visits_translationIds.email;
+        $scope.specialties = visits_translationIds.specialties;
+        $scope.workday = visits_translationIds.workday;
+        $scope.dates = visits_translationIds.date;
+        $scope.description = visits_translationIds.description;
+        $scope.previousVisits = visits_translationIds.previousVisits;
     });
     var self = this;
         var petId = $stateParams.petId || 0;

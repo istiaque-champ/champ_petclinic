@@ -67,7 +67,7 @@ petClinicApp.run(['$rootScope', '$location', 'authProvider', function ($rootScop
     });
 }])
 
-var translations = {
+var visits_translations = {
     UPCOMING_VISITS: 'Upcoming Visits:',
     PREVIOUS_VISITS: 'Previous Visits:',
     VISITS: "Visits",
@@ -77,8 +77,20 @@ var translations = {
     WORKDAYS: "Workdays",
     DATE: "date",
     DESCRIPTION: "Description",
-    VISITS_TYPE:'Visits Type'
+    VISITS_TYPE:'Visits Type',
 };
+console.table(visits_translations);
+
+var translations = {
+    BILL_HISTORY: 'Bill History :',
+    BILL_ID: 'Bill Id:',
+    OWNER: "Owner",
+    VISIT_TYPE: "Visit Type",
+    NAMESPACE: {
+        BILL_ID: 'Bill Id in namespace'
+    }
+};
+console.table(translations);
 
 petClinicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$translateProvider', function (
     $stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $translateProvider) {
@@ -105,6 +117,10 @@ petClinicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider'
 
     console.log("HELLO FROM CONFIG");
     $translateProvider.translations('en', translations);
+    $translateProvider.preferredLanguage('en');
+
+    console.log("HELLO FROM CONFIGssssssss");
+    $translateProvider.translations('en', visits_translations);
     $translateProvider.preferredLanguage('en');
 }]);
 
