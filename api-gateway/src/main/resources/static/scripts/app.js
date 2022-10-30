@@ -73,7 +73,7 @@ var translations = {
     PHONE_NUMBER: "Phone Number",
     EMAIL_ADDRESS: "Email Address" ,
     SPECIALITIES: "Specialities",
-s
+    WORKDAYS: "Workdays",
 
 
 
