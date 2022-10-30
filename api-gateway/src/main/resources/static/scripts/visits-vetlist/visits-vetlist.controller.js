@@ -162,68 +162,7 @@ angular.module('visitsVetList')
                 }
             }
         }
-
-
-
-
-
-
-
-        // This function might not be necessary
-        // self.resetForm = function() {
-        //     // Reset the Add Visit Form to default functionality
-        //     $('#visitForm')[0].reset();
-        //
-        //     // Restore default button name
-        //     $('#submit_button').text("Add New Visit");
-        //
-        //     // Hide the cancel button
-        //     $('#cancel_button').css("visibility", "hidden");
-        //
-        //     // Restore default functionality of form submit
-        //     self.submit = function () {
-        //         var data = {
-        //             date: getCurrentDate(),
-        //             description: self.desc,
-        //             practitionerId: self.practitionerId,
-        //             status: true
-        //         };
-        //
-        //         var billData = {
-        //             ownerId: $stateParams.ownerId,
-        //             date: getCurrentDate(),
-        //             visitType : $("#selectedVisitType").val()
-        //         }
-        //
-        //         $http.post(postURL, data).then(function(response) {
-        //             let currentDate = getCurrentDate();
-        //
-        //             // Add the visit to one of the lists depending on its date
-        //             let isForUpcomingVisitsTable = Date.parse(response.data.date) >= currentDate;
-        //             if(isForUpcomingVisitsTable) {
-        //                 self.upcomingVisits.push(response.data);
-        //             } else {
-        //                 self.previousVisits.push(response.data);
-        //             }
-        //
-        //             // Call the last sort after adding if there is one
-        //             callLastSort(isForUpcomingVisitsTable);
-        //
-        //             createAlert("success", "Successfully created visit!");
-        //         },function () {
-        //             createAlert("danger", "Failed to add visit!");
-        //         });
-        //
-        //         $http.post(billsUrl, billData).then(function () {
-        //
-        //         }, function () {
-        //             console.log("Failed to create corresponding bill!");
-        //         });
-        //     }
-        //
-        //     return false;
-        // }
-
+        
 
         // This value will be set depending on what was last clicked
         let lastSort = "";
