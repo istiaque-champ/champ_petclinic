@@ -165,29 +165,8 @@ angular.module('visitsVetList')
 
 
 
-        // Form no longer has button, simply on change
-        // self.completeFormAction = function() {
-        //     // Check which button modal was called by and perform appropriate action
-        //     let modalTitle = $('#confirmationModalTitle').text();
-        //     let modalButton = $('#confirmationModalConfirmButton');
-        //
-        //     if(modalTitle === $('#submit_button').text()) {
-        //         $('#visitForm').submit();
-        //
-        //         if(modalTitle.toLowerCase() === "update visit") {
-        //             self.resetForm();
-        //         }
-        //     }
-        //     else if(modalTitle.toLowerCase() === "delete visit") {
-        //         self.deleteVisit(modalButton.data("targetVisit"));
-        //     }
-        //     else if(modalTitle.toLowerCase().includes("cancel")) {
-        //         self.cancelVisit(modalButton.data("targetVisit"), modalButton.data("targetStatus"), modalButton.data("targetPractitionerId"), modalButton.data("targetDate"), modalButton.data("targetDescription"));
-        //     }
-        //
-        //     // Hide modal after performing action
-        //     $('#confirmationModal').modal('hide');
-        // }
+
+        
 
         // self.switchToUpdateForm = function (e, practitionerId, date, description, id, visitStatus){
         //     visitId = id;
