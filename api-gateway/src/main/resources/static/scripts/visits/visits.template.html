@@ -204,7 +204,7 @@
                 (i < new Date().getDate() && date.getMonth() <= new Date().getMonth() && date.getFullYear() === new Date().getFullYear()) ||
                 (date.getMonth() < new Date().getMonth() && date.getFullYear() === new Date().getFullYear()) || date.getFullYear() < new Date().getFullYear()) {
 
-                //if string equals to selected day, alert
+                //if string equals to selected day, alert that day is unavailable
                 if(i.toString() === selectedDate) {
                     days += `<div id="day${i}" data-target="${i}" class="editSelected unavailable day">${i}</div>`;
                 } else {
@@ -262,6 +262,7 @@
             }
         }
 
+        //Change inner html to match days variable
         monthDays.innerHTML = days;
 
         //get number of days to insert after current month's date
