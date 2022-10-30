@@ -8,6 +8,7 @@ angular.module('visits')
         $scope.upcomingVisits = translations.UPCOMING_VISITS;
         $scope.visits = translations.VISITS;
         $scope.phoneNumber = translations.PHONE_NUMBER;
+        $scope.email = translations.EMAIL_ADDRESS;
 
 
     }
