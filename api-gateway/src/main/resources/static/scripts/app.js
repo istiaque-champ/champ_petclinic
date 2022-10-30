@@ -101,6 +101,10 @@ petClinicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider'
         });
 
     $httpProvider.interceptors.push('httpErrorInterceptor');
+
+    console.log("HELLO FROM CONFIG");
+    $translateProvider.translations('en', translations);
+    $translateProvider.preferredLanguage('en');
 }]);
 
 ['welcome', 'nav', 'footer'].forEach(function (c) {
