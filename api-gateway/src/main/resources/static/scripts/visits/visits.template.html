@@ -379,7 +379,7 @@
         if(monthDays.innerHTML === null) {
             location.reload();
         }
-
+//for testing purposes
         console.log("Selected date: " + selectedDate);
         isEditMode = false;
     }
@@ -439,38 +439,38 @@
     var option1 = "";
 
 
-    //hide all and only unhide available options
-    const displayOptions = () => {
-        let option = document.getElementById("selectedVisitType").value;
-        //let optionInput = document.getElementById("optionInput").value;
-
-        switch (option){
-            //For Visit Type Examination Only general doctors can be selected
-            case("Examinations"):     //Visit Type
-                option1 = "general"; //speciality of doctor
-                break;
-
-            case("Injury"):
-                option1 = "radio";
-                break;
-
-            case("Medical"):
-                option1 = "general";
-                break;
-
-            case("Chronic"):
-                option1 = "general";
-                break;
-
-            case("Consultations"):
-                option1 = "dentistry";
-                break;
-
-            case("Operations"):
-                option1 = "radio";
-                break;
-        }
-    }
+    // //hide all and only unhide available options
+    // const displayOptions = () => {
+    //     let option = document.getElementById("selectedVisitType").value;
+    //     //let optionInput = document.getElementById("optionInput").value;
+    //
+    //     switch (option){
+    //         //For Visit Type Examination Only general doctors can be selected
+    //         case("Examinations"):     //Visit Type
+    //             option1 = "general"; //speciality of doctor
+    //             break;
+    //
+    //         case("Injury"):
+    //             option1 = "radio";
+    //             break;
+    //
+    //         case("Medical"):
+    //             option1 = "general";
+    //             break;
+    //
+    //         case("Chronic"):
+    //             option1 = "general";
+    //             break;
+    //
+    //         case("Consultations"):
+    //             option1 = "dentistry";
+    //             break;
+    //
+    //         case("Operations"):
+    //             option1 = "radio";
+    //             break;
+    //     }
+    // }
 
     //get value either for PM or AM for the time slots
     const getAMorPM = (isAM) => {

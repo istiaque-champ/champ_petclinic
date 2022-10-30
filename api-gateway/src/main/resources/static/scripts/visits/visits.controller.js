@@ -688,8 +688,6 @@ angular.module('visits')
             //Initializing variable for status
 
             var statusText = "";
-            let currentDate = getCurrentDate();
-
 
             //Retrieving the current date
             let currentDate= getCurrentDate();
