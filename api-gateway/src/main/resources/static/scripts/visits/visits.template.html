@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="/css/addVisitFormStyle.css" type="text/css" />
 <!-- Style Loading END -->
 
+<!-- Calendar -->
 <div class="container-calendar">
     <div class="calendar">
         <div class="month">
@@ -274,6 +275,8 @@
 
         let slots = "";
         let timeIsSelected = false;
+
+        //this variable might be unused, must investigate
         let Selectthis;
 
         //create time slots
@@ -346,10 +349,9 @@
             document.querySelector(".time-picker").classList.remove("time-picker-selected");
         }
 
-
-
         timeSlots.innerHTML = slots;
 
+        //If time has been selected
         if(timeIsSelected) {
             document.querySelector('.submitBTN').addEventListener('click',() => {
                 let month = date.getMonth();
