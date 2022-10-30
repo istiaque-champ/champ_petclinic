@@ -89,12 +89,8 @@ public class PrescriptionRessource {
         if (!date.isValid(prescription.getDatePrinted())) {
             throw new InvalidInputException("Invalid date format");
         }
-        if(prescription.getPetId() != prescription.getPetId()){
-            throw new InvalidInputException("Invalid Pet Id provided");
-        }
         if(prescription.getPetId() == null){
             throw new ConflictException("Prescription id does not exist");
-
         }
     }
 }
