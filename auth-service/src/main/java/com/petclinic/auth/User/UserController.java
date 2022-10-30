@@ -83,6 +83,11 @@ public class UserController {
         return userMapper.modelToPasswordLessDTO(saved);
     }
 
+    @PutMapping(value = "/{userId}")
+    public UserPasswordLessDTO updateUser(@PathVariable long userId, @RequestBody @Valid UserIDLessRoleLessDTO dto){
+        return userMapper.modelToPasswordLessDTO(userService.updateUser(dto, userId));
+    }
+
     @PutMapping("/passwordReset/{userId}")
     public void passwordReset(@PathVariable long userId, @RequestBody String newPassword) {
 

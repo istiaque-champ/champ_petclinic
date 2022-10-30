@@ -23,7 +23,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -51,6 +50,8 @@ public class AuthServiceUserServiceTests {
             BADPASS = "123",
             BADEMAIL = null;
     final long BADID = -1;
+    final Integer VALID_TYPE = 1;
+    final Integer VALID_TYPE_ID = 1;
 
     private String VALID_TOKEN = "a.fake.token";
 
@@ -82,7 +83,7 @@ public class AuthServiceUserServiceTests {
     @Test
     @DisplayName("Create new user")
     void create_new_user() {
-        UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO(USER, PASS, EMAIL);
+        UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO(USER, PASS, EMAIL, VALID_TYPE, VALID_TYPE_ID);
 
         when(jwtService.encrypt(argThat( n -> n.getEmail().equals(EMAIL) )))
                 .thenReturn(VALID_TOKEN);
@@ -98,7 +99,7 @@ public class AuthServiceUserServiceTests {
     @DisplayName("Reset user password")
     void test_user_password_reset() {
 
-        final User u = new User(USER, PASS, EMAIL);
+        final User u = new User(USER, PASS, EMAIL, VALID_TYPE, VALID_TYPE_ID);
         userRepo.save(u);
 
         User user = userService.passwordReset(u.getId(), NEWPASSWORD);
@@ -113,7 +114,7 @@ public class AuthServiceUserServiceTests {
     @DisplayName("Reset password, passed wrong ID")
     void test_user_password_reset_ID() {
 
-        final User u = new User(USER, PASS, EMAIL);
+        final User u = new User(USER, PASS, EMAIL, VALID_TYPE, VALID_TYPE_ID);
         userRepo.save(u);
 
         assertThrows(NotFoundException.class, () -> userService.passwordReset(10000, ""));
@@ -122,7 +123,7 @@ public class AuthServiceUserServiceTests {
     @Test
     @DisplayName("Create new user with email already in use")
     void create_new_user_with_same_email() {
-        UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO(USER, PASS, EMAIL);
+        UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO(USER, PASS, EMAIL, VALID_TYPE, VALID_TYPE_ID);
         User userMap = userMapper.idLessRoleLessDTOToModel(userIDLessDTO);
         userRepo.save(userMap);
 
@@ -133,7 +134,7 @@ public class AuthServiceUserServiceTests {
     @Test
     @DisplayName("get user by id and succeed")
     void get_user_by_id() throws NotFoundException {
-        User user = new User(USER, PASS, EMAIL);
+        User user = new User(USER, PASS, EMAIL, VALID_TYPE, VALID_TYPE_ID);
         User saved = userRepo.save(user);
         User found = userService.getUserById(saved.getId());
         assertEquals(saved.getId(), found.getId());
@@ -154,7 +155,7 @@ public class AuthServiceUserServiceTests {
         final int USER_COUNT = 10;
 
         for (int i = 0; i < USER_COUNT; i++) {
-            userRepo.save(new User(USER, PASS, EMAIL + i));
+            userRepo.save(new User(USER, PASS, EMAIL + i, VALID_TYPE, VALID_TYPE_ID));
         }
 
         assertEquals(USER_COUNT, userRepo.count());
@@ -168,7 +169,7 @@ public class AuthServiceUserServiceTests {
         final int USER_COUNT = 10;
 
         for (int i = 0; i < USER_COUNT; i++) {
-            userRepo.save(new User(USER, PASS, EMAIL + i));
+            userRepo.save(new User(USER, PASS, EMAIL + i, VALID_TYPE, VALID_TYPE_ID));
         }
 
         assertEquals(USER_COUNT, userRepo.count());
@@ -179,7 +180,7 @@ public class AuthServiceUserServiceTests {
     @DisplayName("Delete user by id")
     void delete_role_by_id() {
 
-        final UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO(USER, PASS, EMAIL);
+        final UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO(USER, PASS, EMAIL, VALID_TYPE, VALID_TYPE_ID);
 
 
         final User saved = userService.createUser(userIDLessDTO);
@@ -197,7 +198,7 @@ public class AuthServiceUserServiceTests {
     @DisplayName("When creating user, encrypt password")
     void encrypt_password_before_persistence() {
 
-        final UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO(USER, PASS, EMAIL);
+        final UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO(USER, PASS, EMAIL, VALID_TYPE, VALID_TYPE_ID);
 
 
         final User saved = userService.createUser(userIDLessDTO);
@@ -221,7 +222,7 @@ public class AuthServiceUserServiceTests {
             return "Email sent to " + mail.getMessage();
         });
 
-        final UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO(USER, PASS, EMAIL);
+        final UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO(USER, PASS, EMAIL, VALID_TYPE, VALID_TYPE_ID);
 
 
         final User saved = userService.createUser(userIDLessDTO);
@@ -234,7 +235,7 @@ public class AuthServiceUserServiceTests {
     @DisplayName("Given user, generate verification email")
     void generate_verification_email() {
 
-        final UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO(USER, PASS, EMAIL);
+        final UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO(USER, PASS, EMAIL, VALID_TYPE, VALID_TYPE_ID);
 
 
         final User saved = userService.createUser(userIDLessDTO);
@@ -252,7 +253,7 @@ public class AuthServiceUserServiceTests {
     void successful_login() throws IncorrectPasswordException, SQLIntegrityConstraintViolationException {
 
 
-        final UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO(USER, PASS, EMAIL);
+        final UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO(USER, PASS, EMAIL, VALID_TYPE, VALID_TYPE_ID);
         userService.createUser(userIDLessDTO);
 
         final User byEmail = userRepo.findByEmail(EMAIL).get();
@@ -273,7 +274,7 @@ public class AuthServiceUserServiceTests {
     void bad_password_exception() {
 
 
-        final UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO(USER, PASS, EMAIL);
+        final UserIDLessRoleLessDTO userIDLessDTO = new UserIDLessRoleLessDTO(USER, PASS, EMAIL, VALID_TYPE, VALID_TYPE_ID);
         userService.createUser(userIDLessDTO);
 
         final User user = userRepo.findByEmail(EMAIL).get();

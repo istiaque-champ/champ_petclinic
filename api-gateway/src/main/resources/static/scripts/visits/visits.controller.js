@@ -1,5 +1,4 @@
 'use strict';
-
 angular.module('visits')
     .controller('VisitsController', ['$http', '$state', '$stateParams', '$filter', function ($http, $state, $stateParams, $filter) {
         var self = this;
@@ -136,7 +135,6 @@ angular.module('visits')
                     vetEmailAddress = vet.email;
                     vetSpecialtiesObject = vet.specialties;
                     vetWorkdays = vet.workday;
-
                     return false;
                 }
             });
@@ -686,8 +684,12 @@ angular.module('visits')
         };
 
         self.getStatus = function (status, date) {
+
             //Initializing variable for status
+
             var statusText = "";
+            let currentDate = getCurrentDate();
+
 
             //Retrieving the current date
             let currentDate= getCurrentDate();

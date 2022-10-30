@@ -587,7 +587,6 @@
     });
 </script>
 
-
 <div class="mydiv">
     <h2>Visits</h2>
 </div>
@@ -616,14 +615,15 @@
 
     <div class="form-group" style="margin-top: 12px">
         <label for="selectedVisitType">Visit Type:</label>
-        <select id="selectedVisitType" name="selectedVisitType" ng-model="$ctrl.visitType" onchange=displayOptions()>
+        <select id="selectedVisitType" name="selectedVisitType" ng-model="testfilter" > //onchange=displayOptions()>
             <option disabled selected value>Please Select A Visit Type</option>
-            <option value="Examinations">Examinations</option>
-            <option value="Injury">Injury</option>
-            <option value="Medical">Medical</option>
-            <option value="Chronic">Chronic</option>
-            <option value="Consultations">Consultations</option>
-            <option value="Operations">Operations</option>
+            <option value="general">Examinations</option>
+            <option value="surgery">Injury</option>
+            <option value="">Medical</option>
+            <option value="radiology">Chronic</option>
+            <option value="general">Consultations</option>
+            <option value="surgery">Operations</option>
+
         </select>
     </div>
 
@@ -631,11 +631,10 @@
 
     <div class="form-group">
         <label for="selectedVet">Practitioner</label>
-        <input type="text" id="option1" ng-model="testfilter" value="{{option1}}">
+        <input type="text" id="optionInput" ng-model="testfilter" value="" hidden>
         <select id="selectedVet" ng-model="$ctrl.practitionerId" ng-change="$ctrl.loadVetInfo();$ctrl.getVisitsForPractitionerIdAndMonth()" required>
             <option disabled selected value>Please Select A Veterinarian</option>
-            <option ng-repeat="p in $ctrl.vets | filter: testfilter " data-target="{{p.firstName}} {{p.lastName}} " value="{{p.vetId}}">{{p.firstName}} {{p.lastName}}
-                {{p.specialties}}</option>
+            <option ng-repeat="p in $ctrl.vets | filter: testfilter" data-target="{{p.firstName}} {{p.lastName}}" value="{{p.vetId}}">{{p.firstName}} {{p.lastName}}</option>
         </select>
 
         <br>
