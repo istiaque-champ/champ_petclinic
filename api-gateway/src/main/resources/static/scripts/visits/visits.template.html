@@ -204,6 +204,7 @@
                 (i < new Date().getDate() && date.getMonth() <= new Date().getMonth() && date.getFullYear() === new Date().getFullYear()) ||
                 (date.getMonth() < new Date().getMonth() && date.getFullYear() === new Date().getFullYear()) || date.getFullYear() < new Date().getFullYear()) {
 
+                //if string equals to selected day, alert
                 if(i.toString() === selectedDate) {
                     days += `<div id="day${i}" data-target="${i}" class="editSelected unavailable day">${i}</div>`;
                 } else {
