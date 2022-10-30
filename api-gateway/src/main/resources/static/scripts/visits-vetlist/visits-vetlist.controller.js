@@ -14,11 +14,85 @@ angular.module('visitsVetList')
         self.date = new Date();
         self.desc = "";
 
+        // GET LIST OF VETS/PRACTITIONERS
+        $http.get(vetsUrl).then(function (resp) {
+            self.vets = resp.data;
+        });
+
+        //MIGHT NEED TO EDIT SO IT'S NOT RUN ON GET
         //Fetch visits according to vet id
         $http.get("api/gateway/visits/vets/"+practitionerId).then(function (resp) {
             self.visits = resp.data;
             self.sortFetchedVisits();
         });
+
+        // GET AND ASSIGN VET/PRACTITIONER INFORMATION
+        self.loadVetInfo = function() {
+            let selectedVetsId = $("#selectedVet").val();
+
+            let foundVet = false;
+            let vetPhoneNumber = "";
+            let vetEmailAddress = "";
+            let vetWorkdays = "";
+            let vetSpecialtiesObject = null;
+
+            $.each(self.vets, function(i, vet) {
+                if(selectedVetsId == vet.vetId) {
+                    foundVet = true;
+                    vetPhoneNumber = vet.phoneNumber;
+                    vetEmailAddress = vet.email;
+                    vetSpecialtiesObject = vet.specialties;
+                    vetWorkdays = vet.workday;
+
+                    return false;
+                }
+            });
+
+            let vetSpecialties = "";
+            $.each(vetSpecialtiesObject, function(i, specialty) {
+                if(i < vetSpecialtiesObject.length - 1) {
+                    vetSpecialties += specialty.name + ", ";
+                } else {
+                    vetSpecialties += specialty.name;
+                }
+            });
+
+            if(foundVet) {
+                $("#vetPhoneNumber").val(vetPhoneNumber);
+                $("#vetEmailAddress").val(vetEmailAddress);
+                $("#vetSpecialties").val(vetSpecialties);
+                $("#vetWorkdays").val(vetWorkdays).trigger("change");
+            } else {
+                $("#vetPhoneNumber").val("");
+                $("#vetEmailAddress").val("");
+                $("#vetSpecialties").val("");
+                $("#vetWorkdays").val("");
+            }
+        }
+
+        // GET PRACTITIONER NAME WITH ID
+        self.getPractitionerName = function (id){
+            var practitionerName = "";
+            $.each(self.vets, function (i, vet){
+                if (vet.vetId == id){
+                    practitionerName = vet.firstName + " " + vet.lastName;
+                    return false;
+                }
+            });
+            return practitionerName;
+        };
+
+        // GET OWNER NAME WITH ID
+        self.getOwnerName = function (id){
+            var ownerName = "";
+            $.each(self.owner, function (i, owner){
+                if (owner.ownerId == id){
+                    ownerName = owner.firstName + " " + owner.lastName;
+                    return false;
+                }
+            });
+            return ownerName;
+        };
 
         // Function to get the current date
         function getCurrentDate() {
@@ -157,78 +231,7 @@ angular.module('visitsVetList')
         //     }
         // }
 
-        // GET LIST OF VETS/PRACTITIONERS
-        $http.get(vetsUrl).then(function (resp) {
-            self.vets = resp.data;
-        });
 
-        // GET AND ASSIGN VET/PRACTITIONER INFORMATION
-        self.loadVetInfo = function() {
-            let selectedVetsId = $("#selectedVet").val();
-
-            let foundVet = false;
-            let vetPhoneNumber = "";
-            let vetEmailAddress = "";
-            let vetWorkdays = "";
-            let vetSpecialtiesObject = null;
-
-            $.each(self.vets, function(i, vet) {
-                if(selectedVetsId == vet.vetId) {
-                    foundVet = true;
-                    vetPhoneNumber = vet.phoneNumber;
-                    vetEmailAddress = vet.email;
-                    vetSpecialtiesObject = vet.specialties;
-                    vetWorkdays = vet.workday;
-
-                    return false;
-                }
-            });
-
-            let vetSpecialties = "";
-            $.each(vetSpecialtiesObject, function(i, specialty) {
-                if(i < vetSpecialtiesObject.length - 1) {
-                    vetSpecialties += specialty.name + ", ";
-                } else {
-                    vetSpecialties += specialty.name;
-                }
-            });
-
-            if(foundVet) {
-                $("#vetPhoneNumber").val(vetPhoneNumber);
-                $("#vetEmailAddress").val(vetEmailAddress);
-                $("#vetSpecialties").val(vetSpecialties);
-                $("#vetWorkdays").val(vetWorkdays).trigger("change");
-            } else {
-                $("#vetPhoneNumber").val("");
-                $("#vetEmailAddress").val("");
-                $("#vetSpecialties").val("");
-                $("#vetWorkdays").val("");
-            }
-        }
-
-        // GET PRACTITIONER NAME WITH ID
-        self.getPractitionerName = function (id){
-            var practitionerName = "";
-            $.each(self.vets, function (i, vet){
-               if (vet.vetId == id){
-                   practitionerName = vet.firstName + " " + vet.lastName;
-                   return false;
-               }
-            });
-            return practitionerName;
-        };
-
-        // GET OWNER NAME WITH ID
-        self.getOwnerName = function (id){
-            var ownerName = "";
-            $.each(self.owner, function (i, owner){
-                if (owner.ownerId == id){
-                    ownerName = owner.firstName + " " + owner.lastName;
-                    return false;
-                }
-            });
-            return ownerName;
-        };
 
         // No confirmation needed since data should only be viewable
 
