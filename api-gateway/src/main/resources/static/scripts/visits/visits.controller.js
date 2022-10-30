@@ -19,6 +19,8 @@ angular.module('visits')
         $scope.upcomingVisits = translationIds.upcomingVisits;
         $scope.visits = translationIds.visits;
         $scope.phoneNumber = translationIds.phoneNumber;
+        $scope.email = translationIds.email;
+
 
 
 
