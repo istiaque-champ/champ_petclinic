@@ -22,6 +22,8 @@ angular.module('visits')
         $scope.email = translationIds.email;
         $scope.specialties = translationIds.specialties;
         $scope.workday = translationIds.workday;
+        $scope.date = translationIds.date;
+
 
 
     });
