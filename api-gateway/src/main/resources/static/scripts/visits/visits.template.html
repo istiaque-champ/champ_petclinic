@@ -478,10 +478,11 @@
         return isAM ? "AM" : "PM";
     }
 
+    //gets date template
     const getDateTemplate = (monthAddition) => {
         return new Date(date.getFullYear(), date.getMonth() + monthAddition, 0);
     }
-
+    //gets date format for chosen date
     const getDateFullFormatEqualsTo = (chosenDate) => {
         return (chosenDate === new Date().getDate() && date.getMonth() === new Date().getMonth() && new Date().getFullYear() === date.getFullYear());
     }
@@ -501,6 +502,7 @@
         return $("#selectedVet :selected").attr("value") + "," + startDate + "," + endDate;
     }
 
+    //render calendar
     renderCalendar();
 
     const editDateParsing = (year, month, day) => {
