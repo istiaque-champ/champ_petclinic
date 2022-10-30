@@ -329,6 +329,7 @@ angular.module('visitsVetList')
                     status: visitStatus
                 };
 
+                // Might not be needed
                 let putURL = "api/gateway/owners/*/pets/" + petId + "/visits/" + visitId;
 
                 $http.put(putURL, data).then(function(response) {
@@ -380,7 +381,9 @@ angular.module('visitsVetList')
         let lastSort = "";
         let dateSortName = "Date";
         let descSortName = "Description";
-        let vetSortName = "Veterinarian";
+        // let vetSortName = "Veterinarian";
+        // Change to owner Sorting
+        let ownerSortName = "Owner";
         let statusSortName = "Status";
 
         // This function will call the last sorted option without changing ascending or descending
