@@ -162,7 +162,7 @@ angular.module('visitsVetList')
                 }
             }
         }
-        
+
 
         // This value will be set depending on what was last clicked
         let lastSort = "";
@@ -467,46 +467,6 @@ angular.module('visitsVetList')
         }
         // END SORT FUNCTIONS
 
-        // Might be necessary
-        // self.submit = function () {
-        //     var data = {
-        //         date: $filter('date')(self.date, "yyyy-MM-dd"),
-        //         description: self.desc,
-        //         practitionerId: self.practitionerId,
-        //         status: true
-        //     };
-        //
-        //     var billData = {
-        //         ownerId: $stateParams.ownerId,
-        //         date: $filter('date')(self.date, "yyyy-MM-dd"),
-        //         visitType : $("#selectedVisitType").val()
-        //     }
-        //
-        //     $http.post(postURL, data).then(function(response) {
-        //         let currentDate = getCurrentDate();
-        //
-        //         // Add the visit to one of the lists depending on its date
-        //         let isForUpcomingVisitsTable = Date.parse(response.data.date) >= currentDate;
-        //         if(isForUpcomingVisitsTable) {
-        //             self.upcomingVisits.push(response.data);
-        //         } else {
-        //             self.previousVisits.push(response.data);
-        //         }
-        //
-        //         // Call the last sort after adding if there is one
-        //         callLastSort(isForUpcomingVisitsTable);
-        //
-        //         createAlert("success", "Successfully created visit!");
-        //     },function () {
-        //         createAlert("danger", "Failed to add visit!");
-        //     });
-        //
-        //     $http.post(billsUrl, billData).then(function () {
-        //
-        //     }, function () {
-        //         console.log("Failed to create corresponding bill!");
-        //     });
-        // }
 
         self.getStatus = function (status, date) {
             //Initializing variable for status
