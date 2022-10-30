@@ -1,6 +1,12 @@
 'use strict';
-angular.module('visits').controller('VisitsController', ['$http', '$state', '$stateParams', '$filter', '$translate', function ($http, $state, $stateParams, $filter, $translate) {
+angular.module('visits')
+    .controller('VisitsController', ['$http', '$state', '$stateParams', '$filter', '$translate', function ($http, $state, $stateParams, $filter, $translate) {
     $translate.use("en");
+
+    $translate(['UPCOMING_VISITS', 'VISITS','PHONE_NUMBER', 'EMAIL_ADDRESS','SPECIALITIES', 'WORKDAYS', 'DATE', 'DESCRIPTION', 'PREVIOUS_VISITS', 'VISIT_TYPE']).then(function (translations) {
+        $scope.visit_type = translations.VISITS_TYPE;
+
+    }
 
     var self = this;
         var petId = $stateParams.petId || 0;
@@ -689,7 +695,6 @@ angular.module('visits').controller('VisitsController', ['$http', '$state', '$st
             //Initializing variable for status
 
             var statusText = "";
-            let currentDate = getCurrentDate();
 
 
             //Retrieving the current date
