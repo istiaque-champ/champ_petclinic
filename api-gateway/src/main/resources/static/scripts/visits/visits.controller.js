@@ -2,8 +2,8 @@
 
 
 angular.module('visits')
-    .controller('VisitsController', ['$http', '$state', '$stateParams', '$filter', /*'$translate'*/, function ($http, $state, $stateParams, $filter, /*$translate*/) {
-    $translate.use("en");
+    .controller('VisitsController', ['$http', '$state', '$stateParams', '$filter' /*'$translate'*/, function ($http, $state, $stateParams, $filter /*$translate*/) {
+    //$translate.use("en");
  /*
     $translate(['UPCOMING_VISITS', 'VISITS','PHONE_NUMBER', 'EMAIL_ADDRESS','SPECIALITIES', 'WORKDAYS', 'DATE', 'DESCRIPTION', 'PREVIOUS_VISITS', 'VISIT_TYPE']).then(function (visits_translations) {
         $scope.visit_type = visits_translations.VISITS_TYPE;

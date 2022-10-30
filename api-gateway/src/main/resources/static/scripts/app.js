@@ -9,7 +9,7 @@ const whiteList = new Set([
 var petClinicApp = angular.module('petClinicApp', [
     'ui.router', 'layoutNav', 'layoutFooter', 'layoutWelcome', 'petDetails' , 'ownerList', 'ownerDetails', 'ownerForm', 'petForm'
     , 'visits', 'vetList','vetForm','vetDetails', 'loginForm', 'rolesDetails', 'signupForm', 'billDetails', 'billHistory'
-    , 'verification' , 'adminPanel', /*'pascalprecht.translate'*/]);
+    , 'verification' , 'adminPanel' /*'pascalprecht.translate'*/]);
 
 petClinicApp.factory("authProvider", ["$window", function ($window) {
 
@@ -66,6 +66,8 @@ petClinicApp.run(['$rootScope', '$location', 'authProvider', function ($rootScop
         }
     });
 }])
+
+//Translation table
 /*
 var visits_translations = {
     UPCOMING_VISITS: 'Upcoming Visits:',
@@ -92,10 +94,10 @@ var translations = {
 };
 console.table(translations);
 
- */
+*/
 
-petClinicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', /*'$translateProvider'*/, function (
-    $stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, /*$translateProvider*/) {
+petClinicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider' /*'$translateProvider'*/, function (
+    $stateProvider, $urlRouterProvider, $locationProvider, $httpProvider /*$translateProvider*/) {
 
     // safari turns to be lazy sending the Cache-Control header
     $httpProvider.defaults.headers.common["Cache-Control"] = 'no-cache';
@@ -121,6 +123,7 @@ petClinicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider'
     console.log("HELLO FROM CONFIG");
     $translateProvider.translations('en', visits_translations);
     $translateProvider.preferredLanguage('en');
+
      */
 
 }]);
