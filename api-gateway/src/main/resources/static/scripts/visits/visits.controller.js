@@ -1,8 +1,10 @@
 'use strict';
-angular.module('visits')
-    .controller('VisitsController', ['$http', '$state', '$stateParams', '$filter', '$translate', function ($http, $state, $stateParams, $filter, $translate) {
-    $translate.use("en");
 
+
+angular.module('visits')
+    .controller('VisitsController', ['$http', '$state', '$stateParams', '$filter', /*'$translate'*/, function ($http, $state, $stateParams, $filter, /*$translate*/) {
+    $translate.use("en");
+ /*
     $translate(['UPCOMING_VISITS', 'VISITS','PHONE_NUMBER', 'EMAIL_ADDRESS','SPECIALITIES', 'WORKDAYS', 'DATE', 'DESCRIPTION', 'PREVIOUS_VISITS', 'VISIT_TYPE']).then(function (visits_translations) {
         $scope.visit_type = visits_translations.VISITS_TYPE;
         $scope.upcomingVisits = visits_translations.UPCOMING_VISITS;
@@ -26,6 +28,7 @@ angular.module('visits')
         $scope.description = visits_translationIds.description;
         $scope.previousVisits = visits_translationIds.previousVisits;
     });
+    */
     var self = this;
         var petId = $stateParams.petId || 0;
         var postURL = "api/gateway/visit/owners/" + ($stateParams.ownerId || 0) + "/pets/" + petId + "/visits";

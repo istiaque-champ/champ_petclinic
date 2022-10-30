@@ -77,7 +77,7 @@ var visits_translations = {
     WORKDAYS: "Workdays",
     DATE: "date",
     DESCRIPTION: "Description",
-    VISITS_TYPE:'Visits Type',
+    VISITS_TYPE:'Visits Type'
 };
 console.table(visits_translations);
 
@@ -116,12 +116,9 @@ petClinicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider'
     $httpProvider.interceptors.push('httpErrorInterceptor');
 
     console.log("HELLO FROM CONFIG");
-    $translateProvider.translations('en', translations);
-    $translateProvider.preferredLanguage('en');
-
-    console.log("HELLO FROM CONFIGssssssss");
     $translateProvider.translations('en', visits_translations);
     $translateProvider.preferredLanguage('en');
+
 }]);
 
 ['welcome', 'nav', 'footer'].forEach(function (c) {
