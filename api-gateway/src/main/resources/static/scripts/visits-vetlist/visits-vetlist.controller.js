@@ -517,6 +517,7 @@ angular.module('visitsVetList')
             }
         }
 
+        // Sort by Description
         let sortDescriptionAscendingUpcomingVisits = false;
         let sortDescriptionAscendingPreviousVisits = false;
         self.SortTableByDesc = function(isForUpcoming, flipSortingBool = true) {
@@ -570,7 +571,61 @@ angular.module('visitsVetList')
             }
         }
 
+        // Sort by Owner Name
+        let sortOwnerAscendingUpcomingVisits = false;
+        let sortOwnerAscendingPreviousVisits = false;
+        self.SortTableByOwner = function(isForUpcoming, flipSortingBool = true) {
+            lastSort = ownerSortName;
+            ResetSortButtonArrows(isForUpcoming);
 
+            if(isForUpcoming) {
+                if(flipSortingBool) {
+                    sortOwnerAscendingUpcomingVisits = !sortOwnerAscendingUpcomingVisits;
+                }
+
+                if(sortVetAscendingUpcomingVisits) {
+                    self.upcomingVisits.sort(function (a, b) {
+                        a = self.getOwnerName(a.ownerId).toLowerCase();
+                        b = self.getOwnerName(b.ownerId).toLowerCase();
+
+                        return a < b ? -1 : a > b ? 1 : 0;
+                    });
+                    $('#sortByOwnerButtonUpcomingVisits').text("Sort by owner ↓")
+                } else {
+                    self.upcomingVisits.sort(function (a, b) {
+                        a = self.getOwnerName(a.ownerId).toLowerCase();
+                        b = self.getOwnerName(b.ownerId).toLowerCase();
+
+                        return a > b ? -1 : a < b ? 1 : 0;
+                    });
+                    $('#sortByOwnerButtonUpcomingVisits').text("Sort by owner ↑")
+                }
+            } else {
+                if(flipSortingBool) {
+                    sortOwnerAscendingPreviousVisits = !sortOwnerAscendingPreviousVisits;
+                }
+
+                if(sortOwnerAscendingPreviousVisits) {
+                    self.previousVisits.sort(function (a, b) {
+                        a = self.getOwnerName(a.ownerId).toLowerCase();
+                        b = self.getOwnerName(b.ownerId).toLowerCase();
+
+                        return a < b ? -1 : a > b ? 1 : 0;
+                    });
+                    $('#sortByOwnerButtonPreviousVisits').text("Sort by owner ↓")
+                } else {
+                    self.previousVisits.sort(function (a, b) {
+                        a = self.getOwnerName(a.ownerId).toLowerCase();
+                        b = self.getOwnerName(b.ownerId).toLowerCase();
+
+                        return a > b ? -1 : a < b ? 1 : 0;
+                    });
+                    $('#sortByOwnerButtonPreviousVisits').text("Sort by owner ↑")
+                }
+            }
+        }
+
+        //Sort by Vet Name
         let sortVetAscendingUpcomingVisits = false;
         let sortVetAscendingPreviousVisits = false;
         self.SortTableByVet = function(isForUpcoming, flipSortingBool = true) {
@@ -624,6 +679,7 @@ angular.module('visitsVetList')
             }
         }
 
+        //Sort by Status
         let sortStatusAscendingUpcomingVisits = false;
         let sortStatusAscendingPreviousVisits = false;
         self.SortTableByStatus = function(isForUpcoming, flipSortingBool = true) {
@@ -676,7 +732,9 @@ angular.module('visitsVetList')
                 }
             }
         }
+        // END SORT FUNCTIONS
 
+        // Might be necessary
         self.submit = function () {
             var data = {
                 date: $filter('date')(self.date, "yyyy-MM-dd"),
