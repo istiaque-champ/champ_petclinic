@@ -635,10 +635,10 @@
 
     <div class="form-group">
         <label for="selectedVet">Practitioner</label>
-        <input type="text" id="option1" ng-model="testfilter" value="{{option1}}">
+<!--        <input type="text" id="option1" ng-model="testfilter" value="{{option1}}">-->
         <select id="selectedVet" ng-model="$ctrl.practitionerId" ng-change="$ctrl.loadVetInfo();$ctrl.getVisitsForPractitionerIdAndMonth()" required>
             <option disabled selected value>Please Select A Veterinarian</option>
-            <option ng-repeat="p in $ctrl.vets | filter: testfilter " data-target="{{p.firstName}} {{p.lastName}} " value="{{p.vetId}}">{{p.firstName}} {{p.lastName}}
+            <option ng-repeat="p in $ctrl.vets" data-target="{{p.firstName}} {{p.lastName}} " value="{{p.vetId}}">{{p.firstName}} {{p.lastName}}
                 {{p.specialties}}</option>
         </select>
 
@@ -646,13 +646,13 @@
 
         <label for="vetPhoneNumber" style="margin-top: 10px;">Phone Number:</label>
         <input id="vetPhoneNumber" disabled="disabled" style="background-color: #dbd9ce;"/>
-
+        <br>
         <label for="vetEmailAddress">Email Address:</label>
         <input id="vetEmailAddress" disabled="disabled" style="background-color: #dbd9ce;"/>
-
+        <br>
         <label for="vetSpecialties">Specialties:</label>
         <input id="vetSpecialties" disabled="disabled" style="background-color: #dbd9ce;"/>
-
+        <br>
         <label for="vetWorkdays">Workdays:</label>
         <input id="vetWorkdays" disabled="disabled" style="background-color: #dbd9ce;" onchange=selectChanged() />
     </div>
