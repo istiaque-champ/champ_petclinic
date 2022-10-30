@@ -307,8 +307,9 @@ angular.module('visitsVetList')
             $('#date_input').val(date);
             console.log(date);
             $('#description_textarea').val(description);
-            $('#submit_button').text("Update Visit");
-            $('#cancel_button').css("visibility", "visible");
+            //not needed
+            // $('#submit_button').text("Update Visit");
+            // $('#cancel_button').css("visibility", "visible");
 
             let d = date.toString().split("-");
             editDateParsing(d[0], d[1], d[2]);

@@ -42,553 +42,553 @@
 <!--</div>-->
 
 <!-- Removing this script for calendar-->
-<!--<script>-->
-
-<!--    let date = new Date();-->
-
-<!--    //specify which months goes with which numbers-->
-<!--    //ex: 09 = September-->
-<!--    const months = [-->
-<!--        "January",-->
-<!--        "February",-->
-<!--        "March",-->
-<!--        "April",-->
-<!--        "May",-->
-<!--        "June",-->
-<!--        "July",-->
-<!--        "August",-->
-<!--        "September",-->
-<!--        "October",-->
-<!--        "November",-->
-<!--        "December",-->
-<!--    ];-->
-
-<!--    let selectedDate = date.getDate();-->
-<!--    let selectedTime;-->
-<!--    let availableDays = [];-->
-<!--    let availableTime = [];-->
-<!--    let vetAvailabilityStr;-->
-<!--    let nameOnCalenderStr;-->
-<!--    let availabilities = [];-->
-<!--    let count = 11;-->
-<!--    let selday=false;-->
-<!--    let ButtonClicked=false;-->
-
-<!--    const renderCalendar = () => {-->
-
-<!--        date.setDate(1);-->
-
-<!--        const monthDays = document.querySelector('.days');-->
-
-<!--        const timeSlots = document.querySelector('.times');-->
-
-<!--        const lastDay =  getDateTemplate(1).getDate();-->
-<!--        const prevLastDay = getDateTemplate(0).getDate();-->
-
-<!--        const firstDayIndex = date.getDay();-->
-<!--        const lastDayIndex = getDateTemplate(1).getDay();-->
-
-<!--        const nextDays = 7 - lastDayIndex - 1;-->
-
-<!--        localStorage.setItem("practitionerIdAndMonth", getFormatPractitionerIdAndMonth());-->
-
-<!--        let showSelectedDate = new Date("" + months[date.getMonth()] + " " + selectedDate + ", " + date.getFullYear());-->
-
-<!--        let formattedDate = showSelectedDate.toDateString().substring(0, 3) + ", " + showSelectedDate.toDateString().substring(3, 10).trim() + ", " + date.getFullYear();-->
-
-<!--        let isMonthUnavailable = false;-->
-<!--        if((new Date("" + months[date.getMonth()] + " " + (parseInt(selectedDate) + 1) + ", " + date.getFullYear()) < new Date())) {-->
-<!--            isMonthUnavailable = true;-->
-<!--            formattedDate = date.getFullYear().toString();-->
-<!--        }-->
-
-<!--        availableDays = [];-->
-<!--        let vetWorkDays = [];-->
-<!--        let days = "";-->
-
-<!--        let vetsArray;-->
-<!--        if (vetAvailabilityStr !== undefined && vetAvailabilityStr !== null) {-->
-<!--            vetsArray = vetAvailabilityStr.split(",");-->
-<!--        } else {-->
-<!--            vetsArray = null;-->
-<!--        }-->
-
-<!--        if(vetsArray !== null) {-->
-<!--            for (const d of vetsArray) {-->
-<!--                switch (d.toLowerCase().trim()) {-->
-<!--                    case "monday":-->
-<!--                        vetWorkDays.push(1);-->
-<!--                        break;-->
-<!--                    case "tuesday":-->
-<!--                        vetWorkDays.push(2);-->
-<!--                        break;-->
-<!--                    case "wednesday":-->
-<!--                        vetWorkDays.push(3);-->
-<!--                        break;-->
-<!--                    case "thursday":-->
-<!--                        vetWorkDays.push(4);-->
-<!--                        break;-->
-<!--                    case "friday":-->
-<!--                        vetWorkDays.push(5);-->
-<!--                        break;-->
-<!--                    default:-->
-<!--                        break;-->
-<!--                }-->
-<!--            }-->
-<!--        } else {-->
-<!--            formattedDate = date.getFullYear().toString();-->
-<!--            selectedDate = null;-->
-<!--        }-->
-
-<!--        if(nameOnCalenderStr === undefined) {-->
-<!--            nameOnCalenderStr = date.getFullYear().toString();-->
-<!--        }-->
-
-<!--        //change currently selected month and date on the title UI elements-->
-<!--        document.querySelector(".date p").innerHTML = formattedDate;-->
-<!--        document.querySelector(".time-date h1").innerHTML = nameOnCalenderStr;-->
-<!--        document.querySelector(".date h1").innerHTML = months[date.getMonth()];-->
-
-<!--        for(let x = firstDayIndex; x > 0; x&#45;&#45;) {-->
-<!--            let d = prevLastDay - x + 1;-->
-
-<!--            if(CheckWeekend(d, -1)) {-->
-<!--                days += `<div id="day${d}" data-target="previous-page-${d}" class="prev-date unavailable day">${d}</div>`;-->
-<!--            } else {-->
-<!--                days += `<div id="day${d}" data-target="previous-page-${d}" class="prev-date day">${d}</div>`;-->
-<!--            }-->
-<!--        }-->
-
-<!--        //get the week days that the vet works-->
-<!--        for(let i = 1; i <= lastDay; i++) {-->
-<!--            availableDays.push(i)-->
-
-<!--            let workDay = false;-->
-<!--            for(let w of vetWorkDays) {-->
-<!--                if(getWeekDay(i, 0) === w) {-->
-<!--                    workDay = true;-->
-<!--                }-->
-<!--            }-->
-
-<!--            //get the already scheduled visits-->
-<!--            let scheduledVisits = false;-->
-<!--            if(availabilities != null) {-->
-<!--                for (let a of availabilities) {-->
-<!--                    if(a === i) {-->
-<!--                        scheduledVisits = true;-->
-<!--                    }-->
-<!--                }-->
-<!--            }-->
-
-<!--            //check if day is weekend-->
-<!--            if(CheckWeekend(i, 0) && getDateFullFormatEqualsTo(i) && vetAvailabilityStr !== null) {-->
-<!--                days += `<div id="day${i}" data-target="${i}" class="today_weekend day">${i}</div>`;-->
-<!--            }-->
-
-<!--            //check if day unavailable-->
-<!--            else if((CheckWeekend(i, 0) || vetAvailabilityStr === null) ||-->
-<!--                (i < new Date().getDate() && date.getMonth() <= new Date().getMonth() && date.getFullYear() === new Date().getFullYear()) ||-->
-<!--                (date.getMonth() < new Date().getMonth() && date.getFullYear() === new Date().getFullYear()) || date.getFullYear() < new Date().getFullYear()) {-->
-
-<!--                if(i.toString() === selectedDate) {-->
-<!--                    days += `<div id="day${i}" data-target="${i}" class="editSelected unavailable day">${i}</div>`;-->
-<!--                } else {-->
-<!--                    days += `<div id="day${i}" data-target="${i}" class="unavailable day">${i}</div>`;-->
-<!--                }-->
-<!--            }-->
-
-<!--            //check for vet availabilities-->
-<!--            else if(workDay === false || scheduledVisits === true) {-->
-
-<!--                if (i.toString() === selectedDate) {-->
-<!--                    days += `<div id="day${i}" data-target="${i}" class="editSelected holiday day">${i}</div>`;-->
-
-<!--                } else if(getDateFullFormatEqualsTo(i)) {-->
-<!--                    days += `<div id="day${i}" data-target="${i}" class="today_holiday day">${i}</div>`;-->
-
-
-<!--                } else {-->
-<!--                    days += `<div id="day${i}" data-target="${i}" class="holiday day">${i}</div>`;-->
-<!--                }-->
-<!--            }-->
-
-<!--            else if(selectedDate === i.toString() && count>=6){-->
-<!--                days += `<div id="day${i}" data-target="${i}" class="date-selected unavailable day">${i}</div>`;-->
-<!--                availableDays.push(i)-->
-<!--            }-->
-
-<!--            //check for date selected by user-->
-<!--            else if(selectedDate === i.toString()) {-->
-<!--                days += `<div id="day${i}" data-target="${i}" class="date-selected day">${i}</div>`;-->
-<!--                selday=true;-->
-<!--            }-->
-
-<!--            //specify the date of today-->
-<!--            else if (getDateFullFormatEqualsTo(i)) {-->
-<!--                days += `<div id="day${i}" data-target="${i}" class="today day">${i}</div>`;-->
-<!--            }-->
-
-<!--            //regular days-->
-<!--            else {-->
-
-<!--                days += `<div id="day${i}" data-target="${i}" class="day">${i}</div>`;-->
-<!--            }-->
-<!--            //days += `<div id="day${i}" data-target="${i}" class="day">${i}</div>`;-->
-<!--            //availableDays.push(i);-->
-<!--        }-->
-
-
-<!--        //insert the days for the next month-->
-<!--        for(let j = 1; j <= nextDays; j++) {-->
-<!--            if(CheckWeekend(j, 1)) {-->
-<!--                days += `<div id="day${j}" data-target="next-page-${j}" class="next-date unavailable day">${j}</div>`;-->
-<!--            } else {-->
-<!--                days += `<div id="day${j}" data-target="next-page-${j}" class="next-date day">${j}</div>`;-->
-<!--            }-->
-<!--        }-->
-
-<!--        monthDays.innerHTML = days;-->
-
-<!--        //get number of days to insert after current month's date-->
-<!--        let numberOfDays = document.getElementsByClassName("day").length;-->
-<!--        let numberOfNext = document.getElementsByClassName("next-date").length;-->
-<!--        let numberOfRows;-->
-
-
-<!--        if(numberOfDays === 28) {-->
-<!--            numberOfRows = 2;-->
-<!--        } else if (numberOfDays === 35) {-->
-<!--            numberOfRows = 1;-->
-<!--        } else {-->
-<!--            numberOfRows = 0;-->
-<!--        }-->
-
-<!--        if(numberOfRows !== 0) {-->
-<!--            for(let j = numberOfNext + 1; j <= (numberOfRows * 7) + numberOfNext; j++) {-->
-<!--                if(CheckWeekend(j, 1)) {-->
-<!--                    days += `<div id="day${j}"data-target="next-page-${j}" class="next-date weekend day">${j}</div>`;-->
-<!--                } else {-->
-<!--                    days += `<div id="day${j}" data-target="next-page-${j}" class="next-date day">${j}</div>`;-->
-<!--                }-->
-<!--            }-->
-<!--        }-->
-
-<!--        monthDays.innerHTML = days;-->
-
-<!--        let slots = "";-->
-<!--        let timeIsSelected = false;-->
-<!--        let Selectthis;-->
-
-<!--        //create time slots-->
-<!--        for(let i = 9; i < 17; i++) {-->
-<!--            let addition = 1;-->
-<!--            let val = i;-->
-<!--            let is1AM = true, is2AM = true;-->
-<!--            let firstTime, secondTime;-->
-
-<!--            //if time is 1PM, change 13 to 1 PM for english time format-->
-<!--            if(i > 12) {-->
-<!--                val = i - 12;-->
-<!--                is1AM = false;-->
-<!--                is2AM = false;-->
-
-<!--                //if time is 11AM, make second time period (12) a PM time-->
-<!--            } else if(i === 11) {-->
-<!--                is2AM = false;-->
-
-<!--                //if time is 12PM, make sure that PM times are posted and that second time is 1PM and not 13PM-->
-<!--            } else if(i === 12) {-->
-<!--                addition = -11;-->
-<!--                is2AM = false;-->
-<!--                is1AM = false;-->
-<!--            }-->
-<!--            //for time try to make an array that holds all the times that were selected and then do a for loop to iterate through it and hide the div-->
-
-<!--            firstTime = getAMorPM(is1AM);-->
-<!--            secondTime = getAMorPM(is2AM);-->
-
-
-<!--            //Make time unavailable-->
-<!--            if(isMonthUnavailable || formattedDate === date.getFullYear().toString() || (new Date().getDate() === parseInt(selectedDate)) && new Date().getMonth() === date.getMonth() && new Date().getFullYear() === date.getFullYear()) {-->
-<!--                slots += `<div data-target="${i} " class="time-slots time-unavailable">${val} ${firstTime} - ${val + addition} ${secondTime}</div>`;-->
-<!--            }-->
-<!--            //make selected time unavailable-->
-<!--            else if(i === parseInt(selectedTime)) {-->
-<!--                slots += `<div data-target="${i} " class="time-slots time-selected time-unavailable">${val} ${firstTime} - ${val + addition} ${secondTime}</div>`;-->
-<!--                timeIsSelected = true;-->
-<!--                count=11;-->
-<!--                availableTime.push(i);-->
-<!--            }-->
-<!--            //check time selected-->
-<!--            else if(i === parseInt(selectedTime)){-->
-<!--                slots += `<div data-target="${i} " class="time-slots time-selected">${val} ${firstTime} - ${val + addition} ${secondTime}</div>`;-->
-
-
-<!--            }-->
-<!--            //Show user available time ranges-->
-<!--            else{-->
-
-<!--                slots += `<div data-target="${i} " class="time-slots">${val} ${firstTime} - ${val + addition} ${secondTime}</div>`;-->
-
-
-<!--            }-->
-
-
-<!--        }-->
-
-<!--        //make confirmation button appear if time was selected-->
-<!--        if(timeIsSelected) {-->
-<!--            slots += `<div class="confirmation-time">-->
-<!--                    <div class="submitBTN">Confirm</div>-->
-<!--                  </div>`;-->
-
-<!--            // ButtonClicked = true;-->
-<!--            document.querySelector(".time-picker").classList.add("time-picker-selected");-->
-
-<!--        } else {-->
-<!--            document.querySelector(".time-picker").classList.remove("time-picker-selected");-->
-<!--        }-->
-
-
-
-<!--        timeSlots.innerHTML = slots;-->
-
-<!--        if(timeIsSelected) {-->
-<!--            document.querySelector('.submitBTN').addEventListener('click',() => {-->
-<!--                let month = date.getMonth();-->
-<!--                let sDate = selectedDate;-->
-
-<!--                if (month < 9) {-->
-<!--                    month = "0" + (month + 1);-->
-<!--                }-->
-<!--                else if(month !== 12) {-->
-<!--                    month += 1;-->
-<!--                }-->
-<!--                else {-->
-<!--                    month = "01";-->
-<!--                }-->
-
-<!--                if(selectedDate < 10) {-->
-<!--                    sDate = "0" + sDate;-->
-<!--                }-->
-<!--                console.log("lol");-->
-<!--                $('#date_input').val(date.getFullYear() + "-" + month + "-" + sDate);-->
-<!--            });-->
-<!--        }-->
-
-<!--        //fixes bug where window wouldn't load-->
-<!--        if(monthDays.innerHTML === null) {-->
-<!--            location.reload();-->
-<!--        }-->
-
-<!--        console.log("Selected date: " + selectedDate);-->
-<!--        isEditMode = false;-->
-<!--    }-->
-
-<!--    //check if a date is on the weekend-->
-<!--    const CheckWeekend = (tempDate, month) => {-->
-<!--        let weekend = new Date("" + months[date.getMonth() + month] + " " + tempDate + ", " + date.getFullYear()).getDay();-->
-<!--        return (weekend === 0 || weekend === 6);-->
-
-<!--    }-->
-
-<!--    //check if date selected is a day of the week (monday to friday)-->
-<!--    const getWeekDay = (day, month) => {-->
-<!--        return new Date("" + months[date.getMonth() + month] + " " + day + ", " + date.getFullYear()).getDay();-->
-<!--    }-->
-
-<!--    //fix selected date if user changes month so that it can't select a weekend-->
-<!--    const fixDays = (isPrevOrNext) => {-->
-<!--        let valMin = 0;-->
-<!--        let valMax = 0;-->
-<!--        let wasMaxReached = false;-->
-
-<!--        for(let a of availableDays) {-->
-<!--            if(a > selectedDate && wasMaxReached === false) {-->
-<!--                valMax = a;-->
-<!--                wasMaxReached = true;-->
-<!--            }-->
-
-<!--            if(a < selectedDate) {-->
-<!--                valMin = a;-->
-<!--            }-->
-<!--        }-->
-
-<!--        if(valMin === 0 || isPrevOrNext === 1) {-->
-<!--            selectedDate = valMax.toString();-->
-
-<!--        } else if(valMax === 0 || isPrevOrNext === 2) {-->
-<!--            selectedDate = valMin.toString();-->
-
-<!--        } else {-->
-<!--            if((valMax - parseInt(selectedDate) <= (parseInt(selectedDate) - valMin))) {-->
-<!--                selectedDate = valMax.toString();-->
-<!--            }-->
-<!--            else {-->
-<!--                selectedDate = valMin.toString();-->
-<!--            }-->
-<!--        }-->
-<!--    }-->
-
-<!--    //check selection change for vets availability-->
-<!--    const selectChanged = () => {-->
-<!--        vetAvailabilityStr = $('#vetWorkdays').val();-->
-<!--        nameOnCalenderStr = $("#selectedVet :selected").attr("data-target");-->
-<!--        renderCalendar();-->
-<!--    }-->
-
-<!--    var option1 = "";-->
-
-
-<!--    //hide all and only unhide available options-->
-<!--    const displayOptions = () => {-->
-<!--        let option = document.getElementById("selectedVisitType").value;-->
-<!--        //let optionInput = document.getElementById("optionInput").value;-->
-
-<!--        switch (option){-->
-<!--            //For Visit Type Examination Only general doctors can be selected-->
-<!--            case("Examinations"):     //Visit Type-->
-<!--                option1 = "general"; //speciality of doctor-->
-<!--                break;-->
-
-<!--            case("Injury"):-->
-<!--                option1 = "radio";-->
-<!--                break;-->
-
-<!--            case("Medical"):-->
-<!--                option1 = "general";-->
-<!--                break;-->
-
-<!--            case("Chronic"):-->
-<!--                option1 = "general";-->
-<!--                break;-->
-
-<!--            case("Consultations"):-->
-<!--                option1 = "dentistry";-->
-<!--                break;-->
-
-<!--            case("Operations"):-->
-<!--                option1 = "radio";-->
-<!--                break;-->
-<!--        }-->
-<!--    }-->
-
-<!--    //get value either for PM or AM for the time slots-->
-<!--    const getAMorPM = (isAM) => {-->
-<!--        return isAM ? "AM" : "PM";-->
-<!--    }-->
-
-<!--    const getDateTemplate = (monthAddition) => {-->
-<!--        return new Date(date.getFullYear(), date.getMonth() + monthAddition, 0);-->
-<!--    }-->
-
-<!--    const getDateFullFormatEqualsTo = (chosenDate) => {-->
-<!--        return (chosenDate === new Date().getDate() && date.getMonth() === new Date().getMonth() && new Date().getFullYear() === date.getFullYear());-->
-<!--    }-->
-
-<!--    //Format the current month selected into a format that will be accepted by the api gateway route-->
-<!--    const getFormatPractitionerIdAndMonth = () => {-->
-<!--        let lastDayOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();-->
-<!--        let month = date.getMonth() + 1;-->
-
-<!--        if (month < 10) {-->
-<!--            month = "0" + month;-->
-<!--        }-->
-
-<!--        let startDate = date.getFullYear() + "-" + month + "-01";-->
-<!--        let endDate = date.getFullYear() + "-" + month + "-" + lastDayOfMonth;-->
-
-<!--        return $("#selectedVet :selected").attr("value") + "," + startDate + "," + endDate;-->
-<!--    }-->
-
-<!--    renderCalendar();-->
-
-<!--    const editDateParsing = (year, month, day) => {-->
-<!--        date = new Date("" + months[parseInt(month) - 1] + " " + day + ", " + year);-->
-<!--        selectedDate = date.getDate().toString();-->
-
-<!--        renderCalendar();-->
-<!--    }-->
-
-<!--    const dateReset = () => {-->
-<!--        date = new Date();-->
-<!--        selectedDate = date.getDate();-->
-<!--        let month = date.getMonth()-->
-
-<!--        if (month < 9) {-->
-<!--            month = "0" + (month + 1);-->
-<!--        }-->
-<!--        else if(month !== 12) {-->
-<!--            month += 1;-->
-<!--        }-->
-<!--        else {-->
-<!--            month = "01";-->
-<!--        }-->
-
-<!--        $('#date_input').val(date.getFullYear() + "-" + month + "-" + selectedDate);-->
-<!--        renderCalendar();-->
-<!--    }-->
-
-<!--    //previous page selector-->
-<!--    document.querySelector('.prev').addEventListener('click',() => {-->
-<!--        date.setMonth(date.getMonth() - 1);-->
-
-<!--        renderCalendar();-->
-<!--        fixDays();-->
-
-<!--        selectedTime = "";-->
-
-<!--        renderCalendar();-->
-<!--    });-->
-
-<!--    //next page selector-->
-<!--    document.querySelector('.next').addEventListener('click',() => {-->
-<!--        date.setMonth(date.getMonth() + 1);-->
-
-<!--        renderCalendar();-->
-<!--        fixDays();-->
-
-<!--        selectedTime = "";-->
-
-<!--        renderCalendar();-->
-<!--    });-->
-
-<!--    //select dates-->
-<!--    document.querySelector('.days').addEventListener('click',(event) => {-->
-
-<!--        let target = event.target.dataset.target;-->
-
-<!--        if(target !== undefined) {-->
-<!--            if (target.substring(0, 13) === "previous-page") {-->
-<!--                selectedDate = target.substring(14, 16).trim();-->
-
-<!--                date.setMonth(date.getMonth() - 1);-->
-
-<!--            } else if (target.substring(0, 9) === "next-page") {-->
-<!--                selectedDate = target.substring(10, 12).trim();-->
-
-<!--                date.setMonth(date.getMonth() + 1);-->
-
-<!--            } else {-->
-<!--                selectedDate = target;-->
-<!--                date.setDate(parseInt(target));-->
-<!--            }-->
-<!--            selectedTime = "";-->
-<!--        }-->
-<!--        renderCalendar();-->
-<!--    });-->
-
-<!--    document.querySelector('.times').addEventListener('click',(event) => {-->
-
-<!--        let selected = event.target.dataset.target;-->
-
-<!--        if(selected !== undefined) {-->
-<!--            selectedTime = selected;-->
-<!--        }-->
-
-<!--        renderCalendar();-->
-<!--    });-->
-<!--</script>-->
+<script>
+
+// <!--    let date = new Date();-->
+
+// <!--    //specify which months goes with which numbers-->
+// <!--    //ex: 09 = September-->
+// <!--    const months = [-->
+// <!--        "January",-->
+// <!--        "February",-->
+// <!--        "March",-->
+// <!--        "April",-->
+// <!--        "May",-->
+// <!--        "June",-->
+// <!--        "July",-->
+// <!--        "August",-->
+// <!--        "September",-->
+// <!--        "October",-->
+// <!--        "November",-->
+// <!--        "December",-->
+// <!--    ];-->
+//
+// <!--    let selectedDate = date.getDate();-->
+// <!--    let selectedTime;-->
+// <!--    let availableDays = [];-->
+// <!--    let availableTime = [];-->
+// <!--    let vetAvailabilityStr;-->
+// <!--    let nameOnCalenderStr;-->
+// <!--    let availabilities = [];-->
+// <!--    let count = 11;-->
+// <!--    let selday=false;-->
+// <!--    let ButtonClicked=false;-->
+//
+// <!--    const renderCalendar = () => {-->
+//
+// <!--        date.setDate(1);-->
+//
+// <!--        const monthDays = document.querySelector('.days');-->
+//
+// <!--        const timeSlots = document.querySelector('.times');-->
+//
+// <!--        const lastDay =  getDateTemplate(1).getDate();-->
+// <!--        const prevLastDay = getDateTemplate(0).getDate();-->
+//
+// <!--        const firstDayIndex = date.getDay();-->
+// <!--        const lastDayIndex = getDateTemplate(1).getDay();-->
+//
+// <!--        const nextDays = 7 - lastDayIndex - 1;-->
+//
+// <!--        localStorage.setItem("practitionerIdAndMonth", getFormatPractitionerIdAndMonth());-->
+//
+// <!--        let showSelectedDate = new Date("" + months[date.getMonth()] + " " + selectedDate + ", " + date.getFullYear());-->
+//
+// <!--        let formattedDate = showSelectedDate.toDateString().substring(0, 3) + ", " + showSelectedDate.toDateString().substring(3, 10).trim() + ", " + date.getFullYear();-->
+//
+// <!--        let isMonthUnavailable = false;-->
+// <!--        if((new Date("" + months[date.getMonth()] + " " + (parseInt(selectedDate) + 1) + ", " + date.getFullYear()) < new Date())) {-->
+// <!--            isMonthUnavailable = true;-->
+// <!--            formattedDate = date.getFullYear().toString();-->
+// <!--        }-->
+//
+// <!--        availableDays = [];-->
+// <!--        let vetWorkDays = [];-->
+// <!--        let days = "";-->
+//
+// <!--        let vetsArray;-->
+// <!--        if (vetAvailabilityStr !== undefined && vetAvailabilityStr !== null) {-->
+// <!--            vetsArray = vetAvailabilityStr.split(",");-->
+// <!--        } else {-->
+// <!--            vetsArray = null;-->
+// <!--        }-->
+//
+// <!--        if(vetsArray !== null) {-->
+// <!--            for (const d of vetsArray) {-->
+// <!--                switch (d.toLowerCase().trim()) {-->
+// <!--                    case "monday":-->
+// <!--                        vetWorkDays.push(1);-->
+// <!--                        break;-->
+// <!--                    case "tuesday":-->
+// <!--                        vetWorkDays.push(2);-->
+// <!--                        break;-->
+// <!--                    case "wednesday":-->
+// <!--                        vetWorkDays.push(3);-->
+// <!--                        break;-->
+// <!--                    case "thursday":-->
+// <!--                        vetWorkDays.push(4);-->
+// <!--                        break;-->
+// <!--                    case "friday":-->
+// <!--                        vetWorkDays.push(5);-->
+// <!--                        break;-->
+// <!--                    default:-->
+// <!--                        break;-->
+// <!--                }-->
+// <!--            }-->
+// <!--        } else {-->
+// <!--            formattedDate = date.getFullYear().toString();-->
+// <!--            selectedDate = null;-->
+// <!--        }-->
+//
+// <!--        if(nameOnCalenderStr === undefined) {-->
+// <!--            nameOnCalenderStr = date.getFullYear().toString();-->
+// <!--        }-->
+//
+// <!--        //change currently selected month and date on the title UI elements-->
+// <!--        document.querySelector(".date p").innerHTML = formattedDate;-->
+// <!--        document.querySelector(".time-date h1").innerHTML = nameOnCalenderStr;-->
+// <!--        document.querySelector(".date h1").innerHTML = months[date.getMonth()];-->
+//
+// <!--        for(let x = firstDayIndex; x > 0; x&#45;&#45;) {-->
+// <!--            let d = prevLastDay - x + 1;-->
+//
+// <!--            if(CheckWeekend(d, -1)) {-->
+// <!--                days += `<div id="day${d}" data-target="previous-page-${d}" class="prev-date unavailable day">${d}</div>`;-->
+// <!--            } else {-->
+// <!--                days += `<div id="day${d}" data-target="previous-page-${d}" class="prev-date day">${d}</div>`;-->
+// <!--            }-->
+// <!--        }-->
+//
+// <!--        //get the week days that the vet works-->
+// <!--        for(let i = 1; i <= lastDay; i++) {-->
+// <!--            availableDays.push(i)-->
+//
+// <!--            let workDay = false;-->
+// <!--            for(let w of vetWorkDays) {-->
+// <!--                if(getWeekDay(i, 0) === w) {-->
+// <!--                    workDay = true;-->
+// <!--                }-->
+// <!--            }-->
+//
+// <!--            //get the already scheduled visits-->
+// <!--            let scheduledVisits = false;-->
+// <!--            if(availabilities != null) {-->
+// <!--                for (let a of availabilities) {-->
+// <!--                    if(a === i) {-->
+// <!--                        scheduledVisits = true;-->
+// <!--                    }-->
+// <!--                }-->
+// <!--            }-->
+//
+// <!--            //check if day is weekend-->
+// <!--            if(CheckWeekend(i, 0) && getDateFullFormatEqualsTo(i) && vetAvailabilityStr !== null) {-->
+// <!--                days += `<div id="day${i}" data-target="${i}" class="today_weekend day">${i}</div>`;-->
+// <!--            }-->
+//
+// <!--            //check if day unavailable-->
+// <!--            else if((CheckWeekend(i, 0) || vetAvailabilityStr === null) ||-->
+// <!--                (i < new Date().getDate() && date.getMonth() <= new Date().getMonth() && date.getFullYear() === new Date().getFullYear()) ||-->
+// <!--                (date.getMonth() < new Date().getMonth() && date.getFullYear() === new Date().getFullYear()) || date.getFullYear() < new Date().getFullYear()) {-->
+//
+// <!--                if(i.toString() === selectedDate) {-->
+// <!--                    days += `<div id="day${i}" data-target="${i}" class="editSelected unavailable day">${i}</div>`;-->
+// <!--                } else {-->
+// <!--                    days += `<div id="day${i}" data-target="${i}" class="unavailable day">${i}</div>`;-->
+// <!--                }-->
+// <!--            }-->
+//
+// <!--            //check for vet availabilities-->
+// <!--            else if(workDay === false || scheduledVisits === true) {-->
+//
+// <!--                if (i.toString() === selectedDate) {-->
+// <!--                    days += `<div id="day${i}" data-target="${i}" class="editSelected holiday day">${i}</div>`;-->
+//
+// <!--                } else if(getDateFullFormatEqualsTo(i)) {-->
+// <!--                    days += `<div id="day${i}" data-target="${i}" class="today_holiday day">${i}</div>`;-->
+//
+//
+// <!--                } else {-->
+// <!--                    days += `<div id="day${i}" data-target="${i}" class="holiday day">${i}</div>`;-->
+// <!--                }-->
+// <!--            }-->
+//
+// <!--            else if(selectedDate === i.toString() && count>=6){-->
+// <!--                days += `<div id="day${i}" data-target="${i}" class="date-selected unavailable day">${i}</div>`;-->
+// <!--                availableDays.push(i)-->
+// <!--            }-->
+//
+// <!--            //check for date selected by user-->
+// <!--            else if(selectedDate === i.toString()) {-->
+// <!--                days += `<div id="day${i}" data-target="${i}" class="date-selected day">${i}</div>`;-->
+// <!--                selday=true;-->
+// <!--            }-->
+//
+// <!--            //specify the date of today-->
+// <!--            else if (getDateFullFormatEqualsTo(i)) {-->
+// <!--                days += `<div id="day${i}" data-target="${i}" class="today day">${i}</div>`;-->
+// <!--            }-->
+//
+// <!--            //regular days-->
+// <!--            else {-->
+//
+// <!--                days += `<div id="day${i}" data-target="${i}" class="day">${i}</div>`;-->
+// <!--            }-->
+// <!--            //days += `<div id="day${i}" data-target="${i}" class="day">${i}</div>`;-->
+// <!--            //availableDays.push(i);-->
+// <!--        }-->
+//
+//
+// <!--        //insert the days for the next month-->
+// <!--        for(let j = 1; j <= nextDays; j++) {-->
+// <!--            if(CheckWeekend(j, 1)) {-->
+// <!--                days += `<div id="day${j}" data-target="next-page-${j}" class="next-date unavailable day">${j}</div>`;-->
+// <!--            } else {-->
+// <!--                days += `<div id="day${j}" data-target="next-page-${j}" class="next-date day">${j}</div>`;-->
+// <!--            }-->
+// <!--        }-->
+//
+// <!--        monthDays.innerHTML = days;-->
+//
+// <!--        //get number of days to insert after current month's date-->
+// <!--        let numberOfDays = document.getElementsByClassName("day").length;-->
+// <!--        let numberOfNext = document.getElementsByClassName("next-date").length;-->
+// <!--        let numberOfRows;-->
+//
+//
+// <!--        if(numberOfDays === 28) {-->
+// <!--            numberOfRows = 2;-->
+// <!--        } else if (numberOfDays === 35) {-->
+// <!--            numberOfRows = 1;-->
+// <!--        } else {-->
+// <!--            numberOfRows = 0;-->
+// <!--        }-->
+//
+// <!--        if(numberOfRows !== 0) {-->
+// <!--            for(let j = numberOfNext + 1; j <= (numberOfRows * 7) + numberOfNext; j++) {-->
+// <!--                if(CheckWeekend(j, 1)) {-->
+// <!--                    days += `<div id="day${j}"data-target="next-page-${j}" class="next-date weekend day">${j}</div>`;-->
+// <!--                } else {-->
+// <!--                    days += `<div id="day${j}" data-target="next-page-${j}" class="next-date day">${j}</div>`;-->
+// <!--                }-->
+// <!--            }-->
+// <!--        }-->
+//
+// <!--        monthDays.innerHTML = days;-->
+//
+// <!--        let slots = "";-->
+// <!--        let timeIsSelected = false;-->
+// <!--        let Selectthis;-->
+//
+// <!--        //create time slots-->
+// <!--        for(let i = 9; i < 17; i++) {-->
+// <!--            let addition = 1;-->
+// <!--            let val = i;-->
+// <!--            let is1AM = true, is2AM = true;-->
+// <!--            let firstTime, secondTime;-->
+//
+// <!--            //if time is 1PM, change 13 to 1 PM for english time format-->
+// <!--            if(i > 12) {-->
+// <!--                val = i - 12;-->
+// <!--                is1AM = false;-->
+// <!--                is2AM = false;-->
+//
+// <!--                //if time is 11AM, make second time period (12) a PM time-->
+// <!--            } else if(i === 11) {-->
+// <!--                is2AM = false;-->
+//
+// <!--                //if time is 12PM, make sure that PM times are posted and that second time is 1PM and not 13PM-->
+// <!--            } else if(i === 12) {-->
+// <!--                addition = -11;-->
+// <!--                is2AM = false;-->
+// <!--                is1AM = false;-->
+// <!--            }-->
+// <!--            //for time try to make an array that holds all the times that were selected and then do a for loop to iterate through it and hide the div-->
+//
+// <!--            firstTime = getAMorPM(is1AM);-->
+// <!--            secondTime = getAMorPM(is2AM);-->
+//
+//
+// <!--            //Make time unavailable-->
+// <!--            if(isMonthUnavailable || formattedDate === date.getFullYear().toString() || (new Date().getDate() === parseInt(selectedDate)) && new Date().getMonth() === date.getMonth() && new Date().getFullYear() === date.getFullYear()) {-->
+// <!--                slots += `<div data-target="${i} " class="time-slots time-unavailable">${val} ${firstTime} - ${val + addition} ${secondTime}</div>`;-->
+// <!--            }-->
+// <!--            //make selected time unavailable-->
+// <!--            else if(i === parseInt(selectedTime)) {-->
+// <!--                slots += `<div data-target="${i} " class="time-slots time-selected time-unavailable">${val} ${firstTime} - ${val + addition} ${secondTime}</div>`;-->
+// <!--                timeIsSelected = true;-->
+// <!--                count=11;-->
+// <!--                availableTime.push(i);-->
+// <!--            }-->
+// <!--            //check time selected-->
+// <!--            else if(i === parseInt(selectedTime)){-->
+// <!--                slots += `<div data-target="${i} " class="time-slots time-selected">${val} ${firstTime} - ${val + addition} ${secondTime}</div>`;-->
+//
+//
+// <!--            }-->
+// <!--            //Show user available time ranges-->
+// <!--            else{-->
+//
+// <!--                slots += `<div data-target="${i} " class="time-slots">${val} ${firstTime} - ${val + addition} ${secondTime}</div>`;-->
+//
+//
+// <!--            }-->
+//
+//
+// <!--        }-->
+//
+// <!--        //make confirmation button appear if time was selected-->
+// <!--        if(timeIsSelected) {-->
+// <!--            slots += `<div class="confirmation-time">-->
+// <!--                    <div class="submitBTN">Confirm</div>-->
+// <!--                  </div>`;-->
+//
+// <!--            // ButtonClicked = true;-->
+// <!--            document.querySelector(".time-picker").classList.add("time-picker-selected");-->
+//
+// <!--        } else {-->
+// <!--            document.querySelector(".time-picker").classList.remove("time-picker-selected");-->
+// <!--        }-->
+//
+//
+//
+// <!--        timeSlots.innerHTML = slots;-->
+//
+// <!--        if(timeIsSelected) {-->
+// <!--            document.querySelector('.submitBTN').addEventListener('click',() => {-->
+// <!--                let month = date.getMonth();-->
+// <!--                let sDate = selectedDate;-->
+//
+// <!--                if (month < 9) {-->
+// <!--                    month = "0" + (month + 1);-->
+// <!--                }-->
+// <!--                else if(month !== 12) {-->
+// <!--                    month += 1;-->
+// <!--                }-->
+// <!--                else {-->
+// <!--                    month = "01";-->
+// <!--                }-->
+//
+// <!--                if(selectedDate < 10) {-->
+// <!--                    sDate = "0" + sDate;-->
+// <!--                }-->
+// <!--                console.log("lol");-->
+// <!--                $('#date_input').val(date.getFullYear() + "-" + month + "-" + sDate);-->
+// <!--            });-->
+// <!--        }-->
+//
+// <!--        //fixes bug where window wouldn't load-->
+// <!--        if(monthDays.innerHTML === null) {-->
+// <!--            location.reload();-->
+// <!--        }-->
+//
+// <!--        console.log("Selected date: " + selectedDate);-->
+// <!--        isEditMode = false;-->
+// <!--    }-->
+//
+// <!--    //check if a date is on the weekend-->
+// <!--    const CheckWeekend = (tempDate, month) => {-->
+// <!--        let weekend = new Date("" + months[date.getMonth() + month] + " " + tempDate + ", " + date.getFullYear()).getDay();-->
+// <!--        return (weekend === 0 || weekend === 6);-->
+//
+// <!--    }-->
+//
+// <!--    //check if date selected is a day of the week (monday to friday)-->
+// <!--    const getWeekDay = (day, month) => {-->
+// <!--        return new Date("" + months[date.getMonth() + month] + " " + day + ", " + date.getFullYear()).getDay();-->
+// <!--    }-->
+//
+// <!--    //fix selected date if user changes month so that it can't select a weekend-->
+// <!--    const fixDays = (isPrevOrNext) => {-->
+// <!--        let valMin = 0;-->
+// <!--        let valMax = 0;-->
+// <!--        let wasMaxReached = false;-->
+//
+// <!--        for(let a of availableDays) {-->
+// <!--            if(a > selectedDate && wasMaxReached === false) {-->
+// <!--                valMax = a;-->
+// <!--                wasMaxReached = true;-->
+// <!--            }-->
+//
+// <!--            if(a < selectedDate) {-->
+// <!--                valMin = a;-->
+// <!--            }-->
+// <!--        }-->
+//
+// <!--        if(valMin === 0 || isPrevOrNext === 1) {-->
+// <!--            selectedDate = valMax.toString();-->
+//
+// <!--        } else if(valMax === 0 || isPrevOrNext === 2) {-->
+// <!--            selectedDate = valMin.toString();-->
+//
+// <!--        } else {-->
+// <!--            if((valMax - parseInt(selectedDate) <= (parseInt(selectedDate) - valMin))) {-->
+// <!--                selectedDate = valMax.toString();-->
+// <!--            }-->
+// <!--            else {-->
+// <!--                selectedDate = valMin.toString();-->
+// <!--            }-->
+// <!--        }-->
+// <!--    }-->
+//
+// <!--    //check selection change for vets availability-->
+// <!--    const selectChanged = () => {-->
+// <!--        vetAvailabilityStr = $('#vetWorkdays').val();-->
+// <!--        nameOnCalenderStr = $("#selectedVet :selected").attr("data-target");-->
+// <!--        renderCalendar();-->
+// <!--    }-->
+//
+// <!--    var option1 = "";-->
+//
+//
+// <!--    //hide all and only unhide available options-->
+// <!--    const displayOptions = () => {-->
+// <!--        let option = document.getElementById("selectedVisitType").value;-->
+// <!--        //let optionInput = document.getElementById("optionInput").value;-->
+//
+// <!--        switch (option){-->
+// <!--            //For Visit Type Examination Only general doctors can be selected-->
+// <!--            case("Examinations"):     //Visit Type-->
+// <!--                option1 = "general"; //speciality of doctor-->
+// <!--                break;-->
+//
+// <!--            case("Injury"):-->
+// <!--                option1 = "radio";-->
+// <!--                break;-->
+//
+// <!--            case("Medical"):-->
+// <!--                option1 = "general";-->
+// <!--                break;-->
+//
+// <!--            case("Chronic"):-->
+// <!--                option1 = "general";-->
+// <!--                break;-->
+//
+// <!--            case("Consultations"):-->
+// <!--                option1 = "dentistry";-->
+// <!--                break;-->
+//
+// <!--            case("Operations"):-->
+// <!--                option1 = "radio";-->
+// <!--                break;-->
+// <!--        }-->
+// <!--    }-->
+//
+// <!--    //get value either for PM or AM for the time slots-->
+// <!--    const getAMorPM = (isAM) => {-->
+// <!--        return isAM ? "AM" : "PM";-->
+// <!--    }-->
+//
+// <!--    const getDateTemplate = (monthAddition) => {-->
+// <!--        return new Date(date.getFullYear(), date.getMonth() + monthAddition, 0);-->
+// <!--    }-->
+//
+// <!--    const getDateFullFormatEqualsTo = (chosenDate) => {-->
+// <!--        return (chosenDate === new Date().getDate() && date.getMonth() === new Date().getMonth() && new Date().getFullYear() === date.getFullYear());-->
+// <!--    }-->
+//
+// <!--    //Format the current month selected into a format that will be accepted by the api gateway route-->
+// <!--    const getFormatPractitionerIdAndMonth = () => {-->
+// <!--        let lastDayOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();-->
+// <!--        let month = date.getMonth() + 1;-->
+//
+// <!--        if (month < 10) {-->
+// <!--            month = "0" + month;-->
+// <!--        }-->
+//
+// <!--        let startDate = date.getFullYear() + "-" + month + "-01";-->
+// <!--        let endDate = date.getFullYear() + "-" + month + "-" + lastDayOfMonth;-->
+//
+// <!--        return $("#selectedVet :selected").attr("value") + "," + startDate + "," + endDate;-->
+// <!--    }-->
+//
+// <!--    renderCalendar();-->
+//
+// <!--    const editDateParsing = (year, month, day) => {-->
+// <!--        date = new Date("" + months[parseInt(month) - 1] + " " + day + ", " + year);-->
+// <!--        selectedDate = date.getDate().toString();-->
+//
+// <!--        renderCalendar();-->
+// <!--    }-->
+//
+// <!--    const dateReset = () => {-->
+// <!--        date = new Date();-->
+// <!--        selectedDate = date.getDate();-->
+// <!--        let month = date.getMonth()-->
+//
+// <!--        if (month < 9) {-->
+// <!--            month = "0" + (month + 1);-->
+// <!--        }-->
+// <!--        else if(month !== 12) {-->
+// <!--            month += 1;-->
+// <!--        }-->
+// <!--        else {-->
+// <!--            month = "01";-->
+// <!--        }-->
+//
+// <!--        $('#date_input').val(date.getFullYear() + "-" + month + "-" + selectedDate);-->
+// <!--        renderCalendar();-->
+// <!--    }-->
+//
+// <!--    //previous page selector-->
+// <!--    document.querySelector('.prev').addEventListener('click',() => {-->
+// <!--        date.setMonth(date.getMonth() - 1);-->
+//
+// <!--        renderCalendar();-->
+// <!--        fixDays();-->
+//
+// <!--        selectedTime = "";-->
+//
+// <!--        renderCalendar();-->
+// <!--    });-->
+//
+// <!--    //next page selector-->
+// <!--    document.querySelector('.next').addEventListener('click',() => {-->
+// <!--        date.setMonth(date.getMonth() + 1);-->
+//
+// <!--        renderCalendar();-->
+// <!--        fixDays();-->
+//
+// <!--        selectedTime = "";-->
+//
+// <!--        renderCalendar();-->
+// <!--    });-->
+//
+// <!--    //select dates-->
+// <!--    document.querySelector('.days').addEventListener('click',(event) => {-->
+//
+// <!--        let target = event.target.dataset.target;-->
+//
+// <!--        if(target !== undefined) {-->
+// <!--            if (target.substring(0, 13) === "previous-page") {-->
+// <!--                selectedDate = target.substring(14, 16).trim();-->
+//
+// <!--                date.setMonth(date.getMonth() - 1);-->
+//
+// <!--            } else if (target.substring(0, 9) === "next-page") {-->
+// <!--                selectedDate = target.substring(10, 12).trim();-->
+//
+// <!--                date.setMonth(date.getMonth() + 1);-->
+//
+// <!--            } else {-->
+// <!--                selectedDate = target;-->
+// <!--                date.setDate(parseInt(target));-->
+// <!--            }-->
+// <!--            selectedTime = "";-->
+// <!--        }-->
+// <!--        renderCalendar();-->
+// <!--    });-->
+//
+// <!--    document.querySelector('.times').addEventListener('click',(event) => {-->
+//
+// <!--        let selected = event.target.dataset.target;-->
+//
+// <!--        if(selected !== undefined) {-->
+// <!--            selectedTime = selected;-->
+// <!--        }-->
+//
+// <!--        renderCalendar();-->
+// <!--    });-->
+</script>
 
 
 <div class="mydiv">
@@ -669,10 +669,10 @@
 <!--    </div>-->
 
 <!--  Might not be needed for this form as vets is auto run on change-->
-    <div class="form-group" style="margin-top: 6px; margin-bottom: 6px">
-        <button id="submit_button" ng-click="$ctrl.showConfirmationModal($event)" class="btn btn-default" type="button" style="border: 1px solid gray; border-radius: 4px">Add New Visit</button>
-        <button id="cancel_button" ng-click="$ctrl.resetForm()" onclick="dateReset()" class="btn btn-default" type="button" style="visibility: hidden; border: 1px solid gray; border-radius: 4px">Cancel</button>
-    </div>
+<!--    <div class="form-group" style="margin-top: 6px; margin-bottom: 6px">-->
+<!--        <button id="submit_button" ng-click="$ctrl.showConfirmationModal($event)" class="btn btn-default" type="button" style="border: 1px solid gray; border-radius: 4px">Add New Visit</button>-->
+<!--        <button id="cancel_button" ng-click="$ctrl.resetForm()" onclick="dateReset()" class="btn btn-default" type="button" style="visibility: hidden; border: 1px solid gray; border-radius: 4px">Cancel</button>-->
+<!--    </div>-->
 </form>
 
 <!-- Notifications not needed for this page-->
