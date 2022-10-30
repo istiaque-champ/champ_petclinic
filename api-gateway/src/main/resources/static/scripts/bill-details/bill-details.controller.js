@@ -11,10 +11,6 @@ angular.module('billDetails')
             })
         }
 
-        self.visitType = function() {
-            self.selectedVisit = self.selectedVisitType
-        }
-
         $http.get('api/gateway/owners').then(function (resp){
             self.owners = resp.data;
             self.selectedOwner = self.owners[0];
@@ -54,7 +50,6 @@ angular.module('billDetails')
             self.bills.customerId = self.selectedOwner.id;
             self.bills.vetId = self.selectedVet.vetId;
             self.bills.petId = self.selectedPet.id;
-            self.bills.selectedVisitType = self.selectedVisitType;
 
             if (createBill){
                 console.log('Creating new bill');
