@@ -74,6 +74,8 @@ var translations = {
     EMAIL_ADDRESS: "Email Address" ,
     SPECIALITIES: "Specialities",
     WORKDAYS: "Workdays",
+    DATE: "date",
+
 
 
 
