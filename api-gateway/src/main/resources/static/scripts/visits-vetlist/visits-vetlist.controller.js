@@ -775,29 +775,30 @@ angular.module('visitsVetList')
             });
         }
 
-        self.deleteVisit = function (visitId){
-            $http.delete("api/gateway/visits/" + visitId).then(function () {
-                // Get the parent row of the sender
-                let modalConfirmButton = $('#confirmationModalConfirmButton');
-
-                // Get the index of the sender from the parent table row data attribute
-                let index = parseInt(modalConfirmButton.data("delete-index"));
-
-                // See if the sender is in upcoming or previous visits
-                let deleteFromUpcomingVisits = modalConfirmButton.data("delete-table-name") === "upcomingVisits";
-
-                // Remove the visit from the list of either upcoming or previous visits
-                if(deleteFromUpcomingVisits) {
-                    self.upcomingVisits.splice(index, 1);
-                } else {
-                    self.previousVisits.splice(index, 1);
-                }
-
-                createAlert("success", "Successfully deleted visit!");
-            }, function () {
-                createAlert("danger", "Failed to delete visit!");
-            });
-        };
+        // No need for the delete function
+        // self.deleteVisit = function (visitId){
+        //     $http.delete("api/gateway/visits/" + visitId).then(function () {
+        //         // Get the parent row of the sender
+        //         let modalConfirmButton = $('#confirmationModalConfirmButton');
+        //
+        //         // Get the index of the sender from the parent table row data attribute
+        //         let index = parseInt(modalConfirmButton.data("delete-index"));
+        //
+        //         // See if the sender is in upcoming or previous visits
+        //         let deleteFromUpcomingVisits = modalConfirmButton.data("delete-table-name") === "upcomingVisits";
+        //
+        //         // Remove the visit from the list of either upcoming or previous visits
+        //         if(deleteFromUpcomingVisits) {
+        //             self.upcomingVisits.splice(index, 1);
+        //         } else {
+        //             self.previousVisits.splice(index, 1);
+        //         }
+        //
+        //         createAlert("success", "Successfully deleted visit!");
+        //     }, function () {
+        //         createAlert("danger", "Failed to delete visit!");
+        //     });
+        // };
 
         self.getStatus = function (status, date) {
             //Initializing variable for status
@@ -838,50 +839,51 @@ angular.module('visitsVetList')
             return statusText;
         };
 
-        self.cancelVisit = function (id, visitStatus, visitPractitionerId, visitDate, visitDescription){
-            visitId = id;
-            var data = {};
-
-            if (visitStatus) {
-                data = {
-                    date: visitDate,
-                    description: visitDescription,
-                    practitionerId: visitPractitionerId,
-                    status: false
-                };
-            }else {
-                data = {
-                    date: visitDate,
-                    description: visitDescription,
-                    practitionerId: visitPractitionerId,
-                    status: true
-                };
-            }
-
-            let putURL = "api/gateway/owners/*/pets/" + petId + "/visits/" + visitId;
-
-            $http.put(putURL, data).then(function(response) {
-                let index = parseInt($('#confirmationModalConfirmButton').data("cancel-index"));
-
-                // Delete that visit (must delete in order to update index when sorted)
-                self.upcomingVisits[index] = response.data;
-
-                // Call the last sort if there was one
-                callLastSort(true);
-
-                if(!visitStatus) {
-                    createAlert("success", "Successfully reverted cancel on visit!");
-                } else {
-                    createAlert("success", "Successfully cancelled visit!");
-                }
-            },function() {
-                if(!visitStatus) {
-                    createAlert("danger", "Failed to revert cancel on visit!");
-                } else {
-                    createAlert("danger", "Failed to cancel visit!");
-                }
-            });
-        };
+        // No need for cancel function
+        // self.cancelVisit = function (id, visitStatus, visitPractitionerId, visitDate, visitDescription){
+        //     visitId = id;
+        //     var data = {};
+        //
+        //     if (visitStatus) {
+        //         data = {
+        //             date: visitDate,
+        //             description: visitDescription,
+        //             practitionerId: visitPractitionerId,
+        //             status: false
+        //         };
+        //     }else {
+        //         data = {
+        //             date: visitDate,
+        //             description: visitDescription,
+        //             practitionerId: visitPractitionerId,
+        //             status: true
+        //         };
+        //     }
+        //
+        //     let putURL = "api/gateway/owners/*/pets/" + petId + "/visits/" + visitId;
+        //
+        //     $http.put(putURL, data).then(function(response) {
+        //         let index = parseInt($('#confirmationModalConfirmButton').data("cancel-index"));
+        //
+        //         // Delete that visit (must delete in order to update index when sorted)
+        //         self.upcomingVisits[index] = response.data;
+        //
+        //         // Call the last sort if there was one
+        //         callLastSort(true);
+        //
+        //         if(!visitStatus) {
+        //             createAlert("success", "Successfully reverted cancel on visit!");
+        //         } else {
+        //             createAlert("success", "Successfully cancelled visit!");
+        //         }
+        //     },function() {
+        //         if(!visitStatus) {
+        //             createAlert("danger", "Failed to revert cancel on visit!");
+        //         } else {
+        //             createAlert("danger", "Failed to cancel visit!");
+        //         }
+        //     });
+        // };
 
         self.setCancelButtonText = function (visitStatus){
             var cancelText = "";
