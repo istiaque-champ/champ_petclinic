@@ -8,6 +8,7 @@
 <!-- Calendar -->
 <div class="container-calendar">
     <div class="calendar">
+        <!-- Calendar header (displays month and year) -->
         <div class="month">
             <i class="fas fa-angle-left prev" ng-click="$ctrl.getVisitsForPractitionerIdAndMonth()"></i>
             <div class="date">
@@ -16,6 +17,7 @@
             </div>
             <i class="fas fa-angle-right next" ng-click="$ctrl.getVisitsForPractitionerIdAndMonth()"></i>
         </div>
+        <!-- Static header for table -->
         <div class="weekdays">
             <div>Sun</div>
             <div>Mon</div>
@@ -25,8 +27,9 @@
             <div>Fri</div>
             <div>Sat</div>
         </div>
+        <!-- Displays all dates/availabilities -->
         <div class="days"></div>
-
+        <!-- Time picker subsection -->
         <div class="time-picker">
             <div class="time-date">
                 <i class="fas fa-angle-left prev-day"></i>
