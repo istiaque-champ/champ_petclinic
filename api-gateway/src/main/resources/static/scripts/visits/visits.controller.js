@@ -24,6 +24,8 @@ angular.module('visits')
         $scope.workday = translationIds.workday;
         $scope.date = translationIds.date;
         $scope.description = translationIds.description;
+        $scope.previousVisits = translationIds.previousVisits;
+
 
 
 
