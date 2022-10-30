@@ -10,6 +10,8 @@ angular.module('visits')
         $scope.phoneNumber = translations.PHONE_NUMBER;
         $scope.email = translations.EMAIL_ADDRESS;
         $scope.specialties = translations.SPECIALITIES;
+        $scope.workday = translationIds.workday;
+
 
 
 
