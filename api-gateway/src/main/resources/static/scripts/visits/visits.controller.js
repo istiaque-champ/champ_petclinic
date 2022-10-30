@@ -17,6 +17,8 @@ angular.module('visits')
     }, function (translationIds) {
         $scope.visit_type = translationIds.visit_type;
         $scope.upcomingVisits = translationIds.upcomingVisits;
+        $scope.visits = translationIds.visits;
+
 
 
 
