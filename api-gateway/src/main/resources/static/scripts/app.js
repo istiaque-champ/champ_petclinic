@@ -9,7 +9,7 @@ const whiteList = new Set([
 var petClinicApp = angular.module('petClinicApp', [
     'ui.router', 'layoutNav', 'layoutFooter', 'layoutWelcome', 'petDetails' , 'ownerList', 'ownerDetails', 'ownerForm', 'petForm'
     , 'visits', 'vetList','vetForm','vetDetails', 'loginForm', 'rolesDetails', 'signupForm', 'billDetails', 'billHistory'
-    , 'verification' , 'adminPanel']);
+    , 'verification' , 'adminPanel', 'pascalprecht.translate']);
 
 petClinicApp.factory("authProvider", ["$window", function ($window) {
 
