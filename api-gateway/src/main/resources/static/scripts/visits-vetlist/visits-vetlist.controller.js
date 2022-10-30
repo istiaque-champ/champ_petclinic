@@ -130,36 +130,26 @@ angular.module('visitsVetList')
         }
 
         // MUST EDIT TO GET ALL VISITS WITH THE PRACTITIONER ID
-        // self.getVisitsForPractitionerId = function() {
-        //     let pId = localStorage.getItem("practitionerId");
-        //
-        //     if(pId != null && pId !== "") {
-        //         let info = pId;
-        //
-        //         if(info !== undefined){
-        //             console.log(info.toString());
-        //             let practitionerId = parseInt(info);
-                    // let startDate = info[1];
-                    // let endDate = info[2];
+        self.getVisitsForPractitionerId = function() {
+            let pId = localStorage.getItem("practitionerId");
 
-                    // if(!isNaN(practitionerId)) {
-                        // $http.get("api/gateway/visits/calendar/" + practitionerId).then(function (resp) {
-                        //     self.availableVisits = resp.data;
-                        //     availabilities = [];
-                        //
-                        //     $.each(self.availableVisits, function(i, visit) {
-                        //         let date = visit.date.toString().split("-");
-                        //
-                        //         availableDays = availableDays.filter(e => e !== parseInt(date[2]));
-                        //         availabilities.push(parseInt(date[2]));
-                        //     });
-                        //
-                        //     renderCalendar();
-                        // });
-        //             }
-        //         }
-        //     }
-        // }
+            if(pId != null && pId !== "") {
+                let info = pId;
+
+                if(info !== undefined){
+                    console.log(info.toString());
+                    let practitionerId = parseInt(info);
+                    let startDate = info[1];
+                    let endDate = info[2];
+
+                    if(!isNaN(practitionerId)) {
+                        $http.get(postUrl).then(function (resp) {
+                            
+                        });
+                    }
+                }
+            }
+        }
 
 
 
@@ -310,33 +300,6 @@ angular.module('visitsVetList')
         //     };
         // };
 
-        // This value will be set depending on what was last clicked
-        let lastSort = "";
-        let dateSortName = "Date";
-        let descSortName = "Description";
-        // let vetSortName = "Veterinarian";
-        // Change to owner Sorting
-        let ownerSortName = "Owner";
-        let statusSortName = "Status";
-
-        // This function will call the last sorted option without changing ascending or descending
-        function callLastSort(isForUpcoming) {
-            switch (lastSort) {
-                case dateSortName:
-                    self.SortTableByDate(isForUpcoming, false);
-                    break;
-                case descSortName:
-                    self.SortTableByDesc(isForUpcoming, false);
-                    break;
-                case ownerSortName:
-                    self.SortTableByOwner(isForUpcoming, false);
-                    break;
-                case statusSortName:
-                    self.SortTableByStatus(isForUpcoming, false);
-                    break;
-            }
-        }
-
         // This function might not be necessary
         // self.resetForm = function() {
         //     // Reset the Add Visit Form to default functionality
@@ -391,6 +354,35 @@ angular.module('visitsVetList')
         //
         //     return false;
         // }
+
+
+        // This value will be set depending on what was last clicked
+        let lastSort = "";
+        let dateSortName = "Date";
+        let descSortName = "Description";
+        // let vetSortName = "Veterinarian";
+        // Change to owner Sorting
+        let ownerSortName = "Owner";
+        let statusSortName = "Status";
+
+        // This function will call the last sorted option without changing ascending or descending
+        function callLastSort(isForUpcoming) {
+            switch (lastSort) {
+                case dateSortName:
+                    self.SortTableByDate(isForUpcoming, false);
+                    break;
+                case descSortName:
+                    self.SortTableByDesc(isForUpcoming, false);
+                    break;
+                case ownerSortName:
+                    self.SortTableByOwner(isForUpcoming, false);
+                    break;
+                case statusSortName:
+                    self.SortTableByStatus(isForUpcoming, false);
+                    break;
+            }
+        }
+
 
         let ResetSortButtonArrows = function(isForUpcoming) {
             if(isForUpcoming) {
