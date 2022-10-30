@@ -21,10 +21,10 @@ angular.module('visitsVetList')
 
         //MIGHT NEED TO EDIT SO IT'S NOT RUN ON GET
         //Fetch visits according to vet id
-        $http.get("api/gateway/visits/vets/"+practitionerId).then(function (resp) {
-            self.visits = resp.data;
-            self.sortFetchedVisits();
-        });
+        // $http.get("api/gateway/visits/vets/"+practitionerId).then(function (resp) {
+        //     self.visits = resp.data;
+        //     self.sortFetchedVisits();
+        // });
 
         // GET AND ASSIGN VET/PRACTITIONER INFORMATION
         self.loadVetInfo = function() {
@@ -110,43 +110,6 @@ angular.module('visitsVetList')
             var yyyy = date.getFullYear();
             return Date.parse(yyyy + '-' + mm + '-' + dd);
         }
-
-        // NOT NEEDED ON THIS PAGE
-        //  START ALERT NOTIFICATIONS
-
-        // Container div for all alerts
-        // let alertsContainer = $('#alertsContainer');
-
-        // Function to delete last added alert
-        // function deleteAlertAfter(alertId, time) {
-        //     setTimeout(function() {
-        //         if(alertsContainer.children().length === 1 && alertsContainer.children(".alert:first-child").attr("id") === alertId) {
-        //             alertsContainer.children(".alert:first-child").remove();
-        //         }
-        //     }, time);
-        // }
-
-        // let alertId = 0;
-        // Function to create alert
-        // function createAlert(alertType, alertMessage) {
-        //     // Create an alert based on parameters
-        //     alertsContainer.append(
-        //         "<div id=\"alert-"+ ++alertId +"\" class=\"alert alert-"+ alertType +"\" role=\"alert\">" +
-        //         "<p>" + alertMessage + "</p>" +
-        //         "</div>"
-        //     );
-        //
-        //     // If there is already an alert make place for new one
-        //     if(alertsContainer.children().length > 1) {
-        //         alertsContainer.children(".alert:first-child").remove();
-        //     }
-        //
-        //     console.log(alertsContainer.children().length);
-        //
-        //     // Delete the alert after x amount of time (millis)
-        //     deleteAlertAfter("alert-" + alertId, 3000);
-        // }
-        //  END ALERT NOTIFICATIONS
 
         // Lists holding visits for the table to display
         self.upcomingVisits = [];
