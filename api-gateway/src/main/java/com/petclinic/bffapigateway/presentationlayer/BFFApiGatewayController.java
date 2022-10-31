@@ -108,6 +108,15 @@ public class BFFApiGatewayController {
                                 .map(addOwnersToBillDetails(billDetails))
                 );
     }
+
+    @GetMapping(value = "/bills/visits/{visitId}")
+    public Flux<BillDetailsExpanded> getBillsByVisitId(final @PathVariable int visitId){
+        return billServiceClient.getBillByVisitId(visitId)
+                .flatMap(billDetails ->
+                        customersServiceClient.getOwner(billDetails.getCustomerId())
+                                .map(addOwnersToBillDetails(billDetails))
+                );
+    }
     
     @DeleteMapping(value = "bills/{billId}")
     public Mono<Void> deleteBill(final @PathVariable int billId){
