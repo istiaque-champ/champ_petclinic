@@ -73,9 +73,9 @@ angular.module('visitsVetList')
         };
 
         //Fetch visits according to vet id
-        //$http.get("api/gateway/visits/vets/"+practitionerId).then(function (resp) {
         //hardcode for test
-        $http.get("api/gateway/visits/vets/234568").then(function (resp) {
+        //$http.get("api/gateway/visits/vets/234568").then(function (resp) {
+        $http.get("api/gateway/visits/vets/"+practitionerId).then(function (resp) {
             self.visits = resp.data;
             self.sortFetchedVisits();
         });
@@ -195,13 +195,13 @@ angular.module('visitsVetList')
                 $('#sortByDateButtonUpcomingVisits').text("Sort by date ⇅");
                 $('#sortByDescButtonUpcomingVisits').text("Sort by description ⇅");
                 // $('#sortByVetButtonUpcomingVisits').text("Sort by veterinarian ⇅");
-                $('#sortByOwnerButtonUpcomingVisits').text("Sort by veterinarian ⇅");
+                // $('#sortByOwnerButtonUpcomingVisits').text("Sort by owner ⇅");
                 $('#sortByStatusButtonUpcomingVisits').text("Sort by status ⇅");
             } else {
                 $('#sortByDateButtonPreviousVisits').text("Sort by date ⇅");
                 $('#sortByDescButtonPreviousVisits').text("Sort by description ⇅");
                 // $('#sortByVetButtonPreviousVisits').text("Sort by veterinarian ⇅");
-                $('#sortByOwnerButtonPreviousVisits').text("Sort by owner ⇅");
+                // $('#sortByOwnerButtonPreviousVisits').text("Sort by owner ⇅");
                 $('#sortByStatusButtonPreviousVisits').text("Sort by status ⇅");
             }
         }
