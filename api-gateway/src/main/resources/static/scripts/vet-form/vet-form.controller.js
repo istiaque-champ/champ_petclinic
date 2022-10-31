@@ -45,7 +45,7 @@ angular.module('vetForm')
                     isAct[1].checked = true;
                 }
                 let phoneNumber = self.vet.phoneNumber;
-                let code = phoneNumber.substring(phoneNumber.length - 4);
+                let code = phoneNumber.substring(phoneNumber.length - 10);
                 document.getElementById("phoneNumber").value = code;
 
             });
