@@ -38,7 +38,7 @@ angular.module('ownerForm')
                 var error = response.data;
                 error.errors = error.errors || [];
                 alert(error.error + "\r\n" + error.errors.map(function (e) {
-                    return e.field + ": " + "One ";
+                    return e.field + ": " + "One or ";
                 }).join("\r\n"));
             });
         };
