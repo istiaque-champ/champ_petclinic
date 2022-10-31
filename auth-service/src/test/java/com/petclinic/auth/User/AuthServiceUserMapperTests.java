@@ -29,7 +29,7 @@ public class AuthServiceUserMapperTests {
     @Autowired
     private UserMapper userMapper;
 
-    private final UserIDLessRoleLessDTO ID_LESS_USER_USER = new UserIDLessRoleLessDTO("usernameTest", "passwordTest", "emailTest");
+    private final UserIDLessRoleLessDTO ID_LESS_USER_USER = new UserIDLessRoleLessDTO("usernameTest", "passwordTest", "emailTest", 1, 1);
     private final Set<Role> ROLES;
 
     {

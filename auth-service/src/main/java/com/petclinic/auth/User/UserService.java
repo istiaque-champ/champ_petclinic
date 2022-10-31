@@ -34,7 +34,6 @@ import com.petclinic.auth.User.data.UserTokenPair;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 public interface UserService {
@@ -59,4 +58,6 @@ public interface UserService {
     UserTokenPair login(UserIDLessRoleLessDTO user) throws IncorrectPasswordException;
 
     User getUserByEmail(String email) throws NotFoundException;
+
+    User updateUser(UserIDLessRoleLessDTO user, long id);
 }

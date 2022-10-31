@@ -26,6 +26,9 @@ public class Bill {
 
     private Integer vetId;
 
+    @Indexed(unique = true)
+    private Integer visitId;
+
     private String visitType;
 
     private Instant date = Instant.now();

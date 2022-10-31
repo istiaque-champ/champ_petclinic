@@ -29,6 +29,7 @@ class BillRepositoryTest {
     private final Double VALID_AMOUNT = BillServiceImpl.visitTypePrices.get(VALID_VISIT_TYPE);
     private final Double SECOND_VALID_AMOUNT = 50.00;
     private final Integer VALID_VET_ID = 1;
+    private final Integer VALID_VISIT_ID = 1;
 
 
 
@@ -41,6 +42,7 @@ class BillRepositoryTest {
         setupBill.setAmount(VALID_AMOUNT);
         setupBill.setVetId(VALID_VET_ID);
         setupBill.setPetId(VALID_PET_ID);
+        setupBill.setVisitId(VALID_VISIT_ID);
         return setupBill;
     }
 
@@ -71,6 +73,7 @@ class BillRepositoryTest {
                     assertEquals(bill.getAmount(), setupBill.getAmount());
                     assertEquals(bill.getVetId(), setupBill.getVetId());
                     assertEquals(bill.getPetId(), setupBill.getPetId());
+                    assertEquals(bill.getVisitId(), setupBill.getVisitId());
                 })
                 .verifyComplete();
     }
@@ -92,6 +95,7 @@ class BillRepositoryTest {
                     assertEquals(bill.getAmount(), setupBill.getAmount());
                     assertEquals(bill.getVetId(), setupBill.getVetId());
                     assertEquals(bill.getPetId(), setupBill.getPetId());
+                    assertEquals(bill.getVisitId(), setupBill.getVisitId());
                 })
                 .verifyComplete();
     }
@@ -124,6 +128,7 @@ class BillRepositoryTest {
                     assertEquals(bill.getAmount(), setupBill.getAmount());
                     assertEquals(bill.getVetId(), setupBill.getVetId());
                     assertEquals(bill.getPetId(), setupBill.getPetId());
+                    assertEquals(bill.getVisitId(), setupBill.getVisitId());
                 })
                 .verifyComplete();
     }
@@ -155,6 +160,7 @@ class BillRepositoryTest {
                     assertEquals(bill.getAmount(), setupBill.getAmount());
                     assertEquals(bill.getVetId(), setupBill.getVetId());
                     assertEquals(bill.getPetId(), setupBill.getPetId());
+                    assertEquals(bill.getVisitId(), setupBill.getVisitId());
                 })
                 .verifyComplete();
     }
@@ -186,6 +192,7 @@ class BillRepositoryTest {
                     assertEquals(bill.getAmount(), setupBill.getAmount());
                     assertEquals(bill.getVetId(), setupBill.getVetId());
                     assertEquals(bill.getPetId(), setupBill.getPetId());
+                    assertEquals(bill.getVisitId(), setupBill.getVisitId());
                 })
                 .verifyComplete();
     }
@@ -219,6 +226,7 @@ class BillRepositoryTest {
                     assertEquals(bill.getAmount(), setupBill.getAmount());
                     assertEquals(bill.getVetId(), setupBill.getVetId());
                     assertEquals(bill.getPetId(), setupBill.getPetId());
+                    assertEquals(bill.getVisitId(), setupBill.getVisitId());
                 })
                 .verifyComplete();
     }
@@ -278,6 +286,39 @@ class BillRepositoryTest {
                     assertEquals(bill.getAmount(), SECOND_VALID_AMOUNT);
                     assertEquals(bill.getVetId(), setupBill.getVetId());
                     assertEquals(bill.getPetId(), setupBill.getPetId());
+                    assertEquals(bill.getVisitId(), setupBill.getVisitId());
+                })
+                .verifyComplete();
+    }
+
+    @Test
+    void findBillByVisitId(){
+        Bill setupBill = getSetupBill();
+
+        Publisher<Bill> setup = billRepository.deleteAll().thenMany(billRepository.save(setupBill));
+
+        StepVerifier
+                .create(setup)
+                .expectNextCount(1)
+                .verifyComplete();
+
+        Mono<Bill> find = billRepository.findBillByVisitId(VALID_VISIT_ID);
+        Publisher<Bill> composite = Mono
+                .from(setup)
+                .thenMany(find);
+
+        StepVerifier
+                .create(composite)
+                .consumeNextWith(bill -> {
+                    assertNotNull(bill.getId());
+                    assertEquals(bill.getBillId(), setupBill.getBillId());
+                    assertEquals(bill.getCustomerId(), setupBill.getCustomerId());
+                    assertEquals(bill.getVisitType(), setupBill.getVisitType());
+                    assertNotNull(bill.getDate());
+                    assertEquals(bill.getAmount(), setupBill.getAmount());
+                    assertEquals(bill.getVetId(), setupBill.getVetId());
+                    assertEquals(bill.getPetId(), setupBill.getPetId());
+                    assertEquals(bill.getVisitId(), setupBill.getVisitId());
                 })
                 .verifyComplete();
     }

@@ -5,8 +5,10 @@
 <link rel="stylesheet" href="/css/addVisitFormStyle.css" type="text/css" />
 <!-- Style Loading END -->
 
+<!-- Calendar -->
 <div class="container-calendar">
     <div class="calendar">
+        <!-- Calendar header (displays month and year) -->
         <div class="month">
             <i class="fas fa-angle-left prev" ng-click="$ctrl.getVisitsForPractitionerIdAndMonth()"></i>
             <div class="date">
@@ -15,6 +17,7 @@
             </div>
             <i class="fas fa-angle-right next" ng-click="$ctrl.getVisitsForPractitionerIdAndMonth()"></i>
         </div>
+        <!-- Static header for table -->
         <div class="weekdays">
             <div>Sun</div>
             <div>Mon</div>
@@ -24,8 +27,9 @@
             <div>Fri</div>
             <div>Sat</div>
         </div>
+        <!-- Displays all dates/availabilities -->
         <div class="days"></div>
-
+        <!-- Time picker subsection -->
         <div class="time-picker">
             <div class="time-date">
                 <i class="fas fa-angle-left prev-day"></i>
@@ -40,7 +44,9 @@
     </div>
 </div>
 <script>
+//this script is used to generate the calendar
 
+//initialize new date
     let date = new Date();
 
     //specify which months goes with which numbers
@@ -60,6 +66,7 @@
         "December",
     ];
 
+    //constants for functions used in script
     let selectedDate = date.getDate();
     let selectedTime;
     let availableDays = [];
@@ -69,8 +76,10 @@
     let availabilities = [];
     let count = 11;
     let selday=false;
+    //unused, to check again
     let ButtonClicked=false;
 
+    //function for calendar rendering
     const renderCalendar = () => {
 
         date.setDate(1);
@@ -87,6 +96,7 @@
 
         const nextDays = 7 - lastDayIndex - 1;
 
+        //setting localstorage variable using getFormatPractitionerIdAndMonth() function
         localStorage.setItem("practitionerIdAndMonth", getFormatPractitionerIdAndMonth());
 
         let showSelectedDate = new Date("" + months[date.getMonth()] + " " + selectedDate + ", " + date.getFullYear());
@@ -94,6 +104,8 @@
         let formattedDate = showSelectedDate.toDateString().substring(0, 3) + ", " + showSelectedDate.toDateString().substring(3, 10).trim() + ", " + date.getFullYear();
 
         let isMonthUnavailable = false;
+
+        //verifying if the selected month is in the past
         if((new Date("" + months[date.getMonth()] + " " + (parseInt(selectedDate) + 1) + ", " + date.getFullYear()) < new Date())) {
             isMonthUnavailable = true;
             formattedDate = date.getFullYear().toString();
@@ -104,12 +116,16 @@
         let days = "";
 
         let vetsArray;
+
+        //verifying if the vets availability string is not null or empty
         if (vetAvailabilityStr !== undefined && vetAvailabilityStr !== null) {
+            //formatting availability to a readable format
             vetsArray = vetAvailabilityStr.split(",");
         } else {
             vetsArray = null;
         }
 
+        //verifies if array is != null and pushes elements to vetWorkDays array
         if(vetsArray !== null) {
             for (const d of vetsArray) {
                 switch (d.toLowerCase().trim()) {
@@ -137,6 +153,7 @@
             selectedDate = null;
         }
 
+        //Defines year with current if it is undefined
         if(nameOnCalenderStr === undefined) {
             nameOnCalenderStr = date.getFullYear().toString();
         }
@@ -149,6 +166,7 @@
         for(let x = firstDayIndex; x > 0; x--) {
             let d = prevLastDay - x + 1;
 
+            //Makes weekend unavailable
             if(CheckWeekend(d, -1)) {
                 days += `<div id="day${d}" data-target="previous-page-${d}" class="prev-date unavailable day">${d}</div>`;
             } else {
@@ -156,18 +174,17 @@
             }
         }
 
-        //get the week days that the vet works
+        //get the work days available for the chosen vet
         for(let i = 1; i <= lastDay; i++) {
             availableDays.push(i)
 
             let workDay = false;
             for(let w of vetWorkDays) {
-                if(getWeekDay(i, 0) === w) {
+                if (getWeekDay(i, 0) === w) {
                     workDay = true;
                 }
             }
 
-            //get the already scheduled visits
             let scheduledVisits = false;
             if(availabilities != null) {
                 for (let a of availabilities) {
@@ -177,16 +194,17 @@
                 }
             }
 
-            //check if day is weekend
+            //Check for weekday
             if(CheckWeekend(i, 0) && getDateFullFormatEqualsTo(i) && vetAvailabilityStr !== null) {
                 days += `<div id="day${i}" data-target="${i}" class="today_weekend day">${i}</div>`;
             }
 
-            //check if day unavailable
+            //check if day is unavailable
             else if((CheckWeekend(i, 0) || vetAvailabilityStr === null) ||
                 (i < new Date().getDate() && date.getMonth() <= new Date().getMonth() && date.getFullYear() === new Date().getFullYear()) ||
                 (date.getMonth() < new Date().getMonth() && date.getFullYear() === new Date().getFullYear()) || date.getFullYear() < new Date().getFullYear()) {
 
+                //if string equals to selected day, alert that day is unavailable
                 if(i.toString() === selectedDate) {
                     days += `<div id="day${i}" data-target="${i}" class="editSelected unavailable day">${i}</div>`;
                 } else {
@@ -244,6 +262,7 @@
             }
         }
 
+        //Change inner html to match days variable
         monthDays.innerHTML = days;
 
         //get number of days to insert after current month's date
@@ -274,6 +293,8 @@
 
         let slots = "";
         let timeIsSelected = false;
+
+        //this variable might be unused, must investigate
         let Selectthis;
 
         //create time slots
@@ -346,10 +367,9 @@
             document.querySelector(".time-picker").classList.remove("time-picker-selected");
         }
 
-
-
         timeSlots.innerHTML = slots;
 
+        //If time has been selected
         if(timeIsSelected) {
             document.querySelector('.submitBTN').addEventListener('click',() => {
                 let month = date.getMonth();
@@ -377,7 +397,7 @@
         if(monthDays.innerHTML === null) {
             location.reload();
         }
-
+//for testing purposes
         console.log("Selected date: " + selectedDate);
         isEditMode = false;
     }
@@ -436,49 +456,51 @@
 
     var option1 = "";
 
+//      **************************** UNUSED METHOD, TO CHECK AGAIN ********************************
 
-    //hide all and only unhide available options
-    const displayOptions = () => {
-        let option = document.getElementById("selectedVisitType").value;
-        //let optionInput = document.getElementById("optionInput").value;
-
-        switch (option){
-            //For Visit Type Examination Only general doctors can be selected
-            case("Examinations"):     //Visit Type
-                option1 = "general"; //speciality of doctor
-                break;
-
-            case("Injury"):
-                option1 = "radio";
-                break;
-
-            case("Medical"):
-                option1 = "general";
-                break;
-
-            case("Chronic"):
-                option1 = "general";
-                break;
-
-            case("Consultations"):
-                option1 = "dentistry";
-                break;
-
-            case("Operations"):
-                option1 = "radio";
-                break;
-        }
-    }
+    // //hide all and only unhide available options
+    // const displayOptions = () => {
+    //     let option = document.getElementById("selectedVisitType").value;
+    //     //let optionInput = document.getElementById("optionInput").value;
+    //
+    //     switch (option){
+    //         //For Visit Type Examination Only general doctors can be selected
+    //         case("Examinations"):     //Visit Type
+    //             option1 = "general"; //speciality of doctor
+    //             break;
+    //
+    //         case("Injury"):
+    //             option1 = "radio";
+    //             break;
+    //
+    //         case("Medical"):
+    //             option1 = "general";
+    //             break;
+    //
+    //         case("Chronic"):
+    //             option1 = "general";
+    //             break;
+    //
+    //         case("Consultations"):
+    //             option1 = "dentistry";
+    //             break;
+    //
+    //         case("Operations"):
+    //             option1 = "radio";
+    //             break;
+    //     }
+    // }
 
     //get value either for PM or AM for the time slots
     const getAMorPM = (isAM) => {
         return isAM ? "AM" : "PM";
     }
 
+    //gets date template
     const getDateTemplate = (monthAddition) => {
         return new Date(date.getFullYear(), date.getMonth() + monthAddition, 0);
     }
-
+    //gets date format for chosen date
     const getDateFullFormatEqualsTo = (chosenDate) => {
         return (chosenDate === new Date().getDate() && date.getMonth() === new Date().getMonth() && new Date().getFullYear() === date.getFullYear());
     }
@@ -498,6 +520,7 @@
         return $("#selectedVet :selected").attr("value") + "," + startDate + "," + endDate;
     }
 
+    //render calendar
     renderCalendar();
 
     const editDateParsing = (year, month, day) => {
@@ -575,6 +598,7 @@
         renderCalendar();
     });
 
+    //select time
     document.querySelector('.times').addEventListener('click',(event) => {
 
         let selected = event.target.dataset.target;
@@ -586,7 +610,6 @@
         renderCalendar();
     });
 </script>
-
 
 <div class="mydiv">
     <h2>Visits</h2>
@@ -616,14 +639,18 @@
 
     <div class="form-group" style="margin-top: 12px">
         <label for="selectedVisitType">Visit Type:</label>
-        <select id="selectedVisitType" name="selectedVisitType" ng-model="$ctrl.visitType" onchange=displayOptions()>
+        <!-- Create angular two-way binding model to filter vets by visit type -->
+        <select id="selectedVisitType" name="selectedVisitType" ng-model="testfilter" >
+            <!-- values are used to filter, hence they are not the same as the text displayed -->
             <option disabled selected value>Please Select A Visit Type</option>
-            <option value="Examinations">Examinations</option>
-            <option value="Injury">Injury</option>
-            <option value="Medical">Medical</option>
-            <option value="Chronic">Chronic</option>
-            <option value="Consultations">Consultations</option>
-            <option value="Operations">Operations</option>
+            <option value="general">Examinations</option>
+            <option value="surgery">Injury</option>
+            <!-- There are no values here because any doctor can perform these visits -->
+            <option value="">Medical</option>
+            <option value="radiology">Chronic</option>
+            <option value="general">Consultations</option>
+            <option value="surgery">Operations</option>
+
         </select>
     </div>
 
@@ -631,15 +658,16 @@
 
     <div class="form-group">
         <label for="selectedVet">Practitioner</label>
-        <input type="text" id="option1" ng-model="testfilter" value="{{option1}}">
+        <!-- Creating the actual model named testfilter. It is set to hidden because it should not be shown. -->
+        <input type="text" id="optionInput" ng-model="testfilter" value="" hidden>
         <select id="selectedVet" ng-model="$ctrl.practitionerId" ng-change="$ctrl.loadVetInfo();$ctrl.getVisitsForPractitionerIdAndMonth()" required>
             <option disabled selected value>Please Select A Veterinarian</option>
-            <option ng-repeat="p in $ctrl.vets | filter: testfilter " data-target="{{p.firstName}} {{p.lastName}} " value="{{p.vetId}}">{{p.firstName}} {{p.lastName}}
-                {{p.specialties}}</option>
+            <!-- Filtering vets using the custom model defined before -->
+            <option ng-repeat="p in $ctrl.vets | filter: testfilter" data-target="{{p.firstName}} {{p.lastName}}" value="{{p.vetId}}">{{p.firstName}} {{p.lastName}}</option>
         </select>
-
         <br>
 
+        <!-- displaying chosen vet info -->
         <label for="vetPhoneNumber" style="margin-top: 10px;">Phone Number:</label>
         <input id="vetPhoneNumber" disabled="disabled" style="background-color: #dbd9ce;"/>
 
@@ -687,6 +715,7 @@
     </tr>
     </thead>
     <tbody>
+    <!-- Listing upcoming visits using ng-repeat -->
         <tr ng-repeat="v in $ctrl.upcomingVisits" data-index="{{$index}}" data-table-name="upcomingVisits">
             <td class="col-sm-2">{{v.date}}</td>
             <td style="white-space: pre-line">{{v.description}}</td>
@@ -712,7 +741,7 @@
     </tr>
     </thead>
     <tbody>
-
+    <!-- Listing previous visits using ng-repeat -->
         <tr ng-repeat="v in $ctrl.previousVisits" data-index="{{$index}}" data-table-name="previousVisits">
             <td class="col-sm-2">{{v.date}}</td>
             <td style="white-space: pre-line">{{v.description}}</td>

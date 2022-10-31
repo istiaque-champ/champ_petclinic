@@ -65,6 +65,13 @@ public class BillResource {
     public Flux<BillDTO> getBillsByPetId(@PathVariable int petId){
         return SERVICE.GetBillsByPetId(EntityDTOUtil.verifyId(petId));
     }
+
+    @GetMapping(value = "/visits/{visitId}")
+    public Mono<ResponseEntity<BillDTO>> findBillByVisitId(@PathVariable int visitId){
+        return SERVICE.GetBillByVisitId(EntityDTOUtil.verifyId(visitId))
+                .map(ResponseEntity::ok)
+                .defaultIfEmpty(ResponseEntity.notFound().build());
+    }
     // Delete Bill //
     @DeleteMapping(value = "{billId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

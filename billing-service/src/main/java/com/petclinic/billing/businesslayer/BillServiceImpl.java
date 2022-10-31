@@ -91,4 +91,10 @@ public class BillServiceImpl implements BillService{
         return billRepository.findBillsByPetId(petId)
                 .map(EntityDTOUtil::entityToDTO);
     }
+
+    @Override
+    public Mono<BillDTO> GetBillByVisitId(int visitId) {
+        return billRepository.findBillByVisitId(visitId)
+                .map(EntityDTOUtil::entityToDTO);
+    }
 }
