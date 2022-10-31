@@ -1,0 +1,31 @@
+/// Prescription Model ///
+    The prescription.java file is a model class used for prescriptions
+    Each prescription is linked to a specific pet via the PetId
+
+    However a pet is not linked to a prescription
+
+    The intention of this service is to call it in the api gateway and link it only on the front end
+
+/// Service Implementation ///
+
+findPrescriptionById():
+    This method returns a prescription based off of the given prescriptionId
+
+savePrescription():
+    This method is used for posting new data
+
+findAllPrescriptionByPetId():
+    This method is used in order to link a prescription by pet in the api gateway
+
+    This method will return all the prescriptions related to a specific pet
+
+
+
+deletePrescriptionByPrescriptionId():
+    This method is used to delete a specific prescription via its id
+
+deletePrescriptionByPetId():
+    This method deletes all of a single pet's prescription
+
+updatePrescription():
+    This method is used for the PUT in order to update a specific prescription

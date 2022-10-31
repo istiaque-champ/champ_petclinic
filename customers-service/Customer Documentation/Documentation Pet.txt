@@ -1,0 +1,77 @@
+All Pet Endpoints can be found in the "PetResources.java" file found in the presentation layer
+
+/// Service Implementation ///
+
+findAll():
+    This method is used for front end purposes in order to display the correct pets associated with a specific owner
+    To do this the ownerService is called in order to get the associated pet id's
+
+    The find all method doesn't actually get all pets but instead gets all the pets of an owner
+
+findPetByPetId():
+    This method is similar to the previous  method in which it will only find a specific pet of a single owner instead of every single pet
+
+updatePet():
+    This method is used to update a pet
+
+    BOTH OF THEM ARE THE SAME
+    Not sure why there are duplicates
+
+CreatePet():
+    The create pet utilises no mappers and directly grabs the value from the pet request model and puts it into a new Pet Object
+
+
+
+deletePet():
+    This just deletes a pet and removes the association with it's owner
+    That's about all there is to it really
+    why are you still reading this? I already told you all that it does
+
+/// Pet Resource ///
+
+    The pet resource class is used as a controller
+    Each method utilises the methods from the PetService interface
+
+    The find pet returns a petDetails which can be thought of as a response model.
+    The reason why there is another find pet by id is because the findpetbyid method returns a normal pet which is needed to convert
+    to a PetDetails.
+
+    Pretty much the findPet uses the findPetById
+
+    The rest of the methods just use their associated service method i.e put mapping uses the put service method
+
+
+
+/// DataLayer ///
+
+    The data layer contains two pet related models
+
+    The Pet model and the PetType Model
+
+    The PetType Model is used in the Pet Model to determine the type of pet (bird, cat, hamster)
+    To see this you can check out a pets details page to see the pet type
+
+    The pet model also includes the associated owner in a many to one meaning the Owner model
+
+
+/// Testing ///
+
+Testing data:
+    The testing data can be found in the ./src/main/resources/db folder
+
+    If any of the models are ever updated you will need to edit the schema and values to match these new models in order for your test
+    to pass
+
+
+
+
+
+
+
+
+
+
+
+
+
+
