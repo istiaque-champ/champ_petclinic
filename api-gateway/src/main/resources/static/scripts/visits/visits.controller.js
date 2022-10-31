@@ -1,7 +1,35 @@
 'use strict';
+
+
 angular.module('visits')
-    .controller('VisitsController', ['$http', '$state', '$stateParams', '$filter', function ($http, $state, $stateParams, $filter) {
-        var self = this;
+    .controller('VisitsController', ['$http', '$state', '$stateParams', '$filter' /*'$translate'*/, function ($http, $state, $stateParams, $filter /*$translate*/) {
+    //$translate.use("en");
+ /*
+    $translate(['UPCOMING_VISITS', 'VISITS','PHONE_NUMBER', 'EMAIL_ADDRESS','SPECIALITIES', 'WORKDAYS', 'DATE', 'DESCRIPTION', 'PREVIOUS_VISITS', 'VISIT_TYPE']).then(function (visits_translations) {
+        $scope.visit_type = visits_translations.VISITS_TYPE;
+        $scope.upcomingVisits = visits_translations.UPCOMING_VISITS;
+        $scope.visits = visits_translations.VISITS;
+        $scope.phoneNumber = visits_translations.PHONE_NUMBER;
+        $scope.email = visits_translations.EMAIL_ADDRESS;
+        $scope.specialties = visits_translations.SPECIALITIES;
+        $scope.workday = visits_translations.WORKDAYS;
+        $scope.dates = visits_translations.DATE;
+        $scope.description = visits_translations.DESCRIPTION;
+        $scope.previousVisits = visits_translations.PREVIOUS_VISITS;
+    }, function (visits_translationIds) {
+        $scope.visit_type = visits_translationIds.visit_type;
+        $scope.upcomingVisits = visits_translationIds.upcomingVisits;
+        $scope.visits = visits_translationIds.visits;
+        $scope.phoneNumber = visits_translationIds.phoneNumber;
+        $scope.email = visits_translationIds.email;
+        $scope.specialties = visits_translationIds.specialties;
+        $scope.workday = visits_translationIds.workday;
+        $scope.dates = visits_translationIds.date;
+        $scope.description = visits_translationIds.description;
+        $scope.previousVisits = visits_translationIds.previousVisits;
+    });
+    */
+    var self = this;
         var petId = $stateParams.petId || 0;
         var postURL = "api/gateway/visit/owners/" + ($stateParams.ownerId || 0) + "/pets/" + petId + "/visits";
         var vetsUrl = "api/gateway/vets";
@@ -16,7 +44,7 @@ angular.module('visits')
             self.sortFetchedVisits();
         });
 
-        // Function to... get the current date ;)
+        // Function to get the current date
         function getCurrentDate() {
             let dateObj = new Date();
             var dd = String(dateObj.getDate()).padStart(2, '0');
@@ -26,6 +54,7 @@ angular.module('visits')
         }
 
         // Function to parse the visit date into a comparable format
+        // Function seems unused. May want to check later
         function parseDate(date) {
             var dd = String(date.getDate()).padStart(2, '0');
             var mm = String(date.getMonth() + 1).padStart(2, '0');
@@ -688,7 +717,6 @@ angular.module('visits')
             //Initializing variable for status
 
             var statusText = "";
-            let currentDate = getCurrentDate();
 
 
             //Retrieving the current date

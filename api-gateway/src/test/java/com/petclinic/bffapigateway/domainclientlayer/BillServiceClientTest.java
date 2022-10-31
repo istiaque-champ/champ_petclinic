@@ -55,7 +55,8 @@ class BillServiceClientTest {
                         "        \"vetId\": 2,\n" +
                         "        \"petId\": 2,\n" +
                         "        \"visitType\": \"Examinations\",\n" +
-                        "        \"amount\": 59.99\n" +
+                        "        \"amount\": 59.99,\n" +
+                        "        \"visitId\": 12345\n" +
                         "    }"));
 
         Mono<BillDetailsExpanded> billDetailsMono = billServiceClient.getBilling(63701);
@@ -74,7 +75,8 @@ class BillServiceClientTest {
                     "        \"vetId\": 2,\n" +
                     "        \"petId\": 2,\n" +
                     "        \"visitType\": \"Examinations\",\n" +
-                    "        \"amount\": 59.99\n" +
+                    "        \"amount\": 59.99,\n" +
+                    "        \"visitId\": 12345\n" +
                     "    }]"));
 
         Flux<BillDetailsExpanded> billDetailsFlux = billServiceClient.getAllBilling();
@@ -141,7 +143,8 @@ class BillServiceClientTest {
                         "        \"vetId\": 2,\n" +
                         "        \"petId\": 2,\n" +
                         "        \"visitType\": \"Examinations\",\n" +
-                        "        \"amount\": 59.99\n" +
+                        "        \"amount\": 59.99,\n" +
+                        "        \"visitId\": 12345\n" +
                         "    }]"));
 
         Flux<BillDetailsExpanded> billDetailsFlux = billServiceClient.getBillsByVetId(2);
@@ -160,7 +163,8 @@ class BillServiceClientTest {
                         "        \"vetId\": 2,\n" +
                         "        \"petId\": 2,\n" +
                         "        \"visitType\": \"Examinations\",\n" +
-                        "        \"amount\": 59.99\n" +
+                        "        \"amount\": 59.99,\n" +
+                        "        \"visitId\": 12345\n" +
                         "    }]"));
 
         Flux<BillDetailsExpanded> billDetailsFlux = billServiceClient.getBillsByPetId(2);
@@ -179,10 +183,30 @@ class BillServiceClientTest {
                         "        \"vetId\": 2,\n" +
                         "        \"petId\": 2,\n" +
                         "        \"visitType\": \"Examinations\",\n" +
-                        "        \"amount\": 59.99\n" +
+                        "        \"amount\": 59.99,\n" +
+                        "        \"visitId\": 12345\n" +
                         "    }]"));
 
         Flux<BillDetailsExpanded> billDetailsFlux = billServiceClient.getBillsByCustomerId(1);
+
+        assertEquals(63701, billDetailsFlux.blockFirst().getBillId());
+    }
+    @Test
+    void getBillingByVisitId() {
+        prepareResponse(response -> response
+                .setHeader("Content-Type", "application/json")
+                .setBody("{\n" +
+                        "        \"billId\": 63701,\n" +
+                        "        \"date\": \"2022-10-09T03:29:52.992+00:00\",\n" +
+                        "        \"customerId\": 1,\n" +
+                        "        \"vetId\": 2,\n" +
+                        "        \"petId\": 2,\n" +
+                        "        \"visitType\": \"Examinations\",\n" +
+                        "        \"amount\": 59.99,\n" +
+                        "        \"visitId\": 12345\n" +
+                        "    }"));
+
+        Flux<BillDetailsExpanded> billDetailsFlux = billServiceClient.getBillByVisitId(12345);
 
         assertEquals(63701, billDetailsFlux.blockFirst().getBillId());
     }
@@ -198,7 +222,8 @@ class BillServiceClientTest {
                     "        \"vetId\": 2,\n" +
                     "        \"petId\": 2,\n" +
                     "        \"visitType\": \"Examinations\",\n" +
-                    "        \"amount\": 59.99\n" +
+                    "        \"amount\": 59.99,\n" +
+                    "        \"visitId\": 12345\n" +
                     "    }"));
 
         Mono<Void> empty = billServiceClient.deleteBill(1);
