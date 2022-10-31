@@ -8,6 +8,8 @@ angular.module('billDetails')
         if (!createBill){
             $http.get('api/gateway/bills/' + $stateParams.billId).then(function (resp) {
                 self.bills = resp.data;
+
+                self.selectedVisitType = self.bills.visitType;
             })
         } else {
             self.bills = {};
