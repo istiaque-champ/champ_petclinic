@@ -51,6 +51,7 @@ angular.module('billDetails')
             self.bills.petId = self.selectedPet.id;
 
             if (createBill){
+                self.bills.visitId = Math.floor(Math.random()*90000) + 10000;
                 console.log('Creating new bill');
                 console.log(self.bills);
                 var uri = 'api/gateway/bills';
