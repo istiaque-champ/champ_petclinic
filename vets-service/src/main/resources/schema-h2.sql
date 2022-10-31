@@ -13,7 +13,8 @@ CREATE TABLE "vets"
     image        LONGBLOB,
     resume       VARCHAR(350),
     workday      VARCHAR(250),
-    is_active    BIT
+    is_active    BIT,
+    rating INT
 );
 CREATE INDEX vets_last_name ON vets (last_name);
 

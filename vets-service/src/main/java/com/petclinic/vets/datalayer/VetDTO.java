@@ -21,5 +21,6 @@ public class VetDTO {
     private String resume;
     private String workday;
     private Integer isActive;
+    private int rating;
     private Set<Specialty> specialties;
 }
