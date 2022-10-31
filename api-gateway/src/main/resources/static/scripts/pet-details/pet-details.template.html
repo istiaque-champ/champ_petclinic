@@ -28,5 +28,16 @@
 
     <!--Button should send back to owner list???-->
     <button ng-click="$ctrl.submitPetDetailsForm()" type="submit" ui-sref="owners">Save</button>
+
+<table id="prescripts">
+
+    <tr id="presTR" ng-repeat="prescription in $ctrl.prescriptions">
+        <td>{{prescription.medication}}</td>
+        <td>{{prescription.amount}}</td>
+        <td>{{prescription.instructions}}</td>
+        <td>{{prescription.datePrinted}}</td>
+    </tr>
+</table>
+
 </div>
 
