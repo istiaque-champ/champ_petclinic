@@ -1481,4 +1481,53 @@ class ApiGatewayControllerTest {
                 .expectBody()
                 .jsonPath("$[0].billId").doesNotExist();
     }
+
+    @Test
+    void getBillByVisitId(){
+        BillDetailsExpanded entity = new BillDetailsExpanded();
+
+        entity.setBillId(1);
+
+        entity.setAmount(599);
+
+        entity.setCustomerId(2);
+
+        entity.setVetId(1);
+        entity.setPetId(1);
+
+        entity.setVisitType("Consultation");
+        entity.setVisitId(1);
+        when(billServiceClient.getBillByVisitId(1)).thenReturn(Flux.just(entity));
+
+
+        OwnerDetails ownerDetails = new OwnerDetails();
+        when(customersServiceClient.getOwner(anyInt())).thenReturn(Mono.just(ownerDetails));
+
+        client.get()
+                //check the URI
+                .uri("/api/gateway/bills/visits/" + 1)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$[0].billId").isEqualTo(1)
+                .jsonPath("$[0].customerId").isEqualTo(entity.getCustomerId())
+                .jsonPath("$[0].visitType").isEqualTo(entity.getVisitType())
+                .jsonPath("$[0].amount").isEqualTo(entity.getAmount())
+                .jsonPath("$[0].vetId").isEqualTo(entity.getVetId())
+                .jsonPath("$[0].petId").isEqualTo(entity.getPetId())
+                .jsonPath("$[0].visitId").isEqualTo(entity.getVisitId());
+    }
+
+    @Test
+    void getBillsByVisitIdNotFoundEmpty(){
+        when(billServiceClient.getBillByVisitId(1)).thenReturn(Flux.empty());
+
+        client.get()
+                //check the URI
+                .uri("/api/gateway/bills/visits/" + 1)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$[0].billId").doesNotExist();
+    }
 }
