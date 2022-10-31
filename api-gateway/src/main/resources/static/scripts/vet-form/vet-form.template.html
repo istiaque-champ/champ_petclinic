@@ -3,7 +3,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
 <link href="/css/vets/form.css" rel="stylesheet" type="text/css"/>
 
-<div class="bg-light">
+<div class="bg-light"> 
     <div class="container">
         <div class="py-5 text-center"/>
         <h2 class="titleVetForm" id="title">New Vet Sign Up</h2>
@@ -11,160 +11,246 @@
         <p class="lead">Welcome to our team, please fill out the form below ensuring to fill all sections.</p>
     </div>
     <div class="row g-5">
-        <div class="col-md-7 col-lg-12">
-            <form enctype="multipart/form-data" id="vetForm" name="vetForm">
+        <form enctype="multipart/form-data" id="vetForm" name="vetForm">
+            <div class="row g-3">
+                <div class="col-sm-6">
+                    <input class="form-control" id="firstName" maxlength="30" minlength="3"
+                           name="firstName" ng-model="vet.firstName" ng-value="$ctrl.vet.firstName"
+                           pattern="^(a-z| |,|.|-)+"
+                           placeholder="First Name" required
+                           title="Minimum of 3 characters and maximum of 30 characters. Only letters and punctuation mark."
+                           type="text"><br/>
+                </div>
+
+                <div class="col-sm-6">
+                    <input class="form-control" id="lastName" maxlength="30" minlength="3" name="lastName"
+                           ng-model="vet.lastName" pattern="^(a-z| |,|.|-)+" placeholder="Last Name" required
+                           title="Minimum of 3 characters and maximum of 30 characters. Only letters and punctuation mark."
+                           type="text">
+                </div>
+
+                <div class="col-12">
+                    <input class="form-control" id="email" maxlength="100" minlength="5" name="email"
+                           ng-model="vet.email" pattern="\b[\w.%-]+@[-.\w]+\.[A-Za-z]{2,5}\b" placeholder="Email"
+                           required
+                           title="Minimum of 5 characters and maximum of 100 characters. Top level domain should have 2 to 5 characters."
+                           type="email">
+                </div>
+
+                <div class="col-sm-12">
+                    <input class="form-control" id="phoneNumber" maxlength="4" minlength="4"
+                           name="phoneNumber" ng-model="vet.phoneNumber" placeholder="Phone Number" required
+                           title="Accepts only numbers for 4 characters." type="number">
+                </div>
+
+                <hr class="my-4"/>
+
+
                 <div class="row g-3">
                     <div class="col-sm-6">
-                        <input class="form-control" id="firstName" maxlength="30" minlength="3"
-                               name="firstName" ng-model="vet.firstName" ng-value="$ctrl.vet.firstName"
-                               pattern="^(a-z| |,|.|-)+"
-                               placeholder="First Name" required
-                               title="Minimum of 3 characters and maximum of 30 characters. Only letters and punctuation mark."
-                               type="text"><br/>
+                        <h5 class="form-label">Profile Picture</h5>
+                        <span id="checkmarkPic" style="display: none">&#10003;</span>
+                        <input accept="image/*"
+                               class="form-control"
+                               id="profilePicture"
+                               name="profilePicture"
+                               ng-model="vet.profilePicture"
+                               onchange="uploadPicture(event)"
+                               type="file"/>
                     </div>
-
                     <div class="col-sm-6">
-                        <input class="form-control" id="lastName" maxlength="30" minlength="3" name="lastName"
-                               ng-model="vet.lastName" pattern="^(a-z| |,|.|-)+" placeholder="Last Name" required
-                               title="Minimum of 3 characters and maximum of 30 characters. Only letters and punctuation mark."
+                        <img alt="Profile picture preview" class="img-preview" height="130px" id="preview"
+                             width="130px"/>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <span class="help-block" ng-show="vetForm.profilePicture.$error.required">Only .png, .pdf, .jpeg and .gif accepted</span>
+                </div>
+
+                <script>
+                    let uploadPicture = function (event) {
+                        let preview = document.getElementById('preview');
+                        let checkmark = document.getElementById('checkmarkPic');
+                        if (document.getElementById('profilePicture') != null) {
+                            checkmark.style.display = "inline";
+                        }
+                        preview.src = URL.createObjectURL(event.target.files[0]);
+                        preview.onload = function () {
+                            URL.revokeObjectURL(preview.src)
+                        }
+                    };
+                </script>
+                <hr class="my-4"/>
+
+                <div class="col-sm-12">
+                    <h5 class="form-label">Career Resume</h5>
+                    <textarea class="form-control" id="vetResume" maxlength="350" name="resume"
+                              ng-model="vet.resume" pattern="^(.*)" placeholder="Resume"
+                              title="Maximum of 350 characters."></textarea>
+                </div>
+
+                <hr class="my-4"/>
+
+                <div class="row gy-3 ">
+                    <div class="col-md-12">
+                        <h5 class="mb-3">Specialty</h5>
+                        <div class="form-check">
+                            <input class="form-check-input specialty" id="radiology" name="specialties"
+                                   ng-model="vet.specialties"
+                                   ng-true-value='[{"id":1, "specialtyId":100001, "name":"radiology"}]'
+                                   type="checkbox"
+                                   value='{"id":1, "specialtyId":100001, "name":"radiology"}'>
+                            <label class="form-check-label vet-label-input" for="radiology">Radiology</label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input specialty" id="surgery"
+                                   ng-true-value='[{"id":2, "specialtyId":100002, "name":"surgery"}]'
+                                   type="checkbox"
+                                   value='{"id":2, "specialtyId":100002, "name":"surgery"}'>
+                            <label class="form-check-label vet-label-input" for="surgery">Surgery</label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input specialty" id="dentistry"
+                                   ng-true-value='[{"id":3, "specialtyId":100003, "name":"dentistry"}]'
+                                   type="checkbox"
+                                   value='{"id":3, "specialtyId":100003, "name":"dentistry"}'>
+                            <label class="form-check-label vet-label-input" for="dentistry">Dentistry</label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input specialty" id="general"
+                                   ng-true-value='[{"id":4, "specialtyId":100004, "name":"general"}]'
+                                   type="checkbox"
+                                   value='{"id":4, "specialtyId":100004, "name":"general"}'>
+                            <label class="form-check-label vet-label-input" for="general">General</label>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Bradley's improved Available Work Day setter -->
+                <div class="col-sm-6">
+                    <div class="my-3 check-align">
+                        <h5 class="mb-3">Available Work Days</h5>
+
+                        <div class="form-check">
+                            <input class="form-check-input workdays" id="sunday" name="workdays"
+                                   type="checkbox"
+                                   value="sunday">
+                            <label class="form-check-label vet-label-input" for="sunday">Sunday</label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input workdays" id="monday" name="workdays"
+                                   type="checkbox"
+                                   value="monday">
+                            <label class="form-check-label vet-label-input" for="monday">Monday</label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input workdays" id="tuesday" name="workdays"
+                                   type="checkbox"
+                                   value="tuesday">
+                            <label class="form-check-label vet-label-input" for="tuesday">Tuesday</label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input workdays" id="wednesday" name="workdays"
+                                   type="checkbox"
+                                   value="wednesday">
+                            <label class="form-check-label vet-label-input" for="wednesday">Wednesday</label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input workdays" id="thursday" name="workdays"
+                                   type="checkbox"
+                                   value="thursday">
+                            <label class="form-check-label vet-label-input" for="thursday">Thursday</label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input workdays" id="friday" name="workdays"
+                                   type="checkbox"
+                                   value="friday">
+                            <label class="form-check-label vet-label-input" for="friday">Friday</label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input workdays" id="saturday" name="workdays"
+                                   type="checkbox"
+                                   value="saturday">
+                            <label class="form-check-label vet-label-input" for="saturday">Saturday</label>
+                        </div>
+
+                        <button onclick="getDays()">Set Days</button>
+
+                        <input type="text" id="workdaysSet" size="100" ng-model="vet.workday" readonly>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Old Work Days Code
+             <div class="col-sm-6">
+                <div class="my-3 check-align">
+                    <h5 class="mb-3">OLD:
+                        Available Work Days</h5>
+                    <div class="col-sm-12">
+                        <input class="form-control" id="workDays" maxlength="250" name="workday"
+                               ng-model="vet.workday"
+                               pattern="((\bMonday\b|\bTuesday\b|\bWednesday\b|\bThursday\b|\bFriday\b|\bSaturday\b|\bSunday\b)(,|)( |))+"
+                               placeholder="ex:Monday, Tuesday"
+                               title="Maximum of 250 characters. Accepts only days of the week seperated by commas."
                                type="text">
                     </div>
-
-                    <div class="col-12">
-                        <input class="form-control" id="email" maxlength="100" minlength="5" name="email"
-                               ng-model="vet.email" pattern="\b[\w.%-]+@[-.\w]+\.[A-Za-z]{2,5}\b" placeholder="Email"
-                               required
-                               title="Minimum of 5 characters and maximum of 100 characters. Top level domain should have 2 to 5 characters."
-                               type="email">
-                    </div>
-
-                    <div class="col-sm-12">
-                        <input class="form-control" id="phoneNumber" maxlength="4" minlength="4"
-                               name="phoneNumber" ng-model="vet.phoneNumber" placeholder="Phone Number" required
-                               title="Accepts only numbers for 4 characters." type="number">
-                    </div>
-
-                    <hr class="my-4"/>
-
-
-                    <div class="row g-3">
-                        <div class="col-sm-6">
-                            <h5 class="form-label">Profile Picture</h5>
-                            <span id="checkmarkPic" style="display: none">&#10003;</span>
-                            <input accept="image/*"
-                                   class="form-control"
-                                   id="profilePicture"
-                                   name="profilePicture"
-                                   ng-model="vet.profilePicture"
-                                   onchange="uploadPicture(event)"
-                                   type="file"/>
-                        </div>
-                        <div class="col-sm-6">
-                            <img alt="Profile picture preview" class="img-preview" height="130px" id="preview"
-                                 width="130px"/>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <span class="help-block" ng-show="vetForm.profilePicture.$error.required">Only .png, .pdf, .jpeg and .gif accepted</span>
-                    </div>
-
-                    <script>
-                        let uploadPicture = function (event) {
-                            let preview = document.getElementById('preview');
-                            let checkmark = document.getElementById('checkmarkPic');
-                            if (document.getElementById('profilePicture') != null) {
-                                checkmark.style.display = "inline";
-                            }
-                            preview.src = URL.createObjectURL(event.target.files[0]);
-                            preview.onload = function () {
-                                URL.revokeObjectURL(preview.src)
-                            }
-                        };
-                    </script>
-                    <hr class="my-4"/>
-
-                    <div class="col-sm-12">
-                        <h5 class="form-label">Career Resume</h5>
-                        <textarea class="form-control" id="vetResume" maxlength="350" name="resume"
-                                  ng-model="vet.resume" pattern="^(.*)" placeholder="Resume"
-                                  title="Maximum of 350 characters."></textarea>
-                    </div>
-
-                    <hr class="my-4"/>
-
-                    <div class="row gy-3 ">
-                        <div class="col-md-12">
-                            <h5 class="mb-3">Specialty</h5>
-                            <div class="form-check">
-                                <input class="form-check-input specialty" id="radiology" name="specialties"
-                                       ng-model="vet.specialties"
-                                       ng-true-value='[{"id":1, "specialtyId":100001, "name":"radiology"}]'
-                                       type="checkbox"
-                                       value='{"id":1, "specialtyId":100001, "name":"radiology"}'>
-                                <label class="form-check-label vet-label-input" for="radiology">Radiology</label>
-                            </div>
-
-                            <div class="form-check">
-                                <input class="form-check-input specialty" id="surgery"
-                                       ng-true-value='[{"id":2, "specialtyId":100002, "name":"surgery"}]'
-                                       type="checkbox"
-                                       value='{"id":2, "specialtyId":100002, "name":"surgery"}'>
-                                <label class="form-check-label vet-label-input" for="surgery">Surgery</label>
-                            </div>
-
-                            <div class="form-check">
-                                <input class="form-check-input specialty" id="dentistry"
-                                       ng-true-value='[{"id":3, "specialtyId":100003, "name":"dentistry"}]'
-                                       type="checkbox"
-                                       value='{"id":3, "specialtyId":100003, "name":"dentistry"}'>
-                                <label class="form-check-label vet-label-input" for="dentistry">Dentistry</label>
-                            </div>
-
-                            <div class="form-check">
-                                <input class="form-check-input specialty" id="general"
-                                       ng-true-value='[{"id":4, "specialtyId":100004, "name":"general"}]'
-                                       type="checkbox"
-                                       value='{"id":4, "specialtyId":100004, "name":"general"}'>
-                                <label class="form-check-label vet-label-input" for="general">General</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6">
-                        <div class="my-3 check-align">
-                            <h5 class="mb-3">Available Work Days</h5>
-                            <div class="col-sm-12">
-                                <input class="form-control" id="workDays" maxlength="250" name="workday"
-                                       ng-model="vet.workday"
-                                       pattern="((\bMonday\b|\bTuesday\b|\bWednesday\b|\bThursday\b|\bFriday\b|\bSaturday\b|\bSunday\b)(,|)( |))+"
-                                       placeholder="ex:Monday, Tuesday"
-                                       title="Maximum of 250 characters. Accepts only days of the week seperated by commas."
-                                       type="text">
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="my-3 check-align">
-                        <h5 class="mb-3">Active Vet</h5>
-
-                        <div class="form-check">
-                            <label class="form-check-label vet-label-input">
-                                <input class="form-check-input isActiveRadio" name="isActive" ng-model="vet.isActive"
-                                       ng-value="1" type="radio" value="1">Yes</label>
-                        </div>
-                        <div class="form-check">
-                            <label class="form-check-label vet-label-input">
-                                <input class="form-check-input isActiveRadio" name="isActive" ng-model="vet.isActive"
-                                       ng-value="0" type="radio" value="0">No</label>
-                        </div>
-                    </div>
-                    <hr class="my-4"/>
-                    <button class="w-100 btn btn-primary btn-lg" ng-click="$ctrl.submitVetForm(vet)" type="submit">
-                        Submit
-                    </button>
                 </div>
-            </form>
+            </div>
+            -->
+
+
+
+            <div class="my-3 check-align">
+                <h5 class="mb-3">Active Vet</h5>
+
+                <div class="form-check">
+                    <label class="form-check-label vet-label-input">
+                        <input class="form-check-input isActiveRadio" name="isActive" ng-model="vet.isActive"
+                               ng-value="1" type="radio" value="1">Yes</label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label vet-label-input">
+                        <input class="form-check-input isActiveRadio" name="isActive" ng-model="vet.isActive"
+                               ng-value="0" type="radio" value="0">No</label>
+                </div>
+            </div>
+            <hr class="my-4"/>
+            <button class="w-100 btn btn-primary btn-lg" ng-click="$ctrl.submitVetForm(vet)" type="submit">
+                Submit
+            </button>
+        </form>
         </div>
     </div>
 </div>
+
+<script>
+    function getDays() {
+        var days = document.forms[0];
+        var wrkDys = "";
+        var i;
+        for (i = 0; i < days.length; i++) {
+            if (days[i].checked) {
+                wrkDys = wrkDys + days[i].value + ",";
+            }
+        }
+
+        if(wrkDys.length == 0){
+            wrkDys = "None";
+        }
+        if (wrkDys.charAt(wrkDys.length-1) == ","){
+            wrkDys = wrkDys.substr(0, wrkDys.length-1);
+        }
+        document.getElementById("workdaysSet").value = '{"workday":"' + wrkDys + '"}';
+    }
+</script>
