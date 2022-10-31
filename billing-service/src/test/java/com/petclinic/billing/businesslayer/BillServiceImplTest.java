@@ -36,6 +36,7 @@ public class BillServiceImplTest {
     private final Double SECOND_VALID_AMOUNT = 50.00;
     private final Integer VALID_VET_ID = 1;
     private final Integer VALID_PET_ID = 1;
+    private final Integer VALID_VISIT_ID = 1;
 
 
     @BeforeEach
@@ -49,6 +50,7 @@ public class BillServiceImplTest {
         setupBill.setAmount(VALID_AMOUNT);
         setupBill.setVetId(VALID_VET_ID);
         setupBill.setPetId(VALID_PET_ID);
+        setupBill.setVisitId(VALID_VISIT_ID);
 
         //Setup mock repo
         when(billRepository.save(any(Bill.class))).thenReturn(Mono.just(setupBill));
@@ -58,6 +60,7 @@ public class BillServiceImplTest {
         when(billRepository.findAll()).thenReturn(Flux.just(setupBill));
         when(billRepository.findBillsByVetId(VALID_VET_ID)).thenReturn(Flux.just(setupBill));
         when(billRepository.findBillsByPetId(VALID_PET_ID)).thenReturn(Flux.just(setupBill));
+        when(billRepository.findBillByVisitId(VALID_VISIT_ID)).thenReturn(Mono.just(setupBill));
     }
 
     @Test
@@ -71,6 +74,7 @@ public class BillServiceImplTest {
                     assertEquals(billDTO.getAmount(), VALID_AMOUNT);
                     assertEquals(billDTO.getVetId(), VALID_VET_ID);
                     assertEquals(billDTO.getPetId(), VALID_PET_ID);
+                    assertEquals(billDTO.getVisitId(), VALID_VISIT_ID);
                     return billDTO;
                 });
     }
@@ -86,6 +90,7 @@ public class BillServiceImplTest {
                     assertEquals(billDTO.getAmount(), VALID_AMOUNT);
                     assertEquals(billDTO.getVetId(), VALID_VET_ID);
                     assertEquals(billDTO.getPetId(), VALID_PET_ID);
+                    assertEquals(billDTO.getVisitId(), VALID_VISIT_ID);
                     return billDTO;
                 });
     }
@@ -106,6 +111,7 @@ public class BillServiceImplTest {
                     assertEquals(billDTO.getAmount(), VALID_AMOUNT);
                     assertEquals(billDTO.getVetId(), VALID_VET_ID);
                     assertEquals(billDTO.getPetId(), VALID_PET_ID);
+                    assertEquals(billDTO.getVisitId(), VALID_VISIT_ID);
                     return billDTO;
                 });
     }
@@ -127,6 +133,8 @@ public class BillServiceImplTest {
                     assertEquals(billDTO.getAmount(), VALID_AMOUNT);
                     assertEquals(billDTO.getVetId(), VALID_VET_ID);
                     assertEquals(billDTO.getPetId(), VALID_PET_ID);
+                    assertEquals(billDTO.getVisitId(), VALID_VISIT_ID);
+                    assertEquals(billDTO.getVisitId(), VALID_VISIT_ID);
                     return billDTO;
                 });
     }
@@ -139,6 +147,7 @@ public class BillServiceImplTest {
         billDTOInput.setCustomerId(VALID_CUSTOMER_ID);
         billDTOInput.setVetId(VALID_VET_ID);
         billDTOInput.setAmount(SECOND_VALID_AMOUNT);
+        billDTOInput.setVisitId(VALID_VISIT_ID);
 
         Bill setupBill = new Bill();
         setupBill.setBillId(VALID_BILL_ID);
@@ -147,6 +156,7 @@ public class BillServiceImplTest {
         setupBill.setDate(VALID_DATE);
         setupBill.setAmount(SECOND_VALID_AMOUNT);
         setupBill.setVetId(VALID_VET_ID);
+        setupBill.setVisitId(VALID_VISIT_ID);
 
         when(billRepository.save(any(Bill.class))).thenReturn(Mono.just(setupBill));
 
@@ -159,6 +169,7 @@ public class BillServiceImplTest {
                     assertEquals(billDTO.getAmount(), SECOND_VALID_AMOUNT);
                     assertEquals(billDTO.getVetId(), VALID_VET_ID);
                     assertEquals(billDTO.getPetId(), VALID_PET_ID);
+                    assertEquals(billDTO.getVisitId(), VALID_VISIT_ID);
                     return billDTO;
                 });
     }
@@ -174,6 +185,7 @@ public class BillServiceImplTest {
                     assertEquals(billDTO.getAmount(), VALID_AMOUNT);
                     assertEquals(billDTO.getVetId(), VALID_VET_ID);
                     assertEquals(billDTO.getPetId(), VALID_PET_ID);
+                    assertEquals(billDTO.getVisitId(), VALID_VISIT_ID);
                     return billDTO;
                 });
     }
@@ -189,6 +201,23 @@ public class BillServiceImplTest {
                     assertEquals(billDTO.getAmount(), VALID_AMOUNT);
                     assertEquals(billDTO.getVetId(), VALID_VET_ID);
                     assertEquals(billDTO.getPetId(), VALID_PET_ID);
+                    assertEquals(billDTO.getVisitId(), VALID_VISIT_ID);
+                    return billDTO;
+                });
+    }
+
+    @Test
+    void test_GetBillByVisitId(){
+        billService.GetBillByVisitId(VALID_VISIT_ID)
+                .map(billDTO -> {
+                    assertEquals(billDTO.getBillId(), VALID_BILL_ID);
+                    assertEquals(billDTO.getCustomerId(), VALID_CUSTOMER_ID);
+                    assertEquals(billDTO.getVisitType(), VALID_VISIT_TYPE);
+                    assertEquals(billDTO.getDate(), VALID_DATE);
+                    assertEquals(billDTO.getAmount(), VALID_AMOUNT);
+                    assertEquals(billDTO.getVetId(), VALID_VET_ID);
+                    assertEquals(billDTO.getPetId(), VALID_PET_ID);
+                    assertEquals(billDTO.getVisitId(), VALID_VISIT_ID);
                     return billDTO;
                 });
     }
