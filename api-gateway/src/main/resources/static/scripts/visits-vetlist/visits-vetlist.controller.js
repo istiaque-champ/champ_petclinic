@@ -3,14 +3,11 @@
 angular.module('visitsVetList')
     .controller('VisitsVetListController', ['$http', '$state', '$stateParams', '$filter', function ($http, $state, $stateParams, $filter) {
         var self = this;
-        //var petId = $stateParams.petId || 0;
-        var practitionerId = $stateParams.practitionerId || 0;
-        // var postURL = "api/gateway/visit/owners/" + ($stateParams.ownerId || 0) + "/pets/" + petId + "/visits";
+        //var practitionerId = $stateParams.practitionerId || 0;
         var postURL = "api/gateway/visits/vets/" + ($stateParams.practitionerId || 0);
         var vetsUrl = "api/gateway/vets";
-        // var billsUrl = "api/gateway/bill";
         var visitId = 0;
-        // self.practitionerId = 0;
+        self.practitionerId = 0;
         self.date = new Date();
         self.desc = "";
 
@@ -19,7 +16,6 @@ angular.module('visitsVetList')
             self.vets = resp.data;
         });
 
-        //MIGHT NEED TO EDIT SO IT'S NOT RUN ON GET
         //Fetch visits according to vet id
         $http.get("api/gateway/visits/vets/"+practitionerId).then(function (resp) {
             self.visits = resp.data;
@@ -139,8 +135,8 @@ angular.module('visitsVetList')
                 if(info !== undefined){
                     console.log(info.toString());
                     let practitionerId = parseInt(info);
-                    let startDate = info[1];
-                    let endDate = info[2];
+                    //let startDate = info[1];
+                    //let endDate = info[2];
 
                     if(!isNaN(practitionerId)) {
                         $http.get("api/gateway/visits/vets/" + practitionerId).then(function (resp) {
