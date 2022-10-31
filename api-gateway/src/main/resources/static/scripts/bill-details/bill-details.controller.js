@@ -44,12 +44,16 @@ angular.module('billDetails')
             }
         })
 
+        self.selectedVisit = function() {
+
+        }
 
         self.submitBillDetailsForm = function (){
 
             self.bills.customerId = self.selectedOwner.id;
             self.bills.vetId = self.selectedVet.vetId;
             self.bills.petId = self.selectedPet.id;
+
 
             if (createBill){
                 self.bills.visitId = Math.floor(Math.random()*90000) + 10000;

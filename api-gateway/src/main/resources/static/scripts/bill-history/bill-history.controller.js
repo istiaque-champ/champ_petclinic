@@ -64,14 +64,14 @@ angular.module('billHistory')
 
             let parentRect = parent.getBoundingClientRect();
             let right = parentRect.right;
-            let top = parentRect.y;
+            //let top = parentRect.y;
 
             child.classList.remove("modalOff");
             child.classList.add("modalOn");
 
             child.style.top = `${top}px`;
-            // child.style.left = `${right + width}px`;
-            child.style.left = `${right}px`;
+            child.style.left = `${right + width}px`;
+            //child.style.left = `${right}px`;
             // child.innerHTML = `${width}`;
         }
         this.hide = ($event, billId) => {
