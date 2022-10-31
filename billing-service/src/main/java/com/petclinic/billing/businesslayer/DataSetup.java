@@ -40,6 +40,7 @@ public class DataSetup implements CommandLineRunner {
             setupBill.setDate(VALID_DATE);
             setupBill.setVetId(i % 2 == 0 ? VALID_VET_ID1 : VALID_VET_ID2);
             setupBill.setPetId(i % 2 == 0 ? VALID_PET_ID1 : VALID_PET_ID2);
+            setupBill.setVisitId(i + 1);
 
             billDTOS.add(setupBill);
         }
