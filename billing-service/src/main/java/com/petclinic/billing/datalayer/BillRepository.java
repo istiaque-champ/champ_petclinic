@@ -21,6 +21,8 @@ public interface BillRepository extends ReactiveMongoRepository<Bill, Integer> {
 
     @Transactional(readOnly = true)
     Flux<Bill> findBillsByPetId(int petId);
+    @Transactional(readOnly = true)
+    Mono<Bill> findBillByVisitId(int visitId);
 
     @Transactional
     Mono<Void> deleteBillByBillId(int billId);

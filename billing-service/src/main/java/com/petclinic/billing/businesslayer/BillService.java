@@ -18,6 +18,7 @@ public interface BillService {
     Flux<BillDTO> GetBillsByVetId(int vetId);
 
     Flux<BillDTO> GetBillsByPetId(int petId);
+    Mono<BillDTO> GetBillByVisitId(int visitId);
 
     Mono<BillDTO> UpdateBill(Mono<BillDTO> model, int billId);
 }
