@@ -11,8 +11,8 @@ const whiteList = new Set([
 var petClinicApp = angular.module('petClinicApp', [
     'ui.router', 'layoutNav', 'layoutFooter', 'layoutWelcome', 'petDetails' , 'ownerList', 'ownerDetails', 'ownerForm', 'petForm'
     , 'visits', 'vetList','vetForm','vetDetails', 'loginForm', 'rolesDetails', 'signupForm', 'billDetails', 'billHistory'
-    , 'verification' , 'adminPanel' /*'pascalprecht.translate'*/]);
-
+    , 'verification' , 'adminPanel']);
+   /* module name for translation: 'pascalprecht.translate'*/
 petClinicApp.factory("authProvider", ["$window", function ($window) {
 
     return {
@@ -98,7 +98,8 @@ console.table(translations);
 
 */
 
-petClinicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider' /*'$translateProvider'*/, function (
+petClinicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', function (
+    /*config name for tanslation : '$translateProvider'*/
     $stateProvider, $urlRouterProvider, $locationProvider, $httpProvider /*$translateProvider*/) {
 
     // safari turns to be lazy sending the Cache-Control header
