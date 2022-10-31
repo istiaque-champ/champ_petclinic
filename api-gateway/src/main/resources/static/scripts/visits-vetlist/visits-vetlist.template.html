@@ -55,7 +55,8 @@
     <tr>
         <th> <button class="btn btn-default" id="sortByDateButtonUpcomingVisits" ng-click="$ctrl.SortTableByDate(true)" style="color: white">Sort by date ⇅</button> </th>
         <th> <button class="btn btn-default" id="sortByDescButtonUpcomingVisits" ng-click="$ctrl.SortTableByDesc(true)" style="color: white">Sort by description ⇅</button> </th>
-        <th> <button class="btn btn-default" id="sortByVetButtonUpcomingVisits" ng-click="$ctrl.SortTableByOwner(true)" style="color: white">Sort by owner ⇅</button> </th>
+        <!-- There's no owner in visit object -->
+        <!-- <th> <button class="btn btn-default" id="sortByVetButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByOwner(false)" style="color: white">Sort by owner ⇅</button> </th> -->
         <th> <button class="btn btn-default" id="sortByStatusButtonUpcomingVisits" ng-click="$ctrl.SortTableByStatus(true)" style="color: white">Sort by status ⇅</button> </th>
     </tr>
     </thead>
@@ -63,7 +64,8 @@
         <tr ng-repeat="v in $ctrl.upcomingVisits" data-index="{{$index}}" data-table-name="upcomingVisits">
             <td class="col-sm-2">{{v.date}}</td>
             <td style="white-space: pre-line">{{v.description}}</td>
-            <td style="white-space: pre-line">{{$ctrl.getOwnerName(v.ownerId)}}</td>
+            <!-- There's no owner in visit object -->
+            <!-- <td style="white-space: pre-line">{{$ctrl.getOwnerName(v.ownerId)}}</td> -->
             <td class="status-text" style="white-space: pre-line">{{$ctrl.getStatus(v.status, v.date)}}</td>
         </tr>
     </tbody>
@@ -75,7 +77,8 @@
     <tr>
         <th> <button class="btn btn-default" id="sortByDateButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByDate(false)" style="color: white">Sort by date ⇅</button> </th>
         <th> <button class="btn btn-default" id="sortByDescButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByDesc(false)" style="color: white">Sort by description ⇅</button> </th>
-        <th> <button class="btn btn-default" id="sortByVetButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByOwner(false)" style="color: white">Sort by owner ⇅</button> </th>
+        <!-- There's no owner in visit object -->
+        <!-- <th> <button class="btn btn-default" id="sortByVetButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByOwner(false)" style="color: white">Sort by owner ⇅</button> </th> -->
         <th> <button class="btn btn-default" id="sortByStatusButtonPreviousVisits" type="button" ng-click="$ctrl.SortTableByStatus(false)" style="color: white">Sort by status ⇅</button>  </th>
     </tr>
     </thead>
@@ -84,7 +87,8 @@
         <tr ng-repeat="v in $ctrl.previousVisits" data-index="{{$index}}" data-table-name="previousVisits">
             <td class="col-sm-2">{{v.date}}</td>
             <td style="white-space: pre-line">{{v.description}}</td>
-            <td style="white-space: pre-line">{{$ctrl.getOwnerName(v.ownerId)}}</td>
+            <!-- There's no owner in visit object -->
+            <!-- <td style="white-space: pre-line">{{$ctrl.getOwnerName(v.ownerId)}}</td> -->
             <td class="status-text" style="white-space: pre-line">{{$ctrl.getStatus(v.status, v.date)}}</td>
         </tr>
 

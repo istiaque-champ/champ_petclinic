@@ -16,7 +16,6 @@ angular.module('visitsVetList')
             self.vets = resp.data;
         });
 
-
         // GET AND ASSIGN VET/PRACTITIONER INFORMATION
         self.loadVetInfo = function() {
             let selectedVetsId = $("#selectedVet").val();
