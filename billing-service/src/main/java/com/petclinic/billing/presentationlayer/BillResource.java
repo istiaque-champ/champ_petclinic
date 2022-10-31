@@ -68,7 +68,7 @@ public class BillResource {
 
     @GetMapping(value = "/visits/{visitId}")
     public Mono<ResponseEntity<BillDTO>> findBillByVisitId(@PathVariable int visitId){
-        return SERVICE.GetBillByVisitId(visitId)
+        return SERVICE.GetBillByVisitId(EntityDTOUtil.verifyId(visitId))
                 .map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
