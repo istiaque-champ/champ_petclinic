@@ -61,7 +61,7 @@
                     </td>
                     <td>
                         <a class="newBtn btn btn-default" ui-sref="deletePet({ownerId: $ctrl.owner.id, petId: pet.id, method: 'delete'})">Delete Pet</a>
-                        <a class="newBtn btn btn-default" ui-sref="petDetails({petId:{{pet.id}}, ownerId:{{owner.id}}})">{{pet.name}}>Edit Pet</a>
+                        <a class="newBtn btn btn-default" ui-sref="editPet({ownerId:{{owner.id}}, $ctrl.owner.id, petId: {{pet.id}} method: 'edit'})">Edit Pet</a>
                     </td>
                 </tr>
             </table>
