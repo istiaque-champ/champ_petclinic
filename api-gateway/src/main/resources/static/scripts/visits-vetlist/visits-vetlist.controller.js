@@ -16,11 +16,6 @@ angular.module('visitsVetList')
             self.vets = resp.data;
         });
 
-        //Fetch visits according to vet id
-        $http.get("api/gateway/visits/vets/"+practitionerId).then(function (resp) {
-            self.visits = resp.data;
-            self.sortFetchedVisits();
-        });
 
         // GET AND ASSIGN VET/PRACTITIONER INFORMATION
         self.loadVetInfo = function() {
@@ -77,6 +72,14 @@ angular.module('visitsVetList')
             });
             return practitionerName;
         };
+
+        //Fetch visits according to vet id
+        //$http.get("api/gateway/visits/vets/"+practitionerId).then(function (resp) {
+        //hardcode for test
+        $http.get("api/gateway/visits/vets/234568").then(function (resp) {
+            self.visits = resp.data;
+            self.sortFetchedVisits();
+        });
 
         // GET OWNER NAME WITH ID
         self.getOwnerName = function (id){
