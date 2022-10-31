@@ -100,7 +100,9 @@ console.table(translations);
 
 petClinicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', function (
     /*config name for tanslation : '$translateProvider'*/
-    $stateProvider, $urlRouterProvider, $locationProvider, $httpProvider /*$translateProvider*/) {
+    $stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+    
+    /*config name for translation: $translateProvider*/
 
     // safari turns to be lazy sending the Cache-Control header
     $httpProvider.defaults.headers.common["Cache-Control"] = 'no-cache';
