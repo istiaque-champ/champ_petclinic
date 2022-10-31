@@ -60,6 +60,7 @@ angular.module('billDetails')
 
             if (createBill){
                 console.log('Creating new bill');
+                self.bills.visitId = Math.floor(Math.random()*90000) + 10000;
                 console.log(self.bills);
                 var uri = 'api/gateway/bills';
                 $http.post(uri, self.bills)
