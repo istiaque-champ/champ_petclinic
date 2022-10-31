@@ -1,4 +1,4 @@
-<div class="bColor">
+<div>
 <h2 id="BillDetailsTitle">Bill Details: </h2>
     <br><br>
 </div>
@@ -11,10 +11,20 @@
             <td id="BillCost" >Price:{{$ctrl.bills.amount}}</td>
         </tr>
         <tr>
-            <td id="BillVisit"><label>Visit Type: </label><input id="BillType" type="text" ng-model="$ctrl.bills.visitType"></td>
+            <td id="BillVisitType">
+                <label>Visit Type:</label>
+            <select id="BillType" ng-model="$ctrl.selectedVisitType">
+                <option value="Examinations">Examinations</option>
+                <option value="Injury">Injury</option>
+                <option value="Medical">Medical</option>
+                <option value="Chronic">Chronic</option>
+                <option value="Consultations">Consultations</option>
+                <option value="Operations">Operations</option>
+            </select>
+            </td>
         </tr>
         <tr>
-            <td id="BillDate">Date/Time:{{$ctrl.bills.date | date:'medium'}}</td>
+            <td id="BillDate" class="ng-binding">Date/Time:{{$ctrl.bills.date | date:'medium'}}</td>
         </tr>
         <tr id="BillOwner">
             <td ><label>Owners: </label><select ng-options="owner.firstName + ' ' + owner.lastName for owner in $ctrl.owners track by owner.id" ng-model="$ctrl.selectedOwner"></select>
@@ -27,9 +37,9 @@
 
 <div id="buttons">
     <a ui-sref="saveBill">
-        <button id="saveBillButton" class="save-bill-button btn btn-success" ng-click="$ctrl.submitBillDetailsForm()" type="submit">Save</button>
+        <a href="http://localhost:8080/#!/bills" id="saveBillButton" class="save-bill-button btn btn-success" ng-click="$ctrl.submitBillDetailsForm()" type="submit">Save</a>
     </a>
     <a ui-sref="printBill">
-        <button class="print-bill-button btn btn-success" ng-click="$ctrl.printPage()" type="print">Print</button>
+        <a class="print-bill-button btn btn-success" ng-click="$ctrl.printPage()" type="print">Print</a>
     </a>
 </div>

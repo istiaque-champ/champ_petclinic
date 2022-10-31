@@ -8,7 +8,15 @@ angular.module('billDetails')
         if (!createBill){
             $http.get('api/gateway/bills/' + $stateParams.billId).then(function (resp) {
                 self.bills = resp.data;
+
+                self.selectedVisitType = self.bills.visitType;
             })
+        } else {
+            self.bills = {};
+        }
+
+        self.visitType = function() {
+            self.selectedVisit = self.selectedVisitType
         }
 
         $http.get('api/gateway/owners').then(function (resp){
@@ -44,15 +52,17 @@ angular.module('billDetails')
             }
         })
 
+
         self.submitBillDetailsForm = function (){
 
             self.bills.customerId = self.selectedOwner.id;
             self.bills.vetId = self.selectedVet.vetId;
             self.bills.petId = self.selectedPet.id;
+            self.bills.visitType = self.selectedVisitType;
 
             if (createBill){
-                self.bills.visitId = Math.floor(Math.random()*90000) + 10000;
                 console.log('Creating new bill');
+                self.bills.visitId = Math.floor(Math.random()*90000) + 10000;
                 console.log(self.bills);
                 var uri = 'api/gateway/bills';
                 $http.post(uri, self.bills)
