@@ -16,7 +16,7 @@ angular.module('visits')
             self.sortFetchedVisits();
         });
 
-        // Function to... get the current date ;)
+        // Function to get the current date
         function getCurrentDate() {
             let dateObj = new Date();
             var dd = String(dateObj.getDate()).padStart(2, '0');
@@ -26,6 +26,7 @@ angular.module('visits')
         }
 
         // Function to parse the visit date into a comparable format
+        // Function seems unused. May want to check later
         function parseDate(date) {
             var dd = String(date.getDate()).padStart(2, '0');
             var mm = String(date.getMonth() + 1).padStart(2, '0');
@@ -688,8 +689,6 @@ angular.module('visits')
             //Initializing variable for status
 
             var statusText = "";
-            let currentDate = getCurrentDate();
-
 
             //Retrieving the current date
             let currentDate= getCurrentDate();
