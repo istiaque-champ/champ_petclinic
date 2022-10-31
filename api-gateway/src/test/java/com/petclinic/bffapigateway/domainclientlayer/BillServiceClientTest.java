@@ -55,7 +55,7 @@ class BillServiceClientTest {
                         "        \"vetId\": 2,\n" +
                         "        \"petId\": 2,\n" +
                         "        \"visitType\": \"Examinations\",\n" +
-                        "        \"amount\": 59.99\n" +
+                        "        \"amount\": 59.99,\n" +
                         "        \"visitId\": 12345\n" +
                         "    }"));
 
@@ -75,7 +75,7 @@ class BillServiceClientTest {
                     "        \"vetId\": 2,\n" +
                     "        \"petId\": 2,\n" +
                     "        \"visitType\": \"Examinations\",\n" +
-                    "        \"amount\": 59.99\n" +
+                    "        \"amount\": 59.99,\n" +
                     "        \"visitId\": 12345\n" +
                     "    }]"));
 
@@ -143,7 +143,7 @@ class BillServiceClientTest {
                         "        \"vetId\": 2,\n" +
                         "        \"petId\": 2,\n" +
                         "        \"visitType\": \"Examinations\",\n" +
-                        "        \"amount\": 59.99\n" +
+                        "        \"amount\": 59.99,\n" +
                         "        \"visitId\": 12345\n" +
                         "    }]"));
 
@@ -163,7 +163,7 @@ class BillServiceClientTest {
                         "        \"vetId\": 2,\n" +
                         "        \"petId\": 2,\n" +
                         "        \"visitType\": \"Examinations\",\n" +
-                        "        \"amount\": 59.99\n" +
+                        "        \"amount\": 59.99,\n" +
                         "        \"visitId\": 12345\n" +
                         "    }]"));
 
@@ -183,7 +183,7 @@ class BillServiceClientTest {
                         "        \"vetId\": 2,\n" +
                         "        \"petId\": 2,\n" +
                         "        \"visitType\": \"Examinations\",\n" +
-                        "        \"amount\": 59.99\n" +
+                        "        \"amount\": 59.99,\n" +
                         "        \"visitId\": 12345\n" +
                         "    }]"));
 
@@ -202,7 +202,7 @@ class BillServiceClientTest {
                         "        \"vetId\": 2,\n" +
                         "        \"petId\": 2,\n" +
                         "        \"visitType\": \"Examinations\",\n" +
-                        "        \"amount\": 59.99\n" +
+                        "        \"amount\": 59.99,\n" +
                         "        \"visitId\": 12345\n" +
                         "    }"));
 
@@ -222,7 +222,7 @@ class BillServiceClientTest {
                     "        \"vetId\": 2,\n" +
                     "        \"petId\": 2,\n" +
                     "        \"visitType\": \"Examinations\",\n" +
-                    "        \"amount\": 59.99\n" +
+                    "        \"amount\": 59.99,\n" +
                     "        \"visitId\": 12345\n" +
                     "    }"));
 
