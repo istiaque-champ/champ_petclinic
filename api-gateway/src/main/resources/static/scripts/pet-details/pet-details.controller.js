@@ -10,6 +10,10 @@ angular.module('petDetails')
 
         })
 
+        $http.get("api/gateway/owners/" + $stateParams.ownerId + "/pets/" + $stateParams.petId + "/prescriptions").then(function(resp){
+            self.prescriptions = resp.data
+        })
+
         self.submitPetDetailsForm = function (){
 
 
