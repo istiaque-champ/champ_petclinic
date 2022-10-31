@@ -38,7 +38,7 @@ angular.module('ownerForm')
                 var error = response.data;
                 error.errors = error.errors || [];
                 alert(error.error + "\r\n" + error.errors.map(function (e) {
-                    return e.field + ": " + e.defaultMessage;
+                    return e.field + ": " + "One or many fields are not valid, please double check";
                 }).join("\r\n"));
             });
         };
