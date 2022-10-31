@@ -123,17 +123,21 @@ a.newBtn:hover, button#newBtn:hover{
   border: 1px solid black;
 }
 
+#bill{
+  border: 1px solid black;
+}
+
 table:not(.noColor) {
   background-color: white;
   color: black;
 }
 
-h2.titleOwner {
+/*h2.titleOwner {
   color: black;
   font-weight: bold;
   font-size: xxx-large;
   text-align: center;
-}
+}*/
 
 h2.form {
   background-color: rgba(0, 0, 0, 0.05);
@@ -141,8 +145,9 @@ h2.form {
 }
 
 div.bColor {
-  background-color: white;
+  background-color: #198754;
 }
+
 
 div.formColor {
   background-color: rgba(0, 0, 0, 0.05);

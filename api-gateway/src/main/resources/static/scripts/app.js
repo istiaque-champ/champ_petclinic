@@ -1,5 +1,7 @@
 'use strict';
 // Whitelist for all things related to auth and Q 401/403 handling
+
+//Can erase everything that is commented under. Its all for internationalization but it didnt work
 const whiteList = new Set([
     'login',
     'signup',
@@ -7,10 +9,10 @@ const whiteList = new Set([
 
 /* App Module */
 var petClinicApp = angular.module('petClinicApp', [
-    'ui.router', 'layoutNav', 'layoutFooter', 'layoutWelcome', 'ownerList', 'ownerDetails', 'ownerForm', 'petForm'
+    'ui.router', 'layoutNav', 'layoutFooter', 'layoutWelcome', 'petDetails' , 'ownerList', 'ownerDetails', 'ownerForm', 'petForm'
     , 'visits', 'vetList','vetForm','vetDetails', 'loginForm', 'rolesDetails', 'signupForm', 'billDetails', 'billHistory'
     , 'verification' , 'adminPanel']);
-
+   /* module name for translation: 'pascalprecht.translate'*/
 petClinicApp.factory("authProvider", ["$window", function ($window) {
 
     return {
@@ -67,8 +69,40 @@ petClinicApp.run(['$rootScope', '$location', 'authProvider', function ($rootScop
     });
 }])
 
+//Translation table
+/*
+var visits_translations = {
+    UPCOMING_VISITS: 'Upcoming Visits:',
+    PREVIOUS_VISITS: 'Previous Visits:',
+    VISITS: "Visits",
+    PHONE_NUMBER: "Phone Number",
+    EMAIL_ADDRESS: "Email Address" ,
+    SPECIALITIES: "Specialities",
+    WORKDAYS: "Workdays",
+    DATE: "date",
+    DESCRIPTION: "Description",
+    VISITS_TYPE:'Visits Type'
+};
+console.table(visits_translations);
+
+var translations = {
+    BILL_HISTORY: 'Bill History :',
+    BILL_ID: 'Bill Id:',
+    OWNER: "Owner",
+    VISIT_TYPE: "Visit Type",
+    NAMESPACE: {
+        BILL_ID: 'Bill Id in namespace'
+    }
+};
+console.table(translations);
+
+*/
+
 petClinicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', function (
+    /*config name for tanslation : '$translateProvider'*/
     $stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+    
+    /*config name for translation: $translateProvider*/
 
     // safari turns to be lazy sending the Cache-Control header
     $httpProvider.defaults.headers.common["Cache-Control"] = 'no-cache';
@@ -89,6 +123,14 @@ petClinicApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider'
         });
 
     $httpProvider.interceptors.push('httpErrorInterceptor');
+
+    /*
+    console.log("HELLO FROM CONFIG");
+    $translateProvider.translations('en', visits_translations);
+    $translateProvider.preferredLanguage('en');
+
+     */
+
 }]);
 
 ['welcome', 'nav', 'footer'].forEach(function (c) {

@@ -57,7 +57,7 @@ public class PetRequestTests {
     {
         //ARRANGE - ACT
         PetRequest pr = new PetRequest();
-        String expected = "PetRequest(id=0, birthDate=null, name=null, type=null)";
+        String expected = "PetRequest(id=0, birthDate=null, name=null, notes=null, type=null)";
 
         //ASSERT
         assertEquals(expected, pr.toString());

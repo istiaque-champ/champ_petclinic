@@ -68,10 +68,24 @@ public class User implements UserDetails {
 
     private boolean verified;
 
+    @Column(name = "usertype")
+    private Integer userType;
+
+    @Column(name = "usertypeid")
+    private Integer userTypeId;
+
     public User(String username, String password, String email) {
         this.username = username;
         this.password = password;
         this.email = email;
+    }
+
+    public User(String username, String password, String email, Integer userType, Integer userTypeId) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.userType = userType;
+        this.userTypeId = userTypeId;
     }
 
     public User(String username, String password, String email, Set<Role> roles) {
@@ -125,6 +139,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return verified;
+        return true;
     }
 }

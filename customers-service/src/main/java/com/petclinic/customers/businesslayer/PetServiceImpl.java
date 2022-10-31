@@ -27,7 +27,7 @@ public class PetServiceImpl implements PetService {
         this.ownerService = ownerService;
     }
 
-   @Override
+    @Override
     public Optional<Pet> findByPetId(int ownerId, int petId) {
         try {
             Optional<Owner> optionalOwner = ownerService.findByOwnerId(ownerId);
@@ -54,6 +54,52 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
+    public Pet updatePet(int id, Pet newPet) {
+        try{
+            Optional<Pet> optionalPet = petRepository.findById(id);
+            Pet foundPet = optionalPet.get();
+            foundPet.setName(newPet.getName());
+            foundPet.setBirthDate(newPet.getBirthDate());
+            foundPet.setType(newPet.getType());
+            foundPet.setOwner(newPet.getOwner());
+            LOG.debug("updatePet: Pet with id {} updated",id);
+            return petRepository.save(foundPet);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            throw new NotFoundException("updatePet failed, Pet with id: " + id + " not found.");
+        }
+    }
+
+
+
+
+
+    @Override
+    public Pet updatePet(int id, PetRequest newPet) {
+        try{
+            Optional<Pet> optionalPet = petRepository.findById(id);
+            Pet foundPet = optionalPet.get();
+            foundPet.setName(newPet.getName());
+            foundPet.setBirthDate(newPet.getBirthDate());
+            foundPet.setType(newPet.getType());
+            foundPet.setNotes(newPet.getNotes());
+            LOG.debug("updatePet: Pet with id {} updated",id);
+            return petRepository.save(foundPet);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            throw new NotFoundException("updatePet failed, Pet with id: " + id + " not found.");
+        }
+    }
+
+
+
+
+
+    @Override
     public Pet CreatePet(PetRequest petRequest, int ownerId)
     {
         try {
@@ -66,6 +112,7 @@ public class PetServiceImpl implements PetService {
             pet.setName(petRequest.getName());
             pet.setBirthDate(petRequest.getBirthDate());
             pet.setType(petRequest.getType());
+            pet.setNotes(petRequest.getNotes());
             LOG.debug("New pet has been saved! The pet name is: " + pet.getName());
             return petRepository.save(pet);
         }

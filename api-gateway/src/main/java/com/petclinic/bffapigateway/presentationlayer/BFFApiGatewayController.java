@@ -39,40 +39,110 @@ public class BFFApiGatewayController {
 
     private final BillServiceClient billServiceClient;
 
+    private final PrescriptionServiceClient prescriptionServiceClient;
+
 
     @GetMapping(value = "bills/{billId}")
-    public Mono<BillDetails> getBillingInfo(final @PathVariable int billId)
+    public Mono<BillDetailsExpanded> getBillingInfo(final @PathVariable int billId)
     {
-        return billServiceClient.getBilling(billId);
+        return billServiceClient.getBilling(billId)
+                .flatMap(billDetails ->
+                        customersServiceClient.getOwner(billDetails.getCustomerId())
+                                .map(addOwnersToBillDetails(billDetails))
+                );
     }
 
 
     @PostMapping(value = "bills",
             consumes = "application/json",
             produces = "application/json")
-    public Mono<BillDetails> createBill(@RequestBody BillDetails model) {
-        return billServiceClient.createBill(model);
+    public Mono<BillDetailsExpanded> createBill(@RequestBody BillDetails model) {
+        return billServiceClient.createBill(model)
+                .flatMap(billDetails ->
+                    customersServiceClient.getOwner(billDetails.getCustomerId())
+                            .map(addOwnersToBillDetails(billDetails))
+                );
+    }
+
+    @PutMapping(value = "bills/{billId}", produces = "application/json", consumes = "application/json")
+    public Mono<BillDetailsExpanded> updateBill(@RequestBody BillDetails bill, @PathVariable int billId){
+        return billServiceClient.editBill(billId, bill)
+                .flatMap(billDetails ->
+                        customersServiceClient.getOwner(billDetails.getCustomerId())
+                                .map(addOwnersToBillDetails(billDetails))
+                );
     }
 
     @GetMapping(value = "bills")
-    public Flux<BillDetails> getAllBilling() {
-        return billServiceClient.getAllBilling();
+    public Flux<BillDetailsExpanded> getAllBilling() {
+        return billServiceClient.getAllBilling()
+                .flatMap(billDetails ->
+                        customersServiceClient.getOwner(billDetails.getCustomerId())
+                                .map(addOwnersToBillDetails(billDetails))
+                );
     }
 
+    @GetMapping(value = "/bills/vets/{vetId}")
+    public Flux<BillDetailsExpanded> getBillsByVetId(final @PathVariable int vetId){
+        return billServiceClient.getBillsByVetId(vetId)
+                .flatMap(billDetails ->
+                        customersServiceClient.getOwner(billDetails.getCustomerId())
+                                .map(addOwnersToBillDetails(billDetails))
+                );
+    }
 
+    @GetMapping(value = "/bills/pets/{petId}")
+    public Flux<BillDetailsExpanded> getBillsByPetId(final @PathVariable int petId){
+        return billServiceClient.getBillsByPetId(petId)
+                .flatMap(billDetails ->
+                        customersServiceClient.getOwner(billDetails.getCustomerId())
+                                .map(addOwnersToBillDetails(billDetails))
+                );
+    }
+    
+    @GetMapping(value = "/bills/customers/{customerId}")
+    public Flux<BillDetailsExpanded> getBillsByCustomerId(final @PathVariable int customerId){
+        return billServiceClient.getBillsByCustomerId(customerId)
+                .flatMap(billDetails ->
+                        customersServiceClient.getOwner(billDetails.getCustomerId())
+                                .map(addOwnersToBillDetails(billDetails))
+                );
+    }
+
+    @GetMapping(value = "/bills/visits/{visitId}")
+    public Flux<BillDetailsExpanded> getBillsByVisitId(final @PathVariable int visitId){
+        return billServiceClient.getBillByVisitId(visitId)
+                .flatMap(billDetails ->
+                        customersServiceClient.getOwner(billDetails.getCustomerId())
+                                .map(addOwnersToBillDetails(billDetails))
+                );
+    }
+    
     @DeleteMapping(value = "bills/{billId}")
     public Mono<Void> deleteBill(final @PathVariable int billId){
         return billServiceClient.deleteBill(billId);
-
-
-
-
     }
 
+    private Function<OwnerDetails, BillDetailsExpanded> addOwnersToBillDetails(BillDetailsExpanded billDetailsExpanded){
+        return owner -> {
+            billDetailsExpanded.setOwnerDetails(owner);
+            return billDetailsExpanded;
+        };
+    }
 
     @PostMapping(value = "owners/{ownerId}/pets" , produces = "application/json", consumes = "application/json")
     public Mono<PetDetails> createPet(@RequestBody PetDetails pet, @PathVariable int ownerId){
         return customersServiceClient.createPet(pet, ownerId);
+    }
+
+    @PutMapping(value = "owners/{ownerId}/pets/{petId}" , produces = "application/json", consumes = "application/json")
+    public Mono<PetDetails> updatePet(@RequestBody PetDetails pet, @PathVariable int petId, @PathVariable int ownerId){
+        return customersServiceClient.updatePet(petId,ownerId, pet);
+    }
+
+    @PutMapping(value = "owners/pets/{petId}" , produces = "application/json", consumes = "application/json")
+    public Mono<PetDetails> updatePet(@RequestBody PetDetails pet, @PathVariable int petId){
+        return customersServiceClient.updatePet(petId, pet);
     }
 
     @GetMapping(value = "owners/{ownerId}/pets/{petId}")
@@ -82,6 +152,7 @@ public class BFFApiGatewayController {
 
     @DeleteMapping("owners/{ownerId}/pets/{petId}")
     public Mono<PetDetails> deletePet(@PathVariable int ownerId, @PathVariable int petId){
+        prescriptionServiceClient.deletePrescriptionByPetId(petId);
         return customersServiceClient.deletePet(ownerId,petId);
     }
 
@@ -111,12 +182,12 @@ public class BFFApiGatewayController {
     public Flux<VisitDetails> getVisitsForPet(final @PathVariable int petId){
         return visitsServiceClient.getVisitsForPet(petId);
     }
-    
+
     @GetMapping(value ="visit/{visitId}")
     public Mono<VisitDetails> getVisitByVisitId(final @PathVariable String visitId){
         return visitsServiceClient.getVisitByVisitId(visitId);
     }
-    
+
     @GetMapping(value = "visits/previous/{petId}")
     public Flux<VisitDetails> getPreviousVisitsForPet(@PathVariable final int petId) {
         return visitsServiceClient.getPreviousVisitsForPet(petId);
@@ -127,7 +198,7 @@ public class BFFApiGatewayController {
         return visitsServiceClient.getScheduledVisitsForPet(petId);
 
     }
-    
+
     @GetMapping(value = "visits/vets/{practitionerId}")
     public Flux<VisitDetails> getVisitForPractitioner(@PathVariable int practitionerId){
         return visitsServiceClient.getVisitForPractitioner(practitionerId);
@@ -300,6 +371,41 @@ public class BFFApiGatewayController {
     /**
      * End of Owner Methods
      * **/
+
+    //Prescription Methods
+    @GetMapping(value = "owners/{ownerId}/pets/{petId}/prescriptions/{prescriptionId}")
+    public Mono<PrescriptionDetails> getPrescriptionDetails(@PathVariable int prescriptionId, @PathVariable int ownerId, @PathVariable int petId) {
+
+        return prescriptionServiceClient.getPrescription(prescriptionId);
+    }
+
+    @GetMapping(value = "owners/{ownerId}/pets/{petId}/prescriptions")
+    public Flux<PrescriptionDetails> getAllPrescriptionDetails(@PathVariable Integer petId) {
+        return prescriptionServiceClient.getPrescriptions(petId);
+    }
+    @PostMapping(value = "owners/{ownerId}/pets/{petId}/prescriptions",
+            consumes = "application/json",
+            produces = "application/json")
+    public Mono<PrescriptionDetails> createPrescription(@PathVariable Integer petId,@RequestBody PrescriptionDetails model){
+        model.setPetId(petId);
+        return prescriptionServiceClient.createPrescription(model);
+    }
+    @PutMapping(value = "owners/{ownerId}/pets/{petId}/prescriptions/{prescriptionId}",
+            consumes = "application/json",
+            produces = "application/json")
+    public Mono<PrescriptionDetails> updatePrescription(@PathVariable Integer prescriptionId,@RequestBody PrescriptionDetails model){
+        return prescriptionServiceClient.updatePrescription(prescriptionId,model);
+    }
+
+    @DeleteMapping(value = "owners/{ownerId}/pets/{petId}/prescriptions/{prescriptionId}")
+    public Mono<PrescriptionDetails> deletePrescriptionByPrescriptionId(@PathVariable Integer prescriptionId){
+        return prescriptionServiceClient.deletePrescriptionByPrescriptionId(prescriptionId);
+    }
+    @DeleteMapping(value = "owners/{ownerId}/pets/{petId}/prescriptions")
+    public Mono<PrescriptionDetails> deletePrescriptionByPetId(@PathVariable Integer petId){
+        return prescriptionServiceClient.deletePrescriptionByPetId(petId);
+    }
+    //End of Prescription Methods
 
     @GetMapping("/verification/{token}")
     public Mono<UserDetails> verifyUser(@PathVariable final String token) {

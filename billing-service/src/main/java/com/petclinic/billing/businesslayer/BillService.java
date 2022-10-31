@@ -1,20 +1,24 @@
 package com.petclinic.billing.businesslayer;
 
-import com.petclinic.billing.datalayer.Bill;
 import com.petclinic.billing.datalayer.BillDTO;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public interface BillService {
-    BillDTO GetBill(@RequestParam(value = "billId", required = true) int billId);
+    Mono<BillDTO> GetBill(int billId);
 
-    List<BillDTO> GetAllBills();
+    Flux<BillDTO> GetAllBills();
 
-    BillDTO CreateBill(@RequestBody BillDTO model);
+    Mono<BillDTO> CreateBill(Mono<BillDTO> model);
 
-    void DeleteBill(@RequestParam(value = "billId", required = true) int billId);
+    Mono<Void> DeleteBill(int billId);
 
-    List<BillDTO> GetBillByCustomerId(@RequestParam(value = "customerId", required = true) int customerId);
+    Flux<BillDTO> GetBillsByCustomerId(int customerId);
+
+    Flux<BillDTO> GetBillsByVetId(int vetId);
+
+    Flux<BillDTO> GetBillsByPetId(int petId);
+    Mono<BillDTO> GetBillByVisitId(int visitId);
+
+    Mono<BillDTO> UpdateBill(Mono<BillDTO> model, int billId);
 }

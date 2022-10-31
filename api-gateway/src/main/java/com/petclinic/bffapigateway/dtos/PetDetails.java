@@ -19,6 +19,8 @@ public class PetDetails {
 
     private String birthDate;
 
+    private String notes;
+
     private PetType type;
 
     private final List<VisitDetails> visits = new ArrayList<>();

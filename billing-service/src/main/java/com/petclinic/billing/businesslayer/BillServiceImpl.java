@@ -1,31 +1,27 @@
 package com.petclinic.billing.businesslayer;
 
-import com.petclinic.billing.datalayer.Bill;
 import com.petclinic.billing.datalayer.BillDTO;
 import com.petclinic.billing.datalayer.BillRepository;
-import com.petclinic.billing.exceptions.InvalidInputException;
-import com.petclinic.billing.exceptions.NotFoundException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.dao.DuplicateKeyException;
+import com.petclinic.billing.util.EntityDTOUtil;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
-import java.util.List;
 
 @Service
 public class BillServiceImpl implements BillService{
-    private static final Logger LOG = LoggerFactory.getLogger(BillServiceImpl.class);
     private final BillRepository billRepository;
-    private final BillMapper billMapper;
 
-    public BillServiceImpl(BillRepository billRepository, BillMapper billMapper) {
+    //made the hashmap a static variable, so it's only created once. Public because EntityDTOUtil uses it
+    public static final HashMap<String, Double> visitTypePrices = setUpVisitList();
+
+    public BillServiceImpl(BillRepository billRepository) {
         this.billRepository = billRepository;
-        this.billMapper = billMapper;
     }
 
-    private HashMap<String, Double> setUpVisitList(){
-        HashMap<String, Double> visitTypesPrices = new HashMap<String, Double>();
+    private static HashMap<String, Double> setUpVisitList(){
+        HashMap<String, Double> visitTypesPrices = new HashMap<>();
         visitTypesPrices.put("Examinations", 59.99);
         visitTypesPrices.put("Injury", 229.99);
         visitTypesPrices.put("Medical", 109.99);
@@ -35,68 +31,70 @@ public class BillServiceImpl implements BillService{
         return visitTypesPrices;
     }
 
+    //Get a bill by its billId
     @Override
-    public BillDTO GetBill(int billId) {
-        Bill bill = billRepository.findById(billId)
-                .orElseThrow(() -> new NotFoundException("No bill found for billId: " + billId));
+    public Mono<BillDTO> GetBill(int billId) {
+      return billRepository.findBillByBillId(billId)
+             .map(EntityDTOUtil::entityToDTO);
+    }
+    //Gets all bills
+    @Override
+    public Flux<BillDTO> GetAllBills() {
+        return billRepository.findAll()
+                .map(EntityDTOUtil::entityToDTO);
+    }
 
-        BillDTO response = billMapper.EntityToModel(bill);
-        LOG.debug("Bill: GetBillByID: found bill ID: {}", billId);
-        return response;
+    //Create a bill based on the DTO
+    @Override
+    public Mono<BillDTO> CreateBill(Mono<BillDTO> model) {
+        //Validation checks moved to EntityDTOUtil
+        return model
+                .map(EntityDTOUtil::dtoToEntity)
+                .flatMap(billRepository::save)
+                .map(EntityDTOUtil::entityToDTO);
     }
 
     @Override
-    public List<BillDTO> GetAllBills() {
-        List<Bill> bills = billRepository.findAll();
-        List<BillDTO> dtos = billMapper.ListEntityToListModel(bills);
+    public Mono<BillDTO> UpdateBill(Mono<BillDTO> model, int billId){
+        return billRepository.findBillByBillId(billId)
+                .flatMap(bill -> model
+                        .map(EntityDTOUtil::dtoToEntity)
+                        .doOnNext(b -> b.setBillId(bill.getBillId()))
+                        .doOnNext(b -> b.setId(bill.getId()))
+                )
+                .flatMap(billRepository::save)
+                .map(EntityDTOUtil::entityToDTO);
+    }
 
-        return dtos;
+    //Deletes a bill by its id
+    @Override
+    public Mono<Void> DeleteBill(int billId) {
+        return billRepository.deleteBillByBillId(billId);
+    }
+
+    //Returns all the bills of a specific customer by its customer id
+    @Override
+    public Flux<BillDTO> GetBillsByCustomerId(int customerId) {
+            return billRepository.findBillsByCustomerId(customerId)
+                    .map(EntityDTOUtil::entityToDTO);
+
     }
 
     @Override
-    public BillDTO CreateBill(BillDTO model) {
-        if(model.getBillId() <= 0) {
-            throw new InvalidInputException("That bill id does not exist");
-        }
-
-        HashMap<String, Double> list = setUpVisitList();
-
-        if(list.get(model.getVisitType()) == null){
-            throw new InvalidInputException("That visit type does not exist");
-        }
-
-        try{
-            Bill entity = billMapper.ModelToEntity(model);
-            entity.setAmount(list.get(entity.getVisitType()));
-            Bill newEntity = billRepository.save(entity);
-
-            LOG.debug("Entity created for bill ID: {}", newEntity.getId());
-
-            return billMapper.EntityToModel(newEntity);
-        }
-        catch(DuplicateKeyException dKE){
-            Bill entity = billMapper.ModelToEntity(model);
-            throw new InvalidInputException("Duplicate key, bill ID: " + entity.getId());
-        }
+    public Flux<BillDTO> GetBillsByVetId(int vetId) {
+        return billRepository.findBillsByVetId(vetId)
+                .map(EntityDTOUtil::entityToDTO);
     }
 
     @Override
-    public void DeleteBill(int billId) {
-        LOG.debug("Delete for bill ID: {}", billId);
-        billRepository.findById(billId).ifPresent(entity -> billRepository.delete(entity));
+    public Flux<BillDTO> GetBillsByPetId(int petId) {
+        return billRepository.findBillsByPetId(petId)
+                .map(EntityDTOUtil::entityToDTO);
     }
 
     @Override
-    public List<BillDTO> GetBillByCustomerId(int customerId) {
-
-            List<Bill> bills = billRepository.findByCustomerId(customerId);
-
-            List<BillDTO> response = billMapper.EntityListToModelList(bills);
-
-            if(response.isEmpty()){
-                throw new NotFoundException("No bill found for customerId: " + customerId);
-            }
-            return response;
-
+    public Mono<BillDTO> GetBillByVisitId(int visitId) {
+        return billRepository.findBillByVisitId(visitId)
+                .map(EntityDTOUtil::entityToDTO);
     }
 }

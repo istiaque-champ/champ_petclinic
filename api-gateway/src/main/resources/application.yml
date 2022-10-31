@@ -17,6 +17,9 @@ app:
   auth-service:
     host: localhost
     port: 7005
+  prescription-service:
+    host: localhost
+    port: 7006
 
 
 logging:
@@ -43,5 +46,8 @@ app:
     port: 8080
   auth-service:
     host: auth
+    port: 8080
+  prescription-service:
+    host: prescriptions
     port: 8080
 

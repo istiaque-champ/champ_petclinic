@@ -27,6 +27,9 @@ public class    Pet {
     @Column(name = "name")
     private String name;
 
+    @Column(name="notes")
+    private String notes;
+
     @Column(name = "birth_date")
     @Temporal(TemporalType.DATE)
     private Date birthDate;
@@ -55,6 +58,10 @@ public class    Pet {
     public void setName(final String name) {
         this.name = name;
     }
+
+    public void setNotes(final String notes){this.notes = notes;}
+
+    public String getNotes(){return notes;}
 
     public Date getBirthDate() {
         return birthDate;
