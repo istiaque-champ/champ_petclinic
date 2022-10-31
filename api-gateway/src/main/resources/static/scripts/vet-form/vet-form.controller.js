@@ -45,7 +45,7 @@ angular.module('vetForm')
                     isAct[1].checked = true;
                 }
                 let phoneNumber = self.vet.phoneNumber;
-                let code = phoneNumber.substring(phoneNumber.length - 4);
+                let code = phoneNumber.substring(phoneNumber.length - 10);
                 document.getElementById("phoneNumber").value = code;
 
             });
@@ -80,6 +80,7 @@ angular.module('vetForm')
                 req = $http.post("api/gateway/vets", vetC);
                 console.log(self.vet)
             }
+
 
             req.then(function () {
                 $state.go('vets');

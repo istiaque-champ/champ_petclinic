@@ -39,25 +39,30 @@
                     </div>
 
                     <div class="col-sm-12">
-                        <input class="form-control" id="phoneNumber" maxlength="4" minlength="4"
-                               name="phoneNumber" ng-model="vet.phoneNumber" placeholder="Phone Number" required
-                               title="Accepts only numbers for 4 characters." type="number">
+                        <input class="form-control" id="phoneNumber" maxlength="10" minlength="4"
+                               name="phoneNumber" ng-model="vet.phoneNumber"
+                               pattern="\b[\w.%-]\b"
+                               placeholder="Phone Number" required
+                               title="Accepts only numbers for 10 characters." type="number">
                     </div>
 
                     <hr class="my-4"/>
 
 
                     <div class="row g-3">
-                        <div class="col-sm-6">
-                            <h5 class="form-label">Profile Picture</h5>
-                            <span id="checkmarkPic" style="display: none">&#10003;</span>
-                            <input accept="image/*"
-                                   class="form-control"
-                                   id="profilePicture"
-                                   name="profilePicture"
-                                   ng-model="vet.profilePicture"
-                                   onchange="uploadPicture(event)"
-                                   type="file"/>
+                    <div class="col-sm-6">
+                        <h5 class="form-label">Profile Picture</h5>
+                        <span id="checkmarkPic" style="display: none">&#10003;</span>
+                        <input type = "file" id="image_input" accept="image/*"
+                               class="form-control"
+                               id="profilePicture"
+                               name="profilePicture"
+                               ng-model="vet.profilePicture"
+                               onchange="getImagePreview(event)"
+                               type="file"/>
+
+                        <input type="file" name="upload_file" class="form-control" placeholder="Enter Name" id="upload_file" onchange="getImagePreview(event)">
+
                         </div>
                         <div class="col-sm-6">
                             <img alt="Profile picture preview" class="img-preview" height="130px" id="preview"
@@ -69,18 +74,21 @@
                     </div>
 
                     <script>
-                        let uploadPicture = function (event) {
-                            let preview = document.getElementById('preview');
-                            let checkmark = document.getElementById('checkmarkPic');
-                            if (document.getElementById('profilePicture') != null) {
-                                checkmark.style.display = "inline";
-                            }
-                            preview.src = URL.createObjectURL(event.target.files[0]);
-                            preview.onload = function () {
-                                URL.revokeObjectURL(preview.src)
-                            }
-                        };
+
+                function getImagePreview(event)
+                 {
+                var image=URL.createObjectURL(event.target.files[0]);
+                var imagediv= document.getElementById('preview');
+                var newimg=document.createElement('img');
+                imagediv.innerHTML='';
+                newimg.src=image;
+                newimg.width="300";
+                imagediv.appendChild(newimg);
+              }
+
+
                     </script>
+
                     <hr class="my-4"/>
 
                     <div class="col-sm-12">
